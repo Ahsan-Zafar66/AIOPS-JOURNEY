@@ -1,0 +1,8 @@
+Following are the common issues with data:
+
+1) The unreasonable effectiveness of data
+Differe ML algorithms whether they are simple or complex perform almost identically on a complex problem once they are given enough data
+Data matters more than algorithms
+
+When we have less data there is a big difference in the performance of simple and complex algorithms, but when we have large data the performance of simple or complex algorithms are identical almost
+

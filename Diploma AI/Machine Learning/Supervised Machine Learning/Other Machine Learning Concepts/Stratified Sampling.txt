@@ -1,0 +1,44 @@
+Stratified sampling is a method of sampling from a population in which the population is divided into smaller groups, called strata. Each stratum is based on shared characteristics or attributes (like age, income, education level, etc.), and then a sample is drawn from each stratum. This technique ensures that every subgroup of the population is adequately represented in the final sample.
+
+The main goal of stratified sampling is to ensure that the sample accurately reflects the characteristics of the population, particularly when some subgroups are small or could be underrepresented in simple random sampling.
+
+How Stratified Sampling Works:
+Divide the Population into Strata: The entire population is divided into distinct, non-overlapping groups (strata) based on specific characteristics. Each individual belongs to exactly one stratum.
+
+Example: If you're conducting a survey on educational attainment in a city, the population could be divided into strata like "high school graduates," "college graduates," and "postgraduate degree holders."
+
+Sample from Each Stratum: From each stratum, a random sample is drawn. The sample size from each stratum can either be proportional (based on the size of the stratum relative to the entire population) or equal (where the same number of individuals is selected from each stratum, regardless of its size).
+
+Example: If 60% of the population are high school graduates, 30% are college graduates, and 10% hold postgraduate degrees, a proportional stratified sample would draw 60%, 30%, and 10% of the sample from these groups, respectively.
+
+Combine the Samples: The samples from all the strata are combined to form the final sample.
+
+When to Use Stratified Sampling:
+Heterogeneous populations: When the population is diverse and consists of distinct subgroups, and you want to ensure that each subgroup is represented.
+Avoiding bias: When some subgroups might be underrepresented or missed entirely in random sampling, stratified sampling ensures these groups are included.
+Small subgroups: When some subgroups are small but important, stratified sampling helps ensure their representation in the sample.
+Example of Stratified Sampling:
+Suppose you're studying the income levels of employees at a company. The company has 500 employees in different departments: engineering, marketing, and finance.
+
+Step 1: You divide the employees into three strata based on their department: engineering (300 employees), marketing (100 employees), and finance (100 employees).
+Step 2: You want to sample 50 employees from the entire company. With proportional sampling, you would sample:
+30 employees from engineering (60% of the total population),
+10 employees from marketing (20% of the population),
+10 employees from finance (20% of the population).
+If you were using equal sampling, you might take the same number of employees (e.g., 15) from each department.
+Types of Stratified Sampling:
+Proportional Stratified Sampling: The size of the sample from each stratum is proportional to the size of that stratum in the overall population. This ensures that the sample mirrors the composition of the population.
+
+Equal Stratified Sampling: An equal number of individuals are selected from each stratum, regardless of the population size of each stratum. This can be useful if you want to ensure equal representation of each subgroup, but it might not represent the overall population proportions.
+
+Benefits of Stratified Sampling:
+Improved representation: Ensures all important subgroups are represented in the sample.
+Increased precision: Since subgroups are sampled separately, the variability within each stratum is reduced, often leading to more precise estimates.
+Reduces sampling error: Especially effective when there is variability between the strata but homogeneity within each stratum.
+Drawbacks of Stratified Sampling:
+Requires detailed population information: You need to know the characteristics of the population in advance to define the strata properly.
+More complex: Compared to simple random sampling, stratified sampling involves more steps and may be more difficult to implement.
+Summary:
+Stratified sampling ensures that different subgroups within a population are represented in the sample. It is especially useful when the population has distinct categories that might be missed or underrepresented in a random sample, and it can lead to more reliable and accurate conclusions.
+
+Let me know if you'd like more examples or further clarification!

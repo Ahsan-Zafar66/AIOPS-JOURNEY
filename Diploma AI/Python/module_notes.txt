@@ -1,0 +1,50 @@
+A module is a python code written in .py file.
+
+
+# Exammple of a module and how to use it
+hello.py --> filename
+
+def myname(name):
+  print("My name is {}".format(name))
+  print("Hello {}".format(name))
+
+
+now let's call this funtion in jupyter notebook
+
+import filename
+
+import hello
+
+hello.myname("Ahsan")
+
+
+================
+
+help("modules") --> to see all the modules installed
+
+
+=================
+import pandas as pd
+
+content = dir(pd) ---> to see all the things that have been programmed in a library, all functions available in it
+
+print(content)
+=======================
+
+package is a collection of modules
+
+let's create a folder program
+
+__init__.py --> create this file in this folder
+
+math.py --> create a math function file
+
+science.py --> create a file containing science functions
+
+from program import math
+
+math.power(3,2) --> import power function from math module which is present in program package
+
+
+# another way to import module from package
+from program.math import power  

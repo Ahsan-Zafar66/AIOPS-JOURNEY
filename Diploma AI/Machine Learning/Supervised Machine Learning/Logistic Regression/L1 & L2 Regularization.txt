@@ -1,0 +1,136 @@
+Regularization is a technique used in machine learning (ML) and deep learning (DL) to prevent overfitting by adding a penalty to the loss function. Overfitting occurs when a model performs well on the training data but fails to generalize to unseen data, meaning it has learned noise or overly complex patterns. Regularization discourages complex models by imposing a constraint on the coefficients or weights of the model.
+
+Types of Regularization
+The two most common types of regularization are L1 and L2 regularization. Both methods penalize large coefficients, but they do so in different ways:
+
+1. L1 Regularization (Lasso)
+L1 regularization adds the absolute value of the coefficients (weights) to the loss function. The penalty term for L1 regularization looks like this:
+
+𝐿
+𝑜
+𝑠
+𝑠
+=
+Original Loss
++
+𝜆
+∑
+∣
+𝑤
+𝑖
+∣
+Loss=Original Loss+λ∑∣w 
+i
+​
+ ∣
+Where:
+
+𝑤
+𝑖
+w 
+i
+​
+  is the model's coefficient (or weight),
+𝜆
+λ is a hyperparameter that controls the strength of regularization (higher 
+𝜆
+λ increases the penalty).
+Key Characteristics of L1 Regularization:
+
+Sparsity: L1 regularization tends to push some weights to exactly zero, which can lead to sparse models where some features are effectively ignored. This makes it useful for feature selection.
+Interpretability: Since some features are eliminated (set to zero), the model can become simpler and easier to interpret.
+Non-differentiable: L1 regularization is non-differentiable at zero, which can make optimization slightly more complex compared to L2.
+2. L2 Regularization (Ridge)
+L2 regularization adds the square of the coefficients to the loss function. The penalty term for L2 regularization looks like this:
+
+𝐿
+𝑜
+𝑠
+𝑠
+=
+Original Loss
++
+𝜆
+∑
+𝑤
+𝑖
+2
+Loss=Original Loss+λ∑w 
+i
+2
+​
+ 
+Where:
+
+𝑤
+𝑖
+w 
+i
+​
+  is the model's coefficient (or weight),
+𝜆
+λ is a hyperparameter controlling the strength of regularization.
+Key Characteristics of L2 Regularization:
+
+Smoothly shrinks coefficients: L2 regularization penalizes large weights more heavily but doesn’t shrink any weights to exactly zero. Instead, it makes all weights smaller and smoother.
+Prevents overfitting: L2 regularization encourages the model to distribute the weights more evenly, thus reducing overfitting.
+Differentiable: Since the squared function is smooth, L2 regularization is easier to optimize with gradient-based methods compared to L1.
+Difference between L1 and L2 Regularization:
+Aspect	L1 Regularization (Lasso)	L2 Regularization (Ridge)
+Penalty	Adds absolute values of coefficients (\sum	w_i
+Sparsity	Produces sparse models (some coefficients become zero)	Produces non-sparse models (no coefficients become zero)
+Feature selection	Can select important features by shrinking irrelevant ones to zero	Does not perform feature selection, reduces all coefficients
+Optimization	Non-differentiable at zero, can be harder to optimize	Differentiable, easier to optimize
+Effect	Eliminates some features	Reduces the impact of all features
+3. Elastic Net Regularization
+Elastic Net is a combination of both L1 and L2 regularization. It adds both the L1 and L2 penalties to the loss function:
+
+𝐿
+𝑜
+𝑠
+𝑠
+=
+Original Loss
++
+𝛼
+𝜆
+∑
+∣
+𝑤
+𝑖
+∣
++
+(
+1
+−
+𝛼
+)
+𝜆
+∑
+𝑤
+𝑖
+2
+Loss=Original Loss+αλ∑∣w 
+i
+​
+ ∣+(1−α)λ∑w 
+i
+2
+​
+ 
+Where 
+𝛼
+α controls the trade-off between L1 and L2 penalties.
+
+Are They the Same in Regression, Machine Learning, and Deep Learning?
+In Regression (Linear/Logistic Regression): L1 and L2 regularization are used to regularize the coefficients of the regression model. L1 regularization is also called Lasso Regression, and L2 is called Ridge Regression.
+
+In Machine Learning (ML): In ML models like decision trees, SVM, and neural networks, regularization helps to avoid overfitting. L1, L2, or Elastic Net regularization is commonly applied in algorithms that rely on gradient-based optimization, like linear models and neural networks.
+
+In Deep Learning (DL): In DL, L1 and L2 regularization apply to the weights of neural networks. The regularization penalty is added to the loss function, just like in traditional ML. However, in DL, regularization can also be complemented by other techniques like Dropout, Batch Normalization, and Early Stopping to further reduce overfitting.
+
+Summary:
+L1 Regularization: Adds the absolute value of coefficients to the loss function, leading to sparse solutions (some weights become exactly zero).
+L2 Regularization: Adds the square of the coefficients, smoothly reducing the size of all coefficients without eliminating any.
+They are applied similarly in regression, machine learning, and deep learning, but in deep learning, additional regularization techniques may also be used.
+Let me know if you'd like to explore any specific use cases!

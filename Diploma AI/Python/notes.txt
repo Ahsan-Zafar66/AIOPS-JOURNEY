@@ -1,0 +1,36 @@
+eval(input("enter your number")) --> eval function checks the entered entity if it is a number or float then it deals th einput entity according to the datatype
+
+\ --> to keep writing code on multiple lines, it will consider that it was written in same line
+
+
+import pandas as pd;print("ahsan");abx=10 --> semicolon tells that a line or code ended their, we can write multiple statements on a single line by separating each line with a semi colon
+
+groups of individual statements that make up a single code block are called suites in python.
+example of suite
+if:
+	print(ahsan)
+else:
+	print(end)
+
+
+================
+
+Variables:
+variables are nothing but reserved memory locations to store values.
+This means when you create a variabel you rserve some space in memory.
+Based on the datatype of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory.
+Therefore, by assigning different data types to variables, you can store integers, decimals or characters.
+
+for example x=3.14,
+3.14 get stores in the memory and the identifier is x of this value in the memory, when you call x you get the value stored in x
+
+when we save a value in a variable and run the cell, python interpreter automatically detects the data type of value stored in variable.
+
+
+Five standard datatypes in python are:
+Numbers
+string
+list
+tuple
+dictionaries
+

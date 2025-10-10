@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Session Management</title>
+    
+</head>
+<body>
+  
+<table border= '1 px' align='center'>
+    
+    <tr> 
+        <th> Subject </th>
+        <th> Marks </th>
+        <th> Pass/Fail </th>
+    </tr>
+
+    {% for sub,mark in data.items() %}
+
+    <tr>
+        <td> {{ sub }} </td>
+        <td> {{ mark }} </td>
+        <td> 
+            {% if mark >= 50 %}
+            Pass
+            {% else %}
+            Fail
+            {% endif %}
+        </td>
+    </tr>
+
+    {% endfor %}
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+Escape Characters in pythonL
+
+Singel Quote:
+'Ahsan's Phone' --> will give error
+
+'Ahsan\'s Phone' --> now it will work and output will be Ahsan's phone
+
+"Ahsan's Phone and number is "03068371095"" --> error
+
+"Ahsan's Phone and number is \"03068371095\"" --> now it will work
+
+
+
+
+Unicode Characters:
+for uniode characters use backslash and u
+text = "\u00A9" 
+print(text)
+
+
+# for 8 digit hexa decimal number(emojis)
+text = "\U0001F600"
+print(text)
+
+Bell:
+will hear a bell sound
+text = "Hello\aWordl"
+
+
+Octal and Hexadecimal
+text = "Hex: \x41"
+print(text)
+
+Raw Strings
+r in raw string literals treat backslashes as literal characters not as escape characters
+text = r"C:\Program Files\SomeFolder"
+
+
+============
+
+Comparison operators
+
+number = 10
+
+number+= 10, add 10 to number and save in number
+
+number/=8, divide number by 8 and save it in number
+
+number*=2 multiply number by 2 and save it in number
+
+number // 3 --> floor division, answer is 3 not 3.33
+
+
+
+
+
+
+
+

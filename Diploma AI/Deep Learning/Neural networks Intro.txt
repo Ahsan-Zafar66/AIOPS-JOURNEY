@@ -1,0 +1,83 @@
+Symbolic AI:
+Early Programs qualifying for AI i-e chess only involved harcoded rules crafted by programmers and didn't qualify as machine learing
+For a faily long time, many experts believed that human-level AI could be achieved by having programmers handcraft a sufficiently large set of explicit rules.
+This approach is known as symbolic AI, and it was the dominant paradigm in AI in 1950s till late 1980s
+Symbolic AI could solve only logical probelems like playing chess but failed at more complex problems, fuzzy probelems, such as image classification, speech recognition and language translation.
+
+
+Traditional programming defined rules and logic to get answer, machine learning provides data and answers, logic is derived by algorithm
+
+
+A perceptron models a linear function and can solve linear problems, for complex non-linear problems it doesn't work.
+This issue is resolved by introducing a non-linear activation function
+
+
+CONCEPT OF PERCEPTRON AND ANN:
+A perceptron is the simplest type of ANN.
+It represents a single-layer binary classifier, meaning it can classify data into two classes
+It is a linear classifier. It can solve only problems where the data is linearly separable (e.g by a straight line).
+
+
+An ANN is a multilayer architecture, it can solve non-linear problems.
+ 
+
+
+
+CONCEPT OF ANN AND Multil Layer Perceptron:
+ANN (Artificial Neural Network):
+Definition: ANN is a broad term that refers to any computational model inspired by the structure and function of the human brain. It consists of interconnected layers of neurons that process input data.
+Variety: There are different types of ANNs, including simple ones with only one layer and complex ones with multiple layers or specialized architectures like convolutional neural networks (CNNs) and recurrent neural networks (RNNs).
+
+MLP (Multilayer Perceptron):
+Definition: MLP is a specific type of ANN that consists of at least three layers: an input layer, one or more hidden layers, and an output layer. Each neuron in a layer is connected to every neuron in the next layer, forming a fully connected network.
+Functionality: MLPs are specifically designed to handle non-linear problems and are commonly used in various machine learning tasks, including classification and regression.
+Summary:
+MLP is a type of ANN: All MLPs are ANNs, but not all ANNs are MLPs. ANN is the general concept, while MLP is a specific implementation of that concept with multiple layers.
+
+
+
+MP Neuron Summary:
+A single McCulloch Pitts Neuron can be used to represent boolean functions which are linearly separable
+Linear separability (for boolean functions) There exists a line (or plane) such that all inputs which produce a 1 lie on one side of the line (or plane) and all inputs which produce a 0 lie on the other side of the line (or plane)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

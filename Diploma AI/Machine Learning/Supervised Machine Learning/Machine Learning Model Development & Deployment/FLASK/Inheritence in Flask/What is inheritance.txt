@@ -1,0 +1,6 @@
+Inheritance means that you have a html page such as welcome.html, 
+you can inherit everything or some part of it in other html page without coding it.
+
+
+# you need to write following code in page in which you want to inherit welcome.html 
+{% extend welcome.html%}

@@ -1,0 +1,7 @@
+Discriminative models calculates a decision boundary that correctly classifies the data points.
+On one side of decision boudary there is one class and on the other side there is another class
+
+
+Geenrative modesl learn features, agar cat hai to kyn cat hai konsay features hain.
+agar dog hai to kyn dog hain isky feature kiya hain. generative model features learn krty hain classes ky.
+wo features ki base pr label dety hain jabky discriminative models ye dekhty hain ky data point kis traf hai decision boundary ky.

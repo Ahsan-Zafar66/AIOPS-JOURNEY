@@ -1,0 +1,170 @@
+open(filepath,mode,buffering)
+
+
+file modes:
+r --> read only
+
+rb --> read binary
+
+r+ --> open a file for both reading and writing
+
+rb+ --> opens a file for both reading and wriitng in binary format
+
+w --> opens a file for writing only
+
+wb --> opens a file for writing in binary format
+
+w+ --> opens a  file for both writing and reading
+
+wb+ --> open a file for both writing and rading
+
+a --> open a file for appending in binary format
+
+ab --> opens a file for appending in binary format
+
+a+ --> opens a file for both appending and reading 
+
+ab+ --> opens a file for both appending and reading in binary format
+
+
+
+
+
+
+===============================
+
+
+1. Opening a File
+To open a file, you can use the open() function. The basic syntax is:
+
+python
+Copy code
+file = open('filename.txt', 'mode')
+'filename.txt': Name of the file you want to open.
+'mode': Mode in which the file is opened.
+Common modes:
+
+'r': Read mode (default). Opens the file for reading.
+'w': Write mode. Opens the file for writing (creates the file if it doesn't exist or truncates it if it does).
+'a': Append mode. Opens the file for appending new data (creates the file if it doesn't exist).
+'r+': Read and write mode.
+Example:
+
+python Copy code
+file = open('example.txt', 'r')
+
+2. Reading a File
+Once the file is open, you can read its contents using different methods:
+
+read(): Reads the entire content of the file.
+# python Copy code
+content = file.read()
+readline(): Reads the next line of the file.
+# python Copy code
+line = file.readline()
+readlines(): Reads all lines of the file into a list.
+# python Copy code
+lines = file.readlines()
+
+
+3. Writing to a File
+To write data to a file, open it in 'w' or 'a' mode, and use the write() method.
+
+# python Copy code
+file = open('example.txt', 'w')
+file.write('This is some text.')
+Remember, opening a file in 'w' mode will overwrite the existing content.
+
+4. Closing a File
+Always close the file after you're done to free up system resources.
+
+python
+Copy code
+file.close()
+
+5. Using with Statement
+Using a with statement is a good practice, as it automatically closes the file for you:
+
+python
+Copy code
+with open('example.txt', 'r') as file:
+    content = file.read()
+
+6. Reading Specific Lines
+You can loop through lines to read specific ones:
+
+python Copy code
+with open('example.txt', 'r') as file:
+    lines = file.readlines()
+    specific_line = lines[2]  # Reads the third line (index starts from 0)
+
+7. Reading Specific Information
+#To extract specific information, you can search through the file:
+
+python Copy code
+with open('example.txt', 'r') as file:
+    for line in file:
+        if 'keyword' in line:
+            print(line)
+
+8. Working with Directories
+# To work with directories, you can use the os module:
+
+python Copy code
+import os
+
+# List files in a directory
+files = os.listdir('path_to_directory')
+
+# Change current working directory
+os.chdir('path_to_directory')
+
+# Get current working directory
+current_dir = os.getcwd()
+Example: Reading and Writing Files
+Here's a complete example combining these concepts:
+
+python Copy code
+# Write to a file
+with open('example.txt', 'w') as file:
+    file.write('Hello, world!\n')
+    file.write('Python is great.\n')
+    file.write('Files are useful.')
+
+# Read specific information from the file
+with open('example.txt', 'r') as file:
+    for line in file:
+        if 'Python' in line:
+            print(line)  # Output: Python is great.
+These are the basic operations you'll need to work with files and directories in Python. Let me know if you want to dive deeper into any specific area!
+
+
+
+
+===============================
+
+import os
+#renaming a file
+os.rename(current_filename,new_filename
+
+
+=========
+# removing  a file
+os.remove(filename)
+
+=================
+
+# creating a directorys
+os.mkdir(dir_name_path)
+
+
+# changing a directory
+os.chdir(directory_path)
+
+
+
+# getting current wokring directory
+os.getcwd()
+
+# removing direcroy
+os.rmdir(dirname_path)

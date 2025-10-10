@@ -1,0 +1,103 @@
+**args --> take the arguments as tuple
+
+for example:
+
+def myname(**name):
+  print(name)
+
+myname("Ahsan","Ahmed","Usman")
+
+
+
+
+
+**kwargs --> take arguments as a dictionary, key-value pair
+
+for example:
+def myname(**names):
+  print(names)
+
+
+def myname(**names):
+  if "name" in names.keys():
+    if names["name"] == "Ahsan":
+      print("Welcome Ahsan")
+ 
+
+myname(name="Ahsan",name2="Ahmed",name3="Usman")
+
+
+
+lambda are one liner function
+lambda can take on any number of arguments but returns just only one value in the form of expression. They cannot contain commands or multiple expressions
+lambda function have it;s own local namespace and cannot access other variables or global variables
+
+capital = lambda x: x.upper()
+
+capitals = lambda x,y,z : x.upper() + y.upper() + z.upper()
+
+
+Global vs local variable:
+local variable is only available in a local environment like a function
+
+
+Global Variable concept:
+
+name = "Ahsan Zafar"
+
+global name
+
+def myname(name):
+  name = "Ahmed"
+  print(name)
+
+
+myname(name) --> ahmed will be printed
+
+
+print(name) --> Ahsan Zafar will be printed because name is defined global it's value will remain same, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

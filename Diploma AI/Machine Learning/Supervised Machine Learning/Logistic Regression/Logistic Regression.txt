@@ -1,0 +1,15 @@
+Logistic RegressionL
+Regression comes from the fact that we fit linear model to the feature space
+
+Logistic comes from logistic sigmoid function
+
+The logistic regression classifier is a discriminative model for binary classificication
+We use a logistic sigmoid function,
+
+Features which are linear are inputed into this function and we get a probability.
+
+
+there are many sigmoid functions and a common example of a sigmoid function is the logistic function
+
+gradient descent works best when we have convex cost function
+

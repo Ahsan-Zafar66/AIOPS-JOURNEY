@@ -1,0 +1,3 @@
+In decision tree, the attribute that gives the lowest entropy provides the maximum information gain, such variable is chsoen to split data.
+
+If we use gini, then the variable that gives the lowest gini impurity gives the highest information gain and such variable is chosen to split data.

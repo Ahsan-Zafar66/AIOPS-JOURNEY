@@ -1,0 +1,25 @@
+The difference between a perceptron and a neural network lies in their complexity and functionality. Here's a breakdown:
+
+1. Perceptron:
+Definition: A perceptron is the simplest type of neural network. It's a single-layer neural network and represents a single neuron model.
+Structure: It consists of:
+Input layer: Takes input features.
+Weights: Each input is multiplied by a weight.
+Bias: A bias term is added.
+Activation function: The weighted sum is passed through an activation function (usually a step function for binary output).
+Functionality: Perceptrons are primarily used for binary classification tasks. They can only classify linearly separable data (i.e., data that can be separated by a straight line in 2D or a hyperplane in higher dimensions).
+Limitation: Perceptrons cannot solve more complex problems like XOR, which are non-linearly separable.
+2. Neural Network:
+Definition: A neural network is a system made up of multiple layers of neurons (also called nodes), where neurons in one layer are connected to those in the next.
+Structure:
+Input layer: Takes in the features from the dataset.
+Hidden layers: Intermediate layers between the input and output. These layers allow the network to learn complex patterns.
+Output layer: Produces the final prediction (binary, multi-class, or regression).
+Activation function: Non-linear activation functions (e.g., ReLU, sigmoid, or softmax) are applied in the hidden and output layers.
+Functionality: Neural networks can solve more complex problems, including non-linearly separable data, by having multiple layers of neurons. These additional layers allow the network to learn and represent more complex relationships in the data.
+Multilayer Perceptron (MLP): A neural network with one or more hidden layers is often referred to as a multilayer perceptron (MLP).
+Key Differences:
+Layers: A perceptron has a single layer (no hidden layers), while a neural network can have multiple layers (including hidden layers).
+Capability: A perceptron is limited to linearly separable tasks, while a neural network can solve more complex, non-linear problems.
+Complexity: Neural networks are more complex and can learn more sophisticated patterns compared to a perceptron.
+In summary, a perceptron is a basic building block, and a neural network is a more advanced system of multiple perceptrons.

@@ -1,0 +1,41 @@
+Sparse matrix store the location of non zero elements in a matrix, instead of sotring all matrix of xeros and non-zero values, sparse matrix stores only the location of non-zero elements
+
+array can be copied or viewed. Changes made in copy of array will not be done for original array, but in view array any changes amde to view array will cause changes in original array
+
+# example
+myarray = np.array([1,2,3,4])
+mycopy = myarray.copy()
+myview = myarray.view()
+
+
+
+
+------------
+# searching in numpy array
+np.where(myarray == 3) --> will tell the index where 3 is located
+
+
+
+======================
+MAtrix Multilication Types and logic
+
+# write the following prompt to understand about all the multiplication types
+
+teach me different types of matrix multiplications and give python code to perform them and explain each multiplication answer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

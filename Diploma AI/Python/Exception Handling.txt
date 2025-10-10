@@ -1,0 +1,71 @@
+there are to type of errors:
+1) syntax error
+2) runtime error
+
+
+What is exception?
+an exception is an event, which occurs during the exceptions of a program, that disrupts the normal flow of the program's instructions
+
+# command to see all type of exceptions in python
+print(dir(locals()['__builtins__']))
+
+
+try:
+  run my code
+
+excep give_error_you_suspect_that_will_occur_when_you_run_code:
+  write statement to show if you get the error you expected
+
+else:
+  code to run in which we suspect no logical error
+
+
+----------------------------------------
+
+Example of exception handling
+try:
+  with open("ahsan.txt","r") as file:
+    for line in file.readlines():
+      print(line)
+except FileNotFoundError:
+  print("file not found")
+
+else:
+  print("The exception is not handeled")
+
+---------------------------------------------
+
+# writing multiple exceptions at once
+try:
+  print(10/0)
+except (FileNotFoundError,ZeroDivisionError):
+  print("file not found or zero division erro")
+
+else:
+  print("The exception is handeled")
+
+when try statement is executed and else will run simultaneously
+
+when error raised statement in the except  clause will run
+-----------------------------
+# example # 2
+try:
+  print(10/0)
+except FileNotFoundError:
+  print("file not found")
+except ZeroDivisionError:
+  print("Zero division error, you are dividing by zero")
+else:
+  print("The exception is handeled")
+
+# experiment with above code, by diving by 0 and by 5 or some other number
+
+
+=================================================
+# finally clause will run whatever happens whether try statemnet runs or not, finally will be excuted at all cost
+# you can use finally clause with try clause only. You cannot use try, except and finally clause at once. 
+# even if try clause causes an error but finally clause code will run.
+try:
+  print(10/0)
+finally:
+  print("This is finally clause")
