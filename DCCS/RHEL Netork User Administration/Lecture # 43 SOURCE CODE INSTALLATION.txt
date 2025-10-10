@@ -1,0 +1,81 @@
+What is source code installation?
+Source code installation ye hai ky aik tarball file milti hai us sy package ko install krna
+
+
+There are three commands for source code installation:
+1) Configure
+2) Make
+3) Make install
+
+
+
+Why we need to use source code installation not by rpm and yum?
+When we need customization in package then we use source code, becuase we cannot do customization for rpm and yum
+
+Step # 1
+Get the link of package you want to install
+
+Step # 2 
+# run wget command to download the package in a dirctory
+wget url
+
+Step # 3
+# extract the downloaded file
+tar jxvf filename
+
+Step # 4
+a directory will be made enter in that directory
+Next commands will be run by entering in the directory and by remaining there
+
+Step # 5
+# run configure command
+./configure
+
+if this step gives error install C compiler 
+# command for c compiler is 
+yum install gcc
+
+
+Step # 6
+# run echo command to see if ./configure run succesfully
+echo $?
+
+if output 0 = successfule
+if output != not successful
+
+# step # 7
+# now run make command
+make
+
+# Step # 8
+# run make install command
+make install
+
+
+when we install a package through make install it writes file in a sinlge dirctory /usr/local
+But when we install through yum and rpm they write file sin different directories unless make install
+
+now to chekc the version of newly installed package
+go to /usr/local/package_name
+
+enter the package directory and enter bin directory then
+
+./httpd -v --> run this command it is valid for httpd package
+
+Step # 9
+# start this new version of package
+./package_name -k start
+
+# example
+./httpd -k start --> start newly installed httpd
+
+
+How to remove/ uninstall old package?
+rpm -e package_name --> if old version was installed with rpm
+
+How to uninstall a apckage installed through source code?
+remove the directory that is made in /usr/local/package_name_directory remove package_directory in /usr/local and it will remove the package installed through source code installation
+
+
+DRAWBACKS Of source code installation:
+not easy to maintain

@@ -1,0 +1,485 @@
+Advance permissions include:
+read, write and execute are normal file permissions not advance
+
+SUID, SGID, STICKYBT, SUDOERS,SETFACL,UMASK
+
+
+SUID:
+as we know that a file has users, group and others permissions
+for example
+-rw-r--r--
+
+above file user have read and write, group has read and other also has read permission
+
+now in user section if you see "S" --> SUID
+if s is smalle == SUID + x (execute) permission is set
+if S is capital == SUID only no execute permission
+
+
+# settng suid with capital S
+chmod u+s filename
+
+#example
+chmod u+s test
+
+# seting suid with smaller s (execute perm as well)
+chmod u+xs test
+
+# taking or removing permission
+chmod u-xs test
+
+
+SGID:
+in group section if you see "S" --> SGID
+in group section if youu "s" --> SGID + execute permission
+
+# giving the S 
+chmod g+s test
+
+# giving s
+chmod g+xs test
+
+
+
+STICKY BIT:
+in others section if you see "t" --> Stickybit
+t == Sticky bit is set with x permission
+if T == Sticky bit without x permission
+
+# giving T 
+chmod o+t test
+
+# giving t
+chmod o+xt test
+
+
+
+Setting advance permissions in octal way:
+suid --> 4
+
+sgid --> 2
+
+stickybit --> 1
+
+read -- > 4
+
+write --> 2
+
+execute --> 1
+
+
+normal permissions:
+chmod 777 test
+
+advance permissions:
+first word is for advance permissions and othe rthree are for normal permissions
+
+chmod 4777 test --> suid and all normal
+
+chmod 2777 test --> sgid and all normal
+
+chmod 1777 test --> sticky bit and all normal
+
+chmod 7777 test --> setting suid, sgid, stcky bit all with all  normal permissions
+
+
+
+
+WHAT IS SUID:
+SUID is used to give all users privilege to run commands that can be run only by root
+
+there are commands that are only run by root like fdisk,
+even though group and other users have execute permission they cannot run.
+
+# REQUIREMENT is to enable the users to run fdisk
+If we apply SUID on /sbin/fdisk then all users can run fdisk
+
+
+# lets give fdisk SUID permissions so any user can use it
+cd /sbin
+
+chmod u+s fdisk
+
+
+SUID is quite dangerous as all users can run root commands like fdisk. Now any one can make or remove partitions which is quite dangerous
+
+NOW MY REQUIREMENT is to give access o only a desired user
+Now in this situation SUID is not the solution.
+Now we need to set sudoers
+
+What is the difference b/w suid and sudoers?
+suid --> provide access to all users
+sudoers --> provide root privileges commands acess for specific users.
+
+
+# which files has suid, how to find all suid files?
+find / -perm -4000 -print --> find all the files with suid permission
+
+find / -perm -2000 -print --> find all files with sgid permission
+
+
+HOW to configure sudoers?
+file for sudoers is
+
+/etc/sudoers --> sudoers file path
+
+Now if we want to give special permission of fdisk to only specific user 
+
+there is a tool to edit this file, it is not edited directly
+
+# tool is
+visudo
+
+#syntax
+username command_to_allow_the_user_to_run
+
+ahmed ALL=/sbin/fdisk -l --> enabling ahmed to run fdisk -l command
+
+# now to run this command in user ahmed we cannot run it directly fdisk -l, we need to tell ahmed to look in sudoers file first so the command is
+sudo fdisk -l 
+
+# it will ask password for ahmed account and then it will run the command for which ahmed has been given permissin in sudoers file
+
+
+# TASK:
+how to configure sudo without password authentication when we run the command
+
+
+Lecture # 47
+Sudoers:
+vey important and alot of application in devops
+
+Scenario:
+ there is a developer who is asking access to star tot stop a service.
+He is a normal user we are administrators we need to give him permission to start or stop the service
+
+# tool used to edit sudoers file is visudo because it checks sysntax, errors
+# the service let's suppose it is httpd
+
+Step # 1 open sudoers file via visudo
+visudo
+
+Step # 2 write the following code
+username command
+
+# we are giving ahmed permission to run systemctl start httpd access, 
+ahmed ALL=(ALL) NOPASSWD: /usr/bin/systemctl start httpd
+
+# now when ahmed user runs following command he may not be required to enter administrator password and ahmed account password not needed 
+sudo systemctl start httpd
+
+but note: he can start the service as we entered in sudoers file but he cannot stop it, we need to enter the stop command as well
+
+
+
+# now giving start, stop and restart permission to ahmed
+ahmed ALL = (ALL) /usr/bin/systemtl start httpd, /usr/bin/systemctl stop httpd, /usr/bin/systemctl restart httpd
+
+
+Now sudoers file will be difficult to maintain if you think on big scale giving access to each step separately.
+In such situation we can make templates
+in templates we define a set of commands and assign to users.
+
+# syntax is to write Cmnd_ALias TEMPLATE_NAME_IN_CAPITALS = commands
+Cmnd_Alias MYTEMPLATE = /usr/bin/systemctl start httpd, /usr/bin/systemctl stop httpd, /usr/bin/systemctl restart httpd
+
+Now I can use my MYTEMPLATE for as many users as I like
+
+now go into the bottom of visudo file
+
+# assinging template 1 to user ahmed
+ahmed ALL =(ALL) NOPASSWD: MYTEMPLATE
+
+
+MAKING A USER FULL ROOT USER:
+# go to visudo and find root section
+root ALL=(ALL)		ALL
+ahmed ALL=(ALL) 	NOPASSWD:ALL
+
+now ahmed has become a root user with full privileges
+
+
+
+
+
+WHO IS ADMIN IN LINUX?
+n linux ROOT IS NOT admin.
+Root is a super user but not admin
+Admin is the user that has uid = 0
+
+if you change root uid from 0 to 100, now root s not the super user. Kernel recognizes uid = 0, whichever user has uid=0 is the superuser
+
+# changing a user uid
+usermod -u uid username
+
+# example
+usermod -u 0 ahmed --> giivng ahmed the uid 0
+
+# by /etc/passwd file making root user
+vi /etc/passwd
+
+chnage any user uid or gid to 0 that user will become root as well
+
+
+
+
+
+
+PATH:
+/usr/bin --> has all commands
+
+# command to see commands path
+echo $PATH --> it shows the path of commands that are configured. If you have a command that is not in this path it is some other path you have to configure the path of that command
+
+# to check the path of command where it is coming from
+which fdisk --> to see the path of fdisk
+
+which ifconfig --> to see the path of ifconfig
+
+
+# experiment mv the fdisk command into some other folder
+mv /usr/sbin/fdisk /home/ahsan/Downloads
+
+# now run following command
+which fdisk -> it will give error that fdisk is not present in the builtin paths
+
+# now we need to add the path where we moved fdisk in order to run it
+PATH=$PATH:/home/ahsan/Downloads
+
+# above path is only availabel till reboot to make it permamnet make changes in following file
+vi /etc/profile
+
+# adda the same command
+PATH=$PATH:/home/ahsan/Downloads
+
+path is userspecific
+
+# now run again which fdisk path
+which fdisk --> now it will show the new path of fdisk
+
+this is how we configure the path of a command which is not in builtin paths
+
+
+
+
+
+
+UMASK:
+usermask
+
+# make a directory
+mkdir cricket
+
+# suppose in this directory new 1000 directories will be created but i want all the directories to have permission 700, all permission for user non for group and others
+
+# checking umask values
+umask
+
+# changing umash value
+umask 0077
+
+# now when you make a new directory it will have umask 0077 and permissions related to it
+
+umask meaning is reversed
+0777 --> no privileges
+
+0007 --> full privilees to user and group but none for others as 7 is theri
+
+
+How to make umask permanent?
+add in /etc/bashrc file
+
+umask 0007 --> full privileges to user and group not others
+
+umask default value is 0022, when we give nw umask it subtracts it from 777
+
+# subtracting 777 from 0007
+ 777
+0007
+0770 == full privileges to user, group and none for other
+
+
+for directory umsk is subtracted from777 and for file it is subtracted from 666
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

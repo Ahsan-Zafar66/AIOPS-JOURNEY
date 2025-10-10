@@ -1,0 +1,86 @@
+/ --> this is the parent directory there is no directory before it
+
+boot directory contains the important system files, this directly becomes helpful in booting
+
+dev folder contains the drivers files
+
+etc folder contains service files
+
+/usr/bin --> it contains all the regular user related commands that we use in terminal
+
+/usr/sbin --> commands that a system adminitator can run
+
+In virtual window where you run linux, in the top left menu select machine and select snapshot and save the staet of machine, it helps if your machine crashes then you can go back to the snapshot of the machine you saved
+
+which fdisk --> tells you the location of the file containing this commandcd
+
+if you delete a command file then that command will not be available anymore
+
+home directory contains all users, you will see users here. You cannot see root here as root is a super user
+
+cd --> run cd only to enter root home directory, it is not available in home directly as it is a super user
+
+[root@local_host ~] --> ~ this sign tells you that you are standing in root home directory
+
+
+usr directory contains installed softwares and all new installed softwares are intalled here, linux os files.
+
+usr/lib/modules contains all so files, so stands for shared files
+
+/var/ --> contain all log files, everything that happens is stored here
+
+opt this part software directory
+
+
+
+---------------------
+
+Files
+
+touch ahsan --> this file have txt extension
+
+All files that do not have any extension with them are txt file by default in linux
+
+
+vi ahsan --> make ahsan file
+
+All the following commands must be used outside of insert mode.
+
+press dd to delete a line make sue you are not in insert mode
+
+press 3dd it will delete 3 lines below the where you are standing
+
+press yy to copy a line and press p to paste it
+
+press 3p to paste a lines 3 times
+
+press dw to delete a word
+
+press ye to copy a word
+
+press x to delete single letter
+
+press u for undo
+
+X to protect the file with a password, in vim only
+
+:%s/copy/paste/g --> in normal mode (not insert) this command will replace all the copy words with paste
+
+:10s/copy/paste --> it will replace first copy with paste in 10th line
+
+:10s/copy/paste/g --> all copy will be replaced with paste in 10th line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

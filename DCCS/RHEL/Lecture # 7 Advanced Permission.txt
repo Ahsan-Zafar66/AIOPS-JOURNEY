@@ -1,0 +1,207 @@
+There are 7 runlevel, starting from 0-6
+
+runlevel --> to see runlevel
+
+init 3 --> to go to level 3
+
+graphical interface has level 5. 
+
+when we run the comman runlevel it gives us to numbers like
+
+5 3 --> first number tells us previoud level which is 5 in this case and second number tells us present level which is 3 in this case.
+
+
+===================
+
+/home/Documnets/ahsan.txt
+
+suppose ahsan is a user and he does not have any permission for the ahsna.txt file
+
+ahsan user has read and write permission for folder Documents. 
+
+As ahsan user has permisison for documents and ahsan.txt s present in documents folder, ahsan can read and write this file.
+
+this is known as inherit permission
+
+===========================
+
+TO Restrict ROOT from deleting a file
+
+chattr +i filename --> change attributes, +i stands for immutable, now even root cannot delete this file
+
+chattr -i filename --> removing the restriction on the root
+
+lsattr filename ---> to see status of file.
+
+===============================
+
+To change the permission of all files and directories presen tin a directory
+
+chmod -Rv 444 rhel/ ---> give read permission to all files and directories in rhel, and in these directories whatever files and further directories are present read permission will be given to them as well
+
+
+======================
+
+Advanced permission
+
+When you have a lot of users and you need to give each user a specific access to a file, in that case acl acess control list command is used.
+
+acl --> access control list
+
+
+setfacl -m u:username:rwx filname --> to give specific access to a user
+
+getfacl filename --> to check which user has which permission.
+
+
+setfacl -x u:username filename --> to revoke access of a user
+
+
+chmod calculator linux --->  a website to tell you the commands
+
+
+====================
+
+RUNLEVELS
+
+there are 7 starting from 0 and ending at 6
+
+0 = Halt
+
+6 = Reboot
+
+1 = Single User Mode (safemode)
+
+2 = Multiuser
+
+3 = Full multiuser mode
+
+4 = Unused
+
+5 = Graphical Interface
+
+3 = Terminal Only Interface
+
+==========================================
+For runlevel 1 no password is required, it is a single user password.
+
+How will you recovr a forgotten root password?
+
+We will go to runlevel1 means single user mode and reset the password
+
+Press any key to interrupt the boot session
+
+Press a to enter the kernel setting on the reboot screeen
+
+
+rhgb quiet will be written, remove anything written in front of it
+
+write 1
+
+rhgb quiet 1 and then press enter
+
+You will enter level 1
+
+now set the new password for root
+
+passwd root
+
+
+you have recovered the root password now.
+
+============
+
+cat /etc/inittab --> to chekc the runlevels file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

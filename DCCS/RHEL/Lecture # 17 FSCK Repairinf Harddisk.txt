@@ -1,0 +1,82 @@
+when we turn on the OS, data from harddisk loads into the RAM
+
+Anything that is present in Hardisk comes into the RAM and we see it.
+
+Most of the commands, fetch information from RAM
+
+ext2 -- windows fs fat32, non journaling (no meta data) --> no recovery
+
+ext3 matlab ntfs (recovery possible), 32000 folders can be made. Journaling Files system that stores meta data and which to fast crash recovery. Journaling cannot be disabled if causing probelem
+
+
+ext4 you can make 64k folders . Journaling can be disabled
+
+
+ext4 vs xfs:
+in ext4 data performance is average but in xfs data performance is very good
+in ext4 you cannot take snapshot of current state, in xfs you can take snapshot
+
+# commands to find file system
+dumpe2fs
+
+tune2fs
+
+fstab
+
+df -Th --> will show file system of a directory
+
+=================
+
+if you made any mistake while making an entry in fstab file, then your machine will crash so it is a good practice to check the fstab file before rebooting using mount -a command
+
+mount -a --> mount the newly added unmounted drives in fstab. If there are mistakes in fstab file while entering a drive then you will get error and you can prevent syste from entering into maintence. if no error then rebbot
+
+
+umount /tomcat/ --> unmount the partition on /tomcat directory
+
+To unmount a drive command is umount not UNMOUNT
+
+
+===========================
+
+FSCK (File System Check & Repair)
+
+A hardisk works by it's file system, when a hard disk damages actually files system gets damage that controls a harddive
+
+# command to check damage file system
+badblocks -v /dev/sdb1 --> check any badblocks in sdb1 drive. This can tell yo if your hard drive is slow or has any problem
+
+
+# to repair a drive first unmount it and repair it
+umount /tomcat/ --> mounted on sdb1
+
+e2fsck /dev/sdb1 ---> gives you a complete repor tof repairing the hardisk
+
+
+
+
+
+======================
+
+My chatgpt prompts
+
+Prompt for analyzing excel files:
+Analyze the spreadsheet that I attached and give me the findings. I want some basic statistical analysis using the t-test, chi-square test. And other analysis like frequency distribution of the categorical columns and basic descriptive analysis of the numerical columns.
+
+Give me the accurate and best results after utilizing my data. Think before you pass me the analysis and do your own work.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

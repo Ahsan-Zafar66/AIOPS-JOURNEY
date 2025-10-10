@@ -1,0 +1,16 @@
+It is based on Bayes theorem
+
+It is a probabilitsc classifier which means it predicts on the basis of the probability of an object
+
+e. spam filtering,
+
+
+It is comprised of two words Naive and Bayes:
+
+Naive:
+It is called Naive because it assumes that the occurence of a certain feature is independendt of the occurence of other features.
+Such as if the fruit is identified on the base of color, hsape and tase then red, spherical and sweet fruit is recognized as an apple.
+Hence, each feature individually contributes to identify the it is an apple without depending on each other.
+
+Bayes:
+It is called bayes because it depends on the principles of bayes theorem

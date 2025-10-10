@@ -1,0 +1,231 @@
+When you open some website such as cnn.com this is a website which is being hosted
+
+web developer make the pages through java, html. 
+we host thesea pages on web server such as Apache, Nginx
+
+
+Apache webhosting:
+Step # 1 
+Make a webpage
+
+Step # 2
+Locate the webpage in document root path
+
+Step # 3 
+Host website with path in httpd.conf file
+
+Step # 4
+map website with ip /etc/hosts
+
+	
+
+Steps in Practice:
+
+# make a directory
+mkdir apache
+
+# go  into the directory and create html.index file
+vi index.html
+
+# copy the file in default apache path path
+mv index.html /var/www/html/
+
+# now check if appache is installed
+rpm -wa | grep -i httpd
+
+
+# if not present installs apacge
+yum install httpd-* -y
+
+# files of apache are stored in /etc/httpd
+cd /etc/httpd --> this directory has apache all supported file
+
+# httpd configuration file path /etc/httpd/conf
+cd /etc/httpd/conf
+
+# for linux 7 and 8 configuration is done in child files located in /etc/httpd/conf.d NOT IN PARENT FILE located in /etc/httpd/conf
+cd /etc/httpd/conf.d
+
+# center configuration files of apache is located in
+cd /usr/share/doc/httpd-version/
+
+
+# apache main configuration file has three sections
+1) Global 
+2) Main
+3) Virtual host
+
+we will host webserver in virtual host
+
+<VirtualHost *:80>
+	ServerAdmin webmaster@dummy-host.example.com
+	DocumentRoot /var/www/html/
+	ServerName myahsan.com
+	ServerAlias www.dummy-host.example.com
+	ErrorLog "/var/log/httpd/dummy-host.example.com-error_log"
+	CustomLog "/var/log/httpd/dummy-host.example.com-access_log" common
+</VirtualHost>
+
+change the Document Root to --> /var/www/html
+change the ServerName --> mysysops.com or any website name
+
+# after making changes run the following command to see if entry is correct or are there any syntax error
+httpd -t
+
+# now reload httpd
+systemctl reload httpd
+
+# or restart 
+systemctl restart httpd
+
+# enable
+systemctl enable httpd
+
+
+Now if you enter ip address in the webbrowser you can see the virtual page
+
+# to go to webpage by name you need to do ip address and webpage name mapping
+vi /etc/hosts
+
+# add your machine ip and webpage name
+192.168.43.210 myahsan.com
+
+
+if after all the above steps your webpage doesn't open and show you welcome page do the following things
+1) turn off firewall
+2) turn of selinux --> sestatus (to check status) --> setenforce 0 (temporarily turn it off)
+3) give ownership to apache of the index.html file --> chown apache:apache /var/www/html/index.html
+4) give 644 permission to index.html file --> chmod 644 /var/www/html/index.html 
+
+How  awebsite is accessed from browser to apache server?
+myahsan.com --> resolve ip from /etc/hosts
+
+connect to apache server ip
+
+80 port --> check conf virtual host file---> match server name and alias
+
+DocumentRoot --> path ---> fetch index.html and respond to the browser
+
+
+
+MAKING A WEBSERVER ON OTHER LOCATION THEN DEFAULT /var/www/html
+
+When you have a wenserver hsted in a directory other then default you need to add a security contianer
+
+# First container for first webpage
+<VirtualHost *:80>
+	ServerAdmin webmaster@dummy-host.example.com
+	DocumentRoot /var/www/html/
+	ServerName myahsan.com
+	ServerAlias www.dummy-host.example.com
+	ErrorLog "/var/log/httpd/dummy-host.example.com-error_log"
+	CustomLog "/var/log/httpd/dummy-host.example.com-access_log" common
+</VirtualHost>
+
+
+# SECURITY CONTAINER FOR FIRST CONTAINER
+<Directory /var/www/html>
+Require all granted
+</Directory>
+
+
+# Second container for Second webpage
+<VirtualHost *:80>
+	ServerAdmin webmaster@dummy-host.example.com
+	DocumentRoot /apache
+	ServerName myahsansecond.com
+	ServerAlias www.dummy-host.example.com
+	ErrorLog "/var/log/httpd/dummy-host.example.com-error_log"
+	CustomLog "/var/log/httpd/dummy-host.example.com-access_log" common
+</VirtualHost>
+
+# SECURITY CONTAINER FOR SECIND CONTAINER
+<Directory /apache>
+Require all granted
+</Directory>
+
+
+# now make an entry in /etc/hosts for second webpage
+vi /etc/hosts
+
+
+
+
+# Now if you want to allow other machines to access your webpage make entries for these webpages in that machine
+vi /etc/hosts
+
+machine_ip_on_which_webpage_is_hosted webpage_name
+
+
+192.168.43.210 myahsansecond.com
+
+
+
+Ways ro give other machines access to the webpage:
+1) Make manual entries of the machine ip and webpage in all the machnes
+2) Make a script
+3) Ansible
+
+Organizations use DNS they make the webpage entry in the DNS
+192.168.43.210 myahsan.com
+
+DNS ip is 3.3.3.3
+
+Noe, eevery client will have access to DNS when they call the webpage they go to DNS and DNS containe the machine_ip and the webpage name so all the clients thousand of them can access the webpage now
+
+
+
+Apache has two types of hosting
+1) Name base
+2) Ip base
+
+
+Namebase we have one ip and multiple webpages
+
+In ip base we have separate ip for each webpage, multiple ips for multiple pages
+
+Above apache configuration is name base
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

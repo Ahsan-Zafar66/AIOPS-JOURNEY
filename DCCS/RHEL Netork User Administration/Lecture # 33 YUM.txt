@@ -1,0 +1,66 @@
+# to mount ISO (loop driver)
+ls -l /dev/loop0
+
+# there are 8 loop drivers from 0-7
+
+
+# null driver
+ls -l /dev/null
+
+null driver nullifies any input given to it
+
+
+logs --> var
+
+software --> srv
+
+etc --> configuration files
+
+opt --> third party softwares
+
+lib --> so files
+
+ 
+can we mount dev, lib, etc, bin, sbin?
+No, we cannot mount them separately, we have to keep them in / forlder.
+Because these contain critical file systems which should always be available to OS. They cannot be unmounted or mounted that's why
+
+
+=============================================
+
+YUM:
+yellow dog update modifier
+
+the flaw of rpm package is that it asks for dependencies
+rpm --> manual
+
+yum --> automatic
+
+yum downloads the package from the internet completely
+
+# to see all th eflags of yum
+yum --help
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+$# --> count the parameters
+
+
+break will break when condition is true
+
+continue skip the step where condition becomes true and move o
+
+
+
+read 
+
+Ahsan Zafar from pakistan
+
+echo $REPLY ---> it will show text written when read was called. If you call read again it will rewrite it on previoud info.
+

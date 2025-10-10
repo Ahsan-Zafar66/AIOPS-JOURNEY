@@ -1,0 +1,210 @@
+performance monitoring tools:
+top
+ps 
+iostat
+sar
+vmstat
+pidstat
+starce
+ipcs
+lsof
+htop
+iomerter
+nmon
+tcpdump
+
+# comand use by admin to look for hardrives taking space
+iostat -x -d -p
+
+# to look for  aspecific hardrive
+iostat -x -d -p /dev/sdb
+
+# to get output after every 2 second
+iostat -x -d -p /dev/sdb 2
+
+
+# to get 3 output after every 2 second
+iostat -x -d -p /dev/sdb 2 3
+
+# to get output monitoring in a file
+iostat -x -d -p /dev/sdb 2 > /proc/monitor_report/txt
+
+# live stat
+pidstat
+
+# cpu stats
+mstat
+
+# vm stat
+vmstat
+
+# sar show Network, CPU, HDD
+sar
+
+# sar cpu report after every 2 second
+sar -u 2
+
+sar command also monitors by defult and generate reports
+# directory where sar reports are stored
+cd /var/log/sa
+
+# to see files used by a process
+pmap -d process_id
+
+# if you want to see what system does if you run a comman (strace tool can show you system calls)
+strace df -h
+
+
+# if  acommand is not working you can use strace to locate the eroor
+# suppose df -h is not working
+strace df -h 
+
+
+What was your daily job or daily activities?
+I worked as a junior administrator, there was a senior was me always under whom I worked.
+There were 25 linux servers and we were two people that handled that.
+
+There were application server, Database server and monitoring server (like nagios, ELK) deployed by us.
+We use to make folders and give permissions based on the requirements to the users on server.
+Ticketing tools are JIRA, OTRS, service now and BMC remedy.
+fdisk was used to make partitions
+I worked in L1 and L2 team, senior was L3 we didn't have access to L3. But, I am interested in learning it an dwant to do that and can do for you.
+Yeah, I did patching in the past but it is not at the top of my mind right now. 
+
+
+How to check server is in high utilization?
+We will use top command, then we will check CPU row and ideal value in it.
+if ideal (id) value is 0 then load is 100%, if ideal value is 80-100 there is no load.
+if ideal value is 0 load is 100% then check memory. If memory is full then check swap. Swap is also full what will you do.
+if ideal value is 0, RAM and swap are full, I will go back to top command and check last COMMAND column and see individual processes taking the space how much
+
+Suppose there is an application taking 100% CPU and memory what you will do?
+Do not say you will kill the application
+I will contact the development team of that application.
+
+# 2nd scenario
+I am checking COMMAND column but no process is showing full CPU and memory usage, what you will do now?
+I will check all partitions usage by command (df -h), I will look if any partition is full.
+Use (iostat or iometer) command it will show harddisk utilization
+Check netwrok load.
+Network tools are tcpdump, ipref, nmon, sar, wireshark.
+Sar tool shows nw + hdd + mem + cpu
+
+We will see hdd io utilization --> iostat
+======================================================
+# 3rd scenario
+I wil first check processes with (top and ps -aux) then check RAM and SWAP, then check buffers and cache, use iostat to check utilization or tcpdump
+iostat and tcpdump --> Network Utilization
+I will check buffers and cached, buffering happens in RAM and caching happens in SWAP
+If buffer and cahced have high value then it can make your server or networking slow.
+
+what is buffer?
+When we see a youtube vides, there is a grey line which is buffer and even we lost network we can see the video upto grey line. It means till that point video is loaded in RAM.
+Buffer are called preloaded process in RAM
+
+what is cache?
+Cache is temporary data in hard disk.
+
+
+if you have memory leakage then your buffer and cache will increase drastically
+memory leakge happens when an application is not properly developed by the development team
+
+when some process runs, when their job is done they should be automaticall closed if not close they will take up space in RAM. Valgrinf is a tool to detect memory leakage
+
+# USe sync command before using the following command (Recommendation)
+sync; echo 3 > /proc/sys/vm/drop_caches
+# command to drop cahce and buffer
+echo 3 > /proc/sys/vm/drop_caches
+
+
+============================================
+# 4th case
+If server is still slow?
+Use management console to see faulty hardware
+Hardware is faulty then server will be still low
+
+RAM --> tool memtest
+CPU overheat --> cpu overclocking
+i7ztool --> hardware faulty
+cpu temp tools
+
+====================================
+5th case
+
+
+
+
+
+=========================================
+
+How to chekc and monitor server?
+
+One of the process is eating CPU
+
+What is your daily activity? (Write 20 lines about this)
+
+What critical issue you faced for past 1 month/ 15 days/ and etc. (What critical problem you solved for the company)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

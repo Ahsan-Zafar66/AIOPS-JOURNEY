@@ -1,0 +1,8 @@
+Heart of Cyber Security
+
+service level agreement means supose you are taking internet service, service deny wala khta hai saal ky 365 din mn sy 360 net chalay ga ye hai service level agreement ky is level ki service di jaye gi.
+
+hacking happens becaus eorganization does not know their assets. This is the main issue asset management failure. Identify your assets, know their location, know that content they have. Label them according to criticality
+
+
+SIEM: Security Information and event management

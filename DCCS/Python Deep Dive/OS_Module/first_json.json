@@ -1,0 +1,17 @@
+[
+    {
+      "Name": "CentOS",
+      "Version": "7",
+      "Install": "yum",
+      "Owner": "Redhat",
+      "Kernel": "3.10"
+    },
+    {
+      "Name": "Ubuntu",
+      "Version": "17.10",
+      "Install": "apt",
+      "Owner": "Canonical",
+      "Kernel": "4.13"
+    }
+  
+  ]

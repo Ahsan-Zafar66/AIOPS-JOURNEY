@@ -1,0 +1,43 @@
+How yum works?
+# suppose you ran following command
+yum install docker
+
+what yum will do it will go to the server repo file where url of websites to download doftwares or packages are present
+it will then run the wget command using the url for the package and download it
+then it will install it using the rpm package.
+
+
+============================
+
+ifconfig -a
+
+# to see network file in centos 9 
+cat /etc/NetworkManager/system-connections/enp0s3.nmconnection
+
+# restarting network manager
+systemctl restart network
+
+systemctl restart NetworkManager
+
+# to see ip address 
+ip r l
+
+# in centos 9 there are 3 ways to config the network
+1) nmtui --> nw manager text user interface
+
+2) nmcli
+
+3) direct config edit ifcfg
+
+
+the best is nmcli
+
+# to see network connections
+nmcli connection show
+
+# to see further connection details write the name of driver
+nmcli connection show enp0s3
+
+
+# configuration of an ip address
+nmcli connection modify enp0s3 ipv4.addresses 192.168.1.105 ipv4.gateway 192.168.1.1 ipv4.dns 8.8.8.8 ipv4.method.manual connection.autoconnect yes

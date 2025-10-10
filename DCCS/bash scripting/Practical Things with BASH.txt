@@ -1,0 +1,174 @@
+sudo systemctl status apche2 | awk 'NR==3' | awk -F ":" '{print $2}' | awk '{print $1}' --> to get the line showing status of apache2
+
+systemctl is-active apache2 --> to do the same as above
+
+ps -ax | grep apache2 --> shows processes of users whether they are cnnnected to terminal or not, we are showing abuot apache 2 services
+
+df -h | awk 'NR>1' --> removing the first line from the display
+
+df -h | sed 's/\%//g' | awk '$5>50 {print $0}' --> get data baou usage, replace % with empty space, now print processes who have used greater than 50% memory.
+
+
+==================
+the following piece of code will check the meory usage of /dev/sda3 if it is greater than 50 than it will zip the practical4.sh file and will replace it with a space in it. theoriginal data is stored in a zip file whih can be used later
+#!/bin/bash
+
+
+time=$(date +%d-%m-%y-%H) # just getting day,month,year and hour
+
+# getting status of memeory
+status=$(df -h | grep /dev/sda3 | sed 's/\%//g' | awk '{print $5}')
+
+# printing status
+echo $status
+
+
+# chekcing if status les than or equal to 50
+if [[ $status -le 50 ]]
+then
+        echo "Status if good only $status used"
+
+else
+	# entering the directory
+        cd /etc/bash/practical_bash
+        echo "Entered in directory succesful"
+        
+	# archiving the practical4.sh file
+	tar cvf - practical4.sh -c > /etc/bash/practical_bash/auth.log-$time.tgz
+        
+	# replacing the content in the file with a space
+	echo " " > practical4.sh
+        
+	# printing the success message
+	echo "var log has been archive"
+fi
+
+
+===================
+above code is just an automation of things if memory usage is more we archived the file which can be unzipped using following command
+
+tar -xvf auth.log-23-07-24-18.tgz
+
+it will contain the practical4.sh file.
+
+---------------
+solution of task to show date and ipadress with each line in df -h command result
+
+df -h | awk 'NR!=1' | awk '{print NR "," $0}' | sed -E "s/ +/,/g" | sed "s/\%//g" | sed "s/$/,$(date +%d-%m-%y)/g" | sed "s/$/,$(hostname -I | awk '{print $1}')/g" | sed "s/$/,$(hostname)/g" > data.csv
+
+above command add date and ip address in the output of df -h command and each field is separated by ",". $ in sed subsititue stand for the end of each line.
+
+-----------------
+
+ping 127.128.8.0 --> to ping an ip
+
+ping 127.128.8.0 -c 1 --> to see ping status only once
+
+
+
+
+--------------
+
+Lecture 30 
+
+
+Task 3 
+
+Remove all the files apart from txt in a directory
+
+find . -type f -not -name "*.txt" -print0 | xargs -0 -I {} rm -v {} ----> will remove all the files that are not txt.
+
+-------------------------
+Task 4
+
+ls ahsan.txt | xargs wc --> it will tell how many line sin file, how many words and how many characters, three things it tells 
+
+cat ahsan.txt | wc --> it does same thing as above
+
+--------------------------------
+Task 4
+
+cat /etc/passwd | cut -d: -f | xargs --> it will show all the users in lines now
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

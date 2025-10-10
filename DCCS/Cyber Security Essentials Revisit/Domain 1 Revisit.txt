@@ -1,0 +1,34 @@
+J. Saltzer and M.Schroedar Proceeding of IEEE 1975 describes 8 principles for security mechanism
+
+1) Least Privileges: jiska jitna kam ha usy utna hi ikhtayar diya jaye
+
+2) Fail-Safe Defaults: agar koi policy security policy ky sth match nhi krti to automatically fail ho jaye
+
+3) Economy of mechanism: Jo security mechanishm implement kiya jaye wo economy friendly ho
+
+4) Complete Mediation: Jo security mechanism implement kiya jaye wo complete ho jin purposes ky liye lagaya jaye unhein pora krta ho
+
+5) Open Design: jo control implement kiye jain wo transparent hon, ta ky jo audit krny aeye wo kr sakay
+
+6) Separation of Privilege: Saray kam aik bnda na karay, hr kam differen tbnda karay
+
+7) Least Common Mechanism: Minimize sharing of mechanism, mtlb sharing of resources minimize ho. Mtlb ky sharing os resources for multiple application kam sy kam ho. For example 4 services same ghardware share kr rhin hain, agar aik hack hoti hai to baki 3 bhi ho jain gin because of sharing of hardware. So, sharing of resources should be minimized as it can be
+
+8) Psychological Acceptability: mtlb logon ki training, unhein smjhana is qabil krna ky wo organization mn achy sy kam kr sakein. Unhein training dena ky wo psychologically cheezon ko accept karay.
+
+
+
+Work factor: hacker cheezon ko hack krny mn zyada time waste nhi krty. Agar wo 4-5 gnty mn apki service ya resource ko hack nhi kr sakay to they will move on to next target. So, security controls is trhan ky hony chahiyein ky wo work factor ko barhain increase karein unhein.
+
+
+
+
+Latent Design Considerations: Agar organization shuru mn achy controls nhi lagati bd mn usy ye cheexein bht mehengi parhtin hain kyn ky unhon ny hsuru sy koi planning hi nhi ki. Latent design consderations means ky bd mn security lagana, phly nhi lagai likin bd mn laga rhy
+
+
+Precautionar principles: kon kon sy steps uthain jis sy ap ani organization ko bacha skty hain.
+
+Security Economics: Jo software provider hain, wo malwares ko dekhty hain to bs itna step uthaty hain ky jo customer hamaray software ko use kr rhy unhein nuksan na ho. Itna spend krty hain ky software ka maqsad pora ho sakay.
+Jab hacker kisi chz ko hack krny lagta hai to wo dekhta hai ky is software mn kitni vulnerabilities hain, ky is software ny apni security pr kitna kharch kiya hai. Mn jo time ispy spend karun ga hack krty wy kiya mjhy utna reward mily ga.
+Their are estimation theories which hacker used to estimate things
+

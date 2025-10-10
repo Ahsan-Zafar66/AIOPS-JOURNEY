@@ -1,0 +1,48 @@
+use spiderfoot to gather data about any people, firm, organization.
+it extracts everything addresses, ip adresses and all
+
+
+Shodan is a threat intelligence tool.
+
+pwned websites, websites that are hacked, put your email and check if your email comes in any data breach
+
+# website to check your email has been leaked in any data breach
+haveipawned.com
+
+# put your emmail address
+
+spyse is a cybersecurity Seach Engine, you can use any name, ip address and can get any info
+
+Google Hacking Database, about hacked websites.
+
+Maltego is an open source threat intelligence tool
+
+DarkTrace is learning website for Cybersecurity and AI, It uses AI for cybersecurity.
+
+creepy is a tool that matches a given picture to its location on map. If you give it  apicture it will tell you where this thing is present.
+It is a geolocation tool
+
+CSIRT means Cyber Security Incidence Response Team
+
+FRST is an global forum for Incidence Response Team
+
+REKALL is a tool for memory and live analysis
+ 
+Kansa is a modular  incident response framework in Powershell
+
+reverse who is, is a website to check domains
+
+pushpin
+
+SearchDiggity tools is of google. It is search engine hacking tool arsenal
+
+
+shodan is a search engine for internet connected devices.
+
+
+PSK wifi is a tool to get offline logs of a device and get password
+
+
+Aircrack-ng is a tool to hack passwordm it can guess 6000 passwords per second
+
+NETSCOUT

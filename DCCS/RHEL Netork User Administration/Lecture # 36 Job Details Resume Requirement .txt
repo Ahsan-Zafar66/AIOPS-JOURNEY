@@ -1,0 +1,46 @@
+Setup of an organization:
+applications are hosted on webservers and a database is amintained.
+Clients or users comes from different devices laptops, mobile, and etc through internet to the server to use the application.
+
+
+# what experience do you have?
+I worked as a L1 or L2 junior linux administrator, my job was to maintain the application servers, applications were deployed by the seniors.
+We were two junior administrators, there were 20 servers in the organization
+
+we use to give permissions to different users of different types.
+
+we used nagios and zabbix monitoring tools. They make reports of server loads and present in the form of dashboards
+
+take idea of nagios and zabbix from youtube.
+
+
+
+Daily Activities as administrator:
+1) Monitoring servers 20 servers- we use nagios/zabbix
+2) We use LVM to extend or reduce partition/ disk
+3) as per req- application team --- we create mountpoints with fdisk
+4) House keeping -- archive Tar, zip
+5) Create backups -- we use tape drive
+6) We use to give rights & permissions - to application folder as per requirement
+7) Software update -- patching
+8) We maintain multiple services like - nfs, samba,dhcp,ftp
+9) we manage logs - monitor logs-- varlogs - journalctl logs
+
+
+
+
+Experience:
+Never write you are fresher no one hires fresher or internees,
+enter at least 1-2 years of experience.
+
+For salary negotiation say 80% hike then the previous salary
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,261 @@
+Compression tools:
+GZIP, BZIP2, XZ
+
+whatis GZIP --> to get a short description about this command
+
+Compression technology:
+It means to compress a file, technically deflate the file. So, it could be transferred easily.
+
+=============
+
+Redirection
+
+cat /etc/passwd > ahsan.txt --> single arrow or redirection overwrites the data on the mentione dfile
+
+cat /etc/passwd >> ahsan.txt --> Double arrow or double redirection apeends the data below the already present data.
+
+> /etc/passwd --> it will remove all users data
+
+> /etc/fstab ---> Machine will creash, as you are overwting nothing to the file that contains the information what to do when machine starts
+
+==============
+
+Compression
+Degree of Compression depends on the format of file
+
+GZIP:
+Gzip does not create a new zip file, it converts the file to a .gz format unlinke zip, zip creates a new file which is compressed the file that is compressed is also available
+Gzip is bit fast but give low compression, bzip2 is a bit slow but gives high compression
+
+# file size is not big than use gzip
+
+gzip filename --> compress the given file
+gunzip file.gz --> to unzip the file compresses through gzip
+
+# to zip all file sin a directory but each file separately
+gzip * --> every file will be zipped separately into .gz format
+
+# to unzip all the files
+gunzip *
+
+
+# if file size is very big and you want to compress file to a greater extent use bzip2
+bzip2 filename --> compress the file
+bunzip2 filename --> to uncomprss the file compressed through bzip2
+
+----------------------------
+zipping all files present in a directory
+
+zip zipfilename * --> to zipp all the files present in a directory
+
+zip fun.zip * --> all files of the curent working directory will be zipped in fun.zip file
+
+-----------------------
+
+zipping multiple files of choice
+
+zip fun.zip file1 file2 file3 ---> file1, file2, file3 will be zipped in a file name fun.zip
+
+# unziping the file
+unzip fun.zip
+
+# unzipping the file to a specific directory
+unzip fun.zip -d /home/ahsanzafar/Documents --> to unzip a zip file to a specific directory
+
+
+# reading only files that are present in a zip file
+unzip -l fun.zip --> it will not extract the file only list the files present in this fun.zip file
+
+# creating a zip file to another destination and zipping files from source
+zip /home/ahsanzafar/Downloads/allfile.zip -j /home/ahsanzafar/Documents/* --> this command will zip all the files present in Documents directory to the specified path which is the downloads folder. -j is used so that the zip by default save the directory structure so it will not save it and zip only the files from the path mentioned not the entire path.
+-j = do not include the path, if you don't use -j it will also zip the path structure not the files only
+
+
+# zipping content from two different sources
+# syntax
+zip -j destination_zipfile content_to_zip_path1 content_to_zip_path2
+
+#example
+zip -j /home/ahsanzafar/Downloads/fun.zip /home/ahsanzafar/Documents/file5 /home/ahsanzafar/Pictures/ahsan.txt ----> this command will zip two files from two different locations into a different location in one file. file5 and ahsan.txt will be zipped in fun.zip
+
+# zipping all content of two sources, the following command will zip all the file present in Document and Picture directory to fun.zip to the specified path
+zip -j /home/ahsanzafar/Downloads/fun.zip /home/ahsanzafar/Documents/* /home/ahsanzafar/Pictures/*
+
+# You can use -j in the beginning after zip or before giving path for the files such as
+zip /home/ahsanzafar/Downloads/fun.zip -j /home/ahsanzafar/Documents/* -j /home/ahsanzafar/Pictures/*
+
+-------------------
+Can we compress a file that has 0 byte size?
+Yes, we can but it's size will increase from 0bytes after compressing. The size of 0 byte file increase due to indexing which store the compression information
+
+Can we compress a file multiple times to reduce its size like first gzip--> bzip2 -->gzip2, 3 compressions applied?
+Yes, we can but it is not good, the compression stops after a certain point. Fil won't be compressed anymore.
+
+=====================
+
+Archive & Compression:
+
+archive means to gather multiple files and make single file. For example gathering 1000 files in one single file.
+
+If we have 1000 files each is of 1mb size, so if we archive these files into a file, the size of archived file will be 1000MB because archive is only gathering files into a single file we are not compressing them we are archiving them
+
+# reading a compressed file
+cat file.gz --> it will show encrypted text
+
+# to read a compressed file we use zcat
+zcat file.gz --> now you can read the compressed file
+
+# another command is
+bzcat file.gz --> to read the compressed file
+
+
+----------
+
+#selecting files
+a* ---> select all files that start with a 
+
+*3 --> select files that end with 3
+
+b*3 --> select fil that start with b and end with 3
+
+ls /home/ahsanzafar/Documents/* --> select all files in document folder
+
+ls /home* --> show everything in home directory
+
+ls /home/* --> show everything present after home directory
+
+
+
+file filename --> to check the type of file
+
+
+zip ahsan.piz * --> the file extension of ahsan is not zip it is piz, it does not matter. If you see a file with weird extension then check the type of file by using "file ahsan.piz", it will tell you the file type. Now, change the extension of file by command "mv ahsan.piz ahsan.zip", now you can unzip this file work.
+
+file ahsan.piz --> to check file type
+
+mv ahsan.piz ahsan.zip --> now extension is corrected unzip the file.
+
+rename ahsan.piz ahsan.zip --> rename command can also be used
+
+====================================
+
+You have a zip file, you want to add anew file to zip file how you will add this file to already zipped file?
+
+
+How to unzip a specific file from the zip file?
+
+
+How to change the compression ratio?
+
+
+How to protect a zip file with a password?
+
+
+===================
+
+interview topics:
+apache
+mysql
+lvm
+boot process
+suid 
+stickybiy
+
+============
+
+TAR: 
+
+TAR is the native tool of linux. zip is third party
+
+TAR, Tape archive
+
+TAR only archives, it does not do compression
+
+syntax
+
+tar flag filename.tar filestoarchive
+
+tar -cvf mytar.tar * --> archive all the files of the prresent directory (*) into file mytar.tar
+c = create, v=verbose, f=file
+
+tar -tvf mytar.tar --> it will only show the files present in mytar.tar
+t =list, v=verbose, f= file
+
+# extracting the zip file
+tar -xvf mytar.tar 
+x = extract, v= verbose, f=file
+
+# we can use gzip and zip after tar to compress the files
+
+# tar + compression with gzip
+tar -zcvf myfile.tar.gz ahsan.txt ---> adding z with cvf will compress the file after archiving with gzip
+
+tar -jcvf myfile.tar.bz ahsan.txt --> adding j with cvf will compress the file after archiving it wit bzip2
+
+# to extract the files now
+tar -zxvf myfile.tar.gz 
+
+# extracting file to a specified directory
+tar -zxvf myfile.tar.gz -C myzip/
+
+# to extract bzip file
+tar -jxvf myfile.tar.bz
+
+
+================
+
+copy command 
+
+cp filename placetocopy
+
+cp /home/ahsanzafar/Downloads/* /home/ahsanzafar/Documents/download_backup --> copy command only copy files, it does not copy directory
+
+# to copy directories with copy command use -rv
+cp -rv /home/ahsanzafar/Downloads/* /home/ahsanzafar/Documents/download_backup --> this command will now copy directories as well along files
+
+====================
+
+RSYNC
+
+# a command better than cp is rsync
+rsync is a very powerful tool
+
+If someone ask you in interview which tool you will use to take backup answer rsync
+
+rsync also takes remote backup
+
+rsync is an incremental backp tool
+
+rsync /home/ahsanzafar/Downloads/* /home/ahsanzafar/Documents/Download_backup --> for files
+
+# for directories and files
+rsync -rv /home/ahsanzafar/Downloads/* /home/ahsanzafar/Documents/Download_backup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

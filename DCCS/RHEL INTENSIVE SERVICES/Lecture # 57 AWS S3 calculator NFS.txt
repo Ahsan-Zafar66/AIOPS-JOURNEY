@@ -1,0 +1,41 @@
+In s3 by default there is no public access
+
+API in AWS:
+Restfule and soap API
+
+
+EBS is availability zone specific. 
+For example if your ec2 is in zone one and ebs is in zone two you cannot attach your ebs with your ec2 as both have different AZ
+Your ec2 and EBS should be in AZ 1 and then you can attach your EBS with ec2
+
+
+
+How to create a s3 bucket and make content publically accessible?
+Step # 1
+Create a s3 bucket with a unique name
+
+Step # 2
+Upload the object in the bucket you want to make publically available
+
+Step # 3
+Make the object public
+
+Step # 4
+turn off the bucket BLOCK PUBLIC access option
+
+Step # 5
+copy the url of the object and now you can access it publically
+
+What if I want to delete the bucket?
+Step # 1
+Empty the bucket first, without emptying you cannot dlt it
+
+Step # 2
+After emptyinf the bucket you can delete it now
+
+
+S3 is region specific. 
+
+If you want to make an architecture and you want to know it cost what you will do?
+you can go to following website
+calculator.s3.amazonaws.com

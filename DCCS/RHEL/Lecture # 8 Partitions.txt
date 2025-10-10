@@ -1,0 +1,160 @@
+Add a new hard disk of any size by turning the machine of and using the virtual box settings for machine
+
+Procedure:
+1) Turn the machine off
+
+2) Go to the settings
+
+3) Go to storage
+
+4) Select the controller where your OS is mounted
+
+5) You will see small disk options one say "Add optical Disk" and the other say "Add hard disk", click on hard disk
+
+6) Then click on create, a window will pop up, chose the first option out of three.
+
+7) Give 600 MB space for practice
+
+8) Select this new disk and click on ok
+
+9) Now, turn on the machine
+
+==============================
+
+Steps to make the partition now inside linux OS
+
+1) fdisk sdc --> run the command with the name of the disk you added
+
+2) press m to see the menu in the console
+
+3) press n to create the partiton
+
+4) press p to chose primary partition
+
+5) press 1 to chose default number
+
+6) now you will ooption to allocate the space to the disk press enter to enter into the prompt to specify the disk space and specify the disk size +500MB
+
+7) now press w to write
+
+
+8) ls /dev | grep sd --> now look for sdc1 
+
+
+9) partx -a /dev/sdc --> run this command. This command is run for entire harddisk
+
+
+10) mkfs.ext4 /dev/sdc1 --> format the disk. This command is run for every partition made in the disk. For sdc1, for sdc2,for sdc3 any number of partiotions for all of them it has to be run separately 
+
+11) mkdir mysql --> make this directoy anywhere you like
+
+12) mount /dev/sd1 /mysql/ --> mount the sdc1 drive on folder mysql
+
+
+13) df -h --> check the mysql space
+
+Now, when you will reboot that link between directory and partition will be removed and you will be needed to mount the drive again on the directory
+
+unmount /mysql/ --> to unmount the partition, it will not cause loss of data we are simply detaching the folder from the partition.
+
+==========================================
+Mounting information is stored in RAM, when a machine reboots, all the RAM is cleared. So, link breaks between the partition and the driver.
+
+To make the connection permamnent follow the following procedure
+
+1) blkid /dev/sdd1  --> this command will give you the UUID of sdd1
+
+
+2) vim /etc/fstab --> open this file and add the following line and save the changes. Now, even if you reboot connection will not break
+
+3) UUID=your-uuid-here /directoryname ext4 defaults 0 2
+
+
+3) UUID=1232132132821hubsu /tomcat ext4 defaults 0 2 ---> uuid for sdd1, directory is tomcat.
+
+
+
+if you look 3) it has 6 fields
+
+/dev/sdd1 /tomcat ext4 defaults 0 2
+
+1) /dev/sdd1 or UUID = Device Driver
+
+2) /tomcat = mountpoint
+
+3) ext4 = FS-type
+
+4) defaults = permission
+
+5) 0 = FSCK dump
+
+6) 2 = FSCK ON OFF SEQ
+
+==================================
+
+the writing of data on hard disk is known as flashing (0 or 1 binary form)
+
+
+device drivers interact between softwares and hard disk. 
+
+Device drivers can have multiple names and they are present in /dev directory.
+
+/dev/sda --> device driver
+
+/dev/sdb --> device driver
+
+/dev/sdc --> device driver 
+
+
+device driver ar elike atm card, you cannot get money directly from ATM, you use the card and get the money. 
+
+Device drives are low level programs through which softwares interact with hard disk
+
+==============================
+
+Suppose I have a harddisk of 80 gb and the driver for is is sda
+
+Now I make three partions of 80 GB, one 40 gb and two others of 20 gb. sda driver will assign to these partitons their own drivers. such as sda1 fro 40gb partion, sda2 for 20gb and sda3 for next 20gb partition
+
+sda represent the whole hardisk, while sda1 represent 40gb of partion in that hard disk and etc
+
+
+Suppose I write some data in 40gb partitions, so sda1 will show it or write it. 
+
+
+==============================
+
+Linux partition hard disk
+
+tools -command
+
+Dis druide
+
+fdisk, cfdisk, sfdisk, parted --> commonly used disk partition commands
+
+
+fdisk -l --> list the harddisk of the system
+
+
+============================
+
+Command to discover the newly added hardisk
+
+echo "- - -" > /sys/class/scsi_host/host0/scan
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

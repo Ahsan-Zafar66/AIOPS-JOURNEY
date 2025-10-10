@@ -1,0 +1,129 @@
+ls -s ahsan.txt ah.txt --> it will create a soft link of file ahsan.txt. Soft link file is ah.txt it is the child of parent file ahsan.txt
+
+Any changes made to ahsan.txt will appear in ah.txt and vice verse. If you delete the parent file ahsan.txt then child file is also useless which is called orphan file now.
+
+now if you make ahsan.txt again then link is restored but data will not as you deleted it
+
+
+Partition + directory and only directory:
+
+df -h 
+
+above command shows us some output, the names we see in Mounted on section are partition and directories.
+
+the names we don't see here but present in \ parent directory are only directories which are part of root partition.
+
+You can understand with the help of a house, in a house there are multiple rooms so each room is a partition. The siblings who don;t have their own room they share a room. So, they are directories. The siblings who own their room have their partition and they are directory as well.
+
+
+Soft links & Hard Links:
+
+Soft links can cross partition and can also be created over directories, it becomes handy when the file path is too long and you create a shortcut of it on desktop.
+
+Hard links cannot cross partitions & cannot be created over directories
+
+Soft links become orphan when parent file is deleted
+
+Hard links do not get orphan if a parent is deleted, it acts as a backup.
+
+A file having a hardlink, it's number will be more than one, it indicates that the file has a hardlink.
+
+Softlink show that the child is linked to that parent file but hard link does not show that this child is linked to which parent file.
+
+We can determine the parent file by using inode.
+
+Inode:
+
+Every file in linux have a unique inode number
+
+Inode keep attributes of a file (properties)
+
+Command to see inode is "ls -i filename"
+
+inode are unique inside partitions & are assigned randomly
+
+ls -il for long list & inode details of file
+
+Hardlink --> link files inode number will be same
+
+Softlink --> link files inode number will be different
+
+Hidden Files:
+
+touch .ahsan.txt --> create a hidden file ahsan.txt
+
+ls -a --> to see all regular and hidden files
+
+ls -ia --> to see the inode number of all files hidden and regular
+
+ls -ia .ahsan.txt --> to see inode number of ahsan.txt
+
+find . -inum 441280 --> find all the files that have this inode number
+
+ln -s /home/ahsan.txt /root/Desktop/ahsan2.txt --> create a softlink of file ahsan.txt present in home directory to the desktop with name ahsan2.txt
+
+
+
+Softlink can be used to give another name to a command by making the softlink of a command with another name and calling the another name, it will do the same job as the command becaus eit is the softlink or child of the parent command
+
+
+------------------
+
+Copy
+
+cp -r /home/Documents /etc/bash --> copy the folder Documents into /etc/bash, -r is used for directories while copying them because a directory can have multiple files in it or folders so -r (recursive) is used.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

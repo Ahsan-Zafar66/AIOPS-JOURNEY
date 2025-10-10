@@ -1,0 +1,18 @@
+How asset values can be expressed?
+Qualitative Research:
+1) Unstructured data
+2) Summary
+3) Subjective Conclusion
+4) Interviews, focus groups, observations
+
+Quantitative Research:
+1) Structured data
+2) Statistical Analysis
+3) Objective conclusion
+4) Surveys, Experimenst
+
+
+Asset Classification:
+
+Who is the ultimate owner of data?
+Senior Management (CEO)

@@ -1,0 +1,6 @@
+cybtaiworke virtual machine helps you learn scada, this virtual machine is designed to learn scada.
+
+NERC 
+
+
+this course aim to cover certification of cyber security skills of ICS/SCADA professional

@@ -1,0 +1,539 @@
+In centos 6 we have runlevels, they are also present in 7,8
+
+
+CentOS 7,8 also have targets, there are two targets:
+1) multiuser.target 
+
+2) graphical.target
+
+
+multiuser.target is runlevel3 in RHEL 6
+
+graphical.target is runlevel5 in RHEL 6
+
+in RHEL the command was init, such init 5 to go to level 5
+
+in RHEL 7,8 following are the cmmands
+
+systemctl isolate multi-user.target --> to swith to level 3
+
+systemctl isolate graphical.target --> to switch to runlevel 5
+
+
+=======================
+
+In centos 6 we change default runlevel by editing the /etc/inittab 
+
+In centos 7,8
+
+systemctl get-default --> this command will tell you the runlevel in which system will enter whne it reboots
+
+systemctl set-default multi-user.target --> now when you reboot system will enter in runlevel 3 always until you set other runlevel by default 
+
+
+========================
+
+Concept of hardisk
+
+Suppose we have a 16gb hardisk it is 16gb to us but to fdisk it will be expressed in terms of cylinders, like 16gb has 1958 cylinders, cylinders refers to the space we can fill
+
+One cylinder size is approimately of 8MB
+
+calculating hardisk size through cuyliners
+
+no. of cylinders = 92567
+
+one cylinder equals to 8MB
+
+
+total MBS = 92567 * 8 =740,536 MB
+
+GB = 740536 / 1024 = 723GB 
+
+=======
+
+500 MB hardisk, then one cylinder is of 1mb.
+
+If you have hardisk in MB then one cylinder is of 1mb and if you have harddisk in gb then one cylinder is of 8mb
+
+=======
+
+you have 16gb, one cylinder is of 8mb
+
+you need to make a partition of 24mb how many cylinder it will use?
+
+It will use 3 cylinders.
+
+if you need to make a partiton of 96mb how many cylinder you will use?
+It will use 12 cylinders
+
+if you make a partition of 1MB how many cylinder you will use?
+Only 1 cylinder and only one mb will be used, the remaining 7mb can be used for other partition as well
+
+========================
+
+Detecting the new hard disk without turning the machine of
+
+echo "- - -" > /sys/class/scsi_host/host0/scan
+
+echo "- - -" > /sys/class/scsi_host/host1/scan
+
+echo "- - -" > /sys/class/scsi_host/host2/scan
+
+======================
+
+fdisk can only create, delete or manage a partition.
+
+It cannot format, or mount a partition
+
+We can make onl 4 primary partitions in a  harddisk. 
+
+If you need to make a 5th partition, you have to delete one partition from the already made 4 and now you can make any number of partitions in that extended partition.
+
+These 3 linux and one extended partition are made, extended is just for name, you will new partitions in extended partition and it will hold them. Deleting extended partition will remove all the partitions that it is holding
+
+
+
+==================
+
+w --> updates the partition table
+
+partx -a /dev/partition --> update the kernel table
+
+===================
+
+if you delete data by rm -rf --> is it wiped out?
+
+No, the data does not wipe out, if you deleted anthing it can all be recovered using recovery tools.
+
+To wipe out data, overwrite with new data, overwriting wipes out the previous data.
+
+==================
+
+File system means meta data
+
+meta data is the index of data, like a book has an index page that about the contents in that book.
+
+
+==================
+
+File system includes: (inode, inode tables, blocks, superblocks, mount in tables)
+
+mkfs.ext4 /dev/sde1 --> make file system in sde1 partition, if your partition is of 200MB, it will take few space to make file system that will get linked with data which will be store in remaining space.Like 200MB, 10MB taken by file system, 190MB free to store data.
+
+---------
+
+When we format a partition, it only overwrites the system files, due to the overwriting of system files, the index of the data which was stored on this partition is lost. But the data is there it can be recovered.
+
+======================
+
+Question----in a hard disk there are 6 partitions, how many drivers?
+
+sda, sda1,sda2,sda3,sda4,sda5,sda6 --> total 7 drivers
+
+How many file systems wlill be created?
+6 file systems will be created
+
+How many partition table?
+1
+
+======================
+
+Connecting a directory with the partition driver is known as mounting.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

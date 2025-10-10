@@ -13,7 +13,7 @@ Create a Token and select all the scopes in the scope section
 Step # 4
 Copy the token 
 
-token: glpat-_hAFV97u7PxzdNxJg3YJ
+token: use your token
 
 you can check the newly made token in preferences section
 
@@ -40,11 +40,11 @@ How to generate Token PAT --> Profile --> Settings --> Developer Setting --> PAT
 
 tick all the options of the scope
 
-token: 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
+token: use your token
 
 Step # 2
 create a environment variable in terminal
-GIT_PATH=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
+GIT_PATH=use your access token
 
 
 echo $GIT_PATH | docker login ghcr.io -u username --password-stdin

@@ -1,0 +1,15 @@
+# following code is to write a file
+%%writefile myfile.txt
+ahsan is a good boy
+he is learning python
+
+# now open file
+read_file = open("myfile.txt")
+read_file.read()
+
+# now when you read file again it will give you empty string because you read the file
+# if you want to read the file again run seek command
+read_file.seek(0)
+
+# now run read comand again
+read_file.read()

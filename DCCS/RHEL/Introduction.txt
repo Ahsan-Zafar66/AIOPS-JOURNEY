@@ -1,0 +1,7 @@
+rm -rf filename --> it won't ask the permission to dlt the file
+
+rm -rf *\ --> it will all files in that directory without asking permission
+
+whatis pwd --> gives short introduction of the command.
+
+man pwd --> to get all information about the command

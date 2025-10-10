@@ -1,0 +1,104 @@
+Interview Question
+
+What are the backup types?
+following are backup types
+1) Full backup 1
+2) incremental backup 2
+3) Differential backup 3
+4) Cumulative 4
+
+Whare are the differen toptions for a backup or how you take the backup?
+We can take backup of a machine into anther machine.
+we can take backup into SAN, NAS, Tape drive LTO (linear tape operator)
+
+
+
+
+RSYNC:
+it is a very powerfool tool for backups.
+
+suppose you have machine 1 and machine 2. In machine 1 you have ahsan and ahmed two files.
+Now you create backup of data of machine 1 into machine 2 using rsync. First time it copies everything as machine2 does not have any previous record of this data.
+Now, if you run rysnc again for data present in machine 1, rsync will first check the data of machine 1 and machine 2, is there any difference, if there is difference then it will only add the data which is not already present in machine 2. If the data is same then it will not create the backup again it is smart.
+
+
+# search on google
+how rsync works with zip and tar.
+
+
+copy command always copy all data again and overwrites it to the already present same data but rsync only take data which is new and not present in the destination where backup is created.
+
+
+rsync -parv  files destination
+
+p = preserve, save the permissions of file so other user which are not given permisison to modify the file cannot modify it in backup
+a = archive
+r - recursive
+v = verbose
+
+
+# search 15 example sof rsync
+
+rsync -avz /home/ahsanzafar/Downloads/* /home/ahsanzafar/Documents/backup --> this command will copy or transfer only new files which are not present in the baackup not all files (useful when daily backup update is required, it only copies the newly added files of the source into the destination backup)
+
+if you update a file in the source and same file is present in destination backup, if you run rsync it will check file modified and files which have been modified it will overwrite the source info on the destination file. 
+if a file inode number is different in source and destination then that file has been modified in source and back up has different i node
+
+
+stat filename --> show the stats of files asked in interview
+
+atime means access time
+
+mtime means modify time
+
+ctime means change time
+
+
+
+
+How rsync works?
+RSYNC comapres source and destination files modify time.if any changes in the source then it will copy only the incremental data
+
+
+
+# creating backup on another device
+syntax
+rsync -avz /home/ahsanzafar/Downloads/* remoteserveripaddres:pathinthatmachine
+
+rsync -avz /home/ahsanzafar/Downloads/*  192.168.0.65:/home/hacker/backup
+
+# creating backup in ahmed user in another machine
+rsync -avz /home/ahsanzafar/Downloads/*  ahmed@192.168.0.65:/home/hacker/backup
+
+
+
+gzip and bzip2 are not backup tools, they are compression tools.
+
+
+Commercial Backup tools:
+1) Veritas Netbackup
+2) windows NT backup
+3) TS
+4)VEEAM
+5) Dell networker
+6) EMC Networker
+
+Open source backup tools:
+AMANDA
+ZAMANDA
+BACULA
+BACKUPC
+
+
+
+
+
+
+
+
+
+
+
+
+
+

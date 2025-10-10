@@ -1,0 +1,120 @@
+ip r l ---> to chekc machine ip
+
+production server, devlopment program server, UAT server, proc server --> google them and know them
+
+if you are not entering the maintainence mode, then check the munted partitins 5th and 6th field are they both 0? If yes, then durng rebooting these partitions are automatically skipped by e2fsck because 0 means off. Turn on the partitions to get the error and enter maintainence mode for wrong entries.
+
+
+4th field in fstab file permissions:
+
+we have defuaults there we can change this perimission to:
+1) ro
+2) exec
+3) noexec
+4) user
+5) auto
+6) noauto
+7) rw
+
+ro,user,noauto --> how to give multiple permissions as once.
+
+defaults, ro --> read only permission, defaults will not be considered
+
+# after making changes in permission run following command
+mount -o remount /tomcat 
+
+==============
+Processes & daemons
+anything that runs in system is a process
+
+program or files which are loaded in RAM are know as open files
+
+
+lsof --> list open files
+
+
+cat passwd | grep -A1 user --> show one more line after the matching lines.
+
+cat passwd | grep -B1 user --> show one line before the matching lines
+
+cat passwd | grep -i user --> -i ignore lower and upper case host or Host, bring both
+
+================
+# find command
+
+find /home -iname ahsan.txt --> -i ingore upper lower case, find ahsan.txt in home directory
+
+find /home -iname "*.txt"
+
+
+locate command is faster than find. Locate used database, it does not anter each folder to search for the required file like find command.
+
+
+ls /var/lib/mlocate/mlocate.db --> file or database of locate command, if you delete it locate cannot do anything
+
+touch fedora.txt --> new file
+
+locate fedora.txt --> no find
+
+updatedb --> to update locate database to also have data of newly created files, run this command so the newly files are available in locatedb
+
+locate fedora.txt --> now locate will find it as it's database has been updated
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

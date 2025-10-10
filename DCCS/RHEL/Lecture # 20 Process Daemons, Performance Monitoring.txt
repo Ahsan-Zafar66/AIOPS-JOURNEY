@@ -1,0 +1,206 @@
+ls /var/lib/mlocate --> will  show the locate db file
+
+if you remove the mlocate.db file then locate will not work
+
+lsof --> display the open files in RAM
+
+
+pid is assigned randomly to each process.
+
+ps --> to see all procesess in RAM
+
+ps -el --> The -e option is for listing all processes running on the system, and the -l option is for using the long format. Combined as ps -el, it provides a more detailed view of all processes running on the system.
+
+ps aux
+
+ps --help
+
+
+ps -el --> to see in detail all processes
+
+
+top --> it is like windows task manager
+
+cat /proc/cpuinfo
+
+lscpu --> cpu information
+
+lsusb --> usb information
+
+pidof process_name --> to get the pid of process
+
+pidof cgroup --> pid of that process
+
+pidof firefox --> pid of firefox
+
+pgrep fire --> process id of firefox
+
+pstree --> show process tree
+
+init is the father of all processes so it's pid is always 1, (till RHEL 6 only)
+
+systemmd is the fathe of all process in RHEL 7 and 8
+
+
+pid --> process id
+
+ppid --> parent process id
+
+
+ppid shows us the initiater of the process, who initiate this process. If you kill the ppid then all the processes run by ppid will be stopped
+
+
+kill pidofprocess --> killin a process by using its pid
+
+pkill process_name --> killing a process by it's name
+
+proc directory has ram information
+
+cd /proc/ --> contains processes navigated from RAM
+
+top brings data from /proc/
+
+uptime --> to see time from when the system is turned on
+
+cat /proc/cpuinfo --> to get information about cpu
+
+
+if you have one core and one application is running, another application comes it will need to wait so your load is 1, 3rd application comes and it has to wait for the first and second one to be completed so now your load is 2.
+
+
+load_average: 0.00, 0.01, 0.00. 
+1st position tells load of last minute
+
+second position tells load of last 5 minutes
+
+third position tells load of last 15 minutes
+
+in top commmand, in cpu line ni means not in use, id means ideal value
+
+
+
+
+
+free --> tell you about memory and swap
+
+free -m --> show result in mbs
+
+free -g --> to see memory result in gb
+
+
+
+
+
+
+
+
+
+
+
+
+
+what is buffer/cache? --> interview question
+
+Buffer:
+Buffers refer to memory used by the kernel to temporarily hold data that is being transferred between devices (like a disk or a network interface) and applications.
+For example, when data is being written to a disk, it may be temporarily stored in a buffer to smooth out differences in processing speed between the disk and the application.
+
+Cache:
+Cache refers to memory that is used to store data that is frequently accessed by the system.
+When files or programs are accessed, the operating system may store copies of the data in the cache so that subsequent access to this data can be much faster, since it can be retrieved from memory rather than from a slower storage device.
+The cache helps to improve overall system performance by reducing the need to repeatedly read data from the disk.
+
+
+Why This Matters
+High values in buffers and cache indicate that the system is making good use of available memory to optimize I/O operations.
+Even though memory may be "used" for buffers and cache, it's still available for applications if needed, so it's not considered "wasted."
+In short, buffers and cache are techniques used by the OS to optimize memory usage and improve performance, particularly for I/O operations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

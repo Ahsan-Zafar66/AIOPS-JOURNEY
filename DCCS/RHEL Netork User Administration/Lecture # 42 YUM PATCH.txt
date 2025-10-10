@@ -1,0 +1,275 @@
+# to install an rpm package
+rpm -ivh package_name
+
+# if package give dependency error you can istall by using nodeps keyword
+prm -ivh --nodeps package_name
+
+# getting information about rpm package
+rpm -qi package_name
+
+# checking that file is created by which package
+rpm -qf /etc/fstab --> who created fstab x
+
+# to see if a package is installed or not
+rpm -qa | grep -i mysql --> -qa means query all and -i means ignore lettercase
+
+# updating  an already installed package
+yum update package_name
+
+# checking report if update avaiable
+yum check-update package_name
+
+
+Scenario:
+You installed mysql version 5.0 but the developer team need 5.7, you checked in yum the version available in yum is 5.
+What you will do now?
+You will go to internet find the repository fro mysql 5.7 and download it in your local system and paste it in /etc/yum.repos.d/ directory along with other repos
+now you can install mysql 5.7 by updating or by removing previous and installing new one.
+
+Suppose you didn't find the repository how you will install now?
+You can install by downloading the code compilation
+
+If the interviewer ask you that he wants to install a specific version of a software?
+the best answer is that you will look for rpm for that version, ot repository of that version or source code compilation
+
+
+
+How to update kernel?
+yum update kernel
+
+
+How to update full OS?
+yum update --> it will update everything
+
+
+kernel is present in boot diectory. 
+We can have multiple kernels but one will run only at a time
+
+kernel update s different than packages.
+
+after updating kernel, you need to reboot to use the new kernel
+
+SUPPOSE after updatng kernel server is not coming up what you wil do?
+I will boot the old kernel and will diagnose the problem by reading log files
+
+
+# we do not use yum update directly, first we get report and send to different teams, they aprove which update you can do and then you wil update the approved packages
+yum check-update --> to get the report of updates for all packages
+
+# suppose feedback from teams say that do not update mysql and docker rest you can update all
+yum update -x mysql docker --> this command will update all except mysql and docker
+
+
+# What is patching?
+Above everyting is known as patching.
+
+# updating software from one version to other is software patching
+
+
+There is a proper way of patching like asking departments getting approval we do not directly do patching. First we take permission
+1) First you stop the service
+2) Take data backup
+3) inform the departments
+4) then do patching or updating
+
+if you have multiple servers then stop service from one and keep the other one open
+then you stop for a timperiod the other server like service is down for next 2 hours or a day which we normally see with websites.
+
+
+
+
+# to see yum history
+yum history
+
+
+# not to see details about a process
+yum history info 9 --> it will show the details of ID 9 which software was installed, let's suppose docker, it will show details of installation of docker
+
+# reversing or roll backing installation
+yum history rollback 7 --> take the machine back to installation of sotware at 7 id, and remove all other softwares having id more than 7
+
+# removing only a specif package through id
+yum history undo 7 --> suppose docker had id 7 now it will be removed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

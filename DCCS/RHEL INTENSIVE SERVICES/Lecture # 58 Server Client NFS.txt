@@ -1,0 +1,286 @@
+Server is a machine where services are running
+
+we will make centos 8 as a server and centos 9 as a client
+
+we will give access of centos8 which will act as a server to many clients
+
+What we need to make a server?
+we need an IP address(unique for every machine)
+
+we need to give server a name
+
+How to set name of a serve in centos 7 and 8?
+hostnamectl set-hostname server1.example.com --static --> --static makes it persistent even after reboot
+
+
+# now go to the file and check the server entry /etc/hostname
+cat /etc/hostname
+
+# the output should contain the server1.example.com which is my server name you can name any
+
+--------CENTOD 6 METHOD OF MAKING A SERVER---------------------
+# how to make a server in centos 6?
+# command to create hostname
+hostname myserver
+
+# add the host in the file /etc/sysconfig/network
+vi /etc/sysconfig/network
+
+--------------------------------------------
+
+
+# to see hostname details
+hostnamectl
+
+# now check if you can ping the server, ping means you can send packets to the machine or server
+ping myserver
+
+# now if you are unable to ping server then you need to resolve the server with the ip of machine
+for this you need to make an entry into DNS, DNS binds server with the ip, package for this task is BIND
+we have not studied DNS yet so we will use Flat DNS
+
+# Flat DNS is actually "/etc/hosts" file
+# now check the ip of machine and make an entry in this file
+# example of entry, ip and hostname, now we have mapped the server with the machine ip
+10.0.2.15 myserver
+
+
+
+NOTE: Both machines ip address should be different when you configure them to be a server or client
+
+Steps for creating server:
+NOTE: you have to create server in both machine server_machine and machine using as a client
+Step # 1
+Set a name of a server
+
+Step # 2
+# bind the name with the ip of machine by makin an entry in /etc/hosts
+# example for server
+server_ip_address server_name
+
+Step # 3
+# check if you can ping google from the machine or not
+
+Step # 4
+NOw in /etc/hosts in server machine make entry for both server and client, and do the same for client make entry for both in /etc/hosts file
+make an entry of client in your server machine in file /etc/host and vice verse
+
+# in server machine
+ip_server ip address
+ip_client ipaddress
+
+# in client machine 
+ip_server ipaddress
+ip_client ipadress
+
+# if you want to give shortcuts to your servers and clients hostnames
+10.0.2.15 server_machine sm --> host server_machine is short named now as sm.
+
+
+After setting hosts in both server_machine and client_machine and making entry of both machines in each of the machine and after validating through ping command we can cross ping machines we can configure NFS now.
+
+
+# now let's make a directory in server which we will share with client machine
+mkdir /home/firstsharing --> firstsharing we are making in the machine that we want to act as a server.
+
+# now enable rpcbind and nfs-utils (cent os 6 and 7) or nfs-server (centos 8 or 9) by the folowing commands in both machines
+# commands for cent 6 and 7
+systemctl enable nfs-utils --> cent os 6 or 7
+systemctl enable rpcbind
+
+# commands for centos 8 and 9
+systemctl enable nfs-server --> cent os 8 or 9
+systemctl enable rpcbind
+
+
+nfs is hosted on port number "2049"
+
+# command to check if 2049 port is listening
+netstat -tulnp | grep 2049
+
+# another command
+ss -tulnp | grep 2049
+
+
+-----Server machine Next steps--------
+# NFS has a major file /etc/exports, in which we need to make entry for the folder which is to be shared
+# iwant to share a folder suppose
+/home/ahsan/firstshare
+
+# entry in /etc/exports
+/home/ahsan/firstshare *(sync) --> entry of a folder you want to share
+
+# after making an entry we neet to export the shared folder into RAM
+# command to export files
+exportfs -rv
+
+# command to validate if export is successful 
+exportfs -v
+
+-==============================
+
+-----Client Machine Next steps----------
+
+# now first check what has been shared with you by the server
+showmount -e myserver.ahsan--> myserver.ahsan is my server name
+
+# stop the server machine firewall now go to server machine and turn off firewall because client will access what has been shared by server
+# checking status of firewall on SERVER machine
+firewall-cmd --state
+
+# stop firewall
+systemctl stop firewalld
+
+# now you can see the filename you shared from server into your client
+# now you need to mount this file on a directory in client
+# making a directory in client
+mkdir /home/ahsan/client_host
+
+# mounting the firstsharing directory from server onto client_host directory in client
+mount myserver.ahsan:/home/ahsan/firstsharing /home/ahsan/client_host
+
+# now run df -h command to see the mounted folder
+df -h
+
+
+# now create some file in firstsharing directory on server and check if you see the same file and content on your client. 
+# if everything went fine then you must be able to see what you make change in server in client in the client_host directory where you mounted the server firstsharing directory
+
+# making persistent the mounting of firstsharing directory from server on client_host directory in client make an entry in /etc/fstab file
+# example
+myserver.ahsan:/home/ahsan/firstsharing /home/ahsan/client_host nfs defaults 0 0
+
+myserver.ahsan:/home/ahsan/firstsharing --> directory path of server
+
+/home/ahsan/client_host ---> directory of client on which you want to mount directory of server
+
+nfs --> file system
+
+
+# after making an entry run command
+mount -a
+
+
+NOTE: if you get any problem in future problem is always in server, client does not have any probelm
+What ever you write in server it will be shown in client but you cannot write anything from client, if you want to write you need to give permission to client to write (making new files)
+
+# allowing client for read and write
+# got to server machine and open the file
+vi /etc/exports
+
+# path of file
+/home/ahsan/firstsharing *(sync) it was written initially now change it to --> /home/ahsan/firstsharing *(sync,rw)
+
+# now reload the exports file
+exportfs -r
+
+# check file uploaded again
+exportfs -v
+
+
+after doing above steps we need to check firstsharing directory permissions, what permissions it has, if it has read only then you still can;t write anything in it from client. So, you need to give firstsharing read and write permissions.
+
+# Client privileges to server directory
+To enter directory from client you need read permission only for the firstsharing directory in server machine.
+To read the files of the directory you need execute permission for the firstshring directory in server machine means that you must give firstsharing directory execute permission in server
+To create new files you need write permission
+
+now client can create files in the shared directory
+
+
+my server ip centos 8 in virtual box: 192.168.43.63
+my client ip centos 9 in virtual box: 192.168.43.210
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

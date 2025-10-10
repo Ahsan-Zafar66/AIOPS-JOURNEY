@@ -1,0 +1,422 @@
+LVM is a layer on a hardisk.
+Suppose we have hardisk like sda, sdb,sdc,sde. 
+Lvm is created as a layer on any hardisk
+
+# Checking lvm in you system
+lvmdiskscan --> it will show the hardisks which ar ebeing used as lvm
+
+# checking lvm in detail
+pvdisplay --> will show the lvm drive details
+
+# checking volume group details
+vgdisplay
+
+# checking lvm
+lvdisplay
+
+LVM or Local Volume Management:
+If a directory is not in lvm so it cannot be expanded. For example sometimes when we design the OS we do not keep some directories in lvm:
+Now these directories space is full, you cannot expand them because they are not in lvm. So, what you will do?
+You can make a new directory with more capacity and you will migrate the data of that directory into this new directory
+
+
+LVM Components:
+LVM has three components:
+1) Physical Volume
+
+2) Volume Group
+
+3) Logical Volume
+
+Suppose I have a hard disk of 1gb:
+Physical volume --> 1gb
+
+volumne group --> 1 gb
+
+logical colume  --> 700 MB
+
+i gave 700 MB to logical volume so I could expand it when it is needed using the remaining 300 MB
+
+
+Now, if you add a harddisk while your system is on you can search the newly harddisk by using following command becaus ein organizations we do not siwtch off systems
+
+echo "- - -" > /sys/class/scsi_host/host0/scan
+
+echo "- - -" > /sys/class/scsi_host/host1/scan
+
+echo "- - -" > /sys/class/scsi_host/host2/scan
+
+How to make an LVM partition?
+Add a hardisk
+
+fdisk /dev/sdc
+
+# Step # 1
+add a new hardisk in it
+
+Step # 2
+# make a partition in that hardisk using fdisk command
+fdisk /dev/sde
+
+# make primary partition by pressing p and keep defaults cylinders and other things
+
+# after the creation of partition, change the code of partition to 8e by pressin t and chaning the hex code to 8e
+
+# Step # 3
+then save and then run the partx -a /dev/sde1 command if you are in centos 6 or for 7/8 run --> partprobe -s /dev/sdc
+
+OR FOR RHEL 9
+partprobe /dev/sde 
+
+# Step # 4 DO NOT RUN MKFS command now
+now for regular hardrive we run --> mkfs.ext4 /dev/sde1 --> but in this case we won't because we want to make LVM
+
+# Step # 5
+# create physical volume by command
+pvcreate /dev/sde1
+
+# Step # 6
+# create volume group you can give any name 
+vgcreate group_name driver_name
+#example
+vgcreate myvol /dev/sde1
+
+Step # 7 Create logical volume: 
+lvcreate -L size -n name_of_lv vg_name --> lv is logical volume name and vg is volume group name.
+
+# example for above senario
+lvcreate -L 400M -n lv1 myvol1 --> creating  a logical volume lv1 of 400MB size on volume group myvol1
+
+
+Step # 8 Formatting this lvm
+mkfs.ext4 /dev/myvol/lv1 --> lvm is created in dev directory under volume group name which is myvol and logical volume is lv1
+
+Step # 9 mount the lvm on the directory
+mkdir /testlvm
+
+# mounting the lvm on the directory
+mount /dev/myvol/lv1 /testlvm
+
+Step # 10 make an entry in /etc/fstab file to make the mounting persistent
+/dev/myvol/lv1		/testlvm 	ext4		defaults 	0 	0
+
+
+Step # 11 
+# run following command to see if there is no error in fstab entry
+mount -a
+
+
+
+# Removing LVM
+as we make lvm the order is
+
+1) physical volume
+2) volume group
+3) logical volume
+
+when we remove lvm the order is:
+1) logical volume
+2) volume group
+3) physical volume
+
+# first unmount the lvm using unmount command on the directory which is mounted on the lvm
+unmount /testlvm
+
+# removing lvm
+lvremove /dev/myvol/lv1
+
+# removing goup volume
+vgremove myvol
+
+# removing physical volume
+pvremove driver_name
+
+pvremove /dev/sde1
+
+
+
+Your manager comes and ask you to increase the size of directory testlvm.
+you will first check whether this directory is lvm and run command "vgdisplay" to check if any space is available in the volume group
+
+
+Extending an LVM:
+There two commands:
+1) Extend
+2) Resizing
+
+Both are compulsory to run 
+
+suppose your hardisk is of 1 gb sde, and you have sde1 which is of 500MB partition of your hardisk
+Now you create an lvm of 400Mb on the sde1. 100Mb is till remaining. You can extend it
+
+# extension can be in two ways either you can mention the additional MB you want to add or total size your want your disk to take
+
+# increase partition by additional 50mb
+lvextend -L +50M /dev/myvol/lv1
+
+or 
+
+# Make partition size total 350MB
+lvextend -L 350M /dev/myvol/lv1
+
+
+# after running extend command
+resize2fs lvm_driver_name
+
+resize2fs /dev/myvol/lv1
+
+
+# if you want to extend by % remaining free space you can suppose we have 100Mb free space (NOTE you will use smaller "l")
+lvextend -l +50%free /dev/myvol/lv1 --> we had 100MB so 50% of 100Mb is 50MB so partition will be increased by 50MB, you can use any % 
+
+
+
+
+LVREDUCE:
+Shrinking the partition. It has 5 commands and only 2 are important
+
+Reducing is done offline, unmount the partition first
+
+Step # 1
+umount /testlvm
+
+Step # 2 run fsck command
+e2fsck -f /dev/myvol/lv1
+
+Step # 3 resiszing
+resize2fs /dev/myvol/lv1 200MB  --> resize the partition to 200MB, ky meri partition jitny ki bhi hai usy kam kr do
+
+# FOR RHEL 7 or 8
+xfs_grows  /dev/myvol/lv1
+
+if you have used xfs file system then you cannot reduce lvm
+
+# Step # 4 reduce the partition
+lvreduce -L 200M /dev/myvol/lv1
+
+# Step # 5 mounting
+mount /dev/myvol/lv1 /testlvm
+
+
+It is recommended to take backup of the data to prevent data loss.
+
+When you reduce partition size
+
+
+
+
+
+
+
+Scenario: Suppose your vg has no free space left for extending the lv what you will do now? You had pv and it has all been consumed?
+So, in this case what we can do we can add another physical volume and can then extend our volume group.
+
+Step # 1
+# create a new partition in the same hardisk. Suppose you have 800MB sde, 400MB is sde1 and 400MB is sde2. sde1 was lvm and it is full.
+Now, make the sde2 physcial volume
+
+# command (make sure to create a sde2 partition through fdisk and change it's extension to 8e same procedure as done sde1)
+pvcreate /dev/sde2
+
+Step # 2
+# extending the vg of sde1
+vgextend previous_vgname new_pv_made
+
+# example
+vgextend myvol /dev/sde2
+
+
+# now run vgdisplay command and now you will see space of newly extended vg
+
+Step # 3 extend the lvm now
+lvextend -L +100M /dev/myvol/lv1
+
+Step # 4
+resize2fs /dev/myvol/lv1
+
+
+
+Scenarios:
+Now, in this new scenario our sde is completely full upto 800MB. Now how can we increase the space?
+
+Step # 1
+# add a new hard disk of desired size through fdisk, let's suppose I added sdd
+# create a partition in it and keep it's type to 8e
+
+Step # 2 
+# run the pvcreate command
+pvcreate /dev/sdd1
+
+
+Step # 3
+# extend the volume group
+vgextend myvol /dev/sdd1
+
+
+Step # 4 extend the lvm
+lvextend -l +100%free myvol
+
+Step # 5 resize
+resize2fs /dev/myvol/lv1
+
+
+Where: myvol is the volume group, lv1 is the lvm created on myvol and the main agenda is to extend myvol and then lv1
+
+
+
+Scenario: Make another lvm name lv2 on the myvol volume group which you extended previously
+
+# command
+lvcreate -L +400M -n lv2 myvol
+
+
+# format
+mkfs.ext3 /dev/myvol/lv2
+
+
+
+Scenario: You need to add another lvm such as lv3, but you cannot add new hard disk how you will make?
+You will check the usage of lv1 and lv2, if possible reduce them and use the freed space to create lv2
+
+
+VG can have multiple PV and LV
+
+
+
+We mounted different directories on different lvms? How we can see the mapping of a directory at which lvm it is mounted, in which vg and in which pv?
+# commands
+lsblk
+pvs
+pvscan
+lvs
+
+lvs -o + devices
+
+
+
+
+
+Taking LVM Backup:
+
+# taking volume group or vg backup
+vgcfgbackup vg_name
+
+# example
+vgcfgbackup myvol
+
+# if myvol get's corrupted now you can restore it's metadata
+vgcfgrestore myvol
+
+# path where this backup is stored is "/etc/lvm/backup/" look for a file similar to vgname such as myvol
+cat /etc/lvm/backup/myvol
+
+# to read the file to see where the backup for lvm are stores
+cat /etc/lvm/lvm.conf --> search using keyword backup to see the directory where lvm backup are stored. 
+
+
+# to exclude a hardisk driver so no lvm can be created on it, go to file /etc/lvm/lvm.conf
+and search by keyword filter and in exclude section write driver name such as sdc, sdd. Now, on these drivers lvm cannot be made
+normally /dev/cdrom is written theri you can change to your reference like /dev/sdc, now you cannot make lvm on sdc
+
+
+
+LVM SNAPSHOT:
+# comand to create snapshot
+lvcreate -L size_of_snapshot -s -n name_of_snapshot lvm_of_which_snapshot_you_want_to_create
+
+# example
+lvcreate -L 20M -s -n my_snapshot /dev/myvol/mylvm
+
+above command is taking 20MB snapshot of lvm --> mylvm and it is stored in the volume group directory which is /dev/myvol look in this directory for newly created snapshot
+
+# removing snapshot
+lvremove /dev/myvol/my_snapshot
+
+What is PE in vgdisplay?
+PE means physical extent, suppose my PV physical volume is 100mb, so my PE will be 25, each PE is of 4mb size
+
+By increasing PE, performance increases
+
+LE means logical extent and it is formed in lv. It's size is also 4mb. 
+
+We can increase PE size, by default it is 4mb
+
+
+HOW TO CHANGE PE SIZE?
+you can change pe size while creating vg
+
+# sizes you can give 4,8,16,32.
+vgcreate -s 8 myvol /dev/sdd1
+
+
+RHEL CERTIFICATION EXAM QUESTION?
+Create a prtition of 100 extent with eact extent of 32MB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

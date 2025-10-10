@@ -1,0 +1,21 @@
+To secure an organization we focus on three things Peoplw, Technology and process.
+
+People can be compromised by giving money, process and technology can also be compromised through byber attacks
+ the major risk is of people, according to survey 62% s the risk of people in organization attack
+
+
+When scada systems were made there was no security in the design of these systems.
+The time when these things were made there was no concept of security, because main thing was continuition of things.
+
+Shodan is a search engine tool which you can use to find which scada software is running at which place in the world.
+You can search modbus, you can search ports to see which port is being used in which part of the world
+
+
+ICS-CERT Industrial Control Systems Cyber Emergency Response Team
+
+
+
+
+
+
+

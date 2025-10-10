@@ -1,0 +1,131 @@
+If you have a network card and card has two ports, then theri are two mac addresses each for one port
+
+
+if you do not have network card, enp0s3 driver will not be available but lo driver will be available even if a machine does not have network card.
+lo is local host, lo is available for local testing, it does not go out of machine.
+
+
+OSI Layer is used for communication in an organization. Layer is:
+1) Physical Layer
+2) Data Link
+3) Network
+4) Transport
+5) Session
+6) Presentation
+7) Application Layer
+
+
+Protocols are mostly in layer 4 and 7
+
+Protcols:
+http --> web page -web browser
+ftp --> data transfer
+smtp
+ssh --> remote session
+nfs
+dns
+dhcp
+smb
+
+
+
+ports are configured inside server and devices
+
+ports and protocols are associated with each other
+
+ports are inside server and devices. Protocols come and interact with ports
+
+ports are like gate to a service.
+For example I have device and it has three ports 90,21,22. Now a protocol come for port 80, first I have to start the service of port 80 then the protcol can interact with the respective port. Protocols come through ip address on the device port. 
+80 port protocol is http, so u have to start the http service on port 80 and then protocol http can come through ip and interact with the port.
+
+
+How to open the ports in linux?
+By starting that service
+
+How to close the ports in linux?
+stop that service
+
+
+ports are inside server and they talk to protocols outside the server
+
+for http port is 80 and for ftp port is 53.
+Suppose port 53 is close, ftp protocol comes through ip, suppose network is is 192.168.102, the connection between ftp and it's port will not be established as port is closed
+
+
+Can we change the port inside a server?
+Yes, we can change the ports. there are config files for each port. 
+After changing the port we need to change the protocol, we cannot change the protocol ourself, we need to ask the client to change that protocol  to new port, such as http port is 80, i chnage it to 800 but htt protocol when comes look for 80, so we need to ask the client to change the protocol to 800 so that when http comes in a server it looks for 800 port now not 80
+
+
+
+How to remember ports?
+http -> 80
+https --> 443
+dns --> 53
+ssh --> 22
+telnet --> 23
+mysql --> 3306
+ftp --> 21/20
+smtp --> 25
+pop3 --> 110
+imap --> 143
+posp3 --> 995
+imaps -->993
+ldap --> 389
+rdesktop --> 3389
+tomcat --> 8080
+samba --> 137/139/445
+squd 3128
+
+
+
+all ports are mentioned in /etc/services file
+# command to read the file where all ports info is stored
+cat /etc/services
+
+# searching for a specific port in file
+:/ftp 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

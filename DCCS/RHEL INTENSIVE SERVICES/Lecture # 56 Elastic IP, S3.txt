@@ -1,0 +1,107 @@
+# you can update your ec2 intance
+
+# yum command to check for updates
+yum check-update
+
+# update command
+yum update -y
+
+# check history of yum if updating stops your application
+yum history 
+
+# you can roll back to previous things if you updated
+# first check task number through yum history for updates
+yum history info task_number
+
+# roll back update through this command
+yum history undo task_number
+
+# chekc ip address
+ip r l
+
+An ec2 instance has two ips
+1) Private ip of machine
+2) Public ip of router
+
+when we connect through public ip in mobaxterm, public ip just takes us to our ec2 instance.
+ec2 instance has it's own private ip, the public ip is used by us to connect to the router and router of aws takes us to our ec2.
+there are multiple ec2's hosted inside a public ip, each ec2 instance has it's own private ip.
+
+# checking live ip
+curl ifconfig.me
+
+
+Elastic ip is used in production environment
+
+S3:
+simple storage service
+google drive, drop box and one drive these are exmples of s3
+
+
+ebs writes data in an organized way but s3 does not store data in an organized way
+
+s3 till 5gb free
+
+suppose we have 4 files, we need a unique bucket (5gb) to upload and store files.
+Once files are uploaded in buckert they are objects now.
+
+S3 creation:
+Step # 1
+go to s3 service
+
+Step # 2
+click on create bukcet, create bucket read rules for naming buckets
+
+Step # 3
+after bucket has been created  go to permissions and turn of block public access, give public access
+
+Step # 4
+you can now access the object from anywhere from its url
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+# How RPM works?
+It wokrs by maintaining a database of packages after installation
+
+# to rebuild rpm database if it gets corrupted
+rpm --rebuilddb
+
+
+# installing an rpm package
+rpm -ivh package_file
+
+# example
+rpm -ivh zsh-4.3x86_64.rpm
+
+
+
+
+# you can mount a dvd in some other folder
+mount /dev/dvd_name /folder_name_to_mount
+
+# for example
+mount /dev/cdrom /ahsan --> mount the cdrom on ahsan directory
+
+# if you want check files in an rpm package
+rpm -qlp package --> qlp means query list package, it will list all the files in that package
+
+qlp shows the files inside a package, and also shows the path to which each file will be copied or extracted
+
+
+
+
+
+# in following command h is used for hasing the junk information
+rpm -ivh package
+
+# to check if a packaged has been installed or not
+rpm -qa | grep -i package_name --> qa means query all bring all rpm packages installed
+
+
+# Installing forcefull a package if you are facing any error
+rpm -ivh --force package_name
+
+
+# UNINSTALLING A software
+rmp -e package_name
+
+rpm -e zsh-4
+
+
+# checking installed package information
+rpm -qi zsh --> information os zsh package
+
+# Upgrading or updating a software
+step # 1
+# check your machine architecture
+arch
+
+# step # 2 & 3,download from website or  download the package to the present directory
+# wget is command line downloaader
+wget link_to_download_package 
+
+# step # 4 updating
+rpm -Uvh downloaded_package
+
+
+# website to download rpm packages
+rpm.pbone.net
+
+filwatcher.com
+
+rpmseek.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+

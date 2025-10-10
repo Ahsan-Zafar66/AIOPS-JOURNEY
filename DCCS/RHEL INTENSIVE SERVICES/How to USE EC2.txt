@@ -1,0 +1,48 @@
+EC2 means elastic compute cloud
+
+Step # 1
+Launch an ec2 instance of desired linux
+
+Step # 2
+Download a private key (same key can be used for multiple ec2 and if you want to create a separate key for each ec2 instance you can do as well)
+
+
+Step # 3
+Copy the public ip of machine which is DISPLAYED ONLY ONCE
+
+Step # 4
+Start an SSH from mobaxterm, upload the private key and enter the public ip address copied earlier
+
+Step # 5
+# write following command to connect the virtual machine
+ec2-user --> automatically connects with the instance created using the private key
+
+
+
+SOME SERVICES and their use:
+EC2 --> Elastic Compute CLoud
+
+Auto Scaling --> EC2 horizontal scaling
+
+Lambda --> serverless Computing
+
+ELB --> Elastic Load Balancer
+
+ECS --> Elastic Container Service
+
+EMR --> Elastic Map Reduce
+
+Kinesis --> Real time data/video streaming
+
+Athena --> Interactive Quey Engine
+
+QuickSight --> Business Intelligence dashboard
+
+Glue --> ETL service
+
+
+
+
+
+Public vs Elastic IP:
+Public Ip of ec2 instance changes after you reboot but elastic ip is not changed after reboot and it is not free it comes with charges.

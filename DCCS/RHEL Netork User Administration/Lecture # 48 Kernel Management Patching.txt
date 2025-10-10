@@ -1,0 +1,214 @@
+In this lecture we will see how to install a new driver.
+
+Suppose we have installed VLC and playing  a video but not getting the sound.
+Issue: No sound Driver, because we are lacking .ko file for sound driver
+
+
+
+How to install any driver:
+Befor ewe install sound driver we need to see the chipset in our system
+
+# detecting or seeing drivers at hardware level
+lspci -vvv
+
+# seaching specifically for audio driver
+lspci -vvv | grep -i audio
+
+lspci command shows ALL sound video audio network card chipset hardware
+
+somtimes you get drivers in .rpms format but most of the time drivers are in source code format on the internet
+
+# format of files will be like
+intel.driver.tar.gz
+
+intel.ko --> file we need
+
+
+Step # 1
+# unzip the driver file in .gz format
+tar -zxvf driver_file.gz
+
+Step # 2 
+# read the INSTALL instructions file
+
+Step # 3
+# run the 3 commands to install driver
+./configure
+make
+make install
+
+
+Step # 4
+after compilation the driver will be loaded in RAM, we also need to load it in memory
+cd /usr/local/intel
+
+ls .intel.ko --> list intel.ko files
+
+# command is
+insmod driver_path --> loading  adriver in memory
+
+# more advance command is
+modprobe driver_name --> it goes itself in lib/modules/kernel drectory and look for mentioned driver
+
+
+Step # 5
+driver loads after booting automatically
+you need to persist to auto run the cmnd while booting
+
+# file is where you need to make an entry to make it perisistent
+vi /etc/modprobe.d/dist.conf
+
+# example
+alias audio intel --> make entry for audio intel driver in this file now it will persist
+
+# following file contain the information which drivers to load while booting
+vi /lib/modules/kernel_name/kernel/modules.dep
+
+IF YOU DON"T WANT IN YOUR COMPANY TO USE A DRIVER SUCH AS VLC OR NO USB ATTACHMENT YOU CAN SIMPLY BLACKLIST THE DRIVER
+
+# go into the file and add the driver
+cd /etc/modprobe.d
+
+# lokk for file blacklist.con
+vi blacklist.conf --> open file and make entry for the driver you want to blacklist
+
+
+
+KERNEL:
+we can have multiple kernels in our system
+But, at a time only one kernel we can use, we can have multiple kernels but can use only one at a time
+
+when system start, kernel is loaded in RAM and it is extrcted all files in it.
+
+RUnning kernel can be seen in directory "/proc"
+
+config file in "boot" directory is manual file for kernel
+vi config_file --> opening the config file
+
+# you can search for nay driver here for example search for NTFS if ther eis y or m means driver is enabled
+if NTFS is not set then we can install ntfs.ko file through yum
+
+#example
+yum install ntfs-3g fuse ntfsprogs
+
+
+# updating the kernel
+yum update kernel --> it does not owerwrite, it removes the old fles and install new files (will not overwrite)
+
+after updating kernel changes are made in grub (grub.conf) file and ne kernel entry is recorded
+vi /grub/grub.conf --> path of grub file
+
+# if you want to now where the file came from like which package extraction installed this file
+rpm -qf filename
+
+# if there are multiple kernels which one is running can be checked by following command
+uname -r
+
+# if you want to switch to other kernel you can only while rebooting you cannot switch while another kernel is running
+
+
+WAYS to update kernel:
+1. rpm -U kernel_name
+
+2. yum update kernel
+
+3. kernel compilation --> download source code and compile it
+
+
+KERNEL TUNING: (IMPORTANT and asked in Interviews)
+tuning means changing kernel parameters
+
+when system starts, kernel is loaded in RAM, modifying kernel or making changes in it while it is loaded in RAM it is called kernel tuning
+go to /proc to see kernel running
+
+
+TYPES of kernel:
+1) monolithic kernel called modular used by linux
+2) micro kernel used by solaris /AIX/HP -ux
+
+NOTE: you can make changes only in sys file present in proc directory
+kernel tuning can be done only in "/proc/sys"
+
+# which things we can tune
+sysctl -a
+
+# counting how many drivers we can tune
+sysctl -a | wc -l
+
+
+
+KERNEL TUNING CONTINUED:
+suppose you are getting application is not starting and you get too many open files.
+Ram and memory is free when you checked but you are still getting error too many open files
+
+Kernel is not allowing to open or load new files this is kernel limitation
+
+# how many files are open/loaded in kernel
+
+# ho many files you can open in system can be seen in
+cat /proc/sys/fs/file-max --> this file has the number of files you can open.
+
+# now if your application is not running because you reached the limit of files mentioned in the file-max.
+# changing limit of file we can open in file-max
+number_of_files > /proc/sys/fs/file-max
+
+# example suppoer file-max allow to open 4000 files max you can increase it to any number let's increase to 5000
+5000 > /proc/sys/fs/file-max
+
+what we done above is known as kernel tuning, an your error too many open file is solved now.
+
+
+
+2nd Issue:
+RAM is full --swap is not being used and you are being limit by kernel
+
+# kernel swappiness file that control the use of swap, 100 do swapping a lot, 10 do wapping less
+# tu tune any kernel we will go in proc
+cat /proc/sys/vm/swappiness
+
+# changing swappiness value
+echo 60 > /proc/sys/vm/swappiness
+
+
+
+NOTE:above is also kernel tuning because we changed the limit of kernel
+
+
+# going into proc and finding separate files is a hectic task
+## another way is to run the direct command using sysctl
+
+# find swappiness and it's value
+sysctl -a | grep swap --> t shows current tag and value
+
+# modifiying tag and value
+sysctl -w vm.swappiness=10
+
+
+we can modfiy any kernel file using the sysctl command
+
+
+ABOVE CHANGES are valid till we reboot system. We need to make these changes persistent
+
+HOW TO MAKE KERNEL TUNING PERSISTENT:
+
+# make an entry in the following file
+vi /etc/sysctl.conf
+
+# example entering swappiness tuning in sysctl.conf file
+vm.swappiness=50
+
+reboot system and validate
+
+
+# validate if entry has been udated in ram
+sysctl -p
+
+
+IF YOU ARE IN ORACLE:
+# you can make changes in oracle database using following command and to make changes persisitent make entry in /etc/sysctl.conf
+sysctl -a | grep -i shm
+
+
+If someone ask you in inteview what you did in kernel tuning:
+I changed swappines 
+I increased the maximum open file limit

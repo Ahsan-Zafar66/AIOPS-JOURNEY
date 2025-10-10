@@ -1,0 +1,74 @@
+A company asked you make a /web directory which has 5gb of space to store the data, how will you do it?
+
+First option is to add 5 gb hard disk to the system and mount the directory to that drive
+
+second option is to use a USB drive of 5 gb
+
+third option is to use SAN (storage area networks), SAN box is a collection of hardisks, each hardisk has a size let's take 300gb for example. SAN has 10 hard disks suppose and each is of 300gb. Now, we can merge the all hardisk into one of 3000GB or 3tb, now we can divide this 3TB hardisk into any desired number of partitions.
+In our case SAN has 10 disks each of 300gb, suppose we have requirement to create 1000GB storage, then we can merge these 10 hardisks and total space will beocme 3000GB now we can easily assign 1000GB for our purpose, this 1000GB is known as LUN (Logical Unit Number). This is LUN 1 of 1000GB. 
+Now we have another requirement for 700GB, we make it from the remaining 2000GB, this is LUN 2.
+Now we have another requirment for 1300GB, we can make it from available space and it is LUN 3.
+These LUN1 LUN2 and LUN3 are available in server as sdb, sdc, sdd, because sda is already in server and we are installing SAN box to get more space.
+
+Linux server has HBA card which is connected with Storage (SAN BOX) HBA CARD with the help of Fiber Chanel cable
+
+SAN storage box is called target
+
+scsi controller controls the hardisks in SAN
+
+Finding these LUNs and displaying in server is known as LUN Scannning
+
+# comand for lun scanning, we have to run all these three commands not only one
+echo "_ _ _" > /sys/class/scsi_host/host0/scan
+echo "_ _ _" > /sys/class/scsi_host/host1/scan
+echo "_ _ _" > /sys/class/scsi_host/host2/scan
+
+
+# Why we need ot run commands three times, what is the logic?
+Suppose you have a server and it has three HBA cards, and each card has two ports. Now you need to run command for 6 times, so it could go to the each port and search for LUN's
+
+In a hardisk we can make only 4 partitions. we can maek more than 4 partitons by making 3 primary and one extended. In that extended partition we can amke any 63 partitions, these partitions are known as logical partitions.
+
+Extended paritions are also known as primary partitons.
+
+We can make 4 primary, 1 extended and 63 logical partitions. Primary does not support logical. On primary we make extended partition and in that extended partition we make logical partition
+
+logical partition start from 5, first 4 are always primary. FOr example sda1,sda2,sda3,sda4 --> primary, sd5,sda6 -->logical. If you make only 2 partition one is primary sda1 and second is extended sda2,now you make logical partition it will start from sda5 not from sda3. It will skip sda3 and sda4 as these are always for primary partitions
+
+
+
+===============
+Partition Table Types:
+There are two types of partition tables
+1) msdos/mbr
+2) GPT
+
+the limitation to make only 4 primary partitions are in msdos/mbr
+
+In GPT partition table we can make upto 128 primary partitions
+
+
+To check which partition table your partition has:
+parted -l /dev/sdb --> it will tell the partition table of partition sdb
+
+we can convert msdos to GPT, but their is data loss
+
+
+To write unwritten data from memory to harddisk we can use sync command
+
+sync --> writes data from memory to harddisk, sometimes we run command and make changes to something it is present in RAm but not in harddisk, it takes time to write from RAM to hardisk, so you can run sync command to immediately save the or write the things to hard disk
+
+
+What is the difference between ext2, ext3, ext4, and xfs? --> interview question prepare a good answer
+
+
+
+# COMMAND TO UNMOUNT THE DRIVE
+unmount -l /madmax2 --> madmax2 is directory
+
+now you cannot access data in madmax2 directory because the drive is unmounted and the link between directory and drive is broken now. Data was written on the drive. Now, to access the data again mount the drive on the same folder and you can access the data.
+
+
+when we turn on the OS, data from harddisk loads into the RAM
+
+Anything that is present in Hardisk comes into the RAM and we see it.

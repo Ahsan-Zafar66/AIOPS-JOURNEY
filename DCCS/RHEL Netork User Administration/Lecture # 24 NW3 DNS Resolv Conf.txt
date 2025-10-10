@@ -1,0 +1,151 @@
+# you can add only on default gatewat
+
+# command to add a gateway, it will add 192.168.1.1 as gateway
+route add default gw 192.168.1.1 
+
+
+# command to remove the gateway 192.168.1.1
+route del default gw 192.168.1.1
+
+the above command remove the gateway from RAM, but ifcfg file still has the gateway entry. But, gateway will still not work though it is present in ifcfg file, because it has been delted from RAM. But, after reboot the ifcfg will autoload in RAM and gateway will start working again
+
+to remove gateway permannetly remove entry from ifcfg file.
+
+
+# directory storing network driver information in centos 9
+cd /etc/NetworkManager/system-connections
+
+we can add multiple gateway is called destination routes static routes, but default gateway is only one
+
+
+What is DNS?
+Domain name system, domain name service
+
+
+When we write a website name, such as facebook.com.
+The network goes to DNS finds the ip address of the website and connect us with that ip address. We can access a website by directly entering the ip address of the website.
+
+
+/etc/resolv.conf --> this file stores the nameserver information, it holds the DNS server info and then goes to that DNS.
+I wrote faceboo.com, the network will go  to resolv.conf file and then check the DNS server, goes to that DNS server find the ip of facebook.com and connects us
+
+resolv.conf has DNS information
+
+
+
+
+
+ip route --> to see the gateway (entry after default is gateway 10.0.2.2, entry after enps03 10.0.2.15 is ip address of enps03)
+ip route | grep default --> to see the default gateway
+
+# deleting a default gateway
+route del default gw 10.0.2.2
+
+# adding a gateway again
+route add default gw 10.0.2.2 
+
+ip addr show --> to see ip address
+
+
+DNS information is in /etc/resolv.conf  file
+
+public DNS of google and facebook are used to ping them
+gateway ip can also be used to ping google and facebook
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

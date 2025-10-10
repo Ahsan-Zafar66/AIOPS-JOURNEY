@@ -1,0 +1,160 @@
+DNS:
+Domain Name System
+
+Name to IP resolution --> name se IP milta hai
+
+If you need to connect to as erver anywhere in the world, you need an ip address without it you cannot connect
+
+There are million of services hosted on servers like faceboo, instagram and a lot more. We cannot remeber ip address of each of service server. It is better to remeber these services BY name rather than ip addresses of their servers
+
+is it easy for you rmemember ip addresses or name of service?
+ip addres of facebook = 192.157.43.10 or just facebook.com which one is easy to remeebr? 
+
+when you write facebook.com on your browser, it goes to DNS which has name and ip addresses of services, you enter name it goes to DNS matches with the service retrieve it's ip and connect to it
+
+if you connect by writing ip in your browser it wont go to DNS
+
+if you connect by writing name like google.com it goes to DNS gets the google ip stored their and connects you google.com
+
+
+-------------Making DNS Caching + Recursive server-----------------------
+
+Clients use ISP i want them to use my own self created DNS to connect to my service.
+
+
+if  a client needs to go on facebook, it comes to my DNS and i give hime the ip address to connect with facebook.
+
+if  client connects with facebook, it has to go outside get the ip and connect, i don;t want it to go out fot this reason i will my on DNS server for the client so client does not need to go out that DNS server will get the ip of facebook for my client.
+
+
+# installing bind package
+yum install bind-*
+
+
+# config file of DNS
+/var/named/chroot
+
+# DNS has two conf files one in /etc/named/named.conf and second in "/var/named/chroot/etc/named.conf"
+first_file = /etc/named/named.conf
+
+second_file = /var/named/chroot/etc/named.conf --> main file
+
+# move the first file from its location
+mv /etc/named/named.conf /home/ahsan
+
+
+# THE MAIN conf file for DNS is stored in path "/var/named/chroot/etc/named.con" if in this path named.conf file is not present create it
+
+
+# starting dns service
+systemctl start named-chroot
+
+
+# checking port of named-chroot
+netstat -tulnp | grep -i 53
+
+# anothetr command
+ps -el | grep -i named
+
+# opening a port in firewall and aadding dns
+firewall-cmd  --permanent add-service=dns
+
+after adding dns, we have successfully implemented the caching recursive dns server
+
+if you remember we use to make an entry in the flat dns file which was "/etc/hosts" but now our dns is ready and we can make entry in it.
+the file for dns is "/etc/resolv.conf"
+
+
+
+# when we write
+dig youtube.com --->there is a "." after com whic we don;t see it is root server is ----> .com is TLD top level domain --> it goes inside and look for youtube which is domain name.
+
+
+
+LAND DNS:
+DNS that resolves our local domains such as i have a page sysops.com. I don't want my dns to go out looking for it;s ip when my client calls. I want it to have it and resolve it locally
+
+creating a local zone and resolving local server in dns
+
+# open named.conf file in chroot/etc
+
+zone "sysops.local" {
+type master;
+file "var/named/sysops.db";
+};
+
+resolving local domain sysops.com
+
+
+# now e have to make data base file in directory
+cd /var/named/chroot/var/named/
+
+# making .db file
+touch sysops.db
+
+# after creating sysops.db in the /var/named/chroot/var/named/ directory we need to copy zone script from a file
+cat /usr/share/doc/bind-version/sample/var/named/named.localhost > /var/named/chroot/var/named/sysops.db 
+
+# now open this file
+vi sysops.db
+
+# write this in file at last
+
+sysops.local IN A 4.4.4.4 --> sysops.local is my domain and zone name
+
+# you can also write the above line as
+@ IN A 4.4.4.4
+
+# OR
+portal.sysops.local IN A 6.6.6.6 --> portal is subdomain
+
+# OR
+mail.sysops.local IN A 7.7.7.7 --> mail is subdomain
+
+# now restart the named-chroot
+systemctl restart named-chroot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

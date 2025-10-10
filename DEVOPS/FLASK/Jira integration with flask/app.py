@@ -24,9 +24,9 @@ def information():
 
 
 
-        user = "ahsanzafarqau@gmail.com"
-        api = "ATATT3xFfGF0rv4nzQuXRBzq_DLrL2aoMoURxzdQgFrbGxrvLsx-Pz2nDLJjSUuFO_4PxGzrRSvIMKgozMnD9mDd-IPlvFwoqoV7F4sBfWF3F20NNLDcGKcUur3gpk-wnDj8UJWMvW3H52qvCzfSm8WyjT-E4QU2iUqtD-Y5I5SRu35Sby4x7_0=757B7A9A"
-        myserver = "https://ahsanzafarqau.atlassian.net"
+        user = "use your email"
+        api = "use your api token"
+        myserver = "use atlassian project url"
 
         # establishing the connection with jira using username and api token
         jira = JIRA(server=myserver,basic_auth=(user,api))
