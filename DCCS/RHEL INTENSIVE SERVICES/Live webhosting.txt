@@ -1,0 +1,191 @@
+We will use apache and DNS to host a website.
+
+We wil make an ec2 instance on AWS 
+
+Step # 1
+Create an aws ec2 instance and connect to it through moba xterm
+
+# update the ec2
+yum update -y
+
+# install httpd and telnet if not installed
+yum install httpd-*
+
+yum install telnet-*
+
+# now check if you can connect to telnet
+telnet ec2_ip 80 --> 80 port is for httpod
+
+# now go to the foloowing path and create and index.html file.
+cd /var/www/html/
+
+# creating index.html file
+vi index.html
+
+# copy the following file
+cp /usr/share/doc/httpd-version/httpd-vhosts.conf /etc/httpd/conf.d/
+
+# also look in path
+cd /usr/share/doc/ --> in this directory look for httpd-core or some file like this and see if you find httpd-vhosts.conf file in it as different centos version store dile in different ways
+
+if you do not find httpd-vhosts.conf file in the above directory create one in the path "/etc/httpd/conf.d/"
+
+
+Open the httpd-vhosts.conf file and modify the document root path to /var/www/index.html/
+
+in the server name part write your website name like www.cybertruck.com
+
+# check if there is any error in httpd-vhosts.conf file
+httpd -t
+
+# reload httd
+systemctl reload httpd
+
+
+
+# check if you can acces ec2 from outside
+if you cannot access the page that you entered here check if firewall is allowing you
+firewall in AWS is known as securitygroup
+
+# now go to AWS instance on website click on security groups and add http rule there
+
+# now add http service with ipv4 addresses and set source 0.0.0.0/0 so anyone could acces it. Wait for sometime until changes are done and after some time writw your ec2 ip addres on any broser windows, linux anythin
+
+you don't need to make any entry in files /etc/hosts p
+
+you have successfully hosted a website using ip
+
+HOW TO ACCES THROUGH NAME:
+you have to register a domain on GODADDY website
+
+Open account of goddady 
+
+go to dns then go to manage zones
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

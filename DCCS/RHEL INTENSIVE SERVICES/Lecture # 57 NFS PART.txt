@@ -1,0 +1,64 @@
+NFS:
+Network File Sharing
+
+Multiple services/protocols
+NFS
+Samba
+DHCP
+DNS
+
+What companies do they allocate a separate server for each service.
+like one server for samba, one separate server for NFs and so on
+
+What companies do they do clustering, for example on cluster of servers for SAMBA service, one cluster of servers for WEB services:
+suppose samba cluster has 3 servers --> server a,b and c --> server a is main --> if a is down load is distributed to other b and c servers and even if server a is down clients are directed to b and c. So, services do not stop
+
+
+Scenario:
+make NFS in cent os 7
+client will be cent os 6
+
+NFS port number = 2049
+
+NKFS works on UDP protocol
+
+BFS works only linux to linux
+
+NFS doesn't ask for username and password
+
+
+SAMBA = file service
+samba ports are 137,139,335
+samba = tcp protocol
+samba works linux to linux and linux to windows
+samba ask for username & password
+
+NFS server task:
+share a folder
+
+Step # 1 make a directory which you want to share
+mkdir /home/ahsan/nfs_server
+
+Step # 2 install nfs
+# check if already exist or not
+rpm -qa | grep -i nfs-utils
+
+# if not present install
+yum install nfs-utils -y
+
+# no reboot server
+systemctl restart nfs
+
+# enable nfs
+systemctl enable nfs
+
+# make entry in /etc/exports
+/home/ahsan/nfs_server *(sync)
+exportfs -rv
+
+exportfs -v --> optiona,
+
+We have implemented NFS server
+
+
+When you ar ein production if task requires 5-10 minutes ask for a day or two do not do tasks instantly

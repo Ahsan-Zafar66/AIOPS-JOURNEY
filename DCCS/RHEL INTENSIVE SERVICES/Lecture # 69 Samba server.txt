@@ -1,0 +1,141 @@
+SAMBA:
+It is a file server.
+
+It is useful for file sharing.
+It works from linux to linux and linux to windows
+
+SAMBA asks for username and password.
+
+NFS do not ask for username and password.
+
+
+TASK:
+Make a folder which you can access from windows
+
+# check samba package is installed or not
+rpm -qa | grep -i samba
+
+# configuration file of samba
+cd /etc/samba/
+
+look for for file smb.conf
+
+[global] --> share name and values in them are labels
+
+
+# let's make our own share. Client will see what name we give to the share
+
+
+[common]
+path = /opt/fileserver
+hosts allow = 192.168.43.0/24 
+
+# checking if everything writte is wrking
+testparm --> pres enter twice 
+
+Every linux user are also FTP user
+every linux user are also mail user
+every linux user are NO SAMBA user
+
+# HOW TO CREATE SAMBA USER
+smbpasswd -a username --> enter samba user, user should be already existing, if user does not exist then make a new user and make that user samba user
+
+# my pasword for samba is samba?1133? an duser is ahsan in centos 9 machine
+
+samba port is 137
+
+# in you windows try if you can connect to port 137, 139, 445
+137 --nmb -> netbios
+139 --smb --> samba
+445 --> sharing
+
+# start smb and nmb ports
+systemctl restart smb
+systemctl restart nmb
+
+# check firewall or add services
+firewall-cmd --list-services
+
+# add if not present
+firewall-cmd --add-service=samba
+
+
+# now got to windows search bar and write the ip address of server where samba is configures
+\\192.168.43.211
+
+# enter the username created in samba and it's password
+
+
+if you are file sharing, there is a concept of file lock, so multiple users accessing that file not write it simutaneously or corrupt the file, so we give first client rw and second clinet read only permissions
+# tags to add in smb.conf file
+writable = yes
+browseable = yes
+file lock = yes
+create mask = 0644
+directory mask = 0770
+read list = ahsan,ahmed --> give ahsan ahmed read
+write list = ahsan,ahmed --> give ahsan ahmed write
+
+
+# creating another tag
+[alnafi]
+path = /home/ahsan/alnafi
+hosts allow = 192.168.43.0/24
+
+Windows concept:
+windos has workgroup and domain control (dc)
+
+when two window machines connect with each other, they are include in workbook or workfamily of each other.
+they can now communicate with each other
+
+domain control means all users will be authenticated here
+
+
+
+# we can forget above tags of samba, we can find tags by using command
+testparm -vvv --> to see all samba tags, if we forget we can search here
+
+
+HOW SAMBA(smb) WORKS?
+peer to peer access.
+
+domain controler is for centralized authentication
+
+samba makes a workgroup in its machine
+
+samba send nmb to windows and nmb shares folders samba shows
+
+windows communicate with nmb, windows think it is my brother it does not know that behinf the screen samba is working
+
+nfs does not have nmb that is why we cannot share nfs with windows.
+
+samba version4 can be used as active directory
+
+samba is 90% replacement of active directory
+
+winbind is used for window authetication
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

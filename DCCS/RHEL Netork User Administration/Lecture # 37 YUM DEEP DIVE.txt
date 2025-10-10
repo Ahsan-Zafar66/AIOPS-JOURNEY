@@ -1,0 +1,277 @@
+How YUM Works?
+1) yum install docker
+2) cd /etc/yum.repos.d --> when we run the command 1) than yum go in this directory and load the repo file
+3) refer all .repo file and load it
+4) it thne checks baseurl/mirrorlist tag under main tag
+5) then it connects to repository server with fastest mirror/url with the help of http or ftp protocol
+6) after connecting to the repo server it will check the package in the inventory of the server which is in xml format e.g repomd.xml, if it is present it will download the required package
+7) download in local machine -- with curl & store .rpm in /var/cache/yum ..
+8) rpm -ivh <pkg.rpm> install
+9) it will remove the .rpm pkg after installing the software
+
+
+
+# if you want to look manually go to website
+mirror.centos.org
+go in packages and you will reach the warehouse of packages
+
+
+
+When yum not work?
+see is there any issue in the dns and resolve dns ---- http port open fw
+pkill yum and start it again
+
+
+
+# if you want to search a package into yum warehouse
+yum search package_name
+
+
+# suppose if we are seaching a package and it is not available
+# what we can do is add other warehouses from other linux versions or OS
+
+How to add other repository in the warehouse for softwares that are not present in current repositories of the warehouse
+
+# installing epel repository, epel is fedora repository server, epel is for extra packages
+yum install epel-release
+
+
+# downloading the package only not installing
+# if you have download a package it will be in the following repository
+cd /var/cache/yum/x86_64/7/epel/packages --> if you dowload it will go in this directory
+
+# now you can install the downloaded package using rpm -ivh package_name command
+rpm -ivh package_name
+
+
+Some other repo servers:
+1) epel
+2) remi
+3) DAG
+4) rpmforge
+5) rpm.pbone.net
+6) webtatic
+
+
+# if you want the yum to look in a specific directory
+# it won;t check other repositories only the mentioned one it will check
+yum --enablerepo=epel install xmms
+
+
+
+# how to make yum not work
+step # 1
+cd /etc/yum.repos.d --> go in this directory
+
+step # 2 select repo you want to disable
+change the enabled of the repo from 1 to 0, 1 means on 0 means off. Now you turned off yum for this repository. Next time you install something yum will not look in this repository
+
+# another way
+rename the repo file with some other name, now file name is changed yum will not be able to acess it
+
+
+# when we are connected to internet we install using yum calls online installation
+# some companies does not allow you to go to internet in this case you need to download softwares offline.
+
+
+What is lvm?
+Logic Volume management, increasing or decreasing a partition size. Which partition size we can increase which we cannot.
+
+Home can be increased as it is in LVM
+
+Boot is not in LVM it is directly on harddrive
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

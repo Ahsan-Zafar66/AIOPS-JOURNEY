@@ -1,0 +1,5 @@
+{
+    "my_os_cmd":"cat /etc/os-release | grep -iw 'NAME' | awk -F '=' '{print $2}' | tr -d '\"'",
+    "my_data_cmd":"df -h | grep -v tmpfs | awk NR!=1 | awk '{print $1,$2,$3,$4,$5,$6}' | sed -e 's/%//g' | sed -E 's/ +/,/g' | sed \"s/$/,$(date '+%F %T')/g\" | sed \"s/$/,$(hostname -I)/g\" | sed \"s/$/,$(hostname)/g\" > my_project.csv"
+    
+    }

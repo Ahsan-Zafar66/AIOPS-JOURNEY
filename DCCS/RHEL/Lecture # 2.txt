@@ -1,0 +1,76 @@
+touch ahsan{1..100}.txt --> to make 100 text files, ahsan1.txt, ahsan2.txt
+
+df -h --> show df output in human readable format
+
+-h , -rf, -l and others are all flags
+
+df --help --> show all flags related to a command
+
+
+mkdir /home/ahsanzafar/Documents/folder1/folder2 --> it will give error if the folder1 does not exist, like this command only makes the last folder
+
+mkdir -p /home/ahsanzafar/Documents/folder1/folder2 --> this command will not give any error it will make itself the folders that does not exist to make the final folder
+
+ls -d /home/ahsanzafar/Documents/folder1/folder2 --> to check whether the directory has been formed or not.
+
+
+id --> to see the user you are using
+
+su hacker --> to login to user hacker
+
+sudo -i --> to become root user
+
+su - hacker --> to login to user hacker
+
+if you are root user then it won't ask for password to login to any acocunt, remeber not the root user of an account, real root user
+
+man pwd --> tell about pwd
+
+whatis pwd --> shows small description of the command
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

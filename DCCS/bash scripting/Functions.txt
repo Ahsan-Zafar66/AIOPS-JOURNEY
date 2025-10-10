@@ -1,0 +1,98 @@
+syntax of a function
+
+
+function_name()
+{
+	statements
+}
+
+function_name
+
+---------------
+
+local variable --> defined with local command and only available inside function
+
+call_name()
+{
+	local name=ahsan
+	echo -e "My name is $name"
+}
+
+call_name
+
+echo "Your name is $name"
+
+==============
+above function will print name in the function statement but not out of it
+------------------
+global variable --> can be accessed globally
+
+name is defined globally and it is accessible inside or outside of the function.
+==========
+global_var()
+{
+	echo "My name is $name"
+}
+
+name=ahsan
+
+global_var
+
+====================
+
+echo $? --> tells you the status of previous command run by you. 0 means command ran and 127 means command not found
+
+
+==============
+
+Passing arguments in the function
+========================================
+argument()
+
+{
+	echo "My name is $1"
+	echo "My age is $2"
+	echo "i am learning $3"
+}
+
+argument ahsan 24 bash_scripting
+===========================================
+
+addition()
+{
+	first_num=$1
+	second_num=$2
+	answer=$((first_num + second_num))
+	echo "The sum of $first_num and $second_num is: $answer"
+}
+
+first_number=10
+second_number=200
+
+addition first_number second_number
+
+a=300
+b=500
+
+addition a b
+
+===========================
+In above function we define variable first_num and second_num and set $1 and $2 in them, it means when we call function first value passed will be stored in first_num and second number passed will be stored in second_num.
+Then i am defining the values of these argumetns before calling function, like first_number is 100 and second_number is 200
+then i am using the function with a and b, so this function will sum two numbers in whatever way they are passed either directly while calling the function or passing the variables in them.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

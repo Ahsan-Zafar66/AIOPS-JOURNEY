@@ -1,0 +1,204 @@
+what is cron?
+cron is a task scheduler. cron runs as a service.
+
+# to check cron
+systemctl status crond
+
+
+# how we sart a service
+service service_name start
+
+# example
+service docker start
+
+# check service status
+service service_name status
+
+# example
+service docker status
+
+# restarting service
+service docker restart
+
+
+# stopping service
+service docker stop
+
+
+In rhel 6 services are controlled by INIT but in RHEL 7,8 services are controlled by SYSTEMD
+
+init pid is 1
+
+service is replaced by systemctl
+# commands now
+systemctl start docker
+
+# restart
+systemctl restart docker
+
+# status
+systemctl status docker
+
+
+# rhel 6 autostart (start these services while booting next time)
+chkconfig docker on
+
+chkconfig mysql on
+
+# rhel 7 auto start
+systemctl enable docker --> start docker when system start
+
+systemctl enable mysql
+
+
+
+
+How to schedule jobs through cron?
+
+crontab -e --> crontab is set for current user and it opens a file 
+
+# for specific user
+crontab -u ahmed -e --> setting cron tab for user ahmed
+
+# in the first line of file write
+* * * * *  touch scripts.sh --> * are schedule and after stars whatever is written is job
+
+first * = Minutes
+second * = Hours
+third * = date
+fourth * month
+fifth * = day of week (monday =1, sunday = 7)
+
+# schedule for Friday 9:30 AM
+30 9 * * 5
+
+# schedule for 13th of every month 7:30 PM
+30 19 13 * *
+
+# schedule for every new year
+00 00 01 01 *
+
+# schedule that the job shoudl run all days except saturday
+* * * * 1-5,7 ---> 6 is not included
+
+
+USE CRONTAB.GURU website to convert your schedules into cron language
+
+
+* * * * * touch scripts.sh --> five stars fro system but 6 should be for cloud 
+
+the first * is for minutes and second is for hours
+
+15 2 * * * touch scripts.sh --> always at 2:15 am create a file scrits.sh. The other three stars are for always like daily
+
+
+# to see the jobs scheduled
+crontab -l --> list the jobs that are scheduled
+
+
+
+
+
+# Exercise of cron
+Step # 1 
+# make a script that takes backup after business hours
+vi script.sh --> make a script file
+
+# what to write in script file
+#!/bin/bash
+
+rsyn -avz /home/ahsan/Downloads/* /home/ahsan/Documents --> take backup of everything in downloads in documents
+
+touch /home/ahsan/Documnets/ran_success --> create a file ran_success to chekc if the script ran smoothly
+
+
+
+Step # 2 # now create a cron job of running the above script at desired time
+crontab -e  --> open a crontab job
+
+# write the following command in crontab file
+20 7 * * * /home/ahsan/Downloads/script.sh --> daily at 7:20 am run the script.sh file 
+
+
+
+
+
+
+How to take backup of crontab jobs?
+# path where cron jobs are stored
+cat /var/spool/cron/root --> file where root cron jobs are stored and you can read present jobs
+
+# you can copy above file
+cp /var/spool/cron/   /home/ahsan/Pictures/ --> cop yht file in cron to Pictures
+
+
+How cron works?
+systemctl start crond --> start crond when it starts it is loaded RAM
+
+In every 1 minute this program will become active & go to /var/spool/cron/root & check job time
+with th curent time & it time matche then it will execute that job & if time didn't match then cron goes to sleep again.
+
+
+# if you want to check which cron jobs have been run previously
+cat /var/log/cron
+
+
+
+How to restrict a user from creating it;s cron?
+# go to the following path
+ls /etc/cron
+
+# find cron.deny file her and add the name of user you want to resrtict.
+vi /etc/cron.deny
+
+
+# add user ahmed here write it
+ahmed
+
+
+# now try to schedule a job using ahmed
+
+
+
+NOTE:
+ there is not cron.allow file like cron.deny. 
+If you created cron.allow file and added some users suppose you add ahmed there, now except ahmed all users will be restricted from scheduling cron jobs.
+Except ahmed no one will be able to make jobs now.
+
+
+hardening OS:
+unwanted modules are removed
+unwanted services are stoped
+unwanted package unistalled
+excess permission are removed
+single user mode is secured
+grub / bios passwrd set
+ssh remote login - roort logn disabled
+OS FW enable
+unwanted services are stoped.
+
+
+
+What is anacrontab?
+Job left by cron is executed by anacrontab
+
+TYPEs of scheduler:
+there are three
+1.cron
+2. anacron (jobs not executed by cron due to system switch off is done by anacron)
+3. at scheduler (used only for one time job)
+
+systemctl status atd --> atd at scheduler
+
+
+
+
+
+
+
+
+
+
+
+
+

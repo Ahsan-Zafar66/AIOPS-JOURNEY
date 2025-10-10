@@ -1,0 +1,132 @@
+How to extend swap on Hard disk Level?
+locate swap first
+
+# step 1 make a partition
+fdisk /dev/sdc
+
+# making partition
+press n --> new partiton
+select primary and available partition number as prmary has 1-4
+allocate space
+press t
+enter partition number
+write hex code 82 which is for swap
+
+# step # 2 run partx command
+partx -a /dev/sdc
+
+# step # 3 now run swap command (sde1 is the partition created)
+mkswap /dev/sdc1
+
+# step # 4 make entry in /etc/fstab file
+/dev/sdc1 swap swap defaults 0 0
+
+1st swap --> as we are not mounting so in place of mount point swap will come
+
+2nd swap --> as third position is for file system as we are making swap so file system will be swap
+
+# step # 5 merging swaps
+swapoff -a --> turn of swap
+
+swapon -a --> turn on swap
+
+after turning off and on swap the newly created swap and previous ones will automatically merge
+
+
+
+REMOVING SWAP:
+if you want to remove swap remove the entry from /etc/fstab file and turn off swap and turn it on again. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

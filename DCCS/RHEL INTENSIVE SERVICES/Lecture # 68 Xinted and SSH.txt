@@ -1,0 +1,208 @@
+Xinetd:
+it is a service in which there are samll base services. It is a stand alone services that controls other small services.
+
+which controls multiple child services
+
+xinet based services are telnet, tftp, nrpe, amanda
+
+so if you start these services separately thesde are stand alone and are loaded in RAM, suppose you start telnet, it is loaded in RAM but use of telnet is very little, like this suppose you loaded amanda, it's use is little it is also loaded in rAM, so in the mean time load on RAM increases.
+So, to deal with this thing they combined such services inside xinted, when you call telnet xinted get's loaded in RAM start telnet when it's job is finished it removes it from RAm, so in this case load on RAM does not increase
+
+xinetd now loads these services when someone calls for them and when their job is finished it removes them from RAM, so RAM loaded is reduced a lot because services are not running in RAM constantly they only run when they are required and removed when their job is finished.
+
+# checking if xinetd is insalled
+rpm -qa | grep -i xinetd
+
+# after installing starting xinetd
+/etc/init.d/xinetd start
+
+# in rhel 7,8,9
+systemctl start xinetd
+
+# house or home of xinetd
+cd /etc/xinetd.d 
+
+# in the /etc/xinetd.d directory it contains config files of child services.
+
+# adding a service in xinetd, such as telnet
+yum install telnet-server 
+
+now you will see telnet in the /etc/xinted.d directory
+
+# start xinetd
+systemctl start xinetd
+
+# now open telnet file created in /etc/xinetd.d
+vi telnet
+
+# look for disable=yes
+turn disable=no
+
+# reload xinetd
+service xinetd reload
+
+
+# adding tftp in xinetd
+yum install tftp-server
+
+# go to tftp file in /etc/xinetd.d
+vi tftp ---> turn the disable=yes into disable=on
+
+# reload xinetd servcice
+service reload xinetd
+
+# now telnet is on and whenever somecalls telnet xinetd starts it and when job ends it removes
+
+
+tftp --> use case -- PXE Boot --> NE installation
+
+nagios is monitoring tool, nrpe is agent for monitoring
+
+
+------------SSH----------------
+
+ssh means secure shell
+
+ssh protocol uses 22 port
+
+
+ssh communicates in encrytion mode (public key + private key)
+
+telnet communicates in clear text mode
+
+communication of client with server is encrypted
+
+systemctl status sshd
+
+
+# location of configuration files of ssh
+cd /etc/ssh
+
+# connecting to another server
+ssh server_ip 
+
+# example
+ssh 192.168.43.63 
+
+# aftering running above command you nned to enter the root password of server to which you are connecting through ssh
+
+when you run ssh 192.168.43.63, the client goes in /etc/services file and find ssh port, it saw 22 their for ssh and that is why it connects with port 22 of the mentioned server.
+
+# services information file
+cat /etc/services
+
+
+# you can also mention port and now it will skip /etc/services file and directly connects with the mentooned port
+ssh 192.168.43.63 -p 22 --> -p means port
+
+the destination port on server is 22, what is the source of client?
+
+when we leave client we pick any port from non-privileged ports 1024-65535, any port can be taken by client to go out and get connected with the server port 22 which is sshd
+the source port is randomly picked and can be any in range 1024-65535
+
+# sshd configure file "sshd_config"
+cat /etc/ssh/sshd_config
+
+
+HOW TO CHANGE PORT OF ANY SERVICE?
+# we can change the port of any service
+# go to following file
+vi /etc/ssh/sshd_config
+
+
+
+------------
+
+when we login using ssh it by defaults goes for root of server
+if you login by normal user then server will ask password of normal user
+
+
+HOW TO RESTRCIT CLIENT TO NOT LOG IN TO ROOT USER OF SERVER?
+# for security reasons sometimes we prohibit client to have root access of server
+
+# what we do is
+# go to main configuration file of ssh
+vi /etc/ssh/sshd_config
+
+# search for label "PermitRootLogin" and turn it to no if there is yes
+
+# now restsrt sshd service in server 
+
+# go to client and try to access roor user of server from root user of client
+
+
+
+# logging in by specifying user
+ssh 192.168.43.63 -l username
+
+#example
+ssh 192.168.43.63 0l ftpuser
+
+
+# another way 
+ssh username@192.168.43.63
+
+# example
+ssh ftpuser@192.168.43.63
+
+# if you close ssh service in server, your client cannot connect with server
+
+
+HOW TO SET PASSWORD LESS SSH in Companies during automation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

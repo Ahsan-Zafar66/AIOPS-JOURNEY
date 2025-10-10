@@ -1,0 +1,319 @@
+How to change default policy of ip tables
+
+# changing accept policy
+iptables -P INPUT DROP --> -P policy
+
+# changing accept policy
+iptables -P OUTPUT DROP --> -P policy
+
+
+# changing accept policy
+iptables -P FORWARD DROP --> -P policy
+
+I blocked all incoming, outgoing and moving forward permissions.
+
+
+# now we will write a rule that if a client is coming for port 80 give it access else for any other port block it
+
+WE MAKE RULES ON THE BASIS OF FRAMEWORK OF IP PACKET
+# ip packet framework
+sip dip dport
+
+sip = source ip (client ip addres)
+dip = destination ip (server ip address where service is hosted)
+dport = destination port (service to acces on the server)
+
+RULE: for allowing the client if it is coming for port 80
+Input --dport 80 -j ACCEPT --> if the input port request is for 80 -j means jump and ACCEPT means accept (give accesss)
+
+
+# allowing all clients to access port 80, as port 80 (httpd) uses tcp so we need to add it
+iptables -A INPUT -s 0/0 -p tcp --dport 80 -j ACCEPT
+
+# diagnosis of above command
+iptables = refers to iptables
+-A INPUT= append rule in INPUT chain
+-s 0/0 = all clients (0/0 means all, if you want to allow a specific client write his ip)
+-p tcp = tcp protocol
+--dport 80 = if client asks for destination port (server port) 80
+-j ACCEPT = jump and accept that client 
+
+
+
+# opening ssh port for a client
+iptables -A INPUT -s 192.168.43.63/32 -p tcp --dport 22 -j ACCEPT
+
+
+# STATES in firewall
+Established.
+New.
+Related.
+
+If a person has connected with the server as he was allowed to connect but OUTPUT is blocked for all then he cannot go out after the connection of client and server on the mentioned port is established.
+
+Now, we can allow only clients to move out whose connection was established with the server on any port. In this way we are allowing only the allowed clients to come on their respective ports and move out if they are able to establish a connection with server.
+
+# command for allowing client with established connections to move out
+iptables -A OUTPUT -d 0/0 -m state --state ESTABLISHED -j ACCEPT
+
+# diagnosis of above command
+iptables = refer to iptable
+
+-A OUTPUT = append this rule for output chain
+-d 0/0 = do for destination 0/0 any, any client from destination (means inside server)
+-m state = match the state of client
+
+--state ESTABLISHED = if the state of client is ESTABLISHED means he was allwoed to make a connection with server
+-j ACCEPT = jump and ACCEPT
+
+# opening ssh port for all clients
+iptables -A INPUT -s 0/0 -p tcp --dport 22 -j ACCEPT
+
+
+# now go to another machine and try to access the machine on ssh port
+ssh ahsan@192.168.43.210 --> on second machine (192.168.43.63) run this command to connect to port 22 on 192.168.43.210 machine
+
+# how to delete a rule from IPTABLE
+iptables -D INPUT 2 --> delete rule 2 from INPUT chain
+
+iptables = refer to iptable
+-D = delete
+INPUT = from input chain
+2 = rule number 2
+
+
+if you have DROP all the input then no client wil be able to ping the server becaus eit is also a service
+
+ping listens icmp protocol and listen to ids
+1) echo-request has id == 8
+2) echo-reply has id == 0
+
+# allowing ping from clients
+iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT
+
+-p icmp = protocol icmp
+--icmp-type 8 = id service 
+
+
+
+
+
+
+
+IPTABLES has 4 types of tables:
+1) RAW
+2) Mangle
+3) NAT
+4) filter
+
+
+Default table is filter table and rules we write they go in filter table
+
+# chekcing raw table
+iptables -t raw -L --> -t means table, raw means raw table, -L means list
+
+# checking mangle table
+iptables -t mangle -L
+
+
+
+NAT:
+nat is for netwrok address translation, ip address change
+
+Suppose you want to connect to facebook and your private ip is 192.168.43.63. When you write facbook.com, the router changes your private ip into public ip to access facebook. and when you come back router takes the public ip and converts back to private ip.
+This is network address translation. COnversion of private ip to public ip and vice vers to acees services on internet
+
+
+# mangle table is used for packet modification
+
+# raw used for tracking
+
+# filter table is used for blocking, filtering and forwarding clients
+
+
+
+IPTABLES are in centos 6, in 7 and 8 it is changed to firewalld
+iptables has tables while firewall has zones and by default it has public zone
+
+
+# how to check by default open ports in firewalld
+firewall-cmd --list-services 
+
+
+# adding a port in firewall
+firewall-cmd --permanent --add-service=nfs
+
+
+
+
+after running above command you need to restart firewall
+
+# restarting firewalld
+firewall-cmd --reload
+
+# now chekc again list services in firewall nfs would have been added
+
+# allowing samba service in iptables
+iptables -A INPUT -s 0/0 -p tcp --dport 137 -j ACCEPT 
+
+# allowing samba in firewall for all clients
+firewall-cmd --permanent --add-service=samba
+
+
+If you are trying to add a service and you want to know if it is present in firewall data you can see by using following command
+# finding serices in firewalld 
+firewall-cmd --get-services
+
+# finding postfix (smtp) service
+firewall-cmd --get-services | grep -i smtp --> check if smtp is present in firewall data because we can only services listed in firewall data
+
+
+
+# seeing zones in firewall
+firewall -cmd --get-zones
+
+
+# seeing all firewall zones
+firewall-cmd --list-all-zones
+
+
+
+# if you are asked to block all services for all clients and you have multiple entries in public zones what you will do?
+# simply chnage the default zone from public to block and now it will block all
+firewall-cm --set-default-zone=block
+
+
+# switching back to public zone
+firewall-cmd --set-default-zone=public
+
+
+# AWS has security-groups
+these are stateful Firewalls which means if a client is able to make established state with the server then allow him automatically to move out
+IN AWS stateless firewall is called "NACL" and stateful firewall is called "sg"
+
+
+
+------------SELINUX------------
+Selinux means security enhance linux.
+
+selinux can be disabled and enabled. 
+
+enable has two categories enforcing and permissive
+
+enforcing has number --> 1 (enforcing means full block)
+permissive has number --> 0 (it allows you move forward with warning)
+
+to switch between permissive and enforcing you don't need to reboot system
+to switch to disabled you need to reboot system
+
+
+# file of selinuc
+cat /etc/selinux/config --> selinux config files
+
+
+# working of selinux
+enforcing has two values on (1) and off(0) and it applies on services like ftp,sam,nfs
+2nd enforcing is context value, we have to set a context set for directories and files
+
+
+
+suppose if a client comes fot ftp service, in ftp config file it is allowed that if  aclient comes for home directory give hime access, but hehind ftp selinux is also present if in selinuc config file value is 0 it will block the client, client won;t be able to access ftp though ftp allows but selinux is not allowing so client will not be able to access it
+
+program level = allow , os level (selinux) = not allow then you cannot access service.
+
+# checking status or boolean value of selinux
+getsebool -a
+
+# chekcing boolean values fro ftp
+getsebool -a | grep -i ftp
+
+
+if program level permissions are given but selinux level permissions are turned off then client cannot do the things turned off by selinux.
+
+# allowing client
+setsebool -P samba_create_home_dirs on
+
+
+
+
+How to see context value?
+
+# checking context value of a directory
+ls -Zd /var/ftp --> checking ftp directory in var context value
+
+# files and directories have context values which decide whether to give access to some client or not
+chcon -a -t samba_share_t /home/ahsan/test 
+
+# one more commadn to change context of files
+semanage f -a -t samba_share /home/ahsan/test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

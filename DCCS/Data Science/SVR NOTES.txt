@@ -1,0 +1,20 @@
+It has insensive tube (epsilon tube), points that lie within  the distance of epsilon (epsilon tube) are not taken into consideration for error calculation.
+
+Points outside of this tube known as zeta (above tube) and zeta* (below tube) are taken into consideration for error calculation, it will try to fit the tube so that the error of these points will be minimum for the optimum tube
+
+
+epsilon tube will try to fit the zet and zeta* points in such a way so that the error is minimum
+
+NOTE:
+Do not apply feature scaling on dummy variables
+
+Do not apply feature scaling if y is binary
+
+Apply feature scaling when independent variables or dependent variables are on different scale
+
+Apply feature scaling after train test split (to prevent data leakage apply scaling separately on train and test set)
+
+When x and y are explicit feautre scaling not necessary when they are implicit like in SVR feature scaling is necessary
+
+WHEN FEATURE SCALING IS USED IN SVR:
+

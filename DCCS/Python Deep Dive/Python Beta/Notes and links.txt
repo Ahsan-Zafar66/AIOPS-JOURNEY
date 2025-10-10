@@ -1,0 +1,5 @@
+# real python a website for a lot of things, I recorded it for naming conventions
+https://realpython.com/python-pep8/
+
+
+ 

@@ -1,0 +1,22 @@
+How to start yum in centos 6.
+centos 6 repo has reached it's end of life.
+
+# now how to use yum
+mount the iso image of centos 6 as a dvd
+you will see it in the mounted driver by running command df -h
+
+# after mounting the centos drive go inside in it and go to packages directory
+# install telne using command
+prm -ivh --force telnet.rpm
+
+# go to internet and search
+centos 6 enable centos vault repo --> you will see a GetPageSpeed website
+On the website you will see a script
+
+# now go to /etc/yum.repos.d and move all the repo files to some other destination
+
+Now make a .repo file such as CentOS-Vault.repo
+
+Now copy the code from website and paste in the CentOS-Vault.repo file
+
+Now yum will work in centos 6 also

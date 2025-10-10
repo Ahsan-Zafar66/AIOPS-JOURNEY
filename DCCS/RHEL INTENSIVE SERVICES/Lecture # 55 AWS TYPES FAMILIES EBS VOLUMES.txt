@@ -1,0 +1,271 @@
+Instance types:
+Check instance types there are 460 listed on aws
+
+
+Check AWS instance families and learn them by heart very important from interview perspective:
+there are 5 familes
+
+1) Genral Purpose (A1,T2,T3,T3a, T4g,M4,M5,M5a,M5n,M6g)
+2) Compute Optimized (C4,C5,C5a,C5n,C6g)
+3) Memory Optimized (R4,R5,R5a,R5n,R6g,X1,X1e,Z1d)
+4) Accelerated computing (P2,P3,F1,G3,G4)
+5) Storage Optimized (D2,H1,I3,I3en)
+6) HPC optimized (Hpc7g,Hpc7a,Hpc6id,Hpc6a) where Hpc7g, Hpc --> family, 7 --> generation, g--> graviton processor
+The naming and numbering of AWS instance types can be confusing.
+They consist of three parts, with each instance type typically given a letter (A,C,D,I,F,G,G,M,P,R,T,X) to denote its family
+followed by a number that denotes its generation (1,2,3,4,5,6). 
+Each generation has a slightly different set of features.
+Some AWS instance types also have an additional letter to reflect how they have been optimized. 
+For example the "g" in T4g and M6g General Purpose instances indicates that the instances are powereed by Grabiton 2 processers which are 40% more efficient than their predecessors.
+
+T4g
+T --> family (General Purpose Family)
+4 --> generation
+g --> graviton processor
+
+p2.xlarge
+p --> family (accelerated computing)
+2 --> generation
+.xlarge --> additonal
+
+AWS instances Hierarchy
+		|
+		|
+Regular, Spot, Dedicated, Optimized
+		|
+		|
+	    Categories
+
+		|
+		|
+
+General Purpose, Optimized Compute, Accelerated, Storage, HPC
+	 	|
+		|
+		Types
+
+t2 	t1	c5	m5	p2
+
+
+
+Hierarchy of storage:
+	Storage
+	  |
+	  |
+	 EBS, EFS (elastic file service), S3
+	  |
+	  |
+	 Volumes
+	  HDD,SSD,NVME
+
+
+EBS stores --> block level
+EFS stores--> file level
+S3 stores --> object level
+
+
+Interview questions related to AWS:
+1) AWS instance families
+2) What is availability zone>
+3) What is a region?
+4) How to select instance type
+5) How to create ec2
+6) How many storage types
+7) data levels
+8) If you forget key for ec2 instance what you will don?
+9) max instance --> can create at once
+10) what is monitoring in aws
+11) diff spot on demand dedicated instance dedicated host
+
+Why EBS is not seprately available like EFS and S3?
+EBS is not separately available, it comes with the ec2 instance.
+
+
+Volume Types (EBS):
+1) General Purpose   2) proviosioned iops  3) throughput optimized   4) hdd magnetic volumes
+
+volume which gives best read/write of data is best
+
+
+hdd types:
+pata, sata, sas, scsi these are spindle disks
+ssd not spindle
+
+how to check hard drive speed
+to check a hardidsk speed there are two things IO and transfer.
+ssd has the fastes IO,
+
+IOPS --> input output operations per second 
+
+
+SSD:
+ssd has general purpose and proviosioned types
+ssd general purpose has gp2 and gp3 type. It has 16000 IOPS
+ssd proviosioned has io2-block (256000 IOPS), io1 and io2 types has 64000 IOPS
+
+HDD:
+HDD has througput optimized and cold HDD
+throughput has throughst1 type. it has 500 IOPS
+cold has sc1 type, it has 250 IOPS
+
+Previous Generation types:
+Magnetic
+magnetic has standard type, it has 40-200 IOPS
+
+
+hudop.com has a IOPS calculator for all volume types
+
+
+
+
+AWS has limitation, boot files cannot be stored in cold hdd and throughput optimized st1 hdd.
+By default root volume has 8-10 gb of space. 
+When you add another volume beside root volume you can add any type of storage includng cold and throughout optimized st1
+
+
+How to add a volume in an ec2 instance?
+If your ec2 instance is in california and you created volume in los angelos 
+then you won't be able to attach the newly created volume to ec2.
+To attach volume both ec2 and volume should be at same location in same data centre
+
+# after making partiton through fdisk
+partprobe -s partition_path
+
+# format the partiton using ext4 or xfs or any other desired formatting
+mkfs.xfx partition_path
+
+# add in /etc/fstab to make it permamnet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

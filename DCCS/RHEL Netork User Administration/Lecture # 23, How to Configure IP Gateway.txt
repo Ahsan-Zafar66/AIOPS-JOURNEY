@@ -1,0 +1,260 @@
+# commands to check ip
+ip addr list
+
+ip addr show
+
+ip r l
+
+ifconfig
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+lspci --> to check all devices in a system
+
+lspci -v --> to get result in detail
+
+lspci -vv -> to get result in more domain
+
+lspci -vvv --> to get result in more detail
+
+
+network cards are known as ethernet
+lspci -vvv | grep -i ether -> locating ethernet 
+
+
+
+# Concept of network drivers
+Suppose you have 2 network cards, and each card has 2 ports. Now, 4 ports in total, how linux will assign them drivers?
+port-1 --> eth0 driver
+
+port-2 --> eth1 driver
+
+port-3 --> eth2 driver
+
+port-4 --> eth3 driver
+
+ifconfig -a --> to see the ip adress of each ethernet driver, e.g eth0 ip address, eth1 ip address
+
+ethtool eth0 --> to get the details of eth0 driver
+
+duplex full means that it sends and recieve signal at same time, half means it first send then recieve not together one by one
+
+
+
+ifconfig ether_driver_name ip_address_of_driver netmask 255.255.255.0 --> to configure an ip (this command goes in RAM, so after reboot the configuration will be gone it is not permanent)
+
+
+do we need to make it permanent or temporary?
+if you have fear that server willl reboot then make it permamnet
+
+# these directory no longer store the network drivers because this is deprecated
+cd /etc/sysconfig/network-scripts/ --> go in this directory and look for file ifcfg-drivername, for example ifcfg-eth0 or ifcfg-eth1. 
+
+# look for file
+ifcfg-eth0 --> file for driver eth0
+
+# directory storing network drivers in centos
+cd /etc/NetworkManager/system-connections
+
+
+open this file and make BOOTPROTO from none to static, also check the device name, ip, netmask, onboot (should be yes), HWADDR (hardware address)
+
+save and quit, then reload file
+
+# command to reload file is
+service network restart ---> to reload the file 
+
+nmtui --> to open network configuration interface
+
+
+
+
+WHAT IS GATEWAY AND HOW TO CONFIGURE IT?
+If two machines, machine1 and machine2 have a switch and they are connected with a same network then they don't need a gateway and router.
+Same network ip example, machine1 ip 192.168.1.100 machine2 ip 192.168.1.103,
+192.168.1.0 to 192.168.1.255 --> same netwoek ip addresses. 192.168.1 this is network and after one 0-255 any number can be given and machines with such ips are considered to have same network.
+192.168.1 --> network address, 
+192.168.1.0 --> 0 is ip address
+
+in 192.168.1.0 where,
+1. --> network ip
+0. --> broadcast ip
+
+
+# two machines which are not on same network they cannot interact without  a router and gateway
+machine1 --> 192.168.3.10
+machine2 --> 192.168.1.103 
+
+if you see closely their network ips are different one has 192.168.3 and one has 192.168.1
+
+Now, for two machines having different networks we need a router
+
+Router helps to communicate between machine having different networks
+
+we need a gateway to access one machine from other if they have different networks. Gateway is router one side ip
+
+
+route -n --> to see networks, their ip, thir driver, gateway
+
+route add default gw gateway_adress --> command to set gateway, ask gateway from network providers
+
+after setting gateway, to make it permanent make changes in the ifcfg-drivername file.
+
+reload the file
+
+
+# to enable or disable a specific interface
+ifconfig drivername down
+ifconfig drivername up
+
+
+ifconfig eth0 down
+
+
+cat /etc/resolv.conf --> to see network names
+
+configuration in this file is temporary, after reboot it is removed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

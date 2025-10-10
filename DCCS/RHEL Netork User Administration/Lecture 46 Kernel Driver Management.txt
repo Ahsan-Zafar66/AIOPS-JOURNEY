@@ -1,0 +1,106 @@
+What is kernel?
+if you go in /boot directory and run ls command to list the files,
+You will see a file vmliz_x86_64 (green color), it is the kernel file.
+kernel file is binary
+kernel contains functions and it is the heart of sysystem.
+It is scheduler of programs, support drivers, information of programs
+
+
+Suppose we have a car, car is OS and engine is kernel. Engine has information like how many gears, how much speed. Everything that runs depends on engine.
+so, kernel controls everything in an OS.
+
+drivers are not located in kernel, kernel control the drivers does not contain them
+
+drivers are .ko --> kernel object
+klm --> kernel loadable module
+lkm--> lodable kernel module
+
+
+# path of kernel 
+cd lib/modules/
+
+go into above path and run ls command to see files
+then one of the files have kernel directory go in it and then go in fs directory
+
+/lib/modules --> kernel file --> kernel directory (contains drivers for sound,file system and others) --> fs directory --> lkm drivers are here if you delete any then your system will not be able to carry out that driver function
+
+
+
+# to see directory structure
+tree .
+
+
+# how many drivers are in use from 2200?
+
+
+commands used for driver management are :
+insmod
+modprobe
+rmmod
+depmod
+modinfo
+
+
+Can you load module in RAM>?
+yes, using the lsmod command
+
+# command is
+lsmod | wc -l --> tootal number of loaded drivers
+
+above command show drivers being used, their size and which process is using them and how many of them using a driver
+
+check ext4 driver how many things are using it
+
+# use following command to see partitions using ext4
+df -TH
+
+# another command
+cat /proc/modules
+
+
+
+How to remove a driver from RAM?
+# command to remove a driver
+rmmod driver_name
+
+
+# adding driver back
+modprobe driver_name
+
+if  adriver is rmeoved by rmmod command it is loaded back after rebooting system because it only removes driver from RAM
+
+HOW TO REMOVE PERMANENTLY DRIVE?
+
+# find the driver
+tree -f /lib/modules/kerneldriver(whatever it is)/kernel/ | grep - i driver_name
+
+# now whatever path you get go their and remove the driver, it will remove the driver permanently
+rm -rf path_of_driver
+
+# to see driver info
+modinfo driver_name
+
+# example
+modinfo ext4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

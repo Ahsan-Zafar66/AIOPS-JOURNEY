@@ -1,0 +1,61 @@
+Full CISSP:
+a person who has passed the CISSP exam and 5years of experince in two of 8 domains of CISSP
+
+Associate:
+A person who has passed the CISSP exam and do not have any experience is called associate. He is given 6 years to get 5 years of experience in any of the two domains of CISSP
+
+
+Domains of CISSP:
+
+1) Security and Risk Management
+
+2) Asset Security
+
+3) Security Engineering
+
+4) Communication and Network Security
+
+5) Identity and Acess management
+
+6) Security Assessment and Testing
+
+7) Security Operations
+
+8) Software Development Security
+
+
+=============
+
+You never do SOC certified for entire organization, you define a context like these computers or this department we want soc certified. (Never go for entire organization).
+
+You cannot break NDA after signing it, you can be sued by the other party in court.
+
+You cannot disclose things which you are not allowed to disclose.
+
+
+============== 
+
+Business Continuity Plan:
+
+make a backup of your data at all cost, so if a disaster happens you would be able to continue your business
+
+Most business makes the mistake that they do not have backup and when disaster happen they fail to continue to the business
+
+Every busniess must have a disaster plan to keep the business going
+
+BCP --> Business Continuity Plan
+
+DRP --> Disaster Recovery Plan
+
+
+
+========================
+
+DOMAIN # 2 Asset Security
+
+Any item deemed by a comany to be valuable are assets. It is anything that adds value to the company. Asets are also referred to as resources.
+Assets are protected based on their value
+
+Examples:
+People, Information, data, Hardware, Systems, Processes, Software.
+Functions, Ideas, Brand, Identity, Intellectual Property

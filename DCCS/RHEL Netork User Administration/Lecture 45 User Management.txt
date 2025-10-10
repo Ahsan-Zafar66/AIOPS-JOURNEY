@@ -1,0 +1,198 @@
+# to add user
+useradd username
+
+# example 
+useradd ahmed 
+
+# to check if a user exist
+id username
+
+# example
+id ahmed
+
+
+# creating password
+passwd usrname
+
+# example
+passwd ahmed
+
+
+
+# another command to create a user
+adduser ahmed --> this is a symlink
+
+symlink means changing a command to your own command for example changing adduser to userbanao
+
+
+# aliases
+alias cl=clear
+
+# now when i cal list as ls command is stored in list it will run
+
+
+# to check how many alias are ther
+alias
+
+
+# to remove alias
+unalias alias_name
+
+#example
+unalias cl
+
+above created alias are temporary if system reboots they will be removed
+
+# to make alias paermanent make changes in /etc/bashrc file
+vi /etc/bashrc
+
+alias cl=clear --> add this alias in the basrc file now even if system reboots it will be available
+
+
+
+How user management works?
+when a person joins a company we create a database for him/her
+database contains:
+Home directory
+Password
+Which shell to give
+which uid
+which gid
+
+
+# when we run useradd command it refers to these files and create user based on the instructions present in these files
+/etc/login.defs
+/etc/default/useradd
+
+# after refering above files it makes changes in following files
+/etc/passwd
+/etc/shadow
+/etc/group
+/etc/gshadow
+
+when a user logins it checks the above four files and validate the entry of user
+
+useradd command also copies /etc/skel/.bash* profile copied to home directory of user
+
+
+
+
+# the following file contains information on how to create a user
+cat /etc/default/useradd
+
+# if you make changes in this file like create user in a directory other then home you can make it
+
+# when we create a user /etc/skel/* all files in this directory are copied to the home directory of user.
+if you want to create another file here in "/etc/skel" you can create in this directory and when the user is created this file 
+along with others will be copied into home directory of user
+
+when we run useradd command it directly goes to two file "/etc/login.defs, /etc/default/useradd" now, these files contain information how to create a user.
+
+
+after refering these files useradd make changes to other four files listed above.
+
+# /etc/passwd file
+there are 7 fields in this file
+
+#example
+thetest:x:1012:1013::/home/the test:/bin/bash
+
+: --> separator of fields
+
+1 --> thetest= username
+2 --> x= passwrd in shadow file
+3 --> 1012= uid
+4 --> 1013=gid
+5 --> :: = gecos finger info
+6 --> /home/thetest= home directory
+7 --> /bin/bash = shell
+
+
+if you comment out a user in /etc/passwd file it will not be available
+
+
+if you change the home directory of  auser to a new directory, it will log in but not be able to find it's home directory. 
+pwd then will be /etc/skel
+
+# command to see all users name
+compgen -u
+
+
+# deleting a user
+userdel ahmed --> home directory will not be deleted
+
+if we add again the user then he can refer to previous home directory
+
+# deleting a user with his home directory
+userdel -r ahmed
+
+
+SHADOW FILE:
+cat /etc/shadow
+
+there are 9 fields in shadow file, passwd had 7 fields
+: --> means separation
+1st field = username
+2nd field = encrypted password file
+third field = password last changed
+fourth field = days before your password is not changed, if you write 20 user won;t be able to change password until 20 days
+fifth days = change password on mentioned day
+sixth days = days before which user recieves an expiration warning of password. Suppose 10 is written so user will get a warning of password expiration before 10 days. 
+seventh field = days after which password should expire
+eight field = account deactivation days.
+ninth field = reserved field
+
+# just un this command and get the fields explaination
+man shadow --> to understand fields in shadow file
+
+
+# shortcut to enter a password file
+vipw
+
+# shortcut to enter a group file, /etc/group 
+vigr
+
+
+# patth of group data file
+cat /etc/group
+
+# adding a user to a group
+usermod -G groupname users --> -G secondary group, -g means primarily group
+
+# checking user group after adding it to group
+id ahmed --> first group will be primary and second is secondary, in above command i aded ahmed in secondary group so primary group is still 
+ahmed but secondary has been changed.
+
+
+HOW TO MODIFY USERS IN LINUX?
+usermod -u 5000 -d /home/Downloads -c "comments" -s /bin/sh ahmed
+
+modifying user ahmed uid to 5000, changing home drectory to home downloads, adding comments (any you can) and chaning bash of user ahmed
+
+
+HOW TO DISABLE USER IN LINUX?
+1. put comments in /etc/passwd file
+2. remove x in second field of the user in /etc/passwd.
+3. the last field put '/sbin/nologin" 
+
+
+YOU CAN LOCK USER AS WELL
+passwd -l usrname
+
+#unloack
+passwd -u username
+
+
+
+# TO DISABLE ALL USERS IN A SYSTEM
+# make a file  
+touch /etc/nologin
+
+
+# making the user to change pasword in next attempt
+
+
+TASK:
+create a user without using adduser and useradd cmnd & everything should be proper
+
+

@@ -1,0 +1,150 @@
+TCP Wrappers:
+actually it is Application Firewall
+
+It has two files
+1) /etc/hosts.allow
+2) /etc/hosts.deny
+
+hosts.deny:
+if you enter service name and the ip address of machine you want to deny, that machine will not be able to access the service
+
+# examples
+vsftpd 192.168.43.210/32 --? /32 means this ip only
+sshd: 192.168.43.210/16 --->all ips from this machine
+
+Suppose I want to deny all the clients for a service but want my machine to have the service
+
+# suppose denying all except my machine
+sshd: ALL EXCEPT 192.168.43.210 --> all clients are restricted of sshd service except the machine i entered the ip for
+
+
+by default hosts.allow file is checked first
+
+hosts.deny restrict only few services which are libwrap.so enabled can be used in tcpwrapper file
+
+if a service has libwrap.so file hosts.deny can restrict or block it if it does not uses or have libwrap.so file it cannot have any effect on that service
+
+# Now you wannt to see whcih servoices use libwrap.so dependency
+ldd /usr/sbin/service_name
+
+# example
+ldd /usr/sbin/vsftpd
+
+HOW TCP WRAPPER WORKS?
+it is an appplication firewall.
+
+when a client sends a request for a service, firt TCP wrapper checks if the application uses libwrap.so dependency if yes then it checks hosts.allow file if the client is allowed to acces the service if it is not present in hosts.allow then it goes to hosts.deny to check if client is restricted or not. adter that it allows the client or not
+
+if their is kernel level firewall it doesn't allow any user to pass until and less that user is allowed in kernel firewall. This kernel firewall is called firewalld and IP TABLES.
+
+
+Firewall in companies are mainly hardware firewall
+In companies when a client accesses a server first it goes to router and then firewall checks and if the user is allowed then the user can access the server
+hardware firewall examples:
+1) cyberroma
+2)sonicwall
+3) fortigate
+4) juniper
+5)paloalto
+6) cisco AS
+
+open source ISO's images ---> pfense + ipcop
+
+linux software ---> IP tables (fw) == hardware fw
+
+Kernel level firewall uses command line whereas hardware firewall has GUI
+
+
+KERNEL LEVEL FIREWALL:
+when we block a client in kernel level firewall we need to specify inbound (incoming of client) and outbound (outgoing of client)
+
+centos 6 it is called = ip tables
+ centos 7 and 8 it is called firewalld
+
+
+# seeing iptables
+iptables -L
+
+# TASK: BLOCK ALL INCOMING TRAFFIC
+iptables -A INPUT -s 0/0 -j REJECT
+
+
+# TASK: BLOCK ALL OUTGOING TRAFFIC
+iptables -A OUTPUT -d 0/0 -j REJECT
+
+
+# refreshing table to remove the blockage
+iptables -F
+
+# making rules permanent
+service iptables saves --> now my rules are permanent
+
+INPUT --> incoming
+OUTPUT --> outgoing
+FORWARD --> coming in and then moving to next from there
+
+the rules we write is stoed in RAM
+
+
+RAM has kernel table and inside this table there is a netfilter module. Netfilter is the actual firewall.
+Rules are controlled by netfilter, iptables it is just like a pen where we write rule and netfilter do the action after reading the rules.
+
+RAM --> kernel table --> netfilter (action taker) and iptable is just rule write
+
+
+Diagnosis of above command
+iptables -A INPUT -s 0/0
+
+-A --> append or add
+INPUT -s 0/0 --> rule -s means source, 0/0 means anywhere, INPUT means add in input chain. Add source in input chain.
+
+-j --> junk
+
+REJECT --> action
+
+
+# blocking a particular client
+iptables -A INPUT -s 192.168.43.210/32 -j REJECT
+
+# freshing table
+iptables -F
+
+TASKL
+1. Block all -- incoming k liye sab ko block
+2. Allow 176.16.0.0 Network
+3. Allow 192.168.43.210
+
+# 1st ruke
+iptables -A INPUT -s 0/0 -j REJECT
+
+# 2nd ruke
+iptables -A INPUT -s 172.16.0.0/16 -j ACCEPT
+
+# 3rd rule
+iptables -A INPUT -s 192.168.43.210 -j ACCEPT
+
+if you wrote above rules their SEQUENCE is wrong because iptables work on first come first rule so it will block all if we run the 1) command
+
+
+CORRECT SEQUENCE OF:
+1) RUN 2nd rule command first
+2) RUN 3rd rule command
+3) RUN the 1st rule command
+
+Now, it will allow the network mentioned in 2nd rule and particular client mentioned in first rule but block all the others which comes next
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

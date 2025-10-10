@@ -1,0 +1,11 @@
+Why do we need ISO 27001 anyways?
+To manage risk, business continuity, information security, cyber security and information technology of an organization
+
+ISO27001 is the gold standard of cyber security
+
+ISO 27799 is for health informatics, devices used in healthcare settings.
+
+4-8 clauses are key clauses of iso 27001
+
+
+

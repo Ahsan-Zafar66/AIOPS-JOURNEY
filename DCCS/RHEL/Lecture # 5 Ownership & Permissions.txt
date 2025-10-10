@@ -1,0 +1,169 @@
+i386/i586/i686 --> they represent 32 bit
+
+if a software or anything have i386 or i586 or i686 then that thing of software is 32 bit
+
+x_86_64 --> represent 64 bit
+
+noarch --> will run in both 32 bit and 64 bit
+
+
+cat /etc/redhat-release --> to check the version of centos
+
+cat /etc/os-release --> if you are using centos in cloud then use this command
+
+arch --> to check the architecture of the linux
+
+uname -r --> to check the kernel version
+
+------------------
+
+OwnerShips
+
+touch ahsan.txt --> create a file using this command
+
+ls -l ahsan.txt --> get the details of the file
+
+the details will be like following
+
+-rw-r--r--. 1 root root 0 Jul 28 10:55 ahsan.txt
+
+the above has 9 sections
+
+1= -       --> tells about type of file
+
+2 = rw-r--r--    ----> permissions of file
+
+3 = .   ----> selinux (can be applied to file or not)
+
+4 = 1    ----> link count (files show hardlink count, directories shows number of directories present in that directory)
+
+5 = root  --> owner of filr
+
+6 = root  --> name of grouop
+
+7 = 0   ---> size in bytes
+
+8 = Jul 28 10:55 --> access time
+
+9 = ahsan.txt --> name of file
+
+-------
+
+section 1 "-" tells you about the type of file
+the file ahsan.txt has a dash in the beginning which tells that it is a regular file
+
+There are 7 types of files which are shown by section # 1
+
+- = regular file
+
+d = directory
+
+l = symlink (softlink)
+
+b = block file
+
+c = character file
+
+s = socket file
+
+p = pipe device file
+
+
+
+
+============
+Let's take section 2 which is rw-r--r--
+
+if you count rw-r--r-- there are total 9 bits in it.
+
+- means a bit is off
+r,w,x means a bit is on
+
+if we look at first 3 bits rw- it means the root has read and write permission and third bit is off
+
+9 bits rw-r--r-- are divided into 3 bits of 3 size
+
+rw- --> binary form is --> 110
+
+--- -->binary form is --> 000
+
+rwx --> binary form is --> 111
+
+
+==========================================
+Ownership Commands
+
+# checking ids of a user
+id username
+
+
+# Changing ownership of file
+chown ownername filename
+
+
+# adding a group
+groupadd groupname
+
+
+# Changing group of a file
+chgrp groupname filename
+
+
+
+User is a single person and group is a collection of users. If a group has certain permission about a file then all the users that are in that group will have the permissions given to the group
+
+
+The 9 bits of a file such as 
+rw- r-- r-- 
+
+# OWNER
+# first three bits show permissions of owner
+rw- = user
+
+# changing permission of owner (giving)
+chmod u+rwx filename --> give read write and execute permissions to the owner
+
+# taking permissions away
+chmod u-rwx filename --> provoke all the permissions of the user
+
+
+# GROUP
+# the middle three bits show permisions of a group
+r-- = group
+
+# giving permissions to a group
+chmod g+rwx filename
+
+# taking permisiion away
+chmod g-rwx filename
+
+
+# OTHERS
+# the last three bits show permission of people that are not owner of the file and not present in a group
+r-- = others (permission given to people that are not user and not in the group)
+
+# giving permission to a group
+chmod o+rwx filename
+
+# taking away
+chmod o-rwx filename
+
+
+# giving them all permissions at once
+chmod ugo+rwx filename
+
+# taking all permission away from all
+chmod ugo-rwx filename
+
+
+==================
+
+Every directory has a . and .. directories, these are commands
+
+. means present directory
+
+.. means moving out of directory
+
+=================
+
+

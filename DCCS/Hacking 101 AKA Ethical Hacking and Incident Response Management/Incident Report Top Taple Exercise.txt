@@ -1,0 +1,121 @@
+Incident Response Table Top Exercise
+
+Brief Intro
+
+This lab is very different. Working together, you need to make a group with your Nafi group mates so that all of you can work on an incident Table Top Exercise.
+
+Walk-through
+
+Introduction
+
+One of the most effective tools at an organizations disposal is the ability to perform table top exercises. 
+
+However many organizations handle these tabletop exercises as dry policy reviews where arguments tend to break out, and start the blame game.
+
+We want you to break through the glass ceiling and instead develop an approach which adds some gamification to tabletop exercise. 
+
+To prep for this lab, please break up into teams of about five. Pick one person on the team to be the Incident Manager (IM).
+
+We encourage you to take these documents to work and walk through this with your co-workers. This is very important exercise as that will teach you on how to perform this effectively and how it should be done in a way that create unity among the tools. 
+
+IR Tabletop Roles – The Incident Manager
+
+When you pick an IM, this person will be responsible for walking the players through the exercise. There are two handouts for this lab. One is for the IM and the other is for the players. The handout will have all of the information the IM needs to successfully navigate the lab.
+
+The IM should not get bogged down into the details of the incident, nor should they punish players and make the game too difficult. The goal is to keep the players moving in the right direction and uncover potential shortcomings in an organization's IR processes.
+
+To summarize:
+
+Identify one person in your group to be the Incident Manager (IM)
+As part of this class, your instructor should be sharing handouts for the IM and the players.
+The IM handout has the overall detail of the incident and various injects.
+The goal of the IM is to keep the walkthrough moving and enjoyable.
+It is not to get bogged down into details
+it is not about punishing the players
+The IM can create additional details from the handout as they see fit.
+The IM can also prod the players in the right direction
+For example, an IM can ask: Don't you think it would be a good idea to check the Active Directory logs?
+Once again, the goal is to keep the scenario fun and moving in the right direction!
+IR Tabletop Roles – The Players
+
+It is absolutely essential for the players to collaborate through this lab. Do not have just one person answer all the questions and take over the game. Incorporate the opinions and backgrounds of others. Also, as part of this lab, there are handouts. The one for the players has a list of procedures the organization has for incident response. Please note, the list of procedures is pretty light. This is intentional. One of the goals of this lab is to identify which procedures would be helpful for the organization to create.
+
+Please note, any and all actions taken by the team will succeed or fail based on a random roll of the dice. Please feel free to download a 20-sided dice app from either Google Play or the Apple Store. There is a large number of options available.
+
+To summarize:
+
+The role of the players is to figure out the different components of the attack and isolate the compromised system.
+This is done by asking the IM questions and taking actions.
+The success or failure of the actions will be determined by the roll of a die (more on that later).
+Please review your handouts now.
+They will tell you what procedures your team has created before an incident.
+These are not the only actions you can take as a team, but there is a positive modifier on your rolls when you do these actions.
+Be sure to discuss each action as a team.
+Do not let the team be taken over by one person.
+If there is an action that the team wants to take, but there are not procedures on your handout, note it. This is a procedure that needs to be written by the team.
+IR Tabletop Rules
+
+What the IM says goes. No questions. It keeps the game moving.
+
+For the 20-sided die, any and all actions will be determined successful if the roll is over 11. If the roll is 10 or below the action fails.
+
+The players will receive a handout that has a list of potential incident response policies, procedures, technologies, and training items that will be given a +2 modifier. Players will need to choose up to 5 items per team from the bonus modifiers list before the game starts.
+
+To summarize:
+
+What the IM says goes. No exceptions.
+Every action that is taken requires a roll of a 20-sided die.
+Feel free to download an app on one of your phones to do this. There are lots of D&D dice apps.
+A roll of 1–10 fails. This means the action was not successful.
+A roll of 11–20 succeeds. This means the action was successful.
+The team gets a +2 modifier if the action they take is from the list of selected bonus modifiers.
+This means a roll of 9 would normally fail...
+However, with the procedure modifier, the roll would be 9+2=11!
+IR Tabletop Injects
+
+Throughout this game the IM will insert positive and negative injects.
+
+The goal of these injects is to add yet more randomness and insanity into the game. These allow a simple phishing scenario to become something pretty wild and crazy. They also serve to identify potential weaknesses in the process.
+
+For example, let's say there is one person on a team who is always answering questions. With injects, the IM can take that person out of the game (Congratulations! You won the lottery and quit in the middle of an incident!) To see how the other people on the IR team react without them.
+
+It also allows the game to be played multiple times, each time with a potentially different outcome!
+
+To summarize:
+
+Throughout the exercise, the IM can drop random injects into the game.
+These are either positive or negative events which will impact the outcome of the game.
+For example, an intern may power off the system you are reviewing.
+Or, the SIEM stops logging data for mysterious reasons.
+The goal of the injects is to keep the game from getting stale.
+It also means your team's game will be different from other teams'.
+Conclusions
+
+At the end of this lab you should have identified some missing procedures. In the real world, this would hopefully kick off a task for your team to develop these procedures for a future incident.
+
+Please feel free to take this lab to work and run through the scenario there. Also, feel free to take a recent news story about a breach and turn it into a game like this. The rolls and the injects should be enough to have the tabletop not follow the news story exactly.
+
+Ideally, you should be able to walk through this lab multiple times at work. Each time discovering new twists and missing procedures. It is far easier and more fun to work through this in a tabletop than in a real incident!
+
+To summarize:
+
+One of the main goals of this lab is to help identify which procedures would have been helpful to the game.
+In a real tabletop, these missing procedures should be noted as tasks for the teams to develop.
+Moving up from procedures, what policies or processes would have been helpful?
+Feel free to play these games at work.
+Take a newsworthy incident and turn it into a game like this one.
+The random injects and rolls will help so it is not just a walkthrough of a news story.
+Repetition of this lab at work will help identify weaknesses that normally would not be identified except in a real incident.
+Additional Resources
+
+Everbridge Tabletop Exercises
+
+https://www.everbridge.com/solutions/alert-residents-and-visitors/tabletop-exercises/
+
+Dungeons & Dragons, Meet Cubicles & Compromises
+
+https://www.blackhillsinfosec.com/dungeons-dragons-meet-cubicles-compromises/
+
+Webcast: Cubicles and Compromises
+
+https://www.blackhillsinfosec.com/webcast-cubicles-compromises/

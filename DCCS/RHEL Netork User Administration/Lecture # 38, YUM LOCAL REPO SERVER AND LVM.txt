@@ -1,0 +1,181 @@
+Why we need a local repo for packages?
+Sometime companies have restrictions that you cannot go to internet for security purposes.
+In that case we create a local repository for yum and can use it. It will behave like online repository but will work offline.
+
+How to make yum local repo?
+Step # 1
+Go the settings of virtual machine and then go to storage and select optical drive and add the iso image of the linux version.
+
+Step # 2
+Now enter the packages directory, in centos 9 packages directory is present inside the Baseos directory.
+
+
+Step # 3
+copy the packages folder in your system
+# copying packages to download folder
+cp -r Packages/ /home/ahsan/Downloads
+
+# another command
+rsync -parv /Packages /home/ahsan/Downloads
+
+There is no differenc ein the packages we copied and packages list present in /etc/yum.repos.d/centos.repo in this file there is a link which has packages list.
+
+
+step # 4
+Now, we have to configure / create a repomd.xml file with createrepo command.
+
+# command is
+createrepo -v path_where_repo_to_make
+
+# example as packages folder is present in downloads
+createrepor -v /home/ahsan/Downloads 
+
+
+
+USING THE LOCAL REPO SERVER:
+create a local.repo file in /etc/yum.repos.d/local.repo
+
+open file with vi editor and write following things
+
+
+
+[local]
+name=[local]
+baseurl=file:///home/ahsan/Downloads/Packages/
+enabled=1
+gpgcheck=0
+
+now save and close the file. Remember in baseurl we give path of packages file which we copie din our local system
+
+# now mv the other repo files to some other place except local.repo file in directory /etc/yum.repos.d/
+
+# to check how many repo files we have
+yum repolist
+
+
+# if you want yum to look a specific repo (visit local repo in this case)
+yum --enablerepo=local  install zsh
+
+
+You can turn off a repo file by switching of enabled = 0,  means on and 0 means of
+
+
+
+LVM or Local Volume Management:
+If a directory is not in lvm so it cannot be expanded. For example sometimes when we design the OS we do not keep some directories in lvm:
+Now these directories space is full, you cannot expand them because they are not in lvm. So, what you will do?
+You can make a new directory with more capacity and you will migrate the data of that directory into this new directory
+
+
+LVM Components:
+LVM has three components:
+1) Physical Volume
+
+2) Volume Group
+
+3) Logical Volume
+
+Suppose I have a hard disk of 1gb:
+Physical volume --> 1gb
+
+volumne group --> 1 gb
+
+logical colume  --> 700 MB
+
+i gave 700 MB to logical volume so I could expand it when it is needed using the remaining 300 MB
+
+
+Now, if you add a harddisk while your system is on you can search the newly harddisk by using following command becaus ein organizations we do not siwtch off systems
+
+echo "- - -" > /sys/class/scsi_host/host0/scan
+
+echo "- - -" > /sys/class/scsi_host/host1/scan
+
+echo "- - -" > /sys/class/scsi_host/host2/scan
+
+How to make an LVM partition?
+Add a hardisk
+
+fdisk /dev/sdc
+
+# Step # 1
+add a new hardisk in it
+
+Step # 2
+# make a partition in that hardisk using fdisk command
+fdisk /dev/sde
+
+# make primary partition by pressing p and keep defaults cylinders and other things
+
+# after the creation of partition, change the code of partition to 8e by pressin t and chaning the hex code to 8e
+
+# Step # 3
+then save and then run the partx -a /dev/sde1 command if you are in centos 6 or for 7/8 run --> partprobe -s /dev/sdc
+
+# Step # 4 DO NOT RUN MKFS command now
+now for regular hardrive we run --> mkfs.ext4 /dev/sde1 --> but in this case we won't because we want to make LVM
+
+# Step # 5
+# create physical volume by command
+pvcreate /dev/sde1
+
+# Step # 6
+# create volume group you can give any name 
+vgcreate group_name driver_name
+#example
+vgcreate myvol /dev/sde1
+
+Step # 7 Create logical volume: 
+lvcreate -L size -n name_of_lv vg_name --> lv is logical volume name and vg is volume group name.
+
+# example for above senario
+lvcreate -L 400M -n lv1 myvol1 --> creating  a logical volume lv1 of 400MB size on volume group myvol1
+
+
+Step # 8 Formatting this lvm
+mkfs.ext4 /dev/myvol/lv1 --> lvm is created in dev directory under volume group name which is myvol and logical volume is lv1
+
+Step # 9 mount the lvm on the directory
+mkdir /testlvm
+
+# mounting the lvm on the directory
+mount /dev/myvol/lv1 /testlvm
+
+Step # 10 make an entry in /etc/fstab file to make the mounting persistent
+/dev/myvol/lv1		/testlvm 	ext4		defaults 	0 	0
+
+
+Step # 11 
+# run following command to see if there is no error in fstab entry
+mount -a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+wewv itnc povk iyzm
+
+
+# Email Setup on UBUNTU OS
+
+1) Log in to your email account
+
+2) Manage yout account and turn on two factor authentication
+
+3) Click on security option and app password
+
+4) app password for centos : egiy deeh uqpm kbay
+
+5) apt-get update --> update your system
+6) apt-get install sendmail mailutils
+7) cd /etc/mail --> go to this directory
+8) mkdir authinfo --> make an authinfo directory their
+9) chmod 700 authinfo/ --> give full permissions to this folder
+
+10) go thi  this authinfo folder and make a file gmail
+11) vim gmail
+12) AuthInfo: "U:root" "I:ahsanzafarqau@gmail.com" "P:egiy deeh uqpm kbay" ---> write this first line in the vim gmail file
+13) makemap hash gmail < gmail --> make database of file gmail
+14) go back in mail directoey
+15) open file sendmail.mc and look for MAILER --> see MAILER_DEFINITION section
+16) add the following lines above MAILER_DEFINITIONS
+define(`SMART_HOST',`[smtp.gmail.com]')dnl
+define(`RELAY_MAILER_ARGS', `TCP $h 587')dnl
+define(`ESMTP_MAILER_ARGS', `TCP $h 587')dnl
+define(`confAUTH_OPTIONS', `A p')dnl
+TRUST_AUTH_MECH(`EXTERNAL DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+define(`confAUTH_MECHANISMS', `EXTERNAL GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+FEATURE(`authinfo',`hash -o /etc/mail/authinfo/gmail.db')dnl 
+
+17) /etc/init.d/sendmail reload --> reload the sendmail
+
+18) /etc/init.d/sendmail status --> check status
+
+19) sendmail ahsanzafarqau@gmail.com < ahsan.txt --> sending the mail written in ahsan.txt to ahsanzafarqau@gmail.com
+20) cd /var/log --> go to this folder
+21) cat mail.log --> check this file to see the status of mail.
+=====================
+
+crontab guru website
+
+crontab -e --> to do entry in crontab
+
+* * * * * echo $(date) >> /var/ahsan/txt --> after every minute add the command output to data to ahsan.txt
+
+crontab -l --> to see the crontab tasks.
+
+crontab -r --> to remove all the schedule processes, in short clear the file.
+
+
+
+

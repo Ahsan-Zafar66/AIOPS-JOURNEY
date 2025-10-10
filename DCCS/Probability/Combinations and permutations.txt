@@ -1,0 +1,51 @@
+Suppose there are 5 peopel and we need to make a committee of two people
+
+suppose these 5 people are A,B,C,D,E
+
+fundamental combination where order is important:
+
+Combination = n1 * n2
+
+when we selet person1 we need to sleect from 5 people, when one is selected and we need to slecte 2nd person we need to select from remaining 4 people
+n1 = 5
+n2 = 4
+
+Total combinations when order is important = n1 * n2 = 5 * 4 = 20
+
+
+
+case # 2 where order is not important wher AB is equal to BA
+
+C = N! / n!(N - n)!
+
+N! --> total people
+
+n! --> how many people we want to select
+
+C = 5! / 2! (5 - 2)!
+
+C = 5 * 4 * 3! / 2 * 1 (3!)
+
+C = 5 * 4 / 2
+
+C = 20 /2 = 10
+
+So, when order is not important we have 10 combinations
+===========================================================
+
+Case # 3 Permutations
+When from N sample n number of objects are need to be selected and order is important 
+
+P = N! / (N -n)!
+
+Commitee odf two people is to be made from pool of 5 people, where first person selected is president and 2nd is sectary, now AB is different from BA
+
+P = 5! / (5 - 2)!
+
+P = 5! / 3!
+P = 5*4*3!/3!
+
+P = 5*4 = 20
+
+Case # 1 and 3 are same
+

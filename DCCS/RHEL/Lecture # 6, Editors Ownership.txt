@@ -1,0 +1,351 @@
+VIM OR VI EDITOR
+
+vi ahsan.txt
+
+:set nu --> to show numbers along lines
+
+:35 --> to go 35 line
+
+:set nonu --> to remove the numbers along lines
+
+:/ftp --> to search ftp in the file
+
+press n after searching for something to move to the next match
+
+shift + n --> for reverse search, n for forward and shift + n for backward search
+
+
+:vsplit --> to vertically split file, becomes handy in case we have a very big file
+
+:split --> for horizontal slit
+
+:vsplit /etc/passwd --> to open another file in the editor with the file you are editing
+
+crtl + ww --> to switch between files in the editor
+
+:X --> to protect file with a password
+
+:X --> to remove password the command is same, and do not set any password keep the fields blank by pressing enter  and password will be removed
+
+=======================
+NANO MODE
+
+nano editor does not require to press i to insert, you can start modifiying it directly
+
+^ this means ctrl
+
+^O Write Out --> means press ctrl and O to write out, and further press enter to write the file and save changes
+
+alt + shift + a --> to initiate the copy marker, now select the lines that you want to copy
+
+alt + shift + 6 --> to copy the lines, to stop the marker 
+
+ctrl + U --> to paste the line
+
+ctrl + K --> to delete the line
+=======================================
+
+Can you open a file who has only read permission?
+
+The answer is yes, you can open. Because when you ope and make changes in it it allows you but when you save the changes it won't allow you. This happen because when you access something and change it, it is happening in RAM, but when you save it it goes in the memory. So, when you make change it won't allow you.
+
+
+Can you copy a file if you have only read permission?
+Yes, I can copy the file because to copy you need minimum read permission and I have that.
+
+
+========================================
+
+directory permission
+
+if a user has read permission he can read the directories present in that directory
+
+if a user has write permission he can create new directories in that directory and read the content of the directory. If he does not have then he cannot create a nw directory or a file in that directory
+
+if you have execute permission you can enter the folder, if you do not have execute permission you cannot even enter the directory.
+
+
+
+===================
+
+Adding group
+
+useradd mygroup
+
+# adding a user to a group
+sudo usermod -aG groupname username
+
+sudo usermod -aG mygroup ahsanzafar
+
+# removing a user from a group
+sudo gpasswd -d username groupname
+
+sudo gpasswd -d ahsanzafar mygroup
+
+
+if you have removed a user from a group and it still has the powers of directory than logout the user and again log in
+=========================
+
+chattr +i filename --> to restrict the root user from deleting anything
+
+
+chattr -i filename --> to again allow user to do anythig with the file
+
+=======================
+
+chmod 777 567 --> octal way chmod u+r filename is symbolic way
+
+there are 8 cores [0-7] 7 is the highest
+
+
+chmod 777 ahsan.txt --> first seven refers to owner, second to group and third to others. 777 means give full permission to owners, groups and others
+
+chmod 707 ahsan.txt --> givee full permission to owners, give NO permission to group, give all permissions to others
+
+
+r = 4, w =2, x = 1
+
+
+if you want to give read and write permission to onwer and no permission to group and others than you will write  600 (4+2=6)
+
+if you want to give read and write permission to all you will write 666
+
+if you want to gove execute permission to all you will write 111
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

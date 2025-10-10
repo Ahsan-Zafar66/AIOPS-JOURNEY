@@ -1,0 +1,142 @@
+# top command to check processes
+top
+
+# taking output in a file
+top -n1 > /home/ahsanzafar/output.txt
+
+# after using top command press u and enter username to filter results by user
+
+
+======================
+
+Linux Processes:
+
+R --> Running
+
+S --> Sleeping
+
+U --> Uninteruptable
+
+Zombie --> dead process takes space in RAM, wait to be killed by parent who initiated 
+
+dfunc
+
+========================
+
+Top command diagnosis:
+
+CPU line:
+ni --> the more value close to zero the less load
+
+hi --> hardware interrupt (any issue in hardware if value increases from 0)
+
+id --> ideal value (the more the value close the 100% the less load on machine)
+
+si --> software interrupt
+
+st -->  
+
+
+General Header:
+PID --> Pid number of each process
+
+USER --> user running the process
+
+PR --> Priority
+
+NI --> nice value
+
+VIRT --> Virtual Memory
+
+RES --> Resident Memory (Process ka memory)
+
+SHR --> Shared mMemory (kisi or ky sth memory ko share kiya huwa hai)
+
+S --> State of process
+
+%CPU --> Process consuming CPU
+
+%MEM --> Memory utilization
+
+Time --> kitny time sy proces run ho rha hai
+
+COMMAND --> Process Name
+
+
+zombie process happens due to wrong designing of application
+=====================
+
+Speeding up  aprocess:
+
+# press r after running top command, enter PID of process whose priority you want to change and give value
+
+
+renice --> changing priority
+
+ 
+if a process is given -19, it will the top priority
+
+if 20 then low priority
+
+===========================
+
+File System Hierarchy
+
+# finding all files made by user ahsanzafar
+find / -user ahsanzafar
+
+# finding all text files
+find / -name "*.txt"
+
+# running multiple commands with find
+find /etc -user ahsanzafar -exec rm -i {} \;
+
+find /etc -user ahsanzafar --> find any file made by user ahsan zafar
+
+-exec --> it tells that find command is ended and another command is starting
+
+rm -i --> remove interactively like ask by yes or no
+
+{} \--> symbols regular expresion
+
+; --> it tells that command has ended
+
+
+
+
+# another find statement
+find /home -perm 777 --> bring all the files that have all permissions
+
+
+# find all files with root user in the mentioned directory and change user to ahsan
+find /home/ahsanzafar/Downloads -user root -exec chown ahsanzafar {} \;
+
+# find all files with the root and give all permissions to all files
+find /home/ahsanzafar/Downloads -user root -exec chmod 777 {} \;
+
+
+
+NOTE:
+{} \; --> there should be a space between {} and \
+
+
+# find all files that is modified in last 10 days
+find / -mtime -10
+
+# find all files modfied before last 10 days
+find / -mtime +10
+
+
+# log files are present in log folder in var directory
+
+message file stores common logs
+
+dmesg file stores diagnostic logs
+
+# to check details of hardware and things write dmesg command in shell
+dmesg
+
+# to see information of motherboard and others
+dmidecode
+
+biosdecode 

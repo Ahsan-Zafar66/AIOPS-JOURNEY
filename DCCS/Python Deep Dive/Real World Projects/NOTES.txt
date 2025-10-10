@@ -1,0 +1,97 @@
+# THIS PROJECT WAS DONE IN LINUX UBUNTU AND YOU CAN ALL THE CODE IN DIRECTORY /myproject
+
+# Project Description:
+We will create a database which stores df -h command output daily and we will create csv file of this information.
+
+
+# First Step
+Create a database if not available and create a table
+
+# table name df_info and create columns according to the output of df -h command
+# columnsa are:
+file_id
+filesystem
+size
+used
+avail
+usage_with_percentage
+mounted_on
+data_entered_datetime
+ip_address_of_machine
+hostname
+
+
+Step # 2 get the desired data using bash commands
+df -h | grep -v 'tmpfs' | awk 'NR!=1'| awk '{print $1,$2,$3,$4,$5,$6}' | sed -e 's/%//d' | sed -E 's/ +/,/g' ---> -v except tmpfs show others, NR!=1 means do not show first row
+
+# adding date
+abd=$(date '+%F %T')
+echo $abd
+
+# now we will add date at the last of above command
+df -h | grep -v 'tmpfs' | awk 'NR!=1'| awk '{print $1,$2,$3,$4,$5,$6}' | sed -e 's/%//d' | sed -E 's/ +/,/g' | sed "s/$/,$(date '+%F %T')"  | sed "s/$/,$(hostname -I)/g" | sed "s/$/,$(hostname)/g"
+
+
+# now we need to get the system name
+cat /etc/os-release | grep -iw "NAME" | awk -F '=' '{print $2}' | tr -d '"'
+
+
+=============================================
+# Python script complete
+
+mport os
+
+try:
+    os_name = os.popen("cat /etc/os-release | grep -iw 'NAME' | awk -F '=' '{print $2}' | tr -d '\"'").read().strip()
+
+    if os_name == "Ubuntu":
+        print(os_name)
+        data_cmd = os.popen("df -h | grep -v tmpfs | awk NR!=1 | awk '{print $1,$2,$3,$4,$5,$6}' | sed -e 's/%//g' | sed -E 's/ +/,/g' | sed \"s/$/,$(date '+%F %T')/g\" | sed \"s/$/,$(hostname -I)/g\" | sed \"s/$/,$(hostname)/g\" > my_project.csv").read()
+        print(data_cmd)
+
+    else:
+        print(f"Some other os is found: {os_name}")
+
+except Exception as e:
+    print(f"Exception {e} occured while running above code")
+
+
+
+
+=================================
+Now in above script rather then writing commands in the script, we can put the commands in a json file and can read from there
+
+# create a file "vi mylinux.json" and write the following command in it
+{
+"my_os_cmd":"cat /etc/os-release | grep -iw 'NAME' | awk -F '=' '{print $2}' | tr -d '\"'",
+"my_data_cmd":"df -h | grep -v tmpfs | awk NR!=1 | awk '{print $1,$2,$3,$4,$5,$6}' | sed -e 's/%//g' | sed -E 's/ +/,/g' | sed \"s/$/,$(date '+%F %T')/g\" | sed \"s/$/,$(hostname -I)/g\" | sed \"s/$/,$(hostname)/g\" > my_project.csv",
+
+}
+
+
+
+PYTHON SCRIPT LOADING COMMANDS FROM JSON FILES:
+
+import os
+import json
+
+
+try:
+    json_file = "mylinux.json"
+    with open(json_file,"r") as jf:
+        content = json.load(jf)
+
+    os_name = os.popen(content["my_os_cmd"]).read().strip()
+
+    if os_name == "Ubuntu":
+        print(os_name)
+        data_cmd = os.popen(content["my_data_cmd"]).read()
+        print(data_cmd)
+        print("Command ran succesfully")
+
+    else:
+        print(f"Some other os is found: {os_name}")
+
+except Exception as e:
+    print(f"Exception {e} occured while running above code")
+

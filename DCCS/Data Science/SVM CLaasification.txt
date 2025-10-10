@@ -1,0 +1,10 @@
+Svm seprates classes by making a decision boundry and the first data points near the decision boudary from both classes are support vectors. The distance between support vectors of classes should be maximum.
+
+
+It has two types:
+linear
+non-linear svm
+
+
+In non-linear svm we transform the data into higher dimension where both classes are separable and then convert back into lower original dimension as we get the decision boundry from the transformation in higher dimension
+The plane is made in highe dimension because data can be separated easily in higher dimension.

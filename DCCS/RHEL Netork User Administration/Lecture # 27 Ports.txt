@@ -1,0 +1,195 @@
+To open ports use following syntax
+# syntax
+service service_name start
+
+# example
+service httpd start
+
+# if you cannot recall the name of service or it's port
+
+# read the file
+cat /etc/services | less -> rememeber less command read file from top to bottom, if you search something that is presnt in the beginning of file and you are presen tin bottom, so it will not work. You have to search in sequence. In this case press n for next same word and p for going to the beginning of file and start searching again by pressing n
+
+
+# Number of total ports in world are
+0 --> 65535
+
+1-1023 --> Privileged port
+
+1024-65535 --> Non-privileged port
+
+# to check open closed ports on a device
+nmap ipaddress
+
+# you can also check other systems port if they are connected to your server by entering their ipaddress
+
+# if you want to check an entire network such as 192.168.1.100, the network is 192.168.1, you can write 192.168.1.0/24 
+
+nmap 192.168.1.0/24 --> check all the systems in this network
+
+
+# command to chekc your network ip
+ip r l
+
+# suppose i got 10.0.2.0/24 
+nmap 10.0.2.0/24 --> to get all ports of all machines on a network which is 10.0.2
+
+=================
+
+Telnet:
+Telnet is another tool to check the ports.
+
+# syntax
+telnet machine_ip port_number
+
+telnet 10.0.2.15 80 --> if port 80 is open telnet wil make connection. "^]" enter it to get out.
+
+# if you want to check another machine port
+telnet other_machine_ip port_number
+
+telnet 10.0.2.0 80 --> check connection of port 80 on machine having ip address 10.0.2.0
+
+================
+
+nc or netcat is another tool to check ports
+
+nc 10.0.2.15 80 --> if prompt does not come then port is open, if prompt comes then port is NOT open
+
+# Ports Connection in 2 Machines:
+suppose one machine has ip: 10.0.2.15
+
+machine 2 ip: 10.0.2.0
+
+# suppose i check port 80 from machine 1 into 2
+telnet 10.0.2.0 80 
+
+suppose connection got established.
+
+Now I know port 80 is open in machine 2
+Now, I can connect to port 80 from machine 1 to machine 2. By writing in browser https://10.0.2.0
+
+
+First step is to check through telnet if port is open, if it is open then you can establish a connection else you cannot establish a connection
+
+
+
+Server Machine Relation:
+Suppose  a number of machines are connected to a server, now you want to check which machine is connected with a server through which port.
+the command to check this is known as netstat
+
+netstat -a --> it shows details of machines using the ports and connection type
+
+netstat -an
+
+netstat -tulnp --> it shows you port of process, pid as well, state, foreign addresss
+
+
+Ping:
+ping command is used to check network latency, if other machine is available.
+
+ping -c 6 10.0.2.0 --> send 6 packets only to 10.0.2.0
+
+
+ping -c 6 -s 1064 10.0.2.0 --> send 6 packets pf 1064 bytes size to machine 10.0.2.0
+
+
+
+# to send ping through a desired gate (netowk card driver)
+ping -I enp0s3 10.0.2.0
+
+ping does not connect with any session. It does not establish a connection, so it does not have any port. Ping uses ICMP protocol
+
+ping works in transport layer (layer 4).
+
+===============================
+
+traceroute:
+traceroute is another tool like ping.
+
+When we connect to goole through internet there is a route by which we reach google, and this route has routers that transfers the packet from our computer to google. Packet moving from one router to the other is known as hops. 
+traceroute tells us about the journey of a packet. If we cannot connect somewhere, we can see at which route packet is failing to get transfered to next router with the help of traceroute
+
+# check the route of google.com, how many hops a packet takes, how fast the packet reaches
+traceroute google.com
+
+
+====================
+
+tcpdump:
+It is a packet sniffer tool, how many packets went. Packet capturing tool
+
+
+How you will monitor networking? --> Interview Question
+Tell about ping we will check slowness
+telnet to check details of port
+traceroute
+netstat
+wireshark
+ipref
+iptraf
+nmon
+
+================
+Linux has two packages for installation:
+1) RPM
+rpm --> redhat package manager
+redhat, fedora, centos, suse,sles use RPM
+
+2) Debian:
+Debian based OS are ubuntu, linux mint, debian, sabaion
+
+rpm -qa --> to check all the packages installed in system
+
+
+# installing an rpm package
+rpm -ivh package_file
+
+# example
+rpm -ivh zsh-4.3x86_64.rpm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

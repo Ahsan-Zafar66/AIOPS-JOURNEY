@@ -1,0 +1,8 @@
+Scada means supervisory control and data acquisition
+
+Scada System Simatic WinCC
+
+in scada course ypu are focussed on detection and prevention
+
+
+Ignition by inductive automation is for SCADA 

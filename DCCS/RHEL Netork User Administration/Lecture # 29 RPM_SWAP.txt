@@ -1,0 +1,88 @@
+There are three ways to install packages in linux
+
+1. rpm way (manual way) 
+2. yum (automatic)
+3. Source code compilation tar ball
+
+
+Can we install packages like windows .exe?
+Yes, we can do with wine which is a software emulator but it doesn;t have cross platform sucess. It is not used in production but used in RND
+Crossover is commercial, and it is not used in production 
+
+YUM:
+Yellow Dog Modifier
+
+
+What is SWAP? (it is shown in top command)
+SWAP is a virtual memory. It is a partition in your Hardisk. It is partial expansion of RAM. It is neither application nor RAM.
+Suppose you have a hardisk, a small portion of that hardisk works as a RAM, this is SWAP. Portion of Hardisk working as RAM is SWAP
+
+Is SWAP compulsory?
+No, it is not mandatory.
+
+
+Which filesystem SWAP uses?
+It used VFS (virtual file system)
+
+As it is virtual memory so ext4 will not work, we need VFS virtual file system.SWAP stores only processes.
+
+
+You start firefox, it goes in RAM, who decides how much RAM firefox will take?
+Developers of firefox decide how much RAM is required like it is written on a game dvd that this much space is required.
+
+RAM stores actual processes, it doesn't store actual data
+
+No process can go directly in cpu without getting in RAM.
+
+Now, think a scenario where company cannot but more RAM due to budget issues, in such cases you can make SWAP in Hardisk. This SWAP will be double then RAM if RAm is 128MB SWAP will be 256MB.
+===================================================
+
+
+WHAT SWAP Actuall do?
+Suppose you have a RAM of 128 and a SWAP of 256MB.
+you opened firefox it took 64 MB in RAM
+you opened word it took 64 MB in RAM, now all RAM is filled
+now you opened ms excel it took 64MB in RAM, because firefox is sent to SWAP in Harddisk
+now you opened chrome it took 64MB in RAM by sending the word to SWAP.
+Now, you minimized the excel and opend the firefox, it will send the excel to SWAP and firefox will again come to RAM. This is how SWAP works. When you minimize an application and open next the application already running is sent to SWAP if all RAM is taken and new application is opened in RAM, when you minimize the new application and go to previous application, the new application is sent to SWAP and previous one comes to RAM
+
+Now, during this shifting of applications in SWAP and back to RAM, we keep SWAP of double size, so always space is available because RAM is full, first application goes to SWAP RAM is cleared and then application present in SWAP comes to RAM
+
+SWAP does not need to be double than RAM, it depends on scenario. Talk with development team to decide the space for SWAP
+
+Swapping is known as paging in windows. Paging is done automatically in windows. Swapping is manual in linux
+
+
+if we have 1TB RAM still we need SWAP? Yes, because some applications require SWAP for cache and other database processes.
+=======================================================
+
+# HOW to extend the SWAP?
+Yes, we can extend swap if it is filled.
+When you extedn there are two partions of swap one made earlier and one made now. To system it will appear as one as they merged but at the backend their are two. For example you had 2gb you made 1gb more, it appears to system as merged 3gb but at the backend 2gb is separate then 1 gb
+
+# check swap by following command
+free -m 
+
+# to check where and on which partition swap is made
+swapon -s
+
+
+There are three ways to extend SWAP?
+1) fdisk part way
+2) file way
+3) file way with different commands
+
+
+=================================
+
+Which process is using SWAP?
+process pid is present in /proc directory
+when you open a process, suppose firefox it got 4405 pid, 4405 directory will appear in /proc directory.
+You opened firefox, ig got 4405 pid and directory 4405 is created in /proc.
+Go in this 4405 directory and read the status file. This status file will show the details of process whether it is using swap or not. Look for VmSwap
+
+
+====================
+Your server utilization is very high load is high, what you will do 
+
+# HOW TO MAKE SWAP?

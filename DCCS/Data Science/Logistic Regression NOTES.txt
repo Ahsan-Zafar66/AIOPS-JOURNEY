@@ -1,0 +1,9 @@
+Three componenets:
+1) Simple Regression Equation
+2) Sigmoid Function
+3) Logistic Regression function
+
+Data point Interpretation:
+1) The fisrt linear regression equation will output a continous number which will be inputed in sigmoid function
+2) Next sigmoid function which converts the continous value into a probability, 
+3) next the logistic regression function takes in the probability and if it is less than 0.5 0 label is give to data point and if it is greater than 0.5 1 label is given to the data point.

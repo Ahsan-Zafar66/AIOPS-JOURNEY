@@ -1,0 +1,124 @@
+& this is symbol of opening the process at the backend
+
+gedit& --> run gedit in the background
+
+ps -ef | grep -i gedit --> getting pid number of gedit
+
+
+firefox& --> open firefox in the background
+
+ps -ef | grep -i firefox --> bring firefox process information
+
+kill pid_firefox --> to close the firefox
+
+firefox --> when you open simply if you close the terminal then firefox will also be closed along te terminal
+
+firefox& --> if you now close the terminal, firefox will not be closed.
+
+
+fg --> shows process that are running in foreground
+
+bg --> background jobs
+
+jobs --> show the processes
+
+
+pstree | grep -i fire --> show the tree of firefox process who opened it 
+
+
+kill -9 pid ---> -9 is for forcefully killin a process which is not getting killed normally
+ 
+by default kill uses -15 to kill processes, -9 is used to kill forcefully.
+
+kill -15 (sigterm)
+
+kill -9 (sigkill)
+
+kill -1 (sighup)
+
+kill -l --> to see all the signals
+
+ps -ef | grep -i process_name --> to find all details about a process if you don't know the name of process write some letters
+
+
+ps -aux --> also tells how muh memory is used by a process which user opened the process
+
+
+firefox& --> it is a daemon process as I run this command it keeps on running until i close it, on the other hand ls is  aprocess which runs and finishes itself, it shows me the results and then goes.
+
+
+firefox, gedit these are applications and they are called application daemon. If you close them no impact on system
+
+
+if you kill the system daemons lik processes of system then your system will crash.
+
+======================
+
+top -n1 > top_info.txt --> getting the output of top command in a file
+
+How you will do performance monitoring in linux?
+Tell about the tools such as top, sar, cvmstat, ps --ef, lsof, free -m.
+
+===========================
+
+Netwroking
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

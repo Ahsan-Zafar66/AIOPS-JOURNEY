@@ -1,0 +1,12 @@
+Bell La-pauda model focuses on confidentiality
+
+Biba model focuses on integrity
+
+
+Trusted Platform Modules is very important it is the small container where all crytographic keys are stored
+
+When systemsa re hacked, hacker made changes in system files.
+If a file attrivute is changed unauthorized way then system is compromized
+
+
+OPENSSL certificate generator.

@@ -1,0 +1,93 @@
+e2fsck  command directly runs in hardisk
+
+You cannot run e2fsck on a running hardisk partitiion
+
+
+# 1st step
+check the badblocks in your hardisk
+
+# 2nd step 
+unmount partition
+
+# 3rd step
+run the e2fsck command
+
+
+================
+can we unmount / directory?
+
+Yes, we can unmount "/" directory in rescue mode
+
+
+================================
+# command used by administrators  
+e2fsck -yc /dev/partitionname --> gives full report
+
+
+
+
+# Reasons for bad sectors in a hardrive
+1) Unclean Shutdown
+2) power fluctuation
+3) Wrong design of application (going in RAM but not saving hardware fue to designing problems)
+
+
+============================
+# autorepairing all partitions when my machine reboots
+
+6th field meaning in fstab file
+0 --> off
+1 --> on
+
+
+suppose if 6th field for a partition is 0, it means no 22fsck check wwhen machine reboots
+
+for paritions where 6th field is not 0, e2fsck run in order starting from partition given 1, it will run first, then partition given number 2 it will run second. If two partitions given same number such as 2 then they will both be checked together by e2fsck. If a prtition is given number 3 it will be cleaned after partitions given number 1 and 2
+
+
+5th and sixth field in fstab file are interdependednt, if 5th field is on also turn on 6th field or off then also turn off 6th field (0 off, 1 on)
+
+if you want to see e2fsck when system reboots, look for section "Checking Filesystem" when machine starts
+
+
+# uuid folder containinf all uuids
+cd /dev/disk/by-uuid --> entering the by-uuid folder
+
+ls -l --> will show uuid mapping with the drives
+
+lsblk -f --> tells drive, mounted folder, uuid, extension of drive
+
+
+==================
+
+pipe symbol (|):
+pipe symbol pases the output of one command to another command
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

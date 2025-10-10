@@ -1,0 +1,343 @@
+FTP:
+File transfer protocol
+
+ftp works on TCP which works on layers 4 -- TCP & UDP (layer 4)
+
+
+applications or service that ask for username and password is TCP
+
+what is differnce b/w NFS, SAMBA and FTP?
+NFS and SAMBA are for file sharing with clients
+
+FTP is for transfering files and downloading them.
+
+
+which services we need to run ftp?
+wuftpd, proftp, sftp, vsftp
+sftp --> secure ftp
+vsftp --> very secure vsftp
+
+VSFTP:
+ftp works on 2 ports, 21 is for connections and 20 is for data transfer
+
+# install vsftpd
+yum install vsftpd
+
+
+# checking which files are created or written by yum while installing vsftpd
+rpm -ql vsftpd
+the most important file of any service in all is the binary file usually in path "/usr/sbin/vsftpd" for others "/usr/sbin/service_name"
+when we start a service through "systemctl start vsftpd" command it loads the "/usr/sbin/vsftpd" file in RAM
+# loading service without systemctl command, go in the directory /usr/sbin and run ./vsftpd and you ca turn of service using pkill and can find process id using pidof, pgrep, ps -el
+
+
+# us you want to see only configuration files not all
+rpm -qc vsftpd
+
+
+# us you want to see only document files not all
+rpm -qd vsftpd
+
+
+# starting service
+# systemctl start vsftpd
+
+# enabling service so it starts automatically after rebooting
+systemctl enable vsftpd
+
+# check if vsftpd port is active or connected
+telnet machine_ip 21 --> port 21 is for vsftpd
+
+# to get out of above command write "quit"
+
+# some other commands to check port 21
+nc machine_ip 21
+
+# another command
+ss -tulnp | grep -i 21
+
+# ftp default path
+/var/ftp
+
+when a client connects the ftp server whatever is present in /var/ftp directory client can see in the server
+
+# install vsftp like this
+yum install vsftpd-* -y
+
+# seeing services in linux
+systemctl list-units
+
+# seeing status of services enabled or disabled
+systemctl list-unit-files
+
+# another command to see in detail s
+list-units
+
+# in rhel 6 to see services
+chkconfig --list
+
+# check vsftpd is present and working
+list-unit-files | grep -i vsftpd
+
+# enabling vsftpd
+systemctl enable vsftpd
+
+
+# checking th vsftp port
+netstat -tulnp | grep -i vsftpd
+
+# you can connect your system on the browser by writing following command
+ftp://myserver.ahsan/ --> meyserver.ahsan is the server of the machine
+
+# if you want to connect to ftp server from client from termina
+ftp myserver.ahsan
+
+NOTE: to connect the machine you need to turn off the firewall
+
+# to connect with server from client, write following command on client and turn off the firewall of server
+telnet myserver.ahsan 21 --> connect client with port 21 of server
+
+# using ftp on command prompt and connecting with server
+ftp myserver.ahsan 21 --> enter the name and password of server account you want to connect with, name=ahsan, password=Ahsan?1122? these are the credentials of my server ahsan account to which I am connecting from client
+
+# after running above command you have to enter correct name and pasword of user you want to access of the server from your client
+
+
+# downloading files
+get filename --. files will be downloaded in client in downloads directory
+
+
+
+FTP BY DEFAULT DOES NOT ASK FOR PASSWORD BUT WE WANT IT TO ASK FOR PASSWORD SO IT IS ONLY CONNECTED BY GRANTED USERS?
+
+
+CONCEPT OF SERVICES:
+
+port must be open of server for client to access
+
+# first check port in server
+# install package
+# start service
+# enable service
+# telnet see if you can access the server if not stop firewall
+
+FTP by default works as anonymous has blank password
+every service have a config file, changing config file changes the binary file in real time when it loads in RAM, we cannot directly edit binary file.
+BEST PRACTICE: when you change a config file of a service take it's backup so you can always go back
+
+# loaction of config file of vsftpd
+cat /etc/vsftpd/vsftpd.conf
+
+# taking backup
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak -->.bak backup
+
+# now open file and look for Allow Anonymous FTP and change it to NO if it is yes
+vi /etc/vsftpd/vsftpd.conf
+
+anonymous_enable=YES ---> change to NO --> anonymous=NO
+
+# restart service after making changes
+after changing configuration file we need to restart the service
+systemctl restart vsftpd
+
+we restart because when we start the service it';s binary file is loaded in RAM and before loading it refers to config file to see the parameters.
+We make change while service is running, so we need to restart t so when binary file is loaed in RAM it refers now to the modified config file and our changes operate.
+
+
+FTP has three types:
+1) anonmous --> no identification
+2) localuser normal user, /etc/passwd
+3) virtual user not in /etc/passwd
+
+
+# After logging in the server throguh ftp if you want to see which commands are applicable here 
+help
+
+
+# downloading file from ftp server
+mget filename
+
+# you can use get command as well
+get filename
+
+
+# if yo want to upload files from client to server first check where you are standing in server inside ftp session
+# run pwd --> to check where you are standing
+suppose the output of above command is /home/alnafi
+
+# command to upload file
+mput /home/ahsan/mycode --> uploading mycode file from client to server in directory /home/alnafi
+
+
+IF YOU RARE FACING PROBLEMS AFTER TURNING OFF FIREWALL AND YOUR CONFGURATION IS CORRECT TURN OF SELINUX
+# command to check selinux (security enhanced linux) status
+sestatus
+
+# turning off selinux
+setenforce 0 --> turn of selinux
+
+
+CHROOT JAILED USERS:
+
+One ftp problem is after connection you can access complete server like all files all directories which is not good from security perspective
+So, what we can do if we give someone access to ftp we only give access to a particular directory not complete OS
+
+we can enable chroot which means we enter a directory and a client, that client will have access to that directory ONLY it cannot go out
+# go to follwoign file
+vi /etc/vsftpd/vsftpd.conf
+
+# look for chroot_user=YES and uncomment the tag line
+
+# now restart the vsftpd service but remember restart is not a good option in production servers as restarting a service breaks connection with all the clients
+# In production server we only reload the driver through reload command
+systemctl reload vsftpd
+
+Step # 1 uncomment chroot label /etc/vsftpd/vsftpd.conf
+chroot_user=YES --> uncomment this line
+
+Step # make a user and set it's password
+# make a userftp
+useradd ftpuser
+
+# set user password
+passwd ftpuser
+
+Step # 3 make a directory in the user
+# make a directory in ftp
+mkdir /home/ftpuser/ftp_dir
+
+
+Step # 4 change the home directory permission of the user created to root make the owner root of the home directory of new user
+# change permissions of ftp to root
+chown root:root /home/ftpuser --> now the owner of this ftpuser home directory is roor
+
+
+Step # 5
+# give permission to home directory of newly created user after making the root owner
+chmod 755 /home/ftpuser
+
+Step # 6
+# give the directory ownership to the user which we created  
+chown ftpuser:ftpuser /home/ftpuser/ftp_dir
+
+# now you can login using ftp myserver_name and can use the jailed user
+
+
+
+
+HOW FTP IS USED IN ORGANIZATIONS:
+we create a hardisk like of any size
+we create a directory for example data and we mount the hardisk on it. In case of multiple clients
+/data/ftpuser1
+/data/ftpuser2
+/data/ftpuser3
+
+For example
+add a hard disk of 15 gb
+mount it on a directory data
+create users inside data director like
+useradd -d /data/ftpuser1 -s /sbin/nologin ftpuser1 --> no ssh only ftp
+
+What is difference in active and passive ftp?
+cat /etc/vsftpd/ftpusers --> this file contain user names that cannot access ftp from outside 
+
+Active:
+when we connect ftp we coonect through port 21 and transfer data from port 20
+
+
+
+Passive:
+we connec through port 21 and for transfer of data port 20 isnot used higher port is used to transfer data using ighr port 1024
+
+
+
+HOW TO FIND BINARY FILE OF ANY SERVICE:
+
+# finding vsftpd binary file run the command
+which vsftpd 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

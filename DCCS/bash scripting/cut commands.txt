@@ -1,0 +1,20 @@
+cat ahsan.txt | cut -c 1-6 --> will show 6 characters of each line
+
+cat ahsan.txt | cut -c 1 --> will show all characters
+
+cat ahsan.txt | cut -c 1-6, 10-15 --> will show 6 characters of each line and then 10-15 characters
+
+cat ahsan.txt | cut -f 1 --> show only first column of a file which has tab separation
+
+cat ahsan.txt | cut -d ":" -f 1 ---> here the delimiter is colon for files which have colon as a separator by default it works for space and tab.
+
+cat ahsan.txt | cut -d ":" -f 1-10 --output-delimiter=" " ---> it will show 10 words of each line and delimiter will be space in the output rather then colon
+
+cat ahsan.txt | cut --complement -d ":" -f 1 ---> complement is used to not show the mentioned cut, like it will not show the first line now
+
+
+
+
+
+
+

@@ -1,0 +1,75 @@
+AWS:
+20 regions
+each region has 2 or more availability centres (data centrs).
+
+Iaas --> infrastructure as a service (sservers,vm,hardware,router,etc)
+
+Pass --> Platform as a service (OS,DB,lambda server,etc)
+
+Saas --> Software as a service (monitoring, cloudwatch, cloud trial)
+
+If you ar eusing services from different copanies it is known as hybrid cloud. Like some services from AWS, some from GCP and etc
+
+
+Services:
+ec2
+s2 storage
+elb
+asg
+cloudwatch
+cloudtrail
+etc
+services are available in all the regions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

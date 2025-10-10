@@ -1,0 +1,70 @@
+In RHEL 6 network is the main player and network manager is culprit
+
+After RHEL 6 the main player is network manager
+
+
+IN RHEL 6 Network Manager disturbs network
+
+# command to stop NetworkManager in RHEL 6\
+service NetworkManager stop
+
+# stopping NetworkManager after rebooting
+chkconfig NetworkManager off
+
+
+
+Classes of IP:
+
+Class A --> 10.0.0.0/8 --> (CIDR Classless intern domain routing), we can write CIDR as 255.0.0.0 NETMASK
+
+Class B --> 172.16.0.0/16 --> 255.255.0.0 NETMASK
+
+Class C --> 192.168.0.0/24 --> 255.255.255.0 NETMASK
+
+Ipadress accomodation by numbers
+Class A > Class B > Class C
+
+
+# Network Concept, Network is also called Domain
+192.168.0.0 --> a network
+
+machines in a same network
+192.168.0.1
+
+192.168.0.2
+
+192.168.0.3 upto 192.168.0.255 
+
+
+
+
+
+IP ALIASING:
+adding additional IP in linux
+
+
+# adding an ipadress on a network port
+ifconfig enp0s3:1 10.0.2.17 netmask 255.255.255.0 --> it will add a new ip address 10.0.2.17 on network enp0s3 and we can add upto 256 networks on one network card, enp0s3 is a driver and we can assign 256 ip address on this network card driver like enp0s3:1, enp0s3:2, enp0s3:256.
+
+
+enp0s3 --> main network driver, 256 ip can be made
+
+enp0s3:1 --> it is know as aliasing ip addreses, companies does this to keep track of all ip addresses on a network card.
+
+
+enp0s3:2 
+
+This ipaddress created is temporary
+
+
+Ip aliasing can be used when company cannot afford routers for the communication of two machines having different networks. 
+
+ip V4 --> 4 octate
+
+ipV6 --> 8 octate, hexadecimal + mac ID
+
+
+Mac ID unique address, it is chip embeded allover world it is unique. We cannot change it at hardware level but on OS level we can change it.
+
+
+Ip address is used for finding lication of your system and MAC ID is used for data communication

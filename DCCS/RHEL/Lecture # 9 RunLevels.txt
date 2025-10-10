@@ -1,0 +1,188 @@
+In runlevel 3 there are 6 consoles that can be accesed by presing alt+f1 to acess 1st console, alt + f3 to access 3rd console, like this we can access all the 6 consoles in runlevel 3
+
+alt + f1 --> for console 1 in runlevel 3
+
+same for other levels just change f1,f2, to access the virtual console
+
+
+suppose i am working in runlevel 3, switched to runlevel 4 now all the commands that i run in runlevel will be stopped.
+
+
+i am in runlevel 3 and i amworking in virtual console 1, so there is a driver that controls this
+
+/dev/tt1 --> for virtual console 1
+
+/dev/tty2 --> for virtual console 2
+
+/dev/tty3 --> for virtual console 3
+
+
+/dev/tty4 --> for console 4
+
+/dev/tty5 --> for cosole 5
+
+/dev/tty6 --> for console 6
+
+to change virtual console after entering runlevel 3
+
+alt + fn + f3 --> run ps to check the virtual console. tty3
+
+
+tty stands for terminal
+
+
+if you remove any of these files such as tty3 you will lose the virual console 3
+
+if you make a file in runlevel3 and shift to runlevel5 it will be available in runlevel5 as well
+
+pts are genome terminal drivers of runlevel 5
+
+pts stands for pseudo terminal
+
+if you have opened only one terminal in runlevel5, pts0 will be shown if you run ps command
+
+if you open another terminal in runlevel 5, now second terminal will have pts1, you can check by running ps command
+
+
+to remotely connect a windows machine with a linux machine putty is used and it uses pts driver
+
+
+
+can we load graphics without switching runlevel?
+Yes, we can and the command used is startx, we are not changing runlevel only temporary loading the graphics. We didn't switched the runlevel, we just temporarily swtiched on the graphics.
+
+pkill x to switch off the temoprary graphics turned on by startx
+
+
+startx --> to turn on graphical services without switching the runlevel
+
+pkill x --> to turn of the graphical services.
+
+GUI is called xserver in linux
+
+
+=======================
+Can a person access GUI through startx command if he has minimal installation?
+No, If a person has minimal install, if he runs startx command it won't run because he will not have the package to laod the graphics because he opted for minimal installation
+That perosn can install the xserver package and then he can load the GUI through startx command.
+
+
+================
+
+What happens or which files are run when computer or machine start.
+
+1) Power on
+
+2) Splash
+
+3) /etc/inittab --> whaever command is given in this file it runs, if you edit and put runlevel6 the computer will go into a loop of rebooting.
+
+
+if you are rebooting due to runlevel6 given in inittab, you can interrupt splash and give runlevel5, it will skip the /etc/inittab file and go to the runlevel5 and turn on the system
+
+=======================
+
+# editing the runlevel default file in centos 6
+vim /etc/inittab --> to edit the file
+
+see which runlevel is given in default, you can change it.
+
+
+NOTE: (centos 6 only)
+if you ever forget your root password, interrupt normal startup, press a and right 1 to enter the first runlevel it won't ask for password and now you can set you new root password and recover it
+
+===============
+to secure singel user (runlevel 1)
+
+vi /etc/sysconfig/init
+
+go to last line of this file by pressing shift + g
+
+SINGLE=/sbin/sushell --> this will be written in last line
+
+copy this line and paste it now comment out one of them
+
+# changed line
+SINGLE=/sbin/sulogin --> now save the changes in the file
+
+NOTE:
+In centos 7,8,9 init file does not exist so it will not work for them. it works for centos 6
+===================
+Resetting root password if you forget in centos 6 ONLY
+cent os
+
+press esc to interrupt rebboting
+
+press a to go to edit command
+
+write 1 in rhgb quiet line in the last after quiet
+
+press enter --> to run command and go to runlevel 1
+
+NOTE:
+if you follow the same procedure for centos 7,8 it doesn't work because it asks for password and you forgot it, follow th eprocedure for centos 7,8,9 to enter without password in runlevel 1
+===========================
+
+If your single user mode is also secured and forgot the password what you can do now>
+
+Now, the option is rescue mode (DVD/ISO).
+
+=======================
+# steps to change password in centos 7,8,9
+
+step #1
+# command to write in line contaning rhgb quiet
+rd.break
+
+step # 2
+# command to write in shell (it will not ask for password now directly enter you to shell)
+mount -o remount rw /sysroot/
+
+step # 3
+# next command in line to run
+chroot /sysroot/
+
+step # 4
+# change password noe
+passwd root
+
+step # 5
+# run this command
+touch /.autorelabel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

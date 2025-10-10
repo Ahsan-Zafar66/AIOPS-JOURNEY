@@ -1,0 +1,28 @@
+It Risk, Risk Management, Cyber Risk Assesment & Management
+1) Categorize Information Systems
+
+2) Select Security Controls
+
+3) Implement Security Controls
+
+4) Asses Security Controls
+
+5) Authorize Information Systems
+
+6) Monitor Security Controls
+
+
+
+Risk Assesment & Management Principles
+Conceptual:
+Functional Purpose
+Abstract Purpose
+General Function
+
+above are suitable for SYSTEM-DRIVEN risk assessments
+
+REAL:
+Physical Function
+Physical Form
+
+suitable for COMPONENT-DRIVEN risk assessments

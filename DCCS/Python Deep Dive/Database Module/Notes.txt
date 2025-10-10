@@ -1,0 +1,148 @@
+###### DataBase Module
+- we are practicing it on ubuntu.
+- Run command to check for updates "apt-get update"
+- install mysql: apt-get install mysql-server
+- check the status of mysql-server service and start it. "systemctl status mysql.service" and "systemctl start mysql-service"
+- mysql_secure_installation
+
+
+# logging into mysqls server
+mysql -u root -p
+
+# seeeing the databases
+show databases;
+
+# creating database
+create database alnafi
+
+
+# getting alnafi databse
+use alnafi
+
+# getting tables details in a database
+show tables;
+
+# getting structure of a table
+describe table_name
+
+# create a table trainer_details having columns, t_id, fname,lname,designation,username, password, salary, datetime datetime,
+# IF FOLLOWING CODE GIVES ERROR REMOVE COMMA AFTER THE LAST COLUMN
+create table trainer_detail(
+t_id int NOT NULL AUTO_INCREMENT,
+fname char(255),
+lname char(255),
+designation char(255),
+username varchar(255),
+password varchar(255),
+salary int,
+join_date datetime,
+PRIMARY KEY t_id
+);
+
+
+# making anothr table course_details with columns c_id, course_name, course_duration,t_id
+create table course_detail(
+c_id int,
+course_name char(255),
+duration int,
+t_id int,
+PRIMARY KEY c_id FOREIGN KEY t_id
+);
+
+
+# inserting data into table trainer_detail
+insert into trainer_detail (fname,lname,design,username,password,salary,datetime) values (row1), (row2);
+
+
+
+
+
+# inserting data into table trainer_detail without mentioning columns BUT remember you have to pass values for all columns including auto_incrmeented you can put NULL as a value for them and it will automatically give them the value they deserve
+insert into trainer_detail values (row1), (row2);
+
+
+# adding columns in an existing table
+alter table trainer detail add column address varchar(255);
+
+
+# adding a column at a specific position, fname,lname,password,salary. I want to add email column after password
+alter table trainer_detail add column email varchar(255) after password;
+
+
+
+# changin value of a column for a row
+update trainer_detail set password="ahsan54321" where t_id=1
+
+# deleting a row
+delete from trainer_detail where t_id=1
+
+# deleting any column from the table
+alter table trainer_detail drop column address;
+
+
+================================================
+
+# go to the ubuntu machine and add a user in mysql databse first to remotely login into your desired database
+# go to mysql database and go to tbale user, now check this table. add your user here in this table.
+
+# entering mysql
+mysql -u root -p
+
+# showing databse
+show databses;
+
+# going to mysql database
+use mysql;
+
+# checking tables
+show tables;
+
+# checking user table
+select User, Host from user;
+
+# making a user in the table
+# command for creating user
+create user 'mysql_user'@'%'IDENTIFIED BY "test123" ---> where mysql_user@% is user and test123 is password
+
+
+# logging into mysql from the ubuntu machine usng the user we created
+mysql -u mysql_user -h 192.168.43.63 -p --> ip address is of ubuntu where we are working
+
+
+# now you can loginto with your newly create duser into mysql
+
+# now you need to make settings so you can enter in mysql through this user from any machine
+# go to the following file and change bind-address=0.0.0.0
+vi /etc/mysql/mysql.conf.d/mysqld.conf
+
+# now restart the mysql service
+
+# now go tot he mysql throuh root and give permission of all datbases to all users
+grant all on *.* to 'mysql_user2'@'%' IDENTIFIED BY 'Test?1234?' WITH GRANT OPTION;
+
+
+
+USING PYTHON FOR DATABSE
+import mysql.connector
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

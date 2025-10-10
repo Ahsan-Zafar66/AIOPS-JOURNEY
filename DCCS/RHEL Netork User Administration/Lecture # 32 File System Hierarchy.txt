@@ -1,0 +1,104 @@
+logs are present in /var/log
+
+secure file has authentication failure logs
+
+when file size increase temendously, linux takes backup and empty the file. 
+For example if secure file is of 2gb backup will be created and secure file is emptied to 0 bytes. This is known as log rotation
+
+consult geekstuff for log rotation
+
+===========================
+
+mnt is optional directory
+
+can be used for temporary mounting of something
+==========================
+
+temp has temporary files
+
+.lock files are there
+
+tmp has sticky bit assigned
+
+
+=====================
+
+lost+found directory is for data recovered files, data recovery files are stored here
+
+=================
+boot directory
+
+boot has very important file kernel
+
+# to see the size of a file or directory
+du -sh filename/directory 
+
+# to see the biggest file on top
+du -ah | sort -n -r | head -20
+
+# checking by directory
+du -cks /home/ahsanzafar/* | sort -n -r | head -10
+
+======================
+
+dev directory is for device drivers
+
+c means character files, these are binary files and are special are executable and act as communicator between two things or points
+
+s means socket files
+
+dev has driver files that are executable.
+
+nst0 --> block device, it sends data to tape device for backup which is attached to server
+
+how to take backup in tape device? --> interview question
+
+tar -cvf /dev/nst0 /home/* --> taking home backup in nst0 tape device
+
+in above command we are taking backup of home directory and everthing in it, nst0 is a driver that interacts with tape device connected with the server. nst0 will create backup in tape device
+
+
+How to manage tape?
+with mt command.
+
+# to see the status of  tape
+mt -f /dev/nst0 status
+
+
+mt -f /dev/nst0 forward
+
+mt -f /dev/nst0 rewind
+
+if I rewind the tape and take backup again previoud backup wil be overwritten by the new one as I rewind the tape
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
