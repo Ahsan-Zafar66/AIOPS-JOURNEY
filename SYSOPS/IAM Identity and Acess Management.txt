@@ -1,0 +1,42 @@
+How to add a user?
+
+Step # 1
+Go to IAM
+
+Step # 2
+Go to users tab
+
+Step # 3
+
+click on add users button
+
+Step # 4
+add username
+
+and select password
+
+chose custom password and add your password
+
+Step # 5
+Select the group for the user you made
+if no group present then select create group.
+select permissions and privileges of the group created
+
+Step # 6
+add the newly created user to the group
+
+Step # 7
+give any tag to the user
+
+this user has been created inside account of AWS
+
+
+HOW TO LOGIN THE NEWLY CREATED USER?
+go to dashboard of IAM
+
+on the right side you will see AWS Account and for account ID you will create account Alias
+
+you will see a url, you can copy the url and paste it in a new tab on the browser
+
+
+now enter the Username and Password

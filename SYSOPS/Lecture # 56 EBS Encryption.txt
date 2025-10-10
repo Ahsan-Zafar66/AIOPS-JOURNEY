@@ -1,0 +1,35 @@
+Encryption of EBS is done while creating a volume.
+
+Snapshots of encrypted volume are also encrytped and when you make volumes from these encrytpted snshots those volumes are also encrypted
+
+
+Once a volume is encrypted you cannot uncrypt it, what you can do you can copy data from encrypted volume into an un-encrypted one
+
+
+We can also encrypt a snapshot while copying it from one region to the other
+
+
+When you have a encrypted volume attached to an ec2 instance, then data is secure at rest and in transit, because when we transfer data we transfer encrypted data.
+
+
+Whatsapp secures data with encryption at rest and in transit?
+No, whatsapp only secures data in transit with end to end encryption. Data at rest stored in mobile is not secured by whatsapp.
+
+
+Un-encrypted snapshots can be shared wth other accounts in the same region publically and privately
+
+Encrypted snapshots can be shared only privately NOT publically
+Encrypted snapshots can only be shared privately with selected acounts and we need to give acces of the Custom Management Key.
+For sharing sanshots, the volume whose snapshot is taken must be encrytoed wth custome management key but not with default key.
+
+If your volume is encrypted with default key you cannot share it with others
+
+Procedre of sharing key:
+1) Go to CMK service
+2) Select your key
+3) Add AWS account ID to which you want to share key
+
+
+CMK charges us 1$ per month.
+You cannot delete directly. We can schedule key deletion minimum 7 days and maximum 30 days
+

@@ -1,0 +1,22 @@
+Virtual Private Gateway:
+
+Suppose there i a company that has it's own data centre.
+
+They are hosting 2000 virtual machine sin data centre
+
+This is private cloud because it is managed by the company itself.
+
+
+Now, they made a VPC in canada using AWS. This a  public cloud as AWS is used by other companies as well.
+now, hey won't use Internet gateway. They will use VPG Virtual Private gateway and attach it to their VPC.
+
+VPG will connetct you to company premise through direct connection or VPN. 
+
+Now, company can connect with is private cloud through VPG.
+
+
+Now, after creating Vitual Private Gateway they can connect with the local data centre they created in the company safely.
+there servers on AWS cloud can use VPG to communicate with servers present locally in their data centre.
+This approach is safe as they are not communicating through internet gateway they are communicating through their private gateway
+
+This is example of hybrid cloud as half is virtual on AWS and half is local in the comapny premises

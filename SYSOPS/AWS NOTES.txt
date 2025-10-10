@@ -1,0 +1,38 @@
+VPC --> virtual private cloud
+
+By default amazon has VPC in each region
+
+VPC,
+
+V --> Virtual not physical
+
+P --> private completely isolated
+
+C --> cloud
+
+
+Each customer has separate vpc, no two customers can see data of each other
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

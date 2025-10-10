@@ -1,0 +1,34 @@
+Region does not matter in saving plan
+
+Spot instance:
+Regionless it doesn't matter
+
+Suppose AWS has a ssd of 120 TB, 100TB is used by clients and 20 TB is free, so AWS says take this 20TB by bididng and the bidder with the market bid will get the storage.
+
+Now, the market value is 1$, you bid for 1.5$ and you are the highest bidder.
+You got this space at 1$ of market price, your bid 1.5$. You own this space until and unless market value does not increase than 1.5$. Once it increase from 1.5$ you no longer own it.
+
+
+
+Discount is huge in spot instance upto70%
+
+
+Use spot instance for services that if they are stopped no impacts happens to your company.
+
+
+Yse spot instances with option that it is capped with on-demand price.
+
+
+Persistant means if price goes up it is stopped or shut down as set, and if price falls back to your bid then again you can use the thing.
+
+
+
+Dedicated hardware means that you will get  a hardware and you can make your instances on that hardware
+
+
+Dedicated Host means that you get a complete hardware and you will pay for the full hardware 
+
+
+
+You can attach 2 NIC card to an ec2 instance, when you attach 2 NIC card with an instance, it will not assign auto public ip you need to attach the Elastic ip. You will have 2 private ips as you have two NIC card but your public ip wil be elastic ip.
+Your istance is AZ1 then your Elastic Network Interface should also be in that AZ1. Both instance and ENI should be in same Availability zone to work together

@@ -1,0 +1,24 @@
+VPC created by account owner is Custom VPC
+
+we are working as AWS solution architect
+
+Custmoer comes and says i want servers.
+
+what is the growth in number of servers in next 5 years?
+
+the customer says you can expect 50 servers to be added in next 5 years
+
+So, now as a solution architect, i will create 150 servers and Network ip will cose of 24 bit like 192.168.2.0/24 --> using this network we have 251 ip addresses which are sufficient for 150 servers to communicate and have a network
+
+
+WHNE YOU CREATE YOUR Custom VPC:
+you need to create a vpc
+
+you need to create CIDR
+
+you need to create subnets and attach with 
+
+you need to create internet gateway and attach it to your vpc for communication on internet
+
+
+go to subnets and edit them and allow the AWS to assign automatically ip addresses, the option will be "enable auto assign public ipv4"

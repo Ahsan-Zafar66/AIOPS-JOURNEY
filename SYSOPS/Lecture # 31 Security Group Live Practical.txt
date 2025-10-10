@@ -1,0 +1,5 @@
+Security Group works on instance level and SG is statefule if inbound is allowed outbound will be allowed automatically.
+
+ICMP --> for ping
+
+RDP --> for remote connection

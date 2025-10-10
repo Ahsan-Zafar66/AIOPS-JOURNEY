@@ -1,0 +1,25 @@
+Real Time Data Streaming service is Kinesis
+
+Shard determines how much data streaming capacity you have.
+
+For example you have 1000 customers sharing live data each second which shard will be used? If there are 10000 customers then same shard will be used, no same shard cannot be used in both cases.
+Different shard process different load of data
+
+Amazon kinessis provide collect, process and analyze streams in real time
+
+Application sending data --> Kinesis Stream ---> ec2 instance for analysis
+
+
+Creating Kinesis in AWS:
+On-demand means if your demand increases shard will be increased autmatically.
+
+Provisioned means, that you estimate that you 10,000 customers and this much data will be streamed and you decide the quantity of shard like 1,2,3 and etc.
+
+
+After creating kinesis get the ARN (Amazon Resource Number).
+
+Now, push your data from application to this ARN
+
+Data Retention in Kinesis is 1 day you can set according to your interest
+
+Data retention purpose is re-marketing 

@@ -1,0 +1,30 @@
+VPG:
+virtual private gateway is used ot connect point to point your aws cloud with you on premises data centre.
+
+It is charged per hour it is not free so do not create it.
+
+
+# Simply create like you create other vpn and attach it with your on premises data centre
+
+Direct Connect:
+AWS gives you a dedicated fibre that goes from VPG installed on cloud to the firewall of on premises data centre, this is called direct connect,
+
+You can connect cloud vpg with on premises data centre by configuring vpn as well
+
+
+Your VPC (virtual private cloud) ---> AWS direct Connect Location (name the partner you ar eusing) ---> partner managed MPLS network (e.g Airtel, Tata)
+
+
+Connecting cloud with on premises data centre through direct connect is more stable as compare to connecting aws with on premise sdata centre through vpn
+
+
+Organization mostly choses direct connect because aws and on premises data centre is connected with dedicated fibre
+
+You only pay in directo connect when you transfer data from aws cloud to on premises data centre.
+
+Direct connect has only benefit of multiple provision of network providers, if one is down then other can be used posing no hinderance in the operations.
+
+
+When you create an account on AWS, it create by default VPC in all regions, Security Groups,NACL,route tables, CIDR
+
+Default subnets in each AZ

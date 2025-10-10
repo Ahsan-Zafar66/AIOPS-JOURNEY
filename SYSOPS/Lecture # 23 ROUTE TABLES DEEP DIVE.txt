@@ -1,0 +1,64 @@
+ROUTE TABLES:
+these are tables that have entries which says whats is the destination & target for that packet.
+
+Each subnet MUST have ONLY ONE Route Table, one subnet cannot have multiple route tables
+
+ONE ROUTE TABLE can be associated with multiple subnets.
+
+Explicit means directly example "Mobile not allowed"
+
+Implicit means indirectly example "A photo with a mobile phone and a cross on the mobile"
+
+
+When you create  a subnet it is associated with the default route table by default.
+
+
+ONE subnet cannot HAVE multiple ROUTE TABLES AT ONE TIME. ONE SUBNET CAN HAVE ONLY ONE ROUTE TABLE AT ONE TIME.
+
+ONE ROUTE TABLE CAN HAVE MULTIPLE SUBNETS INT IT.
+
+Scenario:
+Suppose you have two subnets, s1 and s2.
+
+In subnet 1 or s1 you have application servers that need to communicate with database servers in s2 and also accesible to customers on internet.
+
+In subnet2 or s2 you have database servers which should communicate with application servers in s2 but are not accessible to customers on internet.
+
+So, you will make two route tables here route table 1 and route table 2. RT1 should have local and internet gateway BUT RT2 SHOULD ONLY HAVE LOCAL GATEWAY.
+
+Now, connect s1 with RT1 and s2 with RT2. As s2 are connected with RT2 and RT2 have only local gateway so it cannot be accessed from internet.
+
+s1 = public subnet
+s2 = private subnet
+
+
+HOW TO PUT EC2 instance or server in public or private subnet?
+Chose the type of subnet you want to put your ec2 at the time of creation of ec2 instance in configuration details.
+
+
+
+Can you delete the default MAIN ROUT TABLE?
+Yes, first make the other route table MAIN route table, now you can delte the default route table as it is no longer the main route table.
+
+
+Subnet associations can be changed to another route table.
+
+Custom route table can become main route table
+
+Every route table has default rule for all VPC subnets to communicate (you cannot modify or delte this)
+
+
+YOU CAN STOP SUBNET COMMUNICATION BY USING NACL, YOU CAN BLOCK ONE SUBNET TRAFFIC INTO OTHER BY USING FIREWALL. We cannot block at the router level BUT WE CAN BLOCK AT FIREWALL LEVEL.
+ROUTER WILL SEND THE PACKET FROM ONE SUBNET TO THE OTHER, BUT OTHER SUBNET FIREWALL WILL NOT ALLOW THE PACKET TO ENTER THE SUBNET
+
+
+Security Group:
+To protect every ec2 instance in a subnet there is a security group on the NIC card of ec2 instance.
+
+Security group is virtual firewall
+
+It controls traffic ar the ec2 instance (specifically associated with virtual network interface also know as ENI = Elastic Network Interface)
+
+EC2 --> Security group on nic card --> known as ENI
+
+

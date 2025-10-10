@@ -1,0 +1,41 @@
+In production we have 1000 of servers, so we cannot take each instance snapshot manually. 
+
+We need some automated way.
+
+We will use Lifecycle Manager
+
+The main game is of tagging.
+Suppose I have 1000 servers and each tage has a key value pair and it should be same.
+
+Key: Server
+Value: Database Server
+
+
+All the 1000 ec2 instances have this above key value tag.
+
+
+Now we add this  key, value in lifecycle manager
+
+
+We need to define whether we are taking snapshot of instance or volumes,
+
+Then we define the schedule details including frequecny and time when to take snapshot and at which frequency
+
+
+Retentions Type:
+Suppose you kept 2
+
+start at time 12 pm and take backup every 1 hour.
+
+12 pm first backup
+1 pm second backup
+
+as you kept 2 in retention time, so it will keep only two backups
+
+Now at 2 pm backup will overwrite the backup taken at 12 pm
+
+Now at 3 pm backup will overwrite the backup taken at 1 pm
+
+so, only two backups we will have and each new one will overwrite the previous ones
+
+ 

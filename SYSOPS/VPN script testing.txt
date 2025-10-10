@@ -1,0 +1,42 @@
+# Set your tunnel IPs and shared key
+config vpn ipsec phase1-interface
+    edit "AWS_VPN_Tunnel"
+        set interface "port1"  # Replace with the appropriate interface name
+        set ike-version 2
+        set keylife 28800
+        set peertype any
+        set net-device disable
+        set proposal aes256-sha1
+        set dhgrp 14
+        set remote-gw 3.12.87.176  # Replace with the AWS VPN tunnel IP
+        set psksecret "214rIwLpfk_s_Sk5PQHR_XL_8gegmzkf"
+"  # Replace with your pre-shared key
+    next
+end
+
+config vpn ipsec phase2-interface
+    edit "AWS_VPN_Phase2"
+        set phase1name "AWS_VPN_Tunnel"
+        set proposal aes256-sha1
+        set pfs enable
+        set dhgrp 14
+        set keepalive enable
+        set keylife-type seconds
+        set keylifeseconds 3600
+    next
+end
+
+# Configure firewall policies
+config firewall policy
+    edit 0
+        set name "VPN_to_AWS"
+        set srcintf "AWS_VPN_Tunnel"
+        set dstintf "port1"  # Replace with the appropriate interface for your local network
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set logtraffic all
+    next
+end

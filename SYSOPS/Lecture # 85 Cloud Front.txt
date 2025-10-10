@@ -1,0 +1,40 @@
+CDN: Content Delivery Network. Delivering content on network.
+
+Implementation of CDN is done through cloudfront.
+
+Amazon Cloud Front is a content delivery netword offered by Amazon eb Services
+
+CloudFront delivers the content through worldwide networks of data centers called edge locations
+
+
+CDN task is to deliver content fast and have low latency.
+CDN is done in AWS with cloudfront
+
+Edge location does storage of data ana it's caching
+
+What is cloud front, CDN and caching?
+CDN means content delivery on a network with low latency and high speed.
+In AWS CDN is given by cloudfront service.
+
+Suppose you live in pakistan and you uploaded a video on youtube, and suppose it goes to Data Centre in Pakistan.
+If a pakistani person comes and access your video it will be fast for him
+Now, if a US oerson comes and access your video, your video is in pakistani data centre which is very far from US.
+First, youtube will look for required video in US data centre, if it didn't found it it will go to pakistani datacentre.
+Now, the availability of video for the US person is very slow. So, what the US data centre will do, first time it will get from pakistani data centre.
+After first time, it will cache the video in US data centre and next time someone comes from US, the youtube will use this cached video and latency will be low and accessing to video will be fasr.
+
+This above all thing is content delivery on a network
+
+
+How to set up cloud front?
+Go to cloud front service in the AWS
+
+Chose the resource you want to cache such as s3 bucket.
+
+Your bucket is mapped with a domain name. Now, when you access the s3 bucket cloud front will use caching to increase the speed of content delivery.
+
+Your content will be served through caching and anyone from any location will have low latency and high speed.
+
+Edge locations store and cache content and user when access they get content from the neared edge location
+
+Caching saves a lot of charges by not allowing the complete content to be copied on all the places in the world. Content is uploaded at one place and all around the world it is delivered through caching and helps us to save cost by preventing upoading of content all ove rthe worl

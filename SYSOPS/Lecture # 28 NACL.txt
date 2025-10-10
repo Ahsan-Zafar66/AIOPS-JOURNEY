@@ -1,0 +1,79 @@
+NACL:
+network Access Control List.
+
+NACL works on SUBNET LEVEL NOT EC2 level.
+
+ROUTE TABLE IS MUST FOR SUBNET FOR ROUTING
+
+NACL IS MUST FOR SUBNET FOR SECURITY
+
+IMPLIED ROUTER: It works as a router and NACL works here.
+Nacl function is performed on implied router.
+The implied VPC Router hosts the NACL
+It works at subnet level
+N-ACL are stateless
+
+WE CAN HAVE PERMIT & DENY both rules in NACL
+
+
+NACL is stateless, it means if you want to send a packet you need to configure NACL for outgoing packet and when the same packet comes back you need to configure NACL for incoming same packet. Unlike security group which are statefule and remeber if packet went out it will come back, but NACL is stateless it does not remeber packets, you have to tell it for the same packet for inbound and outbound
+
+If there is issue in the communication of two servers, then probelm could be in NACL and security group inbound outbound rules.
+
+
+BY default NACL allows all inbound and outbound traffic
+
+Each NACL rule has a rule number. Suppose there are 4 NACL rules we have defined their number are 40,50,60,100. So, first rule 40 will be seen then 50,then 60 and then 100. For example rule 40 allows ssh traffic from everywhere but rule 100 denies all traffic. As rule 40 is smaller it will be executed and then rule 100. If someone comes for ssh as it has rule number smaller than the rule 100 he/she can access ssh despite 100b blocks all traffic.
+
+There should be a distance in rule numbers like 10,20,30,40
+
+Lowes number rule is permitted.
+
+Scenario 1:
+rule 40 : Allow ssh traffic from 0.0.0.0/0
+
+rule 60: Block traffic from 0.0.0.0/0
+
+So, which rule will work? Can a person acess ssh?
+Rule 40 will be seen first as it has smaller rule number, when some asks for ssh connection.
+
+
+Scenario 2:
+rule 40 : Block trafic from 0.0.0.0/0
+
+rule 60: Allow ssh traffic from 0.0.0.0/0
+
+So, now can a perosn connect with ssh?
+No, eve rule 60 is allowing ssh traffic from everywhere but rule 40 is smaller in number than rule 60 and it blocks all traffic so now a person cannot access ssh
+
+
+Why give gaps?
+Gapping among rules are advised because if you need to insert some rule at some point you have spacing between rules so that rule can be executed first then some other rule
+
+
+NACL ends with explicit deny at the last, if there is no rule to allow before last rule everything will be denied
+
+
+When we create a custom NACL, all inbound and outbound traffic is denied.
+
+
+Scenario # 3:
+You have application servers in NACL-1 which allows inbound and outbound traffic. Your database servers are in NACL-2 which does not allow inbound and outbound traffic,
+now application servers in NACL-1 wants to communicate with database server in NACL-2 what you will do?
+
+I will take the subnet of application servers which ar eattach with NACL-1 which allows all inbound and outbound traffic from everywhere.
+
+Then I will go to NACL-2 and create inbound and outbound rules for all kind of traffic for subnet of application servers ONLY.Remeber we need to define BOTH INBOUND AND OUTBOUND RULES FOR NACL AS IT IS STATELESS. Now, application servers can communicate with database servers. 
+
+
+-----------
+
+Changes to NACL effect is immediate
+
+
+Why we prefer NACL NOT security Group?
+NACL PROTECT COMPLETE SUBNET, securty group protects ec2 instance inside subnet
+
+
+
+

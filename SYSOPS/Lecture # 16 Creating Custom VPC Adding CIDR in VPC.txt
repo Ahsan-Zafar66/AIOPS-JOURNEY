@@ -1,0 +1,28 @@
+By default amazon gives you ipv4 CIDR 172.31.0.0/16
+
+breaking a network into pieces is known as subnetting and the resultant piece is called subnet
+
+NOTE:
+Once a VPC is created you CANNOT change it's CIDR block, if you want to change CIDR block you have to create new vpc
+
+You cannot remove primary by default cidr
+
+you can remove secondary the one you created cidr
+
+Size of cidr block AWS offers is minmum /28 (16 ip addresses only) and maximum /16 (65536 ip addresses), it does not offer /12 and /8, that much ip addresses cannot be utilized by a person
+
+
+Different CIDR in VPC cannot overlap. For example if 172.31.0.0 is already present you cannot create another one with address 172.31.32.0 because this is already part of 172.31.0.0, you cannot overlap, you cannot create what is already available
+
+172.31.0.0 --> network id will be wasted
+
+172.31.0.255 --> broadcast will be wasted
+
+rememeber first and last ip in each subnet or a network is wasted.
+
+3 ips are reserved by amazon they are also wasted
+172.31.0.1 --> for VPC Router
+
+172.31.0.2 --> DNS Related
+
+172.31.0.3 --> Future use

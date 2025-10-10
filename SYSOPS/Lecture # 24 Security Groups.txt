@@ -1,0 +1,53 @@
+Security Group:
+To protect every ec2 instance in a subnet there is a security group on the NIC card of ec2 instance.
+
+Security group is virtual firewall
+
+It controls traffic ar the ec2 instance (specifically associated with virtual network interface also know as ENI = Elastic Network Interface)
+
+EC2 --> Security group on nic card --> known as ENI
+
+subnet is protected by NACL and each ec2 instance is protected by FIREWALL called Security Group.
+
+Its the defensie in depth, basically the last defense component in the VPC
+
+An Ec2 instance must have a security group at launch
+
+Security Groups are stateful & Dirctional. Stateful means security groupd remembers which packet moved out and now will move in.
+If inbound is allowed thant outbound is also allowed (no rules required). For example if a packet is allowed to enter into the ec2 server, it can go out no rule required.
+
+If outbound traffic is allowed return inbound is also allowed  (no rules required). For example if a packet is allowed to move out of the server, it can come inside again no rule required for inside traffic for the packet then.
+
+When we create an ec2 instance, we define it's security group. By default amazon creates a security group and we can also create security group as we desire.
+By default security group allows source only security group, it means that other ec2 instance that are part of this security group can only communicate with the ec2 instance i am going to create. If i want to allow traffic from any source then i need to edit the source option from security group to all or 0.0.0.0/0
+
+If two ec2 instance have same security group they can coomuniate easily.
+
+In security group inbound and outbound rules are defined separately. By default inbound traffic is only allowed for th esame security gorup means another ec2 instance attached to same security group can come ine. Outbound rules are by default set for 0.0.0.0/0 means ec2 instance can go anywhere on the internet
+
+IN AWS WE CAN DEFINE ONLY PERMIT RULE WE CANNOT DEFINE DENY RULE
+
+All rules are checked to find permit rule, it means you sent request for ssh security group will check all rules and will find the rule for ssh permission.
+
+Implicit deny rule at the end (by default) (if you delete all the rules, and allow only ssh then it is denying all except for ssh)
+
+
+
+CUSTOM SECURITY GROUP:
+When we create  a custom security group, NO INBOUND RULE IS DEFINED NOT EVEN THE EC2 from same security group can communicat euntil and unless you define the rules.
+Outbound rule is defined with 0.0.0.0/0 any ec2 instance having this security group can go to iternet
+
+
+Changes to security group is effective immediately
+
+
+
+
+
+
+
+
+
+
+
+

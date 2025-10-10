@@ -1,0 +1,39 @@
+Normal scenario:
+we write reuters.com, this name is resolved to ip address like reuters.com ip is searched and we go to the server having the ip of reuters.com
+we map the webste name to ip address in the DNS
+
+ELB scenario:
+we write reuters.com, now it is resolved to ELastic Load Balancer DNS name not ip address of server.
+we map the ELB name in the DNS, when some type reuters.com we got to ELB configured in DNS on reuters.com name
+
+
+
+How to configure Load Balancer?
+Step # 1 we need to create a target group.
+
+As we are balancing traffic in servers, so we will put instances in target group
+
+We define the service and it's port
+
+
+Unhealthy threshold:
+2 --> ping the server two times before classifying it as unhealthy
+
+Timeout:
+5 --> number of seconds for which to ping the server
+
+interval:
+10 --> number of seconds to do the pings
+
+
+Step # 2 create load balancer, go to load balancer tab and chose application load balancer
+
+
+Step # 3
+DNS name is the name resolver
+previously without load balancer we used ip address to open the webpage hosted by ec2 instance.
+After adding the load balancer, we will use the DNS name instead of ip address. We will copy and paste the DNS address in a browser and it will take us to the website hosted on servers.
+
+The same way we map ip address to website name. We will map the website name to the DNS name of Load balancer
+
+If one of the server is down in the target group, load balancer will direct the traffic to only healthy server.

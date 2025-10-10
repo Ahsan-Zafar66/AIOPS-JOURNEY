@@ -1,0 +1,53 @@
+EC2:
+Elastic compute Cloud.
+
+EC2 is a virtual machine.
+
+
+EC2 instance Families:
+
+1) General Purpose
+Balanced Memory and cpu
+Suitable for most applications
+Ex M3,M4 and T2
+
+2) Memory Optimized
+More RAM/Memory
+Memory Intensive Apps, DB & caching
+Example R3, R4
+
+3) Compute Optimized
+More CPU than memory
+compute & HPC intensive use
+Ex C2,C4
+
+4) GPU Compute Instances
+graphics Optimized
+High permormance and parallel computing
+Example G2
+
+5) Storage optimized
+Very high, low latency, I/O
+I/O intensive apps, data warehousing, hadoop
+Ex I2,D2
+
+latency: time taken by a website to give response
+for example, suppose a website opens in 15 seconds and another website open in 2 seconds, so first website has high latency as it takes 15 seconds and second website has low latency as it takes only 2 seconds to respond
+
+
+Accessing EC2 intance:
+To access an EC2 instance you require a key-pair
+When you launch a new EC2 instance you can create a private public key-pair
+You can download the private key ONLY ONCE.
+
+When we create an ec2 instance, amazon create a public private key, public part is kep by AWS and private is yours, you can download priavte key ONLY ONCE.
+
+
+
+
+
+
+
+
+
+

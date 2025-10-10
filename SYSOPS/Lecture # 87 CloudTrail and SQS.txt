@@ -1,0 +1,193 @@
+Cloud trail allows you to monitor and retain account activity related to AWS infrastructure
+
+It tracks user activity of AWS account
+
+
+
+CloudTrail provides governance, compliance and audit
+
+Cloud watch monitors cpu, hardware 
+
+cloud trail tracks user activity
+
+
+
+Creating  a trail:
+go to AWS cloud trail
+
+click on create trail
+
+chose the storage location for log files
+
+
+
+check true the log file validation option  
+
+you can chose event type for which you want to create logs
+
+these logs will be created in the storage destination chosen by you. Such as storing in s3 bucket 
+
+
+Which service gives you logging service?
+Cloud Trail
+
+Which trial gives you resource monitoring?
+Cloud watch
+
+
+
+SQS:
+What is SQS?
+Amazon SQS is a managed message queue service that allows you to send, store, and receive messages between different components within a system. Messages are stored in a queue until they are processed and deleted by the consumer. SQS allows you to decouple the components of an application so they can run independently, improving resilience and scalability.
+
+Types of SQS Queues
+Standard Queue:
+
+Best for: Most general-purpose applications where high throughput is required.
+Features: Provides at-least-once delivery, meaning messages may be delivered more than once. It’s an "eventually consistent" model with unlimited throughput.
+Use case: Ideal for applications that can handle duplicate messages and don’t require strict ordering.
+FIFO Queue (First-In-First-Out):
+
+Best for: Applications that require strict message ordering and exactly-once delivery.
+Features: Ensures messages are delivered exactly once and in the exact order they were sent.
+Use case: Suitable for tasks like financial transaction processing, where message order and duplication handling are critical.
+How Does SQS Work?
+Message Producers (clients or services) send messages to an SQS queue.
+Queue temporarily stores these messages until they are processed.
+Message Consumers (workers or services) pull messages from the queue to process them. Once a message is successfully processed, it is deleted from the queue.
+Why Use SQS?
+Decoupling: SQS allows different parts of a system to communicate asynchronously without depending on each other’s availability.
+Scalability: As a fully managed service, SQS can handle a massive volume of messages, and AWS handles all the scaling.
+Fault Tolerance: SQS stores messages in multiple Availability Zones, ensuring they’re highly available and resilient.
+No Server Management: AWS manages the infrastructure, so you don’t need to set up and manage message brokers or worry about scaling servers.
+How to Use SQS?
+1. Creating a Queue:
+You can create a queue through the AWS Management Console, CLI, or SDKs.
+Specify the queue type (Standard or FIFO) and configure settings such as message retention period, maximum message size, visibility timeout, etc.
+2. Sending Messages to the Queue:
+Message producers send messages by calling the SQS SendMessage API.
+Messages can contain up to 256 KB of text data, and producers can include attributes for more structured messaging.
+3. Retrieving Messages from the Queue:
+Message consumers retrieve messages using the ReceiveMessage API.
+Messages are kept hidden (visibility timeout) from other consumers while they are being processed to avoid duplication.
+4. Deleting Messages:
+Once a message is processed, the consumer calls the DeleteMessage API to remove it from the queue permanently.
+Real-World Use Case of SQS
+Example: Order Processing in an E-Commerce Application
+
+Imagine a scenario in an e-commerce application where a customer places an order. Here’s how SQS can streamline the order processing workflow:
+
+Order Placement: When a customer places an order, a message is sent to an SQS queue (e.g., OrderQueue), containing details like order ID, product, and customer information.
+
+Order Processing Service: A microservice (consumer) retrieves messages from OrderQueue and processes each order (e.g., deducting inventory, calculating taxes, etc.). Once processing is complete, it can either delete the message or send it to another queue for further processing (e.g., ShippingQueue).
+
+Shipping and Notification Services: The shipping service takes orders from ShippingQueue, arranges shipment, and updates order status. Meanwhile, a notification service may send confirmation emails or push notifications to customers.
+
+In this setup:
+
+SQS decouples each stage, so order placement, processing, and shipping services don’t depend on each other’s availability.
+The application can scale easily, processing more orders by adding consumers.
+System reliability is improved as each service can recover from failure independently without losing messages.
+Key SQS Features for Developers
+Dead-Letter Queues (DLQ): Messages that fail to be processed multiple times can be sent to a DLQ for troubleshooting.
+Message Visibility Timeout: Determines how long a message remains hidden from other consumers while it’s being processed.
+Long Polling: Reduces costs by letting consumers wait for messages to become available, minimizing empty responses.
+Serverless Integration: Works well with other AWS services like Lambda, SNS, and CloudWatch for automation and monitoring.
+Where and When to Use SQS?
+SQS is ideal in scenarios where components need to be decoupled and can operate independently. Typical use cases include:
+
+Asynchronous Processing: For example, decoupling a front-end from a back-end to make applications more responsive.
+Batch Processing Jobs: Sending jobs to a queue where multiple worker nodes process the tasks asynchronously.
+Load Leveling: Managing traffic spikes by queuing requests and processing them steadily.
+Event-Driven Applications: Triggering workflows based on events without coupling services.
+Summary
+In summary, SQS is a robust message queuing service that enables asynchronous, decoupled communication for distributed applications. It’s widely used for its scalability, reliability, and ability to simplify complex workflows, making it invaluable in microservices architectures, serverless environments, and high-throughput systems.
+We set up an SNS if something is uploaded in s3 send us notification. 
+We can connect this thing with SQS, we can subscribe the SQS to SNS service.
+Now, when something i suploaded in S3, SNS will send message to all it's subscribers.
+As SQS is also a subscriber, we will also recieve the message
+
+
+
+
+
+
+
+Why use SQS over API calls?
+Backpressure ontrol: COnsumer can choose thr rate of processing requests. For example 10 requests in one hour
+
+Fire and Forget:
+Publishers have no insight into client processing
+
+Eventual Guaranteed Processing
+
+Application Decoupling
+
+
+Important Details of SQS Queues
+Many threads/processes can poll (ask if there is some message for me) a ques at once
+Only a single thread/process can process a message at once
+
+Long polling is supported and encouraged
+
+Support for cross account publishing/processing
+
+256 KB maximum payload size per message
+
+Dead Letter Queues can help store failed massage for later processing
+
+
+
+
+SQS creation:
+
+SQS type cannot be changed once created
+
+Standard is cheaper than FIFO
+
+Standard can do once or more time procesing for an entry
+
+FIFO does processing only once
+
+
+Visibility Timeout Configuration:
+Visibility timeout: suppose you have a que and you have one message in it
+you have 3 servers that are polling the que, suppose server one captures the message by polling, the other two servers will not see the message foe the time set in visibility timeout, if it is 1 minute, then other two servers will not see the message for one minute as it is captured by other server
+
+Message retention que: time by which the message is retained
+
+delivery delay: when a message gets to que, I don't want this message to be visible for some duration and you can set the duration in this section.
+
+recieve message wait time:
+it is time for long polling, when a polling thread polls the que to acquire a message. 
+how long the server will hold request till the que responds.
+ jab server poll karay que ko to agar koi message hai to server ko dy dy, agar koi message nhi hai or server poll kr rha hai to server phir itny time bd dobara poll karay
+
+
+
+FIFO is 25% more expensice than standard
+
+
+Access policy:
+
+Dead Letter Que:
+Messages or requests that are not processed by server due to some issue
+
+We must set up an alarm for DLQ
+
+When we see that there is some probelm we solve the probelem and redirect the messages in DLQ into the main que and now server actuire this message or process and complete it and delete it from the main que
+
+Maximum recieves can be define for DLQ
+
+
+
+
+
+
+
+
+
+
+
+
+

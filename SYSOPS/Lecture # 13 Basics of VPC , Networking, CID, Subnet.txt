@@ -1,0 +1,113 @@
+VPC is secure and logically isolated from other VPCS.
+
+What is meant by logically isolated?
+SUppose there are two customers A and B using VPC in california.
+Can these customers A and B can interact as they are in same region? No, they cannot they have separate vpc.
+
+Suppose customer A has two servers one in calfornia and other in los angelos, can customer A servers having separate vpcs can interact with each other as they belong to same region? No, they cannot.
+
+Suppose company has two servers one in california other in canada, company wants to connect want servers to do application live what we can do?
+We can do VPC pairing. In vpc pairing two servers are paired and can interact or connect with each other.
+
+
+VPC is a virtual infrastructure or a data centre
+
+AWS client has full control over resources & servers hosted inside that VPC
+
+It's similar to having your own data centre inside AWS
+
+VPC Components:
+Ipv4 CIDR, what is CIDR it is a network block. CIDR is the important componnet of VPC. Every VPC has s CIDR.
+Whenever we create a vpc we need to define a network block at the backend, this network block is CIDR
+
+Network Block:
+192.168.1.0/24 --> what this network block means?
+192 --> 8 bit
+168 -->  8 bit
+1 --> 8 bit
+0 --> 8 bit
+
+total 8+8+8+8 = 32, what 24 means? it means you cannot change the first 3 values because 8+8+8=24, but the last one can be changed from 0-255.
+/24 means last bit can be changed.
+/16 means first two cannot be changed but last to can be.
+
+
+Subnet:
+suppose we have  aapple, we split it into two parts, what these parts are subapple 1 and subapple 2.
+now, if we break the network in pieces each piece is a subnet.
+192.168.1.0 this is my network, let's break it 192.168.1.0/24, as only last can be change so 0-255, total 256 breaking in two pieces each subnet will have 256/2 = 128ips. SO, each subnet will have 128 ips
+8 bit means 2^8 which is (2*2)*(2*2)*(2*2)*(2*2) --> 4 * 4 * 4 * 4---> 16 * 4 * 4 --> 64 * 4 -->256 , 0-255.
+subnet 1 = 0-127
+subnet 2 = 128-255
+
+subnet 1 --> 192.168.1.0/25  why 25? why not 24 because subnet has 128 ips, and it is 2^7. so we always nee to make the network 32 bit, so 25 + 7 =32
+
+Now breaking network into 4 pieces what will be the / number?
+192.168.1.0/24 --> breaking it into 4 pieces, as total ips are 256, so 256/4 = 64, each subnet will have 64 ips what will be the network block for each subnet now?
+
+as 2^6 = 64, so network block will be 192.168.1.0/26, 26+6=32, because 2^6= 64, as each subnet will have 64 ips and total bits of network should be equal to 32 so / value will be 26, and subnet last 6 bits makes it equal to 32.
+
+subnet1 = 192.168.1.0/26 (ips 0-63)
+subnet2 = subnet1 = 192.168.1.0/26 (ips 64-127)
+subnet3 = 192.168.1.0/26 (ips 128-191)
+subnet4 = 192.168.1.0/26 (ips 192-255)
+
+
+
+
+Formula to calculate subnet ips:
+192.168.1.0/24 and 192.168.1.0/25, how many subnets in 25?
+25 -24 = 1, raise the remainder to the power of 2, 2^1 = 2 --> two subnets
+
+192.168.1.0/26 how many subnets?
+26-24 =2 , raising remainder to the power of 2, 2^2 =4 --> 4 subnets
+
+
+MY AWS account ipv4 CIDR OF VPC:
+172.31.0.0/16
+now 16 bit are fixed and 16 are free, so how many ips i can generate?
+2^16 = 2^8 * 2^8 = 256 * 256 = 65536
+
+# suppose my subnet is 
+172.31.0.0/20 --> how many subnets are there?
+
+20 -16 = 4, 2 ^ 4 = 16 subnets
+
+how many ips in one subnet?
+65536/16 = 4096 ips in one subnet
+
+whenerver we do subnetting 1st ip (subnet ip) and last ip (broadcast ip) is wasted, aprt from these 2 ips 3 ips are used by Amazon, so in total 5 ips are lost in each subnet
+so, available ips in each subnet are 4091
+
+so, total wasted ips in 16 subnets are 16*5 = 80 ips are wasted in total in 16 subnets
+
+if you are seeing only 4 subnets in vpc, other 12 are also available and you can access them any time.
+
+
+Subnet Tool:
+site24x7
+
+
+subnetcalculator for ipv4
+
+enter the cidr ipv4 and subnet and get all your subnets generate
+
+How to create a subnet?
+go the website and geerate subnets for you CIDR ipv4 address
+
+now go to subnet tab in AWS and click on create new subnet and enter the CIDR ipv4 adress fro the subnet and chose the data centre (you can create multiple subnets in same data centre)
+
+SUBNET CANNOT EXTEND BEYOND DATA CENTRE OR AVAILABILITY ZONE
+
+Region --> VPC --> AZ --> subnet
+
+Subnet will be inside AZ, and one AZ can have multiple subnets
+Example
+
+US-region --> Isolated VPC --> Availability zone (1-6) --> AZ1 has it's own subnets, AZ2 has it's own subnets and so on
+
+
+Steps:
+
+1) Create an AWS Accout in a region
+2) VPC has regions inside it. Regions have VPC, VPC has Data Centres

@@ -1,0 +1,117 @@
+Non-relational database is called Dynamo DB by amazon
+
+Dynamo DB is fully managed by amazon
+
+
+Non relational databse is no-sql. No structure query language
+
+DynamoDB supports key-value data.
+
+You don't need to define any schema for non-relational database.
+Only you need to define Primary KEY nothing else no column nothing
+
+
+
+Creating  a DynamoDB table:
+UNique Name of Table
+Partition KEy
+
+After creating table you can add items in the table
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

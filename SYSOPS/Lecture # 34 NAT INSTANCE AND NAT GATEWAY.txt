@@ -1,0 +1,312 @@
+Scenari you have two subnets s1 and s2, s1 have application servers and must be accessible locally or publically. s2 subnet has database servers they should be accessible locally but not publically.
+
+Now, create two route tables RT1 and RT2, in RT1 make rules for local and public access. In RT2 define rules for only locall access.
+
+Now, connect subnet 1 with RT1 which has rules for local and public acees.
+
+
+Now, connect subnet 2 with RT2 which ha s a rule for local access only.
+
+Now, servers in s1 can communicate with database servers in s2 and are also accesble to the public.
+Whwereas, database servers in s2 can communicate with s1 servers but are not phblically accesible
+
+
+
+
+NAT INstance:
+nat instance do natting
+
+Router has two ports LAN (private) and WAN (public)
+
+Router is given by service provider like PTCL, Starlink.
+Router has LAN ports to which mobiles, laptops and desktops are connected. When devices are connected with LAN we get private ip
+
+There is a port on router which is public. This is WAN port. This comes from service provider and this is public
+
+
+We have a router in home from where wifi comesa and we connect different devices mobiles, laptops, desktops with that wifi.
+Router has a feature called DHCP. DHCP assigns ip to your mobile, laptop. The ip given is private.
+
+This connection of mobiles, desktops or latops ic onnected wih LAN.
+
+
+NATTING COMPLETE CONCEPT:
+Suppose I have a connection of wifi from PTCL service provider and they give me router and I connect my laptop mobile and desktop with this wifi, 
+will all my devices gets a different private ip or same? What is gateway? How the private ip of my device is converted into public ip? 
+DOes router has a public ip? If i search google.com from my mobile this request is send to router and router do nating to convert private ip into public ip, public ip of google or router? 
+how my device communicates. Understand my questions and scenario and teach me all the details.
+
+
+
+answer of above question:
+1. Public IP vs. Private IP
+Public IP: This is the address that your router uses to communicate with the internet. It’s unique across the entire internet. Think of it as your home address; it tells the internet where to send data meant for you.
+
+Private IP: These are addresses used within your local network (like your home Wi-Fi). They’re not unique on the internet. Think of them as apartment numbers in a building. Each device on your network gets its own private IP to communicate with other devices.
+
+2. NAT (Network Address Translation)
+NAT: This is a process used by routers to translate private IP addresses to a public IP address. When you send data from your device to the internet, NAT changes your private IP address to the public IP address of the router.
+
+3. Router
+Router: This device connects your local network (like your home) to the internet. It directs traffic between your devices and the internet, and it handles the NAT process.
+Your Scenario
+Wi-Fi Connection: When your PTCL service provider gives you a router, it assigns a public IP address to that router. Your router then assigns private IP addresses to each device connected to your Wi-Fi (like your laptop, mobile, and desktop).
+Do all your devices get a different private IP or the same?
+Different Private IPs: Each device will get a different private IP address assigned by the router. For example, your laptop might get 192.168.1.2, your mobile might get 192.168.1.3, and your desktop might get 192.168.1.4.
+
+4. Gateway
+Gateway: This refers to the router's IP address in your local network. It’s usually the first address in the subnet (e.g., 192.168.1.1). Your devices use this IP address to communicate with the router and, consequently, the internet.
+
+5. How does the conversion from private IP to public IP happen?
+Request to Google: When you search for "google.com" from your mobile:
+
+Your device sends this request to the router using its private IP.
+Router and NAT:
+
+The router receives the request and uses NAT to change the private IP address of your mobile to its own public IP address.
+The request now appears to come from the public IP address of the router.
+Sending the Request: The router sends this request to Google. The request is now using the router's public IP.
+
+Google's Response:
+
+When Google sends data back (like the search results), it sends it to the router’s public IP address.
+Router's Role Again:
+
+The router receives the response and uses NAT to translate the public IP back to the private IP of your mobile device, allowing the correct device to receive the data.
+Summary of Communication Process:
+You search on Google using your mobile device’s private IP.
+The router uses NAT to convert this private IP to its public IP.
+The request goes to Google, which responds to the router’s public IP.
+The router then converts it back to the mobile device’s private IP and sends the data to your mobile.
+Conclusion
+Every device on your local network gets a unique private IP.
+The router has a public IP and handles the NAT process to manage communication between your devices and the internet.
+The gateway is essentially the router’s address within your network.
+
+
+
+
+
+NAT Instance:
+NAT instance allows private subnet EC2 instance to get to internet (proxy)
+In security group attached with NAT instance:
+Inbound : Allow http and https request from private subnet contianing databse servers
+Outbound: Forwarding http and https request to internet 
+The NAT instance should be configured in the route table having public and local access.
+Source Destination Check must be disabled (traffic laundering). Click on instance, go to networking and click on check destination and disable it. 
+Amazon by default check for nstance doing traffic laundering and disable such instances so, if you are using an instance as NAT instance you must disable source destination check
+
+An ec2 insance in which natting software is installed or we take ready made NAT is called NAT intance and it is dedicated for nating.
+
+Now, if we hve database servers we can access internet while keeping them secure, HOW?
+Now, we add the NAT instance ip in the route table of this database servers subnet, these servers have theri own private ip and will send requqest to this nat instance, this nat instance will go to internet and bring the things and give to these databse servers. 
+These database servers are communcating with internet NOT directly but through the NAT instance.
+
+Now, create a securty group for this NAT instance and allow only inbound traffic from subnet having the database servers.
+
+
+Procedure:
+Copy the CIDR of the subnet. Create  a security group allow http and https and add the CIDR of subnet. Now, connect this Security Group with the NAT Instance.
+
+Now, NAT instanc will only accept http and https traffic from database server subnets, no toher person can connet with nat instance.
+
+Now, also define inbound and outbound rules for http and https in the security group attached with nat instance. Allow inbound traffic from only subnet of data base servers and outbound traffic from 0.0.0.0/0 source.
+So, the NAT instance could take traffic only from source database aservers and can go to internet.
+
+
+
+ANY ALTERNATIVE WAY THEN NAT INSTANCE?
+YES, NAT GATEWAY, it is expensive as compare to nat instance.
+NAT Gateway is managed by amazon not by you as previous in case of NAT instance.
+Amazon will do the same make a ec2 instance install a natting software but it is handled by amazon not by you
+
+NAT GATEWAY works only on Elastic IP
+CANNOT BE ASSIGNED TO SECURITY GROUP AS MANAGED BY AMAZON
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

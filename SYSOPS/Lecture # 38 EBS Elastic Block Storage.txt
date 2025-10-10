@@ -1,0 +1,40 @@
+EC2 instanc eand it's storage cannot be in different datacentres they have to be in same data cenre
+
+Elastic Block Storage:
+You cabn get 1 volume upto 16Tb
+If you are making database servers than use SSD as it is faster in I/O operations
+If you are making a portal and it has streaming service like moveis website use HDD, as nothing has to be write onlly streaming will be done.
+if you are making a website like ALNAFI where a lot of other processes takes place apart from streaming of lectures, like someone is writing a review, purchasing a course transactions are happening then use SSD always for transactional things
+
+you can increase volume size but cannot decrease it. 
+
+you can detach Root colume by stopping the instance and detach it. Now, when you attach the root volume back to instance you need to togive the path and it is given in AWS like "/dev/sda1" you have to copy it and past it in the path, path will be given belkow the block were you need to enter it.
+
+when we launch an ec2 instance, there is a option which is by default set to delete root volume whne instance is terminated. You can turn it off or when you detach root volume and re-attacht it this setting is removed and now when you delete the ec2 instance root volume will not be delted as you detached and re-attached it which removed it's default deletion setting
+
+
+
+When you attach EBS in an EC2 instance, it won't appear unless you format it and create a new volume inside OS
+
+There are tow types of block store devices:
+1) Elastic Block Storage
+It is persistent: You have a windows server, you have data in it you shut it down and start it again data will be still there, this is persistent.
+EBS backed EC2 instance means root volume type is EBS
+You can add volume, modify volume size & type
+You cannot decrease EBS volume size
+For eunning EC2 instance you cannot detach/re-attach EBS root volume
+EBS has 99.99 availability.
+
+Instance Store:
+
+Non-persistent: You have a windows server you have data in it you shut idt down and restart it again now the data will be gone. Is you have instanc estore you cannot sht down it yif you want your data to stay there
+ (Virtual disk allocated to EC2 instance, root instance store can be max 10GB)
+Instance store backed EC2 means root volume type is instance store
+SAN: It is formatted and mounted
+
+NAS: It is mounted directly not formatted
+
+
+Amazon EBS volumes fall into two categires:
+SSD-backed volumes:
+Optiized for transactional 

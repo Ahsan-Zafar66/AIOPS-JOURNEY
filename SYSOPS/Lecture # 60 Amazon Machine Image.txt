@@ -1,0 +1,46 @@
+Suppose you need to make 100 servers in AWS but these servers have specific configurations.
+So, you wil configure each of them one by one?
+No, I will create only on ec2 instance, configure it the way i like and then i will replicate this ec2 server 99 time
+
+
+HOW Amazon create these AMI?
+During the AMI-creation process, AWS take snapshots of your instance root volume and other volumes attach to it
+
+
+AMI:
+
+Step # 1
+Create an ec2 instance and connect with through rdp
+
+Step # 2
+Make changes, such as set admin password, make the ec2 instance webserver
+Here make the chages you your other servers to have.
+
+
+Step # 3
+Stop the instance it is recommended, create image of this instance.
+
+when we launch ec2 instance in AWS, it is nothing but a snapshot, AWS has made a lot of snapshots at the nackend, when we selct an OS amazon copies from the snapshot
+
+It is recommended that you stop the instance and takes it's image, but you are in production adn you dont want to stop the instance, then there is an option "No reboot" enable this option to prevent the ece2 instance from rebooting
+
+Step # 4
+After creating image, you can create new instances from AMI section, or when you click on leanch instance you can check AMI's owned by me option to see you manually created AMI's
+
+Select proceed withour a key-pair in key-pair section as we already know the password which we changed
+
+
+
+
+How o deregister AMI?
+You can select AMI and deregister it, after deregistering you are able to deete the snapshots of this AMI image
+
+
+If we take root volume snapshot, how we can attach it with an ec2 instance?
+Take the snapshot of root volume,rather then creating volume from snapshot of root volume or cdrive, create image from this snapshot
+
+
+
+we can create image from an ec2 instance with it's c-drive, or any other drive
+
+We can also create image from snapshot of root volume of ec2 instance.

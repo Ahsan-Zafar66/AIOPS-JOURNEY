@@ -1,0 +1,193 @@
+DNS is a service on Cloud
+
+Route 53 is a service.
+
+Amazon Route 53 has three main functions:
+1) Register Domain Names
+
+2) Route internet traffic to the resources for your domain
+
+3) Check the health of your resources
+
+Can I route route53 from one AWS account to another's ec2 instance?
+yes, you can route. You will create the Route53 in one account and ec2 instance in another account.
+You can add any ip of any resource in route53 service. 
+
+
+DNS Mapping to Resource:
+When you register a domain on AWS through route 53, you get a hosted zone.
+Domain name and hosted zone name are same so dont get confused
+Inside the hosted zone you need to create  a record where you map the domain name you registered with your resource public ip address (ec2 server, s3, anything)
+
+
+
+
+Creating Hosted Zone for physical server:
+Let's take for example we have a domain name registered on go daddy.
+
+We will create a hosted zone in AWS. creating a hosted zone will give us name servers.
+We will go into go daddy and use the name servers of AWS hosted zone. 
+After this, we will create mapping of ip address of server with the domain name registered.
+
+When a customer comes and type our domain name such as safoora.in go daddy will route the traffic to route53 as name server of route 53 are being used, 
+and inside the records it will check that this domain is mapped to which server or resource and will take the customer to that service
+
+
+Can we map one domain to multiple servers?
+Yes, you can. CHose multivalue policy and then you can map your multiple servers (hosting same website) to the one domain.
+It will randomly route the traffic to multiple servers.
+
+
+Route53 Route Internet Traffic Weighted latency Policy:
+We do not want random routing to multiple servers.
+simple policy allows only one server
+
+multivalue policy allows multiple servers randomly
+
+we want the traffic to follow a systematic way
+
+In weighted policy we can define that I want to route 50% traffic to this server, 30% to thsi and 20% to this.
+
+
+Latency based routing:
+If you are sitting in london, your nearest location will be london.
+
+If the servers are in london and US.
+
+You are sitting in London, and you go to website safoora.in, the policy is latency and it will route you to server hosting this website nearest to your location. As you are sitting in london you will be routed to london server.
+
+latency routing means you will be routed to a server hosting website depending upon your location
+
+
+proxyone is a website where you can change your ip and test things.
+
+Geolocation policy:
+In geolocation policy we map the domain to different locations. 
+For example:
+Domain name : hackercloud.in
+ec2 instance is in US
+Geolocation: US
+
+ec2 instance in UK
+Geolocation: UK
+
+Now, if you are in UK and US only then you can access the above website.
+If your location is not UK or US then you cannot access the website. Your geolocation should be among the allowed ones
+
+Using geolocation policy you can make your servers available or not available for specific regions
+
+
+Failover policy:
+In failover policy you can define if my primary server fails then take traffic to secondary server.
+
+You have to add health check of primary server.
+
+Scenario:
+Suppose you shared first: mobile.hackercloud.in with your customers.
+Now, you migrated to m.hackercloud.in but customer has link of previous name mobile.bank.com
+
+naked domain bank.com
+
+subdomain:
+mobile.
+
+main/naked/root/complete domain:
+mobile.hackercloud.in
+
+What to do in such cases?
+define a record in hostzone and we will make c record in this case. It will have a subdomain and a value. subdomain will be old one and 
+
+record name: mobile
+
+Value
+m.bank.com
+
+
+We cannot redirect root domain on s3, load balancer and etc.
+We can use alias to redirect on these services
+I cannot use hackercloud.in to redirect on s3, load balancer. I will create an alias
+
+Creating a record to redirect AWS service.
+Chose record type A
+Togle on Alias option
+Choose your application such as load balancer
+Chose your Region
+CHose your load balacer which is created by you
+
+Now, click on create.
+
+
+Now, whoever comes on hackercloud.in it will go to your load balancer
+
+
+You can do this on global level as well. You can have one server in London and one in US. 
+You willl create two alias now. and do the same procedurelike above for each record
+
+
+
+Routing to S3:
+domain name: hackercloud.in
+
+bucket name should be same as domain name "hackercloud.in"
+upload index.html file and look for static webhosting if it is enable
+
+
+chose record type A
+turn on alias
+chose s3 service
+chose region
+chose s3 bucket
+
+
+Now anyone whose come to hackercloud.in it will got to s3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

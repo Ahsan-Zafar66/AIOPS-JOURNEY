@@ -1,0 +1,30 @@
+VPC Peering:
+VPC peering is a network connection done between two VPC that enables to route traffic between them (IPV4 or IPV6)
+
+AWS uses the existing infrastructure of a VPC to create VPC peering connection.
+
+There is no single point of failure for communication or a bandwidth bottleneck
+
+It is simple and cost-effective way to share resources between regions or replicate data for geographic redundancy across regions
+
+
+
+Suppose we have two vpc VPC-A and VPC-B.
+We have servers in VPC-A and VPC-B.
+
+We want to build a communication between these two servers that are in different VPC's.
+As VPC is 100% isolated how can we build a communication between these two servers?
+
+
+# Get he VPC id of both VPC's, CIDR Address and instance details
+
+Information to get from both VPC's:
+VPC ID,
+VPC CIDR,
+Sever ID in VPC-A,VPC-B
+
+
+
+
+
+

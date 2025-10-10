@@ -1,0 +1,83 @@
+On demand : you pay per hour for number of hours you used the service
+
+reserved: you ask AWS to reserve something for you for a long time like a year, three years or more. 
+For reserved and long term AWS also gives you a discount.
+
+Different regions have different prices for same ec2 instance.
+
+Production severs run every day 24/7, so production servers are made in reserved category.
+
+
+When we reserve an instance family, at the backend it is reserved.
+
+Once we reserved a family for a 12 month period and pay it's price our time has started and from that momen till next 12 month time is there to use it
+
+
+
+If you reserve instance in  aparticular Availability Zone, than instanc eis reserved for that AZ only, if you run an instance in any other AZ then you will be charged on demand not reserved
+
+If you reserve instance in a availability zone, then your capacity is guarrented in that availability zone
+
+Keep your application and database server in same availabilty zone, reserve them in same availability zone to avoid any future errors if amazon runs out of capacity in that availability zone
+
+
+If your company wants to have servers in SEOUL region than reserve instances withou specifying availability zone.
+
+
+
+If your company says they don;t care about availaibility zones BUT the servers should be in SEOUL region, then you can reserve an instance without specifying availabilty zone and later you can use any avaialbility zone to use that reserved instance.
+
+Suppose you reserved t3.x2large instance with 32 gb memory and 8 cores in SEOUL region, you can break down this reserved instance into two instance havin 4 cores and 16gb memory each and launch them in any availability zone in the SEOUL region
+
+You can sell your reserved instance on the AWS, the buyer will contact you to purchase your reserved instances
+
+After you purchased reserved instances AWS will not refund, you can sell it to some other person, STANDARD can be sold to other customers, If you have chosed CONVERTIBLE you can exchange with AWS
+
+Standard --> means fixed cannot be modifed, have more discount because it has less features, you cannot change family of instance. You can only change Availability zone. Can only be sell to other customers, AWS will take 12% commision of the sale
+Standard is dangerous as it does not offer modification, reduce price benefit, you have to sell it own your own
+
+It is advised to use convertible for productions not standard. Because it offers price reduction over time and have benefits of modification
+
+Convertible --> means can be modified, it has less discount as it has more features than standard. It can be exchange for some other instance with AWS. It has price reduction benefit over the period of time. If you payed 600$ first year, and price reduce to 400$ you will pay 400$ for next year
+
+
+
+
+
+
+EC2 Instance State:
+Ec2 instance shutdown --> Pyblic ip changes if you are not using elastic ip
+
+EC2 instance reboot --> Public ip is not changed, it remains same
+
+
+If you start ec2 instance at 9 and stop it 9:10, you will be charged for an hour, isn't it wrong? 
+When we shutdown or stop an ec2 instance, public ip is lost. When a public ip is lost one hour use is recorded because amazon does not know when you will start again or will you use it ever again.
+
+When you reboot, billing hour and ip is not lost. Amazon knows that this person will come again and ip is not lost. And billing hour is also not lost
+
+
+
+
+Instance store is non-persistent once shutdown everything is lost, so it is rebooted and terminated they cannot be stopped.
+
+
+EBS backed instance can be stopped
+
+Storage charges are applicable even if your instance is STOPPED.
+
+
+Suppose you have EBS of 300GB and you stop the instance, AWS will not charge you for computin but will charge you for storage which you have.
+
+
+If your root volume or C drive is on EBS then you can stop or shutdown the instance, if it is on instance store and you shut it don then data of C drive will be gone as it was on instance store and it is non-persistent
+
+
+
+When we attach an Elatic IP to ec2 instance it is not lost even ec2 is stopped, also it;s private ip is not lost.
+Now, if you stop the instance wih elastic ip AWs will incur you charges but if ec2 instace with elastic ip is running than AWS will not incur charges
+
+
+If you want to reboot an EC2 instance rebbot it from AWS console rather than inside OS.
+
+Sometimes in production by mistake someone can terminate the ec2 instance, so you can enable termination prtoection in instance settings. 

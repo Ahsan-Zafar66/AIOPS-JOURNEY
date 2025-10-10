@@ -1,0 +1,32 @@
+lambda is a service that offers the developers to run code without thinking about ec2 servers.
+
+lambda is giving us a platform to run code.
+
+We can run code of nay language.
+
+
+You pay the times your code runs
+
+Suppose you login in indeed.com
+
+You upload a photo on indeed.com that goes in s3. 
+
+Now you will see your profile photo in a round shape how? You didn't cropeed it in round shape then how you ar eseein your photo in round shape?
+The answer a code or a function is attache dwith s3, when ever a photo is uploaded and pushed to s3 it goes through the code that crops it or converts it into round shape
+
+this code or function can be put on lamda without taking tension that ec2 servers can crash or any other thing
+lambda will run your code always.
+
+
+
+Creating Lambda function:
+Go to lambada service on AWS
+
+create  a lambda function
+
+
+How to integraget S3 with lambda function?
+Go to S3 bucket, go to event notification
+
+Select lambda function in event notification and chose from the lambda function you created.
+

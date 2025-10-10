@@ -1,0 +1,185 @@
+Suppose you have a data centre on premises and one on AWS
+
+You want to connect these two data centres, there are two ways one through fibre cable newtwork  (which is very costly) and second is through VPN.
+
+VPN way:
+Create two instances in two regions 
+
+I created an istance in london region which will act as my on premises server
+London Region:
+VPC CIDR: 10.4.0.0/16
+public ip: 35.177.7.166
+private ip: 10.4.10.206
+
+
+I create other instnace in ohio region which will act as my cloud server
+vpc CIDR: 172.31.0.0/16
+cloud server 1 is the ec2 instnace name
+public ip: 3.142.92.155
+privat ip: 172.31.19.32
+
+
+turn off the firewalls in both instances.
+
+ping both private ip's and you wnot be able to ping it.
+
+
+create a firewall fortigate in london region and allow all traffic for this firewal in network settings and remove all other SG
+
+do not slect any key-pair for firewall it's password it;s instance id
+
+instnace firewall ID:
+
+public ip: 3.10.234.69
+
+private ip: 10.4.13.253
+
+password (instnace-id): i-0b0f53bcfb5e920f5
+
+
+open the london server which you are assuming local server or on premise, mine is london
+
+open server manager, add active driectory domain service
+
+add the domain name: intelliverse.ai 
+
+add password : Ahsan?123?
+
+
+Now, we have london server (on premises assumed), ohio server (in cloud server) and firewall
+
+now to enter london server from ohio server we need to define customer gateway in ohio server. We will copy the id of firewall and create a customer gateway in ohio region whose endpoint will be this firewall
+
+
+Create customer gateway in ohio by using firewall public ip
+
+create Virtual private gateway in ohio and attach it with ohio vpc as it is not attached to vpc by default
+
+create a vpn now and chose VPG and chose customer gateway we created above in ohio region
+
+chose static ip and add the CIDR ip of london region 
+
+After vpn is created look for it's tunnels
+VPN tunnel 1 ip: 3.12.87.176
+
+VPN tunnerl 2 ip: 3.141.95.172
+
+
+Go to the london server where we added the active directory domain network and instance rebooted, go to windows defender firewall and turn off domain network
+
+Go to actuve directory users and Computers, go to users, then change the administrator pasword so we don't need to log in through key everytime
+
+Download the configuration of your vpn network, chose fortinet as your firewall is from fortigate and fortIOS5.0GUI
+
+After downloading configuration, search tunnel 1 using it's ip and look for it's pre shared key and do the same thing for tunnel 2
+
+
+Tunnel 1 Pre-shared key: 214rIwLpfk_s_Sk5PQHR_XL_8gegmzkf
+
+Tunnel 2 Pre-shared key:  fqJG89lF1UGeCNySE9LlqC51jUpqdOT_
+
+Login in the firewall using user admin and password the instance id of firewall
+
+now our firewall is login
+
+the  instructor had a script where you need to replace tunnel ip and it's key and than run the script in the shell of the firewall and when you see your tunnel it will be up
+
+
+Now, we will edit route propagation in OHIO route table, propagate the Virtual gateway in the route table (as VPN is connected with firewall), now you will get the route for london from ohio. Now you can go from ohio to london
+
+Now, add the ohio address in the ROute table of london, add ohio cidr and chose firewall instance.
+
+Stop the change/source check in firewall ec2 instance by clicking the firewall instance and changing its settings.
+
+Now, you can communicate with both server using VPN
+
+
+AD connect:
+AD connect is a AWS service which allows you to connect with your active directory the one intelliverse.ai we created in london region ec2 server
+AD connector is a dual availability zone proxy servie that connects AWS (ohio) to you on-premises directory (london)
+With AD connector, you can streamline identity management. You will create account in london and you can connect with ohio using AD connector, no need to create users on both london and ohio.
+
+Now, the thing is we will create user in london region and using this user we will enter the ohio region server through one user. This is called single sign on
+Go to active directories users and computers, and go to your AD which is intelliverse.ai, got to users and create a user in london region AD
+
+Now, we need to make sure three things:
+1) London and ohio region have connectivity, we established this previously by installing firewall at london region and vpg on ohio region and using vpn to connect them.
+2) We created a user at london region
+3) We need to install AD connect service in ohio region
+
+Installing AD in ohio:
+Give all the details and add the directory domain name you made in london region intelliverse.ai
+enter the private ip of london server
+give the administrator password and name of user of london region
+
+IAM USER CREATION:
+
+Go to IAM service in AWS, go to roles and create a new role.
+Trusted entity type: AWS service
+slect ec2 instance
+We will chose directory service in usecase AWS services section
+
+permission policies select "AmazonEC2FullAccess"
+
+Role name: ec2 full access
+
+now click on create role
+
+
+Now create another role and keep permission policy AmazonS3FullAccess
+
+Create another role, do not selct directory service leave it blank, in permission policy chose AmazonEC2RoleforSSM,and give this role name autodomainjoin this third role is added so ec2 instance can modify itself because in future when we create a ec2 instanc ein ohio region it automatically modifies itsefl and gets added in the intelliverse.ai domain
+
+Now, launch an instance in ohio region, we will ask the ec2 to go to AD of this ohio region and go to intelliverse.ai,but ec2 instance don't have the power to modify itself, that is why our 3rd role we created empower ec2 to make changes
+keypair is not required for this instance, go to advance detail, and chose your domain intelliverse.ai in Domain Join Directory session, in IAM instance Profile chose the role number 3 autodomainjoin and launch the instance.
+
+Go to Actibve directory in Ohio region, go to application management and enable the AWS management console
+Now, go to console manager which will show after you enble the management console.Now, click on first role ec2full access and add user. Select your intelliverse.ai forest, click on find by user and search for users you created in london region, select your user and give it full ec2 access.
+
+Now, attach s3access role with the other user
+
+Now, create application url such as interlliverse.
+Now, take this url paste it on browser login using your user 1 name and password, you will enter the london region and can see the ec2 as this user is attached with role whose policy is only ec2fullaccess
+
+now, the serve ryou create in ohio region, use it;s public ip and login using administrator and it';s password which are the administrator of london region server. You will login through the administrator.
+
+Now, we have successfully limited th eusers by using the AD and servers can talk wth each other using their users on on-premises or cloud servers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

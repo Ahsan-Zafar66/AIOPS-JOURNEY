@@ -1,0 +1,149 @@
+Auto Scaling is a feature of AWS. It is 100% free because it is a feature not a service.
+Autoscaling is a feature that allows your AWS compute need (EC2 instances fleet) to grow or shrink depending on your workload requirements
+
+AutoScaling helps you save costs by cutting down the number of EC2 instances when not needed and scaling out to add more instances only when it is required
+
+
+
+How autoscaling works? WHich ec2 instances are added?
+When we set autoscaling we define ec2 instance parameters to add such as their family, instance type, AMI, key pair, block devices, security groups and etc. 
+These things are defined in advance so when AWS needs to add instances it knows which instance with which properties to add
+
+We need to give a custom AMI image, from which AWS will make new instances.
+
+
+How to configure autoscaling?
+
+Step # 1
+Create an AMI image and copy it's AMI id
+example of AMI id:
+ami-04b6019d38ea93034
+
+Step # 2
+Create a launch template which contains the information of EC2 instance.
+
+Step # 3
+Auto Scaling Groups:
+In auto scaling groups we define minimum number of ec2 instance to have at any time and maximum number of instance depending upon load.
+For example minimu 2 and maximum 5. It will at any time 2 ec2 instances. and if load increases and keps increases it will add 3 more ec2 instances total 5 now, but if load increases any further it will not add any ec2 instance.
+And one more thing, the availability zones we define at the time of creation of scaling group lays an important role.
+If we chose AZ1 and Az2, and minimum 4 servers are mentioned, then the asg will make 2 server sin AZ1 and 2 in AZ2. If there is imabalance, then ASG will terminate nstances from the AZ having more instances and launch instance in AZ having less number of instances.
+
+Create an Autoscaling Group and add the launch template created above (these will be the ec2 instance added or removed by ASG).
+
+Set the cpu and instance properties to zero in ASG because you already added your launch template which contains EC2 instance.
+
+Now, create the AytoScaling Group
+
+Step # 4 Adding Load Balanver to the ASG
+When we attach load balancer with AutoSCaling group, we first creat target group and in target group we do not add any instances, then we connect target group with load balancer and then we make the ASG to use target group by default, any instance addeed in ASG will automatically go in target group
+If we attaach instances in target group, then every time new instances are created we need to add them manually in the target group, that is why w do not add any instance while creating target group
+
+Now, attach the load balancer created with ASG. After adding the load balacner with ASG, the instance of ASG will began to appear in target group
+
+Scaling Policy:
+It determines the limit after which AWS will add new instances or remove instances to scale down.
+
+Suppose you mentioned 50%, it means your desired instances load average is 50% than it will add number of instances until it reaches maximum number of instances.
+
+For example:
+Policy load : average 50% of minimum instances
+
+Desired = 2
+
+Minimum : 2
+
+Maximum = 4
+
+
+NOw, as minmum instances set is 2, if their average load increases 50% then ASG will launch 2 more instances as maximum can be four. When the average load of 4 instances gets lower then 50%, it will terminate the instances.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

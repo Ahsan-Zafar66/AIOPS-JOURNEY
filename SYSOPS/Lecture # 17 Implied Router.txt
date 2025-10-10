@@ -1,0 +1,35 @@
+Implied Router:
+VPC has a feeature called implied router.
+no request has to be made, automatic facility.
+
+Implied router automatically does communication between subnets & outside internet world
+
+Suppose your region is Canada and it has two availability zones or data centres
+
+Let's suppose you have two subnets s1 and s2 in az1 and az2.
+
+How these two subnets s1 present in az1 and s2 present in az2 will communicated with each other?
+The answer is implied router, they will communicate through implied router.
+
+
+what if s1 present in az1 needs to communicate outside internet world how it will do?
+Through implied router an ec2 intance using ip of s1 and present in az1 will us eimplied router to communicate with outside world.
+
+
+We do not need to do configurations in implied router, it is automatically present in route tables. Implied router has route tables that have configuration
+
+implied router has route tables which have your server information and allows the outside world to communicate with your server.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

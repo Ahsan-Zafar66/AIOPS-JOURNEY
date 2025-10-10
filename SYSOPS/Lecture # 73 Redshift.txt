@@ -1,0 +1,23 @@
+Redshift is fully managed peta scale data warehouse service in cloud
+
+Redshift is OLAP Online Analytics platform
+
+Redshift can handle only data at rest not online data
+
+for online data or real time data kinesis is used
+
+Redshift stores data in column form not in row form
+
+Column Store
+Country India
+	Pakistan
+Product Mobile
+	Laptop
+Sales   100K
+	200K
+
+
+
+Country Product and Sales are columns
+
+Redshift is 10 times faster than SQL

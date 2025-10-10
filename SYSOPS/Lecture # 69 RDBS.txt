@@ -1,0 +1,136 @@
+RDS: Relational Database Service
+
+
+First install mysql workbench in your machine. We will access RDS of AWS through workbench
+
+In production Public Access of RDS will always be NO. For demo and practice you can select Yes.
+
+If you don't on the Backup window and you have high availability of RDS, then AWS have live replication in active and standby RD, so it automatically takes backup of standby, so even if you have no prefernece for backup it doesn't matter
+
+Turn off deletion protection, if you want to delete RD after practicing. If this option is checked then you won't be able to  delete RD.
+
+Synchronous replication means instantly replication on both ec2 servers where RD is created and replication is created. You type A in active ec2 RD and A will be written in Standby ec2 RD
+
+AWS is NOT responsible for:
+managing DB setting
+Building a relational DB schema
+DB performance tunning
+
+Connection Details:
+password: Myrds?123?
+
+Link: database-1.c3scyiciqo6f.eu-west-2.rds.amazonaws.com
+
+
+Keep the database for public acccess as we will connect using internet
+
+
+Read Only Replica:
+We can create readonly replica of a databse in any AZ of a region
+
+Read Only copy or replica of database is useful when we need to share data with non-technical people such as marketing team
+
+In read only copy you cannot create anything
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

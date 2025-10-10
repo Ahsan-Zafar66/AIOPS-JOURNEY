@@ -1,0 +1,58 @@
+
+If our data is retrived from origin source than AWS incur charges.
+For example 100 GB of data, is being retrieved every time from origin source.
+
+When we use cahcing service through cloudfront we only give charges for data which is retrieved form origin source.
+For example, 100GB of data in source, 90GB is cached only 10 GB remaining which is not cahched we will give charges fro it
+
+URL's of s3, load balacer, Distribution and others are not human friendly.
+
+we need a domain, we can create it using route 53.
+
+then we can map the domain with a source s3, load balancer, ec2 instnace.
+we will need to make an alias and then we can map the domain with a resource.
+
+then we can connect the domain with the cloudfront distrubution
+
+We mush have a public certificate. cetificate allows to customers to interact with website with encryption
+the alternate domain name must match the domain name
+
+
+We can get public certificate from AWS certificate manager, it validates first whether you own the domain name and then generates your certificate
+certificate ensures encrypted browsing between your site and customers
+
+
+Domain --> Distribution --> S3
+
+Create a distrubution and add the s3 bukcet
+
+then create an alias record Route53 and map it with distrubution url
+Distriubution are disabled then deleted
+
+
+
+Infra structure as a code:
+what we did in AWS graphically we can do through code as well
+
+Infrastructure as a code is CLoud Formation in AWS.
+You can make a json file with all the instruction of resources you need and you can use cloud formation to make all those resources from the code
+
+INstructions as code --> cloud formation
+
+Benefit of infrastructure as a code is consistency of resources and it also prevents you froms security threats
+
+
+The code is done in YAML and JSON. You code in these language create a template and upload it in s3 bucket
+
+
+
+Steps to crreate a s3 bucket through cloud formation:
+go to cloud formaiton service
+
+click on create stack
+
+upload your template
+
+give name to yourstack
+
+if you delete stack your resource created through stack is also deleted

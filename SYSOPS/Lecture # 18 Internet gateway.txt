@@ -1,0 +1,58 @@
+Go to vpc then go to route tables in AWS.
+
+Click on routes and you will see two routes by default
+
+0.0.0.0/0 --> for outside internet world
+
+172.31.0.0/16 --> local route, for communication between subnets\
+
+
+implied router does automatically communication because of these two routes.
+
+
+0.0.0.0/0 route can be removed but the 172.31.0.0/16 cannot be,
+
+if you removed 0.0.0.0 no instance can be able to go to internet
+
+
+
+
+Internet Gateway:
+VPC without IG cannot communicate with internet
+
+we can create our own custom Internet gateway and after creating gateway we neeed to attach it to a VPC, which will use the IG to communicate with the internet
+
+
+ONE VPC can have only ONE Internet gateway
+
+
+How to chang an internet gateway?
+
+Step # 1
+detach the default internet gateway from vpc as one vpc can have only one gateway
+
+Now, create a new gateway and attach it to the vpc
+
+now go to route tables and go inside routes attach the newly created gateway with 0.0.0.0/0 route by editing it.
+
+
+Security Groups:
+Security groups are basically virtual firewall that protects your virtual servers or EC2 instances.
+
+every ec2 that we create is a virtua machine similar to the one we create using virtual box
+
+Cloud has virtualization at the backend
+
+Securtiy group is a firewall located on VM NIC card. It protects VM through it's NIC card
+ it is last line of defense.
+
+N-ACL:
+N-ACL is also a firewall but it does not protect VM it protects SUBNET.
+
+It is first line of defense.
+Security group functions at virtual NIC level where as Network ACL they work at the subnet level.
+
+
+Region --> VPC --> Availability zone --> Subnet (N-ACL firewall protects it) ---> ec2 intances each protected by securtiy group
+
+ 

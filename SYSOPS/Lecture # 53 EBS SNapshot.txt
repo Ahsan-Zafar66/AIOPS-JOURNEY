@@ -1,0 +1,41 @@
+Storages ar eof three types block, object and file storage
+
+# to open disk management in windows, write this  "diskmgmt.msc"
+
+After adding a disk in windows you will see that disk in disk management, click on online, then format it and you will see it
+
+
+A snapshot is the backup of a volume at a point time. All the things before that point time will be saved in backup but after the backup is taken and you create new files they will not be included in the backup.
+
+Backup volume are shown in snapshot section, we click on snapshot and chose the ption "create volume from snapshot" and the snapshot will be converted into volume and now we can attach it to an EC2 instance.
+
+
+What if the complete region is gone? Can you recover data?
+Create a copy of snapshot you have taken in other region, when the region is gine snapshot copy will be avaialble in other region as well
+
+When you copy your data from one region to other, data transfer charges incur one time.
+
+
+Keep snapshot on s3 rather than ebs to save cost
+
+
+EBS are AZ specific.
+
+Snashots are region sepecifc, suppose you took snapshot from a volume in AZ1 and then AZ2, both of these will be located in the region, like london is your region, both these snapshots will be in london region not in their data centres, snapshots will be in their region
+
+Snapshots are incremental means, you took a snapshot at 1 pm, and then you took a snapshot at 3 pm, the second snapshot will take backup after the first snaspshot, any data created after 1pm-3pm will be in snapshot2. Now, you attach the snapshot2, it will go to snapshot1 and merge the data before 1 pm and after 1pm to 3pm. You will get compplete data.
+
+Snapshot is used for disaster recovery, you took a snapshot in AZ1 and AZ1 is destroyed. Now, as snapshot is region sepecific not AZ specific, you can create instance in AZ2 and attach the snapshot to instance in AZ2
+
+
+What if your delete s1 and s2 is still there? Will you get full data or only that data back up in s2?
+Each previous snapshot is the parent of new one. The s1 is parent of s2. When s1 is deleted, it will pass it's inheriance to it;s children. WHich means when we restore s2 we will get full data.
+
+What if you delete s2 will you still have full data?
+No, you will not have full data. Because child does not give back to parent. Parents give to child.
+
+
+
+When you take backup of production servers, the best practice is to take snapshot in non-businees hours, as production server will become slower.
+
+

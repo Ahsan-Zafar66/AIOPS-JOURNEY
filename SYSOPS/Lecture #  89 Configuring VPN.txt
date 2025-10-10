@@ -1,0 +1,133 @@
+Suppose you have a data centre on premises and one on AWS
+
+You want to connect these two data centres, there are two ways one through fibre cable newtwork  (which is very costly) and second is through VPN.
+
+VPN way:
+Create two instances in two regions 
+
+I created an istance in london region which will act as my on premises server
+London Region:
+VPC CIDR: 10.4.0.0/16
+public ip: 35.177.7.166
+private ip: 10.4.10.206
+
+
+I create other instnace in ohio region which will act as my cloud server
+vpc CIDR: 172.31.0.0/16
+
+cloud server 1
+public ip: 3.142.92.155
+privat ip: 172.31.19.32
+
+
+turn off the firewalls in both instances.
+
+ping both private ip's and you wnot be able to ping it.
+
+
+create a firewall fortigate in london region and allow all traffic for this firewal in network settings and remove all other SG
+
+do not slect any key-pair for firewall it's password it;s instance id
+
+instnace firewall ID:
+
+public ip: 3.10.234.69
+
+private ip: 10.4.13.253
+
+password (instnace-id): i-0b0f53bcfb5e920f5
+
+
+open the london server which you are assuming local server or on premise, mine is london
+
+open server manager, add active driectory domain service
+
+add the domain name: intelliverse.ai 
+
+add password : Ahsan?123?
+
+
+Now, we have london server (on premises assumed), ohio server (in cloud server) and firewall
+
+now to enter london server from ohio server we need to define customer gateway in ohio server. We will copy the id of firewall and create a customer gateway in ohio region whose endpoint will be this firewall
+
+
+Create customer gateway in ohio by using firewall public ip
+
+create Virtual private gateway in ohio and attach it with ohio vpc as it is not attached to vpc by default
+
+create a vpn now and chose VPG and chose customer gateway we created above in ohio region
+
+chose static ip and add the ip of london region 
+
+After vpn is created look for it's tunnels
+VPN tunnel 1 ip: 3.12.87.176
+
+VPN tunnerl 2 ip: 3.141.95.172
+
+
+Go to the london server where we added the active directory domain network and instance rebooted, go to windows defender firewall and turn off domain network
+
+Go to actuve directory users and Computers, go to users, then change the administrator pasword so we don't need to log in through key everytime
+
+Download the configuration of your vpn network, chose fortinet as your firewall is from fortigate and fortIOS5.0GUI
+
+After downloading configuration, search tunnel 1 using it's ip and look for it's pre shared key and do the same thing for tunnel 2
+
+
+Tunnel 1 Pre-shared key: 214rIwLpfk_s_Sk5PQHR_XL_8gegmzkf
+
+Tunnel 2 Pre-shared key:  fqJG89lF1UGeCNySE9LlqC51jUpqdOT_
+
+Login in the firewall using user admin and password the instance id of firewall
+
+now our firewall is login
+
+the  instructor had a script where you need to replace tunnel ip and it's key and than run the script in the shell of the firewall and when you see your tunnel it will be up
+
+
+Now, we will edit route propagation in OHIO route table, propagate the Virtual gateway in the route table (as VPN is connected with firewall), now you will get the route for london from ohio. Now you can go from ohio to london
+
+Now, add the ohio address in the ROute table of london, add ohio cidr and chose firewall instance.
+
+Stop the change/source check in firewall instance.
+
+Now, you can communicate with both server using VPN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

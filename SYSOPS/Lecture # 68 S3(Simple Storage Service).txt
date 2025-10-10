@@ -1,0 +1,68 @@
+SAN: Block Level and File/Folder Level
+
+NAS: Object Level Storage. S3 is NAS.
+
+S3:
+S3 is the storage for the internet.
+It has simple web services interace for simple storage and retrieval of any amount of data from anywhere on the internet
+
+S3 has very good availability and durability
+
+An obbject size stored in an s3 bucket can be upto 5TB.
+There is unlimited storage
+A bucket can be viewed as containers for objects (Default it's private)
+
+You can use name for folders in a bucket when using AWS console
+
+Suppose you created bucket or s3 storage in London region, it is created in london region but it can be managed globally
+
+When s3 bucket s create it has blocked all public accees by default. To give acces to an object in a bucket first make the bucket public and then give permissions of the object to public and then when you share the link of file the other person can see the file
+
+When we edit a file and upload it, even if the person has access to the file previously, as this file replaced the previous file you have to give again access to the person
+
+Bucket Versioning:
+If you enable bucket versioning, it will maintain the versioning of the file
+
+You can see multiple versions of the file by clicking on the object and it will show the versioning
+
+Bucket Replication:
+One bucket which is source from which replication will be done
+One bucket which is destination where replication will be done
+
+bucket versioning should be enabled in destination
+
+Web Hostings:
+You can do web hosting in s3 and it is called serverless webhosting.
+We can put html and other files in s3
+
+Put the html file in bucket and make it public.
+Now, enable static web hosting in bucket properties, mention the file name. You will see a link in static web hosting section in properties of bucket.
+When you open the link mention in this section, it will automatically read the your html page and will show you.
+Now, you can connect this url with a domain name in DNS.
+
+
+
+
+
+
+SNS integration with S3:
+SNS: Simple Notification Service
+
+Create a notification service.
+Define it's subscription policy (email,sms, smtp and etc)
+the subscriber will get notification
+
+Step # 1
+Create a topic and chose standard option. In access policy chose everyone
+
+Step # 2
+Create  asubscription on email and give your email. Open Gmail and confirm your subscription
+
+Step # 3 
+Publish a message and see if you recieve on your email
+
+Step # 4
+Integration of S3 and SNS.
+
+Go to your respective bucket and go to properties. In properties you will see a section event notification
+S3 bucket and SNS should be created in SAME REGION

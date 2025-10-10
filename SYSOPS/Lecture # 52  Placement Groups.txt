@@ -1,0 +1,42 @@
+Suppose you have three hardwares h1,h2, and h3.
+
+You have an application server, databaase server and webservers.
+
+Placing application server and database server on same hardware is affinity rule, this is done to avoid latency.
+
+Now, placing websevers suppose we have 2, and i place one in h1 and one in h2, this is anti affinity rule.
+
+
+Doing this thing in AWS, like deciding where to place the EC2 is known as EC2-Placement Groups.
+
+CLuster: Application and database servers are on same hardware in same AZ
+
+Create a placement group in AWS (name it together or any) and select cluster type, now create 3 instances and in the placement group option chose this placement group.
+These 3 instance whos placement group is cluster will be on the same hardware on the same AZ
+
+
+
+Spread: Webservers are on different hardwares in same AZ or different AZ
+
+Create a placement group in AWS (with separate or any other name) and select Spread type.
+Now creat 3 instances and in placement group select this group that you create hacving spread type. You can also chose the AZ where you want these 3 instances.
+Now, these three instance will be created in the selected AZ and they all will be on different hardwares in this AZ.
+Instace # 1 will be on xyz1 hardware
+
+Instance # 2 will be on xyz2 hardware
+
+and instance # 3 will be on xyz3 hardware
+
+In cluster type all thress instances are on xyz1 hardware but in spread type all three instances will be on different hardwares.
+
+Now, to make the application Fault Tolerance, you can create more instances in different AZ using the spread placement group, so even if the whole AZ is lost you have servers in other AZ
+
+
+Partition:
+You have application and database servers and you create their replica, BUT THERE IS NO GARRANTEE that this replica will be on different racks or on different hardwares.
+
+Now, you create  a placement group selecting the "partition" as a type, and select number of partitions you want 2,3,4,5.
+
+Now, launch two instances and select this partition placement group, you can also sepeciy the availability zone and you will select partition number (suppose you created 2) and you selecte partition 1 and these two instances will be in partition 1 of this AZ.
+Now, you launched another two instance and chose this partition placement group, you can specift different or same AZ, now you slected partion number 2, these 2 instances will be create din the mentioned AZ in partition 2 completely separate from partition 1.
+
