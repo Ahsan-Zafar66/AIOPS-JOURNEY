@@ -1,0 +1,112 @@
+when you create a vm in virtual box, you go n settings and see Network section.
+
+You use ubuntu an dyou use interent, how the vm is using internet which network?
+It is defined in Network section of each vm.
+You will see Adapter, network type NAT, bridged and others. And which network to use wifi and other
+
+
+By default vm has NAT networking, which is for inside machine configuration
+# Networking in vagrant, go to Vagrant file and locate public network line, read it's description and uncomment the line
+when you uncommnet the public network line it will go bridge networking which allows communincation with other machine on the same network
+config.vm.network "public_network"
+
+# if you want to give your own ip
+config.vm.network "public_network", ip:"192.168.43.123", bridge: "Intel(R) Dual Band Wireless-AC 8265"
+you can get bridge value from your wifi properties which is name of your network
+
+
+when you run vagrant up now, you will see bridged network in adapter 2
+
+
+Networking and different ip addresses explaination
+
+In your Vagrant VM, the three IP addresses you see are associated with different network interfaces. Let's break them down:
+
+1. eth0 (NAT Network - 10.0.2.15):
+IP Address: 10.0.2.15
+Purpose: This is the NAT (Network Address Translation) network adapter.
+In this setup, the VM uses a private IP address (10.0.2.15) to communicate with the host machine and the outside world (internet), but the VM itself is not directly exposed to the external network. The NAT adapter acts as a gateway and allows the VM to access the external network using the host’s IP address, while still keeping the VM private.
+This type of network is typically used when you don’t need to expose the VM directly to the internet or to other machines on the local network.
+2. eth1 (Bridged Network - 192.168.43.139):
+IP Address: 192.168.43.139
+Purpose: This is the Bridged Adapter network.
+When you use a bridged adapter, the VM gets an IP address in the same subnet as your host machine's network. This makes the VM behave like another device on your local network, meaning it can be directly accessed by other devices in the same network, and it can communicate directly with those devices.
+This network setup allows the VM to be "seen" as if it's part of the same local network as your host machine, which is useful for scenarios where you want to access the VM from other devices or if the VM needs to interact with other devices on your local network.
+3. lo (Loopback Interface - 127.0.0.1):
+IP Address: 127.0.0.1
+Purpose: This is the Loopback interface, also known as localhost.
+The loopback address (127.0.0.1) is a special IP address that points back to the same machine. Any data sent to this address will stay within the VM and will not leave the machine.
+This interface is used for network communication that is entirely local to the machine, so it helps test and use network services without leaving the host.
+Why does your VM have 3 IPs?
+Each interface serves a different purpose:
+
+eth0 (NAT): Used for internet access or communication with the host, but isolated from the external network.
+eth1 (Bridged): Used for direct communication with devices on your local network (including the host).
+lo (Loopback): Used for internal, local-only communication within the VM.
+In most cases, you'll use the NAT network (eth0) for internet access, while you’ll use the Bridged network (eth1) for interactions with other devices or for making the VM accessible on the local network.
+
+Do they serve the same purpose?
+No, they each serve different purposes:
+
+NAT allows for private network communication with external access through the host.
+Bridged connects the VM directly to your physical network and allows it to be accessed from other devices on the same network.
+Loopback is for internal communication within the VM itself.
+Let me know if you need further clarification!
+
+
+
+
+Now as my bridged adapter ip is 192.168.43.139, i can take control of this machine anywhere specifying the user and password of that user in this machine
+
+# i will run following command to take control of vagrant user in machine 192.168.43.139 from anywhere and enter its password
+ssh vagrant@192.168.43.139
+
+# now running this command will ask password from me, vagrant123 is the password of this user
+vagrant123
+
+
+
+# you can check your windows machine ip and it;s whole network
+ipconfig
+
+# my ip address of windows is 
+192.168.43.136
+
+So, my network is 192.168.43.0 i can give any ip address to any machine within this network like 192.168.43.137,192.168.43.5,192.168.43.10,192.168.43.150 any ip. And these machines as they are in same network they can communicated with each other
+
+
+
+Question?
+my windows machine ip is 192.168.43.136? What is my network? and if I create new VM on this machine their IP will be 192.168.43.any ? so these machines can communicate with each other? So, if I have another machine on address 192.168.42.135 does it can also communicate with machines on 192.168.43 network? or I need to do special configurations on both side of network machines?
+
+
+
+Anwser
+Let me break down your questions to clarify the network setup and communication between your devices:
+
+1. What is your network?
+If your Windows machine has the IP address 192.168.43.136, it’s part of a network with the subnet 192.168.43.0/24. This means that the network range is from 192.168.43.1 to 192.168.43.254. Any device or machine with an IP address in this range is considered to be on the same local network, and they can communicate directly with each other (assuming no firewall restrictions).
+
+2. What happens if you create new VMs on this machine?
+If you create new VMs on your Windows machine (the host), and the VMs are set up with bridged networking (as you described before), they will get IP addresses in the same subnet as your host machine. So, if your host IP is 192.168.43.136, the VMs will likely get IP addresses like 192.168.43.137, 192.168.43.138, etc., within the 192.168.43.0/24 range. These machines will be on the same local network and can communicate with each other.
+
+3. Can a machine with IP 192.168.42.135 communicate with machines on 192.168.43.x?
+No, direct communication between 192.168.42.x and 192.168.43.x will not work by default because they are on different subnets (192.168.42.0/24 vs. 192.168.43.0/24).
+
+However, there are a couple of ways they can communicate:
+
+Via a router/gateway: If there's a router or gateway that connects both networks (192.168.42.x and 192.168.43.x), the devices on both networks can communicate with each other. In this case, the router would need to have routes set up to forward traffic between the two subnets.
+
+Manually adding routing: If both networks are directly connected (e.g., you're using VMs on different subnets or a multi-homed machine), you could manually configure static routes on each side to allow communication. But that's more advanced and requires knowledge of routing.
+
+4. What do you need to do for communication between 192.168.42.x and 192.168.43.x?
+Router: If you want devices on 192.168.42.x and 192.168.43.x to communicate, you need a router (or a device acting as a router) to connect these two subnets and route traffic between them. The router will have interfaces in both subnets and will forward packets accordingly.
+
+Special Configuration: Without a router, you'll need to do some special configurations like adding static routes to allow the devices to find each other. But in a typical home or office network, a router would handle this automatically.
+
+To Summarize:
+Devices on 192.168.43.x (your VMs and Windows machine) can communicate with each other if they're in the same subnet and have proper network configurations (like bridged networking).
+If you have a machine on 192.168.42.135, devices on the 192.168.43.x network won’t be able to communicate directly with it unless you:
+Use a router that connects both networks (192.168.42.0/24 and 192.168.43.0/24), or
+Manually configure static routes to enable communication between the two networks.
+Let me know if you need further clarification!

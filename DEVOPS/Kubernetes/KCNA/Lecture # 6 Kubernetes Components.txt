@@ -1,0 +1,46 @@
+Following are the components of kubernetes when it is installed on a system
+1) API server
+2) etcd service
+3) kublet service
+4) container runtime
+5) controllers
+6) schedulers
+
+
+
+API server:
+Act as a frontend of kubernetes.
+Users, management devices, CLIs all talk to the API server in order to communicate with kubernetes
+
+2) Etcd Service
+distributed reliable key-value store used by kubernetes to store all the data used to manage the cluster
+
+when you have multiple nodes and masters, etcd stores all that info. In the nodes of a cluster in a distributed manner. Also responsible for implementing the logs and make sure that there are no conflicts between the masters
+
+
+3) Schedulers
+responsible for distributing work or containers across multiple nodes. It also look for newly containers and assigns them to nodes.
+
+
+4) Controllers
+Controllers are the brain behind orchestration
+
+it do all the orchestration
+
+Its job is to monitor containers, if it is down make new one and vice verse
+
+Responsible for noticing and responding when nodes or containers or endpoints goes down.
+The controllers make decisions to bring up the new containers in such cases
+
+
+5) Container Runtime
+it is an underline Software that is used to run container. 
+In our case, it is docker but there are options as well
+
+
+
+6) Kubelet
+kubelet is the agent that runs on each node in the cluster
+It is respnsible for making sure that containers are running on the nodes as expected
+
+

@@ -1,0 +1,95 @@
+Local repository:
+Like we store our images in docker hub we push and pull images from there.
+Local repository means creating a docker repository in your local system for storing images which you can pull later
+
+# following is the command creating a docker repository names registry, the repository is actually a container running to act as a local repository
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+docker run --> to run a container from an image
+
+-d --> detached mode, do not show any output of the command
+
+-p --> port mapping, 5000 of host is mapped with 5000 of container
+
+--restart=always --> if container crash or stops restart it, it is for HA
+
+--name registry --> setting container name will be registry
+
+registry:2 --> it is the image and it's tag
+
+
+# now a contianer has been created named registry
+
+How to push an image in local repository now?
+# step # 1 tag the iamge
+docker tag alpine localhost:5000/alpine
+
+# now push the image
+docker push localhost:5000/alpine
+
+# now take the console of container
+docker exec -it registry /bin/sh
+
+# now find the image
+find / -name alpine --> this command will give you the path where your image has been stored in container which is acting as local repository
+
+
+
+Video Lectures:
+What is repository ?
+Answer : Repository is one kind of godown which package and every image will stored into one directory.
+
+
+How many repository we have seen so far:-
+1. DockerHub
+2. Github
+3. Gutlab
+4. ECR --> AWS
+
+
+dodiya pvt ltd --> go daddy
+
+dodia.com:8080  --> Docker login
+
+dodia.com:8080
+#docker pull abdealidodia/imagename:tag
+#docker pull dodia.com:8080/imagename
+#docker pull localrepo:8080/imagename
+
+#docker login
+
+By Default localrepostiroy --> 5000
+-p 5001:5000
+
+#docker push localrepostiry:port/imagename
+
+# docker run -d -p 5000:5000 --restart=always  --name registry registry:2
+docker pull alpine
+
+#docker tag alpine abdealidodia/alpine
+#docker tag alpine localhost:5000/alpine
+
+URL :https://docs.docker.com/registry/deploying/
+
+Default : /var/lib/registry
+
+
+Vi docker-compose.yml
+version: '3'
+
+ services:
+  registry:
+   image: registry:2
+   ports:
+    - "5001:5000"
+   environment:
+    REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+   volumes:
+    - ./data:/data
+
+
+#docker-compose up
+#docker ps
+#docker exec -it containername sh
+#ls -ltrh /data
+

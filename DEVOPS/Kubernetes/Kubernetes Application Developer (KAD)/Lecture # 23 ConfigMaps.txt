@@ -1,0 +1,74 @@
+What is a configMap?
+A configMap is an object that stores configuration data for applications in form of key-value pairs
+This data can be passed to containers at runtime
+
+# creating a config map through imperativ commands
+kubectl create configmap app-config --from-literal=APP_COLOR=blue --from-literal=APP_MODE=prod
+
+
+# lets create above configmap in a taml file
+
+# vim app-config
+
+APP_COLOR: blue
+APP_MODE: prod
+
+# command to create configmap from a file, name of config map is app-config
+kubectl create configmap app-config --from-file=file_path
+
+
+
+# creating a config map from yaml file
+vim configmap.yml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_COLOR: blue
+  APP_MODE: prod
+
+
+
+ConfigMap Hands On:
+
+# creating configmap through imperative command
+kubectl create configmap test-config --from-literal=APP_COLOR=green --from-literal=APP_TYPE=prod
+
+
+# creating a config map from yml fil
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: first-cm
+data:
+  APP_COLOR: blue
+  APP_TYPE: prod
+
+# creating a config map
+kubectl apply -f configmap.yml
+
+# now lets create a pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mycontainer
+    image: kodekloud/webapp-color
+    envFrom:
+      configMapRef:
+      - name: first-cm
+
+# now in abov pod environment variable which are crucial for container APP_COLOR and APP_TYPe will be fetched from configmap
+
+# now lets create pod
+kubectl apply -f pod.yml
+
+# now lets expose pod using service
+kubectl expose pod mypod --port 8080 --type NodePort --name mysvc
+
+# now get the node ip adress and node ip in which pod is created
+

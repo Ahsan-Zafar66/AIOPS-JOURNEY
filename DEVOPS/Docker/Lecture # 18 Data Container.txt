@@ -1,0 +1,6 @@
+Can we transfer or use one container data into another container.
+Yes, we can and this is called data container
+
+Now we will create database that can be copied or used in any container and will also show the data created in one container into another
+
+docker create -v /dbdata --name dbstore training/postgres /bin/true

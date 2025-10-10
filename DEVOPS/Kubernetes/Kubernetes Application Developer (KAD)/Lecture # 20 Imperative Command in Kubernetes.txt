@@ -1,0 +1,53 @@
+You can create kubernetes resources or objects in two ways:
+1) Imperative Approach:
+2) Declerative Approach
+
+
+Imperative way
+It is creation of resources using command line
+
+# for example, creating nginx pod
+kubectl run nginx --image=nginx
+
+# creating  adeployment, create a deployment name nginx
+kubectl create deployment --image=nginx nginx
+
+
+FOR CKAD EXAM you need to learn imperative commands.
+
+# creating  ayml file fom cmd
+kubectl create deployment --image=nginx nginx --dry-run -o yaml
+
+above command also creates a yaml file of deployment nginx
+
+# CREATING 4 REPLICAS OF DEPLOYMENT	
+kubectl create deployment nginx --name=nginx --replicas=4
+
+# scaling a deployment 
+kubectl scale deployment nginx --replicas=4
+
+
+Imperative Command Hands On:
+
+# creating a pod with nginx image
+kubectl create mypod --image=nginx
+
+
+# if you want to check if your imperative command is correct you can use --dry-run, it doesnt create anything just tell you if command s correct or not
+kubectl run mypod --image=nginx --dry-run=client
+
+# if you want to create a yml file if the command is correct then, give me the yml code for a pod that has nginx image and save specs in a file so i could use file
+kubectl run mypod --image=nginx --dry-run=client -o yaml > mypod.yml
+
+
+# creating a deployment with 3 replicas and checking command if it is correct generating a yml output and saving it in  ayml file
+kubectl create deployment mydeploy --image=nginx --replicas=3 --dry-run=client -o yaml > deploy.yml
+
+# creaitng a pod
+kubectl run mypod --image=nginx
+
+# above we created a pod but we didnt exposed it using  a service, lets do it
+kubectl expose pod mypod --port 6397 --name my-service --dry-rum-client
+
+when you expose a pod, it automatically fetches the labels of mention pod and use the label in its selector.
+port and target port are kept same.

@@ -1,0 +1,92 @@
+In this lecture we will learn how to make a dashboard in kubernetes to visualize pods and resources
+
+Step # 1 install helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# check the version to verify installation
+helm versionhelm version
+
+
+# add help repo
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+
+# install dashboard
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+
+
+# after installing you can either forward a port can use ingress nginx to access dashboard
+
+# port forwarding forwardin 8080 to 443, exposing port locally only inside machine dashboard will be accessible
+kubectl port-forward -n kubernetes-dashboard svc/kubernetes-dashboard 8080:443
+
+
+
+# if you want to expose dashboard on internet then use following command
+kubectl port-forward -n kubernetes-dashboard svc/kubernetes-dashboard 8080:443 --address 0.0.0.0
+
+# now you need ubuntu ip and 8080 port to access the kubernetes dashboard
+
+
+
+# now go on firefox and run, as we apped 443 with 8080, we will go to 8080 and it wil go to 443
+http://localhost:8080
+OR 
+
+# ingress nginx yml file
+# ingress-dashboard.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+  namespace: kubernetes-dashboard
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  rules:
+  - host: dashboard.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kubernetes-dashboard
+            port:
+              number: 443
+
+
+
+Step # 2 when you see dashboard page create a user
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+EOF
+
+
+# now create  a token as you have created a user and paste this token in the firefox and your kubernetes dasboard is ready
+kubectl -n kubernetes-dashboard create token admin-user
+
+
+
+
+
+# now you can user other users as you like and give them access to things as you want. Use deepseek to do this task.
+
+

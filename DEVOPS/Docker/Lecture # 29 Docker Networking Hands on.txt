@@ -1,0 +1,91 @@
+# by default docker has all the networks bridge, host, macvlan, none
+if you don't specify a network while creating a container, the contaner gets bridge network by default
+
+# command to create your network
+docker network creat network_name
+
+# example
+docker network create infinix --> infinix is name of my network as I didn't mentioned the driver or network type, it gets bridge network driver
+
+# creating a network and mentionining driver for the network
+docker network create --driver host mynetwork --> driver is host and network name is mynetwork
+
+
+
+
+# mentioning a network while creating a container
+docker run -itd --name c1 --network infinix busybox 
+
+# second container
+docker run -itd --name c2 --network infinix busybox
+
+above two containers are created in a same network so they can communicate with each other directly through ip addresses.
+By name two containers within same network CANNOT communicate BUT if the network is custom made by you, in that network they can communicate by name.
+
+default network --> communication is done by ip addresses of containers ONLY
+custom network --> Communication can be done by both name and ip addresses of containers
+
+
+
+# you can inspect anything in docker
+docker inpect c1
+
+# inpstecting network
+docker inspect infinix
+
+
+# connecting a container with another network
+docker network connect network_name container_name
+
+A container can be connected with multiple networks and can communicate with containers in different networks to which the container is connected.
+Suppose container1 is connected to bridge and infinix network
+So, it can communicate with containers present in both networks
+
+# you cannot remove network directly you need to disconnect the containers attached with it
+docker network disconnect network_name container_name
+
+# example
+docker network disconnect infinix c1
+
+# after removing all the containers you can remove network
+docker network rm network_name
+
+#examole
+docker network rm infinix
+
+
+
+
+Lecture Notes:
+docker run -dit --name alpine1 alpine ash
+docker run -dit --name alpine2 alpine ash
+docker ps
+
+alpine1 -->172.17.0.2
+alpine2 --> 172.17.0.3
+docker inspect alpine1
+docker inspect alpine2
+
+docker exec -it alpine1 ash
+
+docker network create --driver bridge myabd
+docker run -dit --name alpine1 --network myabd alpine ash
+docker run -dit --name alpine2 --network myabd alpine ash
+docker run -dit --name alpine3 --network myabd alpine ash
+
+alpine1 --> 172.21.0.2--> class B
+alpine2 --> 172.21.0.3
+alpine3 --> 172.21.0.4
+alpine4 --> 172.17.0.2 --> 172.21.0.5
+
+172.17.0.2  Class B 255.255.0.0  N.N.H.H
+172.21.0.2  Class B 255.255.0.0 N.N.H.H
+
+
+
+docker run -dit --name alpine4  alpine ash
+
+
+docker network connect myabd alpine4
+docker run -dit --name alpine5 --network host alpine ash
+

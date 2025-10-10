@@ -1,0 +1,43 @@
+Ansible supported data types:
+
+1) Scaler types: int, string, float and boolean
+
+2) complex types: list, dictionaries, set, json
+
+
+3) special: ansible facts and variable ( example {{inventory_hostname}} )
+
+
+Examples of datatypes now
+
+string:
+name: ahsan
+
+boolean: 
+become: true
+
+list:
+application:
+- web
+- db
+
+application is a list and its values are web and db
+
+
+dictionary:
+db_details:
+  host: database
+  port: 3306
+
+
+dictionary is db_details and it has two key-value pairs
+
+
+
+json:
+mydata: {"status": "running", "version":"1.2"}
+
+
+special:
+"hostname": {{ inventory_hostname }}
+

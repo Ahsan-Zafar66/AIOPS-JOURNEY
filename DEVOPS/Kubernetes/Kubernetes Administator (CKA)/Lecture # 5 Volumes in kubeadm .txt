@@ -1,0 +1,64 @@
+when you have multiple kubernetes cluster you have multiple contexts.
+You need to set context of a particular cluster to work in it.
+
+hostpath volume is not a good option for production applications and real life applications.
+because hostpath is configured of each node separately, and pod schedule on a node can use its hostpath only, it does not gets information of data present on other nodes.
+data of one node is not synchronized with other nodes
+
+hostpath ky sth masla ye hai ky jo pod hai wo jis node per schedule hota hai, usi ky data ko read kr skta hai or usi pr write kr skta hai. wo dsry node ky sth kuch nhi kr skta.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

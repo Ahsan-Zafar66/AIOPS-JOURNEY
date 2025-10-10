@@ -1,0 +1,90 @@
+vars which are defined outside the task act as global variables
+
+# example of defining variables and checking their data type
+
+
+# sudo vim data_type.yml
+
+---
+- name: this yml file is for understanding data types
+  host: localhost
+  vars:
+    a: 15
+    b: 20.1
+    c: ahsan zafar
+    d: True
+  tasks:
+  - name: using debug msg to display variables and their data types
+    debug:
+      msg:
+      - "my number is {{a}} and its data type is {{a|type_debug}}"
+      - "my decimal is {{b}} and its data type is {{b|type_debug}}"
+      - "my name is {{c}} and its data type is {{c|type_debug}}"
+      - "my boolean is {{d}} and its data type is {{d|type_debug}}"
+      
+
+
+the diffrence in var of debug and msg is, while using var you can mention variable only you cannot write a msg or some text
+when you use msg you need to call the variable using double {{}} brackets and you can also write text as you want
+
+
+
+=====================================
+
+Difference b/w set facts and vars in ansible: (Interview Question)
+
+1. vars: vars is used to set variable, that can be used from entire playbook, you can call it anywhere
+
+2. set fact: it is used to set host specific variable--> within a task you can used it. It is set based on a task result
+
+
+Difference:
+vars are used to define a global variable
+
+set facts used to set variable within tasks the same play
+
+
+
+
+- name: This is example of vars and set_facts 
+  hosts: localhost
+  gather_facts: false
+  vars:
+    abd: "Abdeali Dodiya"
+  tasks:
+  - name: this is set_Facts example
+    set_fact:
+      xyz: "Alnafi"
+
+  - name: Printing the variable from vars 
+    debug:
+      var: abd
+  - name: Print the variable from set_facts
+    debug:
+      var: xyz
+
+
+
+if you define variable and set fact with same name then set fact will overwirte it.
+
+- name: This is example of vars and set_facts 
+  hosts: localhost
+  gather_facts: false
+  vars:
+    abd: "Abdeali Dodiya"
+  tasks:
+  - name: this is set_Facts example
+    set_fact:
+      abd: "Alnafi"
+
+  - name: Printing the variable from vars 
+    debug:
+      var: abd
+  - name: Print the variable from set_facts
+    debug:
+      var: abd
+
+
+now at both places Alnafi will be displayed
+
+

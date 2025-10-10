@@ -1,0 +1,52 @@
+# examples of for loop
+
+for i in {1..10}
+do
+	echo "number is $i"
+done
+
+
+===========
+# checking wether files in the directory has executable permission or not
+
+for file in $(ls /home/ahsan-zafar/Downloads)
+do
+	if [[ -x $file ]]
+	then
+		echo "file has executable permission"
+	else
+		echo "file does not have executable permission"
+	fi
+done
+
+
+====================
+
+for name in ahsan ahmed laptop
+do 
+	echo "name is $name"
+done
+
+==================
+for seeing files in same directory
+
+for file in *
+do
+	echo "files are $file"
+done
+
+
+==================
+
+checking whether a thing is a file or a directory
+
+for file in $(ls /home/ahsan-zafar/Downloads)
+do
+	if [[ -f $file ]]
+	then
+		echo "$file is a file not a directory"
+	else
+		echo "$file is a directory"
+	fi
+done
+

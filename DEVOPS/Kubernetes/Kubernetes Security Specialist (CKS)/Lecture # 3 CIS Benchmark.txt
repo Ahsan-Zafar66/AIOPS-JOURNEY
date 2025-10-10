@@ -1,0 +1,17 @@
+CIS Benchmark has provided how to secure the kubernetes cluster.
+It has tests on multiple levels in a cluster, like on pod level, manifest file level, policy level, network level and etc
+
+You can use aqua-bench tool to run all the kubernetes test and can see which tests are passed and which are fail.
+You can download kube-bench tool from aqua security github repository, download it as a container
+RUn the kube-bench using ./kube-bench command in the directory where you download it.
+You will now see all test of cis benchmark how many are pass and how many are failed.
+
+Now, open CIS Benchmark file for kubernetes and run the commands given in this for the test that are fail.
+After running all the commands for failed test run test again and see do the faled ones hav been converted in successful ones.
+
+
+continue until all the failed test has been converted into pass.
+After all the test has been converted into pass state, you have successfully secured your kubernetes cluster according to CIS benchmark rules.
+
+
+

@@ -1,0 +1,167 @@
+# So this is complete informationf of makng CI and CD pipeline on jenkins with blue ocean
+
+
+Step # 1 Setup Jenkins
+There are multiple ways to setup jenkins, either installing directly on OS or used as a docker container. Github is source code management tool and repository is public
+
+In this tutorial we will use jenkins in a docker container running on Ubuntu OS which is a virtual machine
+
+
+# while setting jenkins up ina docker container you need to give it access to docker installed on ubuntu virtual machine.
+# So, that there is no need to install docker in jenkins container.
+
+# command to create a jenkins container that uses  ubuntu docker or host docker
+docker run -d \
+  -p 8080:8080 -p 50000:50000 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v jenkins_home:/var/jenkins_home \
+  --name jenkins \
+  jenkins/jenkins:lts
+
+
+# in above command the line -v /var/run/docker.sock:/var/run/docker.sock  this is necessary to allow jenkins container to use docker of ubuntu, if you do not add it then you cannot use docker of ubuntu
+
+
+# after creating the container you need to go inside the container and install docker.io which will use ubuntu docker and any docker container run in jenkins pipeline will be created on ubuntu not inside jenkins container
+docker exec -it jenkins-blueocean bash
+
+
+apt update
+apt install -y docker.io
+
+
+
+
+Step # 2 Setup Blue Ocean
+
+# now you need to go to localhost:8080 to access jenkins dashboard
+
+
+# go to settings > plugins > available plugins > search and install blue ocean plugin
+
+
+# make sure to restart jenkins after installing blue ocean plugin
+
+
+Step # 3 Start Building Pipeline
+
+# Go to Blue ocean and create a pipeline
+
+# Chose your source code management tool it can be github, gitlab, bitbucket and etc
+
+# then you need to give authentication token, for github go to github account > Settings > Developer Settings > Create classic token
+
+# now add your organization and mention the repository where code is located and create the pipeline.
+
+# now your pipeline is create whose Source Code Management is Github
+
+
+Step # 4
+
+Design your pipeline. I designed my pipeline in two stages git clone and build-deployment
+
+
+Git Cloning:
+
+Add a step and use git plugin and enter your repository URL and branch name such as "main" or "master" whatever it is
+
+# now go to jenkins settings > configure > credentials > add your github credentials username and authentication token UNDER GLOBAL CREDENTIAL (Unrestricted)
+
+# Now, go to pipeline settings in Blue Ocean and in Branch Source add these credentials and github repository URL
+
+
+
+
+Build and Deploy step:
+
+# the above step will clone the github repo in the jenkins container and you can check where this job is running by checking path from CHATGPT
+
+# now as we will build a docker image and push it to my dockerhub you need to add dockerhub username and password, BEST PRACTICE IS TO ENTER THEM AS ENVIRONMENT VARIABLES INYOUR PIPELINE NOT INSIDE SHELL SCRIPT
+
+# now following is a shell script that is checking files cloned from github
+# making a docker image,pushing to dockerhub, and creating a container (remember docker container is created in ubuntu not inside the jenkins docker container)
+
+
+# when we create container with each new version, we need to remove previous docker container so that port overlapping is prevented and only new version is available
+echo "Current Directory:"
+pwd
+ls -l
+
+echo "Building Docker image..."
+docker build -t ahsandc/jenkins-pipeline-test:$BUILD_NUMBER .
+
+echo "Logging in to Docker Hub..."
+echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+
+echo "Pushing image to Docker Hub..."
+docker push ahsandc/jenkins-pipeline-test:$BUILD_NUMBER
+
+echo "Cleaning up old container if exists..."
+# Check if a container is already using port 3200 and stop it
+EXISTING_CONTAINER=$(docker ps -q --filter "publish=3200")
+if [ ! -z "$EXISTING_CONTAINER" ]; then
+    echo "Stopping existing container using port 3200..."
+    docker stop $EXISTING_CONTAINER
+    echo "Removing old container..."
+    docker rm $EXISTING_CONTAINER
+else
+    echo "No existing container on port 3200."
+fi
+
+echo "Running new container from the latest image..."
+docker run -d -p 3200:5000 --name jenkins_app_$BUILD_NUMBER ahsandc/jenkins-pipeline-test:$BUILD_NUMBER
+
+echo "All done! Successfully deployed container version $BUILD_NUMBER"
+
+exit 0
+
+
+
+
+
+HOW TO TRIGGER PIPELINE BY MAKING CHANGES IN GITHUB CODE?
+
+# as you are running jenkins as a docker container on ubuntu in order for github to send trigger to pipeline you need to give access to pipeline to github
+
+# as jenkins is running inside a docker container we can use ngrok for building connection between github and pipeline
+
+# we can bind localhost:8080 port with ngrok which will create a safe tunnel and generate a link which we can give to github webhook for the repo
+
+
+# Example of generated link by ngrok for localhost:8080 is   https://225f49503a67.ngrok-free.app
+
+
+# command to install ngrok
+curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | \
+  sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
+
+echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | \
+  sudo tee /etc/apt/sources.list.d/ngrok.list
+
+sudo apt update
+sudo apt install ngrok -y
+
+
+# now go to ngrok website and generate you authentication token and use it in following command
+ngrok config add-authtoken <YOUR_AUTHTOKEN>
+
+# now start tunneling 8080 using ngrok
+ngrok http 8080
+
+# you see a new windw with a link to copy, copy that http link
+
+https://225f49503a67.ngrok-free.app/
+
+
+# you need to modify above link by adding github-webhook such as
+https://225f49503a67.ngrok-free.app/github-webhook/
+
+
+# now go to your github account > go to repository > go to settings > go to webhook > create a webhook paste the link in Payload URL, content type: application/json, which events would you like to trigger this webhook? chose just the push event  and create the webhook
+
+
+# now go to jenkins > settings > system > github api usage > Chose "Never Check rate limit". This is not recommended but if your pipeline lags and goes to sleeping due to restriction of github api usage then for TESTING you can chose this option so jenkins use api as much as it can.
+# Above thing is only for TESTING NOT PRODUCTION.
+
+
+# Now you have set the repo webhook and attach the ngrok link, whenever you will make change to github code pipeline is automatically triggered, make sur eyour ngrok tunneling is running.

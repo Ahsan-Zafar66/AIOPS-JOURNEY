@@ -1,0 +1,105 @@
+So, selnium grid has components which are:
+
+1) client
+2) router
+3) session map
+4) session que
+5) disributor
+6) event bus
+7) nodes
+
+Selenium Grid is a tool that allows you to run tests on multiple machines in parallel, which can significantly speed up the testing process. The components you mentioned work together to manage how the tests are distributed and executed across different machines. Here’s a detailed breakdown of each component and how a query from the client travels through the grid:
+
+1. Client
+The client is where the test request is made. It's typically your test script or framework (like JUnit, TestNG, etc.). The client sends the test request to the grid, specifying the desired capabilities (e.g., browser type, version, platform).
+
+2. Router
+The router is responsible for forwarding the request from the client to the appropriate component for further processing. The router receives the test request and forwards it to either the Distributor or the Session Map.
+
+3. Session Map
+The session map keeps track of all active test sessions. It stores information about the tests that are currently being executed, including the session ID, node details, and the test status. If the client sends a request for an existing session, the router will check the session map to retrieve information about the session.
+
+4. Session Queue
+The session queue is used when there are no available nodes to handle the test. If there are no idle nodes, the test request is placed in the session queue, waiting until a node becomes available to execute the test.
+
+5. Distributor
+The distributor is responsible for finding the right node to execute the test. It matches the test request (which includes desired capabilities like browser, OS, etc.) with the capabilities of the available nodes. Once a match is found, the distributor will assign the test to the corresponding node. If no match is found, the request may be placed in the session queue.
+
+6. Event Bus
+The event bus is a communication channel between the various components of Selenium Grid. It is used for broadcasting events like test status updates, node registration, node shutdown, etc. For example, when a node is no longer available, the event bus will notify the grid components to adjust accordingly.
+
+7. Nodes
+Nodes are the machines (or virtual machines) where the tests are actually executed. Each node has its own set of browsers (e.g., Chrome, Firefox) and platforms (e.g., Windows, Linux, macOS). Once a test is assigned to a node by the distributor, the node will execute the test on the specified browser and platform.
+
+Path of a Query from the Client:
+Client Sends Request:
+
+The client sends a test request, specifying the desired capabilities (e.g., browser, version, operating system).
+Router Receives Request:
+
+The router receives the request from the client. It first checks the session map to see if there's an active session that matches the request (if it's a request for an ongoing session).
+If it's a new test request, the router forwards it to the distributor.
+Distributor Assigns Test to Node:
+
+The distributor looks at the test request’s capabilities (browser, OS, etc.) and matches it with the available nodes.
+If a node with matching capabilities is available, the test is assigned to that node.
+If no node is available, the request is placed in the session queue to wait for a node to become free.
+Node Executes Test:
+
+Once the node is selected, it runs the test in the specified environment (browser, OS, etc.).
+The node communicates with the event bus to send updates about the test progress and completion.
+Test Completion:
+
+After the test finishes, the node reports the results back to the session map and the client (through the router).
+The event bus may broadcast the result, such as a test passed or failed message.
+Key Scenario:
+Imagine you have a test that requires Chrome on Windows 10.
+
+The client sends the request with those capabilities.
+The router forwards the request to the distributor.
+The distributor checks all the nodes and finds a node with Chrome on Windows 10 available.
+The distributor assigns the test to that node.
+The node runs the test and sends back the results.
+The event bus broadcasts the test result, and the router sends the result back to the client.
+If no node is available:
+
+The test is placed in the session queue.
+When a node becomes available, the distributor will assign the test from the session queue to the free node.
+This process ensures that tests are executed efficiently across multiple machines in parallel.
+
+
+
+
+
+
+
+=============================
+Practical Part
+Go the directory where selenium grid jar is present the one you downloaded from selenium grid
+
+# command to start hub
+java -jar selenium-server-4.6.0.jar hub
+
+selenium grid file: selenium-server-4.6.0.jar
+
+# fous on the output of above command, 
+16:22:28.125 INFO [LoggingOptions.configureLogEncoding] - Using the system default encoding
+16:22:28.141 INFO [OpenTelemetryTracer.createTracer] - Using OpenTelemetry for tracing
+16:22:28.550 INFO [BoundZmqEventBus.<init>] - XPUB binding to [binding to tcp://*:4442, advertising as tcp://192.168.56.1:4442], XSUB binding to [binding to tcp://*:4443, advertising as tcp://192.168.56.1:4443]
+16:22:28.638 INFO [UnboundZmqEventBus.<init>] - Connecting to tcp://192.168.56.1:4442 and tcp://192.168.56.1:4443
+16:22:28.680 INFO [UnboundZmqEventBus.<init>] - Sockets created
+16:22:29.690 INFO [UnboundZmqEventBus.<init>] - Event bus ready
+16:22:30.933 INFO [Hub.execute] - Started Selenium Hub 4.27.0 (revision d6e718d): http://192.168.56.1:4444
+
+
+HUB MACHINE: http://192.168.56.1:4444   if you run this in your browser you will see the selenium grid is insalled and now you can register nodes
+
+
+
+# how to register node
+run the following command on the node machine mentioning the XPUB binding and XSUB binding
+java -jar selenium-server-4.6.0.jar node --publish-events tcp://192.168.56.1:4442 --subscribe-events tcp://192.168.56.1:4443
+
+
+after running above command you will see output and look for ip address of node
+http://192.168.56.1:5555

@@ -1,0 +1,65 @@
+# running busybox image
+docker run busybox echo "Hello from busy box"
+
+
+first image will be searched in local repo if not present then downloaded from repository
+
+busybox is an os, you can give task to it and it will perform
+
+
+# removing a docker image
+docker rmi image_id
+
+# removing a container
+docker rm container_id
+
+if we want to remove a docker image, first we need to clear it's docker container.
+
+
+# going into interactive terminal in busybox
+docker run -it --name CONTAINER1 busybox /bin/sh
+
+by running above command you will enter a terminal /bin/sh in busybox, you can do all the things in that terminal. You can create new files delete and much more. These files or changes will be inside the busybox container. Changes made inside busybox will not effect base machine, everything will be for busybox
+
+
+#we have docker image and we run it in container, once process stopped container is stopped. So, in order to run image again we can use
+docker start container_id
+
+process --> container
+docker file --> image
+
+when we say "docker run busybox" it will create a container from image busybox.
+it which is iterative terminal, it is to go inside that container
+
+
+# how to enter in a running container?
+docker exec -it container_id /bin/sh ---> to enter in the container shell /bin/sh
+
+
+# what docker run command do
+Create Container + inside the container + if you exit inside the container, the container will die
+
+What does Docker exec do?
+take syou inside the running container
+
+
+ist Concept :-
+1. Docker image --> Are read only ? Yes we can not edit image
+2. Image se container banta hain --> Process + we can go inside the container and edit the file if you want
+Reason :- When we create container it will be add one editable layer over the image
+
+Docker images are readable and executable
+
+
+
+
+# remember run command starts the container and if you exit it dies
+# exec command starts a stop container and it does not die until you stop it
+
+
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+Jenkins download link :-
+https://www.jenkins.io/download/
+
+
+cmd -->
+cd C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Lecture 41
+
+
+C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Lecture 41>java -jar jenkins.war
+Running with Java 8 from C:\Program Files\Java\jre1.8.0_202, which is older than the minimum required version (Java 11).
+Supported Java versions are: [11, 17]
+See https://jenkins.io/redirect/java-support/ for more information.
+
+
+Now you need to download and install JDK 11 version for jenkins :-
+https://www.oracle.com/in/java/technologies/javase/jdk11-archive-downloads.html
+
+Once it install then you need to setup your enviornment variable for java 11 version
+
+C:\Users\AbdealiDodiya>java -version
+java version "11.0.16.1" 2022-08-18 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.16.1+1-LTS-1)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.16.1+1-LTS-1, mixed mode)
+
+
+
+
+
+
+Intalling jenkins via cmd line :-
+C:\Users\AbdealiDodiya>cd C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Lecture 41
+
+C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Lecture 41>java -jar jenkins.war
+Running from: C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Lecture 41\jenkins.war
+
+Password :-
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+ef296150616c4e4f9a5041fa3211136a
+
+
+
+#Now you can check your system ip address using #ipconfig
+192.168.1.7
+
+
+
+Now open your browser and hit below uRL :-
+192.168.1.7:8080
+
+Type your secret password in textbox
+
+
+then you need to select plugins --> Install
+
+It will take time to install jenkins
+
+Username and password setup required at installation time.
+
+Jenkins is up and running now :-
+
+
+########################################
+I want to create github account
+https://github.com/
+
+
+Username and password --> Login
+My repository has been created
+https://github.com/abdealipython/selenium_project
+
+echo "# selenium_project" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/abdealipython/selenium_project.git
+git push -u origin main
+
+
+
+#########################
+Now you need to install git bash
+
+you need to login your git via below command
+
+git config --global user.email "abdealipython@gmail.com"
+git config --global user.pass "abdeali"
+
+
+
+
+####################################
+
+Summary :
+1. Pre JAVA 11 version need to install
+2. Jenkins install
+3. Github account should be ready with repostiry
+4. Git bash should be install at your windows machine
+5. Configure git bash with your credential

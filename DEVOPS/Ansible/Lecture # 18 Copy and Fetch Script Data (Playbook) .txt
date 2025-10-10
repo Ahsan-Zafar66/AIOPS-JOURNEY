@@ -1,0 +1,50 @@
+In this lecture we will make bash script and run that script in yaml file in remote nodes
+
+
+# making a bash script file that checks if the service is runnning or not
+
+vim service_details.sh
+
+#!/bin/bash
+
+service_status=$(systemctl is-active sshd)
+
+if [[ "$service_status" == "active" ]]
+then
+	echo "sshd service is running"
+else
+	echo "sshd service is not running"
+fi
+
+
+Now, we can run the file locally as ./service_details.sh, but we need to run the file in worker nodes.
+
+Step # 1 Copy the bash script file into worker node
+vim bash.yml
+
+- name: this yaml file focuses on copying the bash script file, running it, saving its output and displaying it
+  hosts: centos # my centos 8 machine
+  gather_facts: no
+  tasks:
+  - name: copying the bash script file
+    copy:
+      src: /home/jhon/ansible/service_details.sh # source location of file
+      dest: /home/ahsan/  # destination location of file where to copy it
+      mode: 0755 # permission of file
+      owner: ahsan
+      group: ahsan
+  - name: running the file and saving its output in a varibale
+    command: "bash /home/ahsan/service_details.sh"
+    register: command_output # saving the output of file in a variable using register
+  - name: now showing the output of file using debug keyword
+    debug:
+      var: command_output.stdout_lines # passing the output of file saved in command_output variable to debug as a variable 
+
+
+
+if you use command_output withoud stdout_lines, you will see complete output of debug, if you want to see only file or script output then use stdout_lines
+
+# running the playbook
+ansible-playbook bash.yml
+
+

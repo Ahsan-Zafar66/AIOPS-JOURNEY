@@ -1,0 +1,33 @@
+Go to docker hub and log in your account
+
+create a repository and make it public
+
+login in your docker hub account in terminal using command "docker login", enter your username and password
+
+
+How to push an image to docker hub?
+
+Step # 1
+Do tagging of the image you want to push, and name it like username/reponame
+
+for example I have a image name: infinixhot8, I want to pust it into my docker hub repository: opensource
+# we will tag the image first 
+docker tag infinixhot8:latest ahsandc/opensource:latest
+
+
+# now you can push the image after taggng
+docker push ahsandc/opensource:latest
+
+
+# note: if you only specify the username and repo will be created such as
+docker tag infinixhot8:latest ahsandc/myinfinix:latest
+
+# now if you push the above tag, now a new repo with name myinfinix will be created and image will be pushed in it
+docker push ahsandc/myinfinix:latest
+
+
+if you specify reponae along with username then image will go in that repo
+if you specify a repo name that does not exist then new repo will be created
+
+
+if same versions are pushed then the latest one will overwrite the old one, so that is why versioning is important to keep the files of every version

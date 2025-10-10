@@ -1,0 +1,165 @@
+Atlassian is an sutralian company that has many products, we are using JIRA by atlassian
+
+So, there are multiple type of groups or users in atlassian:
+
+1) Org-admin:
+It means organization admins, that have full control of atlassian account and can see all the products JIRA, Confluence, Trello and others
+So, users that are in this group can see everythin and have full control. Billing wagaira bhi yehi log dekhty hain
+
+2) Jira-admins:
+as the beginning speciefies Jira-admins it means people that administer JIRA product. So, they have ful control of this product.
+
+3) jira-user-access-admins-ahsanzafarqau, people in this group control the user administeation of ahsanzafarqau account JIRA product. 
+Ye log decide krty hain kisko kis chz ka access dena hai, kisko add krna hai or kisko remove.
+
+4) jira-users-ahsanzafarqau: ye log users hain jira ky ahsanzafarqau account ky. Ye log wo hain jo kam krty hain projects pr isses pr and etc. Workforce you can say
+
+
+
+Certainly! Let’s break down these groups in Jira to understand what they do and the access they grant:
+
+1. jira-admins-ahsanzafarqau
+Members: Users who are part of this group have specific administration privileges in Jira.
+Access to: This group grants access to all administration features for all Jira products in the instance named "ahsanzafarqau".
+Actions:
+Full administrative access across all Jira products. This means members of this group can perform various administrative tasks such as configuring system settings, managing projects, setting up workflows, permissions, issue types, etc.
+They can also manage global settings in Jira, making changes that affect the entire Jira instance.
+Example Actions:
+Creating, editing, and deleting projects.
+Setting up and managing global permissions.
+Configuring system-wide settings (like workflows and issue types).
+Scope: Their administration rights apply across all products in Jira, which may include Jira Software, Jira Service Management, and Jira Work Management, assuming all those products are part of the Jira instance.
+
+
+2. jira-user-access-admins-ahsanzafarqau
+Members: Users in this group can administer user access but do not have direct product access in Jira.
+Access to: This group grants the ability to administer users and groups within the Jira instance but does not provide direct access to any Jira products (like viewing or managing projects/issues).
+Actions:
+User Management: Members can perform tasks related to managing user accounts and groups. This typically includes actions such as adding or removing users from groups, granting access to specific products, managing permissions, and ensuring the right people have the right access.
+They do not have the ability to access or administer any Jira projects or issues directly; their scope is purely administrative at the user/group level.
+Example Actions:
+Creating, editing, or deactivating user accounts.
+Managing group memberships (e.g., adding/removing users from "jira-users" or "jira-admins").
+Granting or revoking product access for users or groups.
+
+
+3. jira-users-ahsanzafarqau
+Members: This is a standard user group that grants basic access to Jira products.
+Access to: Members of this group are granted access to Jira itself, which typically means they can interact with issues, projects, and other resources in Jira.
+Actions:
+Access to Projects and Issues: Members can view, create, update, transition, and comment on issues within Jira projects they have permission to access.
+They can be assigned to issues, move issues through workflows, and engage with tasks, but they do not have the ability to change system configurations or administrative settings.
+Example Actions:
+Creating and editing issues (like tasks, stories, bugs).
+Viewing and participating in discussions within issues.
+Transitioning issues between workflow stages (e.g., from "To Do" to "In Progress").
+Reporting on issues within the scope of their permissions.
+
+
+4. org-admins
+Members: Users in this group have administrative privileges at the organization level (in Jira Cloud, this is related to managing organizational settings, billing, etc.).
+Access to: This group grants access to organization-level settings, including managing users, groups, and billing. This is higher-level administrative access within Jira, but not directly related to project-specific configurations.
+Actions:
+Organization Management: Members can perform administrative tasks that affect the Jira instance at an organization level.
+This includes managing global settings for all users in the organization, overseeing user access to all Jira products, managing billing information, and controlling access to any connected apps or services.
+Example Actions:
+Managing organization-wide user accounts.
+Billing and subscription management: Accessing and configuring payment details, invoices, and subscription tiers.
+Managing organization-level permissions like who can invite new users, manage billing settings, or configure external integrations.
+Scope: These actions are related to the overall management of the organization’s Jira instance, not to specific projects or issues.
+Summary of Key Differences:
+jira-admins-ahsanzafarqau: Full administrative access to configure and manage all Jira products and features, including project settings, global permissions, and system configurations.
+jira-user-access-admins-ahsanzafarqau: Administrative access to manage users and groups within Jira but no access to Jira projects or product features.
+jira-users-ahsanzafarqau: Basic user access to view and interact with issues and projects within Jira. No administrative privileges.
+org-admins: Higher-level administrative access to manage organization-wide settings, including user management, billing, and product access at the organizational level.
+These groups are designed to allow for different levels of control in Jira, depending on the user’s role in the organization.
+
+
+===================================================================================================================================================================================
+
+
+
+Another breakdown of users
+
+
+Certainly! Jira is a powerful tool used for project management, particularly in agile environments. It provides a variety of users and roles, each with specific privileges. Let's break this down into two parts: Jira users and their privileges and other key components of Jira.
+
+1. Types of Users in Jira and Their Privileges
+In Jira, users are assigned to different roles, which control what they can and cannot do within the system. These roles can be customized based on the project or organization needs. Here are the primary types of users and their associated privileges:
+
+Jira System Administrators
+Privileges:
+Full control over the Jira instance.
+Ability to configure global settings, system-wide permissions, and all aspects of Jira.
+Can create and manage projects, workflows, issue types, screens, and fields.
+Manage Jira users and groups.
+Access and configure all Jira administration settings.
+Jira Administrators
+Privileges:
+Can configure project-level settings, permissions, and workflows, but not global settings.
+Can manage project-specific configurations such as issue types, screens, workflows, and permissions.
+Can manage custom fields, field configurations, and other configurations relevant to specific projects.
+Project Administrators
+Privileges:
+Can configure settings within a particular project, including permissions, components, and issue types.
+Can add or edit project components, versions, and manage project-specific configurations like workflows.
+Cannot make changes that affect the entire Jira instance or other projects.
+Users
+Privileges:
+Standard users can view, create, and work with issues.
+They can transition issues through workflows and add comments or attachments.
+They may be limited in terms of project configuration access, and typically, they can only perform actions related to issues within their projects.
+Service Desk Users (for Jira Service Management)
+Privileges:
+These users typically have access to service desk features like creating and managing customer requests.
+They can interact with requests, raise issues, and resolve incidents based on the configured service desk workflows.
+Browse Project Permission
+This is a permission that allows users to access the project and view its contents (issues, boards, etc.). A user may be given this permission even if they don't have other high-level permissions.
+2. Other Key Components of Jira
+Now, let’s look at other important components of Jira that help manage and organize work:
+
+Projects
+What it is: A project is the main container for issues in Jira. It can represent a specific product, team, or initiative.
+Components: Projects can be configured with unique workflows, issue types, permissions, etc.
+Types of Projects: Jira supports different project types, including Business projects, Software projects, and Service Management projects (for IT support teams).
+Issues
+What it is: An issue is a task, bug, feature, or work item tracked in Jira. It’s the core unit of work.
+Issue Types: Common issue types include Bug, Task, Story, Epic, Sub-task, etc.
+Issue Fields: Issues have fields like Summary, Description, Priority, Status, Assignee, and Reporter.
+Workflows
+What it is: A workflow represents the lifecycle of an issue from creation to resolution. It defines the states and transitions (e.g., “To Do”, “In Progress”, “Done”).
+Customizable: You can create custom workflows for different types of issues or projects.
+Conditions, Validators, and Post Functions: These are used to control and automate how issues transition between statuses.
+Boards
+What it is: A board provides a visual representation of work in Jira. It helps manage and track the flow of issues.
+Types of Boards:
+Kanban board: Used for continuous flow of work with no specific time frame for completing tasks.
+Scrum board: Used for teams following the Scrum methodology with sprints.
+Columns: Columns in boards represent different statuses of work (e.g., "To Do", "In Progress", "Done").
+Sprints (in Scrum Projects)
+What it is: A Sprint is a time-boxed period during which specific work (issues) is completed. This concept is important in Agile methodologies like Scrum.
+Use: Sprints can be created and managed on Scrum boards to organize work into smaller, manageable chunks.
+Filters and JQL (Jira Query Language)
+What it is: Filters allow users to find issues based on certain criteria. Jira Query Language (JQL) is the query language used to create custom searches.
+Example: A JQL query could be project = "My Project" AND status = "To Do", to find all issues in the “To Do” status for a particular project.
+Permissions and Schemes
+Permissions: Jira allows you to define who can do what within a project. Permissions control access to various actions like creating issues, editing issues, transitioning issues, etc.
+Permission Schemes: A permission scheme is a set of permissions that can be applied to a project to control user access.
+Dashboards
+What it is: Dashboards allow you to create custom views and reports that track key project metrics and progress. You can add different gadget types, such as charts, issue filters, or agile boards, to your dashboard.
+Use: Dashboards are helpful for tracking multiple projects, or they can be personalized for individual users or teams.
+Reports
+What it is: Jira provides built-in reports to track progress, manage sprints, and visualize performance.
+Types of Reports:
+Burndown Chart: Shows the work completed versus the work remaining in a sprint.
+Velocity Chart: Shows the team's velocity over time.
+Sprint Report: Shows the completed and incomplete issues in a sprint.
+Key Takeaways:
+Jira users have different roles with different levels of privileges depending on their responsibilities.
+Jira is highly customizable, allowing you to configure workflows, issue types, and dashboards for your team's needs.
+Jira supports agile methodologies (Scrum, Kanban) with tools like boards, sprints, and reports to track progress.
+Permissions, schemes, and JQL help you organize and manage access to data within Jira effectively.
+This is just an overview, so feel free to ask if you'd like more detailed information about a specific area in Jira!
+
+
+

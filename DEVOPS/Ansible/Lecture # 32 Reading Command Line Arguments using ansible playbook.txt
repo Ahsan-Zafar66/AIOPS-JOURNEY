@@ -1,0 +1,23 @@
+# in this lecture we will learn how to pass arguments in command line in ansible playbook
+
+sudo vim command_arg.yml
+
+---
+- name: this yml file is for command line arguments
+  hosts: centos
+  become: yes
+  tasks:
+  - name: installing the zip package
+    yum:
+      name: "{{ package_name }}"
+      state: "{{ package_state }}"
+
+
+
+# command to run above file, you can use -e or --extra-vars any of both
+ansible-playbook command_arg.yml --extra-vars "package_name=zip package_state=present"
+
+
+
+If you have defined varibale in playbook and you also pass its value in command line, then command line value will overwrite the value defined in ansible playbook
+

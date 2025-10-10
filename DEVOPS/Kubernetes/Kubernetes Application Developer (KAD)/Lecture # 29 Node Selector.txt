@@ -1,0 +1,46 @@
+Suppose you have three nodes, Node A, Node B and Node C.
+Node A is dedicated node it has greater resources than Node B and C.
+Node A is for cpu and memory intensive tasks.
+
+Now, you have pod A which is an intensive task and pod B and C which have small tasks.
+Now, you want to schedule Pod A on Node A as it requires more resources.
+
+Now, NodeSelector comes in the play, you can label your nodes.
+Suppose I label Node A large.
+
+Now, while deployng pods, I can add label for specifc node, so that the pod is scheduled on that node.
+
+
+# example of labeling a node
+kubectl label nodes node-name label-key=label-value
+
+# labeling kind-worker node as Large
+kubectl label nodes kind-worker size=Large
+
+
+# example of pod that will get schedule on Large Node
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  nodeSelector:
+    size: Large
+
+
+# now when you depoy above pod it will be deployed on node labeled as Large
+
+
+Limitation of Node Selector:
+Now, we have a condition that we need to schedule pod on a node labeled as large or medium?
+
+Now, we have another condiftion that deploy the pod on nodes which are not labeled as small?
+
+Now, in above both conditions nodeselector will fail. It wont work.
+
+
+
+

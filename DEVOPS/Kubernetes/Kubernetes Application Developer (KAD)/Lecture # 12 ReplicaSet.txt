@@ -1,0 +1,57 @@
+Replica set:
+It create the pods that you mention and make sure that number of pods ar ealways avaialble.
+
+Scenario:
+Suppose you have a pod with label cat, you create a replicaset where you define 5 pods and in your spec you give cat label to pods.
+Now, replicaset will create 4 new pods because one pod with the same label is already available. Including the pod that is alread available and creating 4 new pods will make total of 5 pods.
+
+If already created pod label is lion and replicaset pods label is cat, then replcaset will create 5 new pods making  6 pods in total.
+
+So, labelng is quite important it help to find and match things in kubernetes clusters.
+
+
+# example of a pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels:
+    app: cat
+spec:
+  containers:
+    name: mycontainer
+    image: nginx
+
+
+# now replicaset file
+apiVersion: apps/v1 # we need to use apps/v1 intead of just v1 for replicaset
+kind: ReplicaSet
+metadata:
+  name: myrs
+  labels:
+    app: rs-app
+
+spec:
+  replicas: 5
+  selector:
+    matchLabels: # find template with this label of which 5 replicas is to make
+      app: cat
+  spec:
+    metadata:
+      name: rs-pods
+      labels:
+        app: cat
+    spec:
+      containers:
+      - name: rs-containers
+        image: nginx
+
+
+
+# now above replicase set will make 4 pods, because one pod with same label in matchlabels argument already exist.
+# when replicaset make pods, it first look in cluster how many pods with label define in matchLabels arguments exist in the cluster and then it creates.
+In above case one pod with label define in matchLabels parameter already exist in cluster so replicase will create only 4 more pods as one already exist.
+
+If you change the label of pod or replicaset in that case when it looks in cluster, it wont fine any matching label pod already existing so it will make 5 pods.
+
+        

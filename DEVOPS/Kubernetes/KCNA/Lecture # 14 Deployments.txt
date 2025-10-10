@@ -1,0 +1,30 @@
+Replicasets are managed by deployment
+
+When we make changes in a pod, that pod is not update. Deployment makes a new pod according to the new updates. 
+So, versioning is done.
+You can rollback to any version at any time.
+
+
+Usecases of Deployments:
+1) rolling updates and rollbacks:
+deployments allow the update of application in a controlled manner without downtime
+
+we can specify a new version of our application and the deployment will update the pods gradually.
+
+2) High Availability:
+it will maintain multiple replicas (pods) of our application.
+This ensures high availability and they can be exposed through a service for load balancing.
+
+3) Auto Scaling on load:
+scaling is of two types horizontal and vertical.
+In horizontal scaling, clusters, nodes, pods are created so infrastructure grows horizontally.
+In vertical scaling, suppose a pod has a container with 2 gb space, it increases to 20gb so this particular container has grown which called vertical scaling
+
+
+4) Aplication scaling and decentralization:
+Modular applications wants to run different components of the application as a separate microservices.
+
+5) Blue/Green Deployment & A/B testing
+we can easily achieve Blue/Green Deployment with deployments.
+We have 2 sets of pods, one is running on older version and the second one is for testing running on the newer version.
+

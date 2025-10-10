@@ -1,0 +1,51 @@
+Practical Part
+Go the directory where selenium grid jar is present the one you downloaded from selenium grid
+
+# command to start hub
+java -jar selenium-server-4.6.0.jar hub
+
+selenium grid file: selenium-server-4.6.0.jar
+
+# fous on the output of above command, 
+16:22:28.125 INFO [LoggingOptions.configureLogEncoding] - Using the system default encoding
+16:22:28.141 INFO [OpenTelemetryTracer.createTracer] - Using OpenTelemetry for tracing
+16:22:28.550 INFO [BoundZmqEventBus.<init>] - XPUB binding to [binding to tcp://*:4442, advertising as tcp://192.168.56.1:4442], XSUB binding to [binding to tcp://*:4443, advertising as tcp://192.168.56.1:4443]
+16:22:28.638 INFO [UnboundZmqEventBus.<init>] - Connecting to tcp://192.168.56.1:4442 and tcp://192.168.56.1:4443
+16:22:28.680 INFO [UnboundZmqEventBus.<init>] - Sockets created
+16:22:29.690 INFO [UnboundZmqEventBus.<init>] - Event bus ready
+16:22:30.933 INFO [Hub.execute] - Started Selenium Hub 4.27.0 (revision d6e718d): http://192.168.56.1:4444
+
+
+HUB MACHINE: http://192.168.56.1:4444   if you run this in your browser you will see the selenium grid is insalled and now you can register nodes
+
+
+
+# how to register node
+run the following command on the node machine mentioning the XPUB binding and XSUB binding
+java -jar selenium-server-4.6.0.jar node --publish-events tcp://192.168.56.1:4442 --subscribe-events tcp://192.168.56.1:4443
+
+
+after running above command you will see output and look for ip address of node
+http://192.168.56.1:5555
+
+
+
+My hub and node machine is same, if you have hub and node on different machines then you need to do following things in node machine
+1. You need to download and upload selenium-server-4.6.0.jar file at your node location
+2. You need to download and stored drivers in same location
+3. you need to copy your python selenium project to your node machine
+4. You need to install python package and python at node machine via bulk command
+
+
+# how to install all packages of python of you hub machine into node machine
+# run following command in hub machine
+pip freeze > libraries.txt
+
+# now copy this file in node machine in directry where selenium grid and other things ar epresent
+pip install -r libraries.txt
+
+above command will install all the libraries mentioned in libraries.txt file
+
+
+# now your hub and node is established now you can run python scripts by mentioning the hub path and resources to use (broswer)
+consult the experiment.ipynb notebook to see practical

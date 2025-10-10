@@ -1,0 +1,297 @@
+Marker :-
+
+
+import pytest
+
+
+def test_login():
+print("My Pytest login1...")
+print("We are open dev.alanfi.com")
+print("Mylogin1")
+
+def test_task():
+print("My Task")
+print("TASK :::::::")
+
+def test_data():
+print("My Data")
+print("Data ::::::::::::")
+
+RUN:-
+python -m pytest .\test_abd.py  -s -v -k  "login"  
+python -m pytest .\test_abd.py  -s -v -k  "not login"  
+python -m pytest .\test_abd.py  -s -v -k  "task"  
+python -m pytest .\test_abd.py  -s -v -k  "data"  
+
+#################
+
+import pytest
+
+@pytest.mark.mylogin
+def test_login():
+print("My Pytest login1...")
+print("We are open dev.alanfi.com")
+print("Mylogin1")
+
+
+@pytest.mark.data
+def test_task():
+print("My Task")
+print("TASK :::::::")
+
+@pytest.mark.data
+def test_data():
+print("My Data")
+print("Data ::::::::::::")
+
+RUN :-
+python -m pytest .\test_abd.py  -s -v -m data
+
+
+python -m pytest .\test_abd.py  -s -v -m "not data"
+
+CODE :import pytest
+
+@pytest.mark.phase1
+def test_login():
+print("My Pytest login1...")
+print("We are open dev.alanfi.com")
+print("Mylogin1")
+
+
+@pytest.mark.phase2
+def test_task():
+print("My Task")
+print("TASK :::::::")
+
+@pytest.mark.phase2
+def test_data():
+print("My Data")
+print("Data ::::::::::::")
+
+
+
+
+
+
+LINK :https://docs.pytest.org/en/stable/how-to/mark.html
+
+How to register your market in your test:-
+
+
+first you need to create pytest.ini
+
+pytest.ini :-
+[pytest]
+markers =
+phase1
+phase2
+
+
+
+CODE :-
+import pytest
+
+@pytest.mark.phase1
+def test_login():
+print("My Pytest login1...")
+print("We are open dev.alanfi.com")
+print("Mylogin1")
+
+
+@pytest.mark.phase2
+def test_task():
+print("My Task")
+print("TASK :::::::")
+
+@pytest.mark.phase2
+def test_data():
+print("My Data")
+print("Data ::::::::::::")
+
+
+
+RUN :-
+python -m pytest .\test_abd.py  -s -v -m "phase2"
+Now you will not received any warning in output section
+
+
+
+
+Skip test :-
+
+import pytest
+
+@pytest.mark.phase1
+def test_login():
+print("My Pytest login1...")
+print("We are open dev.alanfi.com")
+print("Mylogin1")
+
+
+@pytest.mark.phase2
+def test_task():
+print("My Task")
+print("TASK :::::::")
+
+@pytest.mark.phase2
+def test_data():
+print("My Data")
+print("Data ::::::::::::")
+
+@pytest.mark.skip
+def test_data2():
+print("Data 2:::::")
+print("Abdeali")
+
+
+
+
+
+################################
+paremeterize test :-
+import pytest
+def test_login():
+print("My pytest login")
+print("Login..........")
+
+
+
+
+
+Arguments :-
+import pytest
+
+@pytest.mark.parametrize("username,password",[('abdeali@gmail.com','abd@123')])
+def test_login(username,password):
+print("My pytest login")
+print("Login..........")
+print(username, " and ", password)
+
+
+
+Two data pass :-
+import pytest
+
+@pytest.mark.parametrize("username,password",[('abdeali@gmail.com','abdeali@123'),('ali@gmail.com','ali@123')])
+def test_login(username,password):
+print("My pytest login")
+print("Login..........")
+print(username, " and ", password)
+
+
+
+
+
+###############
+Now we will create paremerize function to call data from function
+
+import pytest
+
+def my_cred():
+return [
+('abdeali@gmail.com', 'abdeali@123'),
+('ali@gmail.com', 'ali@123'),
+('abd@gmail.com', 'abd@123')
+]
+@pytest.mark.parametrize("username,password",my_cred())
+def test_login(username,password):
+print("My pytest login")
+print("Login..........")
+print(username, " and ", password)
+
+
+
+Output :-
+
+will 3 data
+
+
+
+
+################################
+
+import pytest
+def test_verify_title():
+expected_title= "Education Benefits All | Al Nafi"
+actual_title = "Al Nafi"
+
+if actual_title == expected_title:
+print("My test cases is passed ")
+else:
+print("my test cases is failed ")
+
+
+NOTE : if you comments out from your selection code then you need to press CTRL + /
+
+
+Failur :-
+
+import pytest
+def test_verify_title():
+expected_title= "Education Benefits All | Al Nafi"
+actual_title = "Al Nafi"
+
+# if actual_title == expected_title:
+#     print("My test cases is passed ")
+# else:
+#     print("my test cases is failed ")
+assert actual_title == expected_title
+
+
+CODE :-
+import pytest
+def test_verify_title():
+expected_title= "Education Benefits All | Al Nafi"
+actual_title = "Al Nafi"
+
+# if actual_title == expected_title:
+#     print("My test cases is passed ")
+# else:
+#     print("my test cases is failed ")
+assert actual_title == expected_title ,"My matched are not as expected "
+
+
+
+######################
+import pytest
+def test_verify_title():
+expected_title= "Education Benefits All | Al Nafi"
+actual_title = "Al Nafi"
+
+# if actual_title == expected_title:
+#     print("My test cases is passed ")
+# else:
+#     print("my test cases is failed ")
+assert actual_title in expected_title, "Alnafi not found in our expected title "
+
+
+
+CODE :
+import pytest
+def test_verify_title():
+expected_title= "Education Benefits All | Al Nafi"
+actual_title = "Abdeali"
+
+# if actual_title == expected_title:
+#     print("My test cases is passed ")
+# else:
+#     print("my test cases is failed ")
+assert actual_title in expected_title, "Alnafi not found in our expected title "
+
+
+################################
+CODE :-
+import pytest
+def test_verify_title():
+expected_title= "Education Benefits All | Al Nafi"
+actual_title = "Abdeali"
+
+# if actual_title == expected_title:
+#     print("My test cases is passed ")
+# else:
+#     print("my test cases is failed ")
+assert False , "We are forcing failed"
+
+
+#########################

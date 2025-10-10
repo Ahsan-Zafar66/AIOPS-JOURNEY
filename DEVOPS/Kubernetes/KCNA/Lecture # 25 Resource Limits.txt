@@ -1,0 +1,17 @@
+Resource Limits:
+Resource limits in k8s allow you to set boundaries on how much CPU and memory a container can use.
+
+Purpose:
+Ensure fair usage of resources in a multi-container environment
+
+prevent a single container from consuming all avaible resources and affecting others
+
+Setting limits:
+CPU limit: Specifies a maximum amount of CPU a container can use
+
+memory limitL Specifies maximum amount of memory a container can use
+
+Effect of Limits:
+CPU: if a container exceeds its CPU limits, its gets throttled. It tries to increase cpu and performance is slow
+If a container exceeds it memory limit, it may be termnated or face performance degradation
+

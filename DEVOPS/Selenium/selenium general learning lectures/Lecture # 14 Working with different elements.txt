@@ -1,0 +1,44 @@
+In this lecture we discussed how to use dropdown menus on website
+
+the best practice is to use with select module.
+
+When there are different languages to select in dropdown the best practice is to capture a langage by value not by visibl text.
+
+Do not select values in dropdown directly by finding element and sending key, it is not a best practice
+
+
+The best practice is to use select because dropdown menu in it;s coding use select.
+
+
+
+# For example we have wikipedia and it is avaiable in different languages
+
+import time
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+# importing the select from selenium support
+from selenium.webdriver.support.select import Select
+from webdriver_manager.firefox import GeckoDriverManager
+
+
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+
+driver.get("https://www.wikipedia.org/")
+driver.maximize_window()
+
+# i am finding the dropdown menu of languages and using it's ID as its locator
+my_select = driver.find_element(By.ID,"searchLanguage")
+
+# putting the selected item in select which handles dropdown menus
+sel = Select(my_select)
+
+# now as i wanted to select a language I am using by values which is a good practice, not by visible text which is not a good practice with languages because language appear differently and it causes confusion
+sel.select_by_value('ja')
+
+
+time.sleep(10)
+driver.quit()
+
+

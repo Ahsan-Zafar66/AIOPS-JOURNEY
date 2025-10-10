@@ -1,0 +1,30 @@
+Docker linking is connecting docker containers
+
+In advance version of docker, docker linking is not recommended
+because earlier custom networking was not available, now it is available so no need for linking of containers.
+
+Some companies still using docker linking so you must know it what it is
+
+
+
+
+
+-P --> expose all host port and randomly bind the host port with the container port
+
+docker run -d -P training/webapp python app.py
+
+training/webapp --> docker image to download
+python app.py --> command to run while running container
+
+# the following command is using -p 8000-9000, it means use any available port in this range to bind host with container port
+docker run -d -p 8000-9000:5000 training/webapp python app.py
+
+
+# in the following command we have used loopback 127.0.0.1, now the app is only accesible on host system no one can access app from outside unlike in above case where anyone can access the app
+# app is bing with host only
+docker run -d -p 127.0.0.1:8001:5001 training/webapp python app.py
+
+# use any port randomly
+docker run -d -p 127.0.0.1::5000 training/webapp python app.py
+
+

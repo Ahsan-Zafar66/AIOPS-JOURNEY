@@ -1,0 +1,303 @@
+NOTE: RUN command executes the commands written in it at the time of image creation and when containe ris run they are not executed
+
+CMD command execute the commands at the time of container creation not at the time of image creation 
+
+RUN --> it is used to execute linux commands or the OS chosed in Dockerfile
+
+# for example installing git in ubuntu
+apt-get install git
+
+# to run the above command in a docker file you just need to add RUN
+RUN apt-get install git
+
+
+# another example of running a python file in linux
+python script.py
+
+# above command in docker file will be
+RUN python script.py
+
+RUN --> It just execute linux command --> Installation (apt,yum,dnf)
+
+For installation can you use any other command than RUN?
+NO
+
+ethod:1
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install httpd curl git update -y
+
+Method 2:
+RUN apt-get update && RUN apt-get install -y curl && RUN apt-get install -y git --> Intermeidate laayer only one
+RUN apt-get install git && apt-get install httpd && apt-get install curl
+
+Both command output are same.
+
+
+
+ENV: ENV command use for defining variable and also we can override the value using -e
+
+vim Dockerfile
+
+FROM alpine:latest
+ENV NAME="Ahsan Zafar"
+CMD echo $NAME
+
+it will print ahsan when containe ris run from image created from above file
+
+FROM alpine:latest
+ENV NAME="Ahsan Zafar"
+CMD ["echo", "$NAME"]
+
+above command will print $NAME not Ahsan Zafar, because above coomand is in square brackets and commands in square brackets are not run in shell
+
+
+restart:
+if you use restart with a service, when you exit from it it will run again.
+If you don't use restart keyword with a service, then once you exit it, it will be exited will not run until you run it again
+
+# example without using restart
+docker run --name mynginx -p 8090:80 nginx
+
+# example with restart
+docker run --name myginx2 -p 8090:90 --restart always nginx
+
+
+# restart with a failure limit. If the command is unable to start service after 3 consecutive failures than stop the command do not try more
+docker run --name testing3 -p 8090:80 --restart=on-failure:3 nginx
+
+
+CMD and ENTRYPOINT:
+CMD can be overriden in shell but ENTRYPOINT CAN't BE
+
+vim Dockerfile
+FROM alpine
+CMD ["sleep","5"]
+
+docker run test sleep 10 --> if you have used CMD in Docker file this command will work
+
+BUT, if you have used ENTRYPOINT it will not run, for example
+vim Dockerfile
+FROM alpine
+ENTRYPOINT ["sleep","5"]
+
+docker run test sleep 10 --> WILL NOT RUN GIVE ERROR
+
+YOU CAN USE CMD AND ENTRYPOINT COMBINE
+vim Dockerfile
+FROM alpine
+ENTRYPOINT ["sleep"]
+CMD ["5"] 
+
+
+Entrypoint and CMD can work together.
+
+ARG :
+FROM alpine
+ARG var_name
+ARG var_name=def_value
+RUN echo $(var_name)
+ENV foo=other
+ENV bar=$(var_name)
+
+
+docker build -t arg:v2 .
+
+docker run -it --name myarg arg:v2
+
+
+--> CMD :-
+--> ENTRYPOINT
+
+
+FROM busybox
+CMD sleep 5
+
+CMD ["sleep","5"]
+
+docker build -t cmd:v1 .
+docker run --rm --name test6 cmd:v1
+docker run --rm --name test6 cmd:v1 sleep 10
+docker run --rm --name test6 cmd:v1 top
+
+
+
+FROM busybox
+#CMD sleep 5
+CMD ["sleep","5"]
+
+
+
+ENTRYPOINT
+FROM busybox
+#CMD sleep 5
+#CMD ["sleep","5"]
+ENTRYPOINT ["sleep"]
+
+
+docker run --rm --name test6 cmd:v3 top
+
+
+
+
+
+
+
+
+
+
+
+
+
+Explaination of ARG, CMD, ENV, EntryPoint
+
+1. ARG (Build-time Arguments)
+Purpose: ARG allows you to define variables that users can pass at build-time to customize the build process.
+Scope: It is only available during the build stage of the Dockerfile, meaning it won't exist in the final image or containers started from the image.
+Example:
+Dockerfile
+Copy code
+ARG version=1.0
+FROM ubuntu:$version
+Here, version is a build-time argument. When building the Docker image, you can pass a different version like this:
+
+bash
+Copy code
+docker build --build-arg version=20.04 -t my-ubuntu-image .
+Important Notes:
+
+ARG can be used to set the base image version or toggle debug options during the build.
+It does not persist beyond the image build and cannot be accessed by containers.
+2. ENV (Environment Variables)
+Purpose: ENV sets environment variables that will be available at runtime when the container is running. It persists through the container lifecycle.
+Scope: It can be used by both the build process and the final container.
+Example:
+Dockerfile
+Copy code
+FROM node:14
+ENV NODE_ENV=production
+ENV PORT=3000
+EXPOSE $PORT
+CMD ["npm", "start"]
+The environment variable NODE_ENV is set to production, which can influence how the application behaves (e.g., less logging for production environments).
+
+You can override an environment variable at runtime using the docker run command:
+
+bash
+Copy code
+docker run -e NODE_ENV=development -p 3000:3000 my-node-app
+Important Notes:
+
+You can use environment variables in combination with CMD or ENTRYPOINT.
+It's a good practice to set defaults with ENV in Dockerfiles for consistent runtime behavior.
+3. CMD (Default Command)
+Purpose: CMD defines the default command that will run when a container is started. It acts as an entry point for the container but can be overridden at runtime.
+Scope: It provides the default executable or command for the container when no specific command is provided at docker run.
+Example:
+Dockerfile
+Copy code
+FROM ubuntu
+CMD ["echo", "Hello, Docker!"]
+If you build this Dockerfile and run the container:
+
+bash
+Copy code
+docker build -t hello-image .
+docker run hello-image
+It will output Hello, Docker!.
+
+Important Notes:
+
+CMD is usually overridden by a command passed during docker run. For example:
+bash
+Copy code
+docker run hello-image echo "This is overridden"
+If both CMD and ENTRYPOINT are present, CMD provides the default arguments for ENTRYPOINT.
+There can be only one CMD in a Dockerfile, and the last CMD takes effect.
+4. ENTRYPOINT (Container Entry Command)
+Purpose: ENTRYPOINT specifies a command that always runs when the container starts. It is used to define the main application or service the container is meant to run.
+Scope: Unlike CMD, ENTRYPOINT cannot be easily overridden with additional commands, but it can accept additional arguments passed via the docker run command.
+Example:
+Dockerfile
+Copy code
+FROM ubuntu
+ENTRYPOINT ["echo", "This will always run"]
+When you build and run the container:
+
+bash
+Copy code
+docker build -t my-echo-image .
+docker run my-echo-image
+It will output This will always run.
+
+To pass additional arguments:
+
+bash
+Copy code
+docker run my-echo-image "and this is appended"
+Output: This will always run and this is appended.
+
+CMD with ENTRYPOINT Example:
+Dockerfile
+Copy code
+FROM ubuntu
+ENTRYPOINT ["echo"]
+CMD ["Hello, Docker!"]
+When you run this container:
+
+bash
+Copy code
+docker run my-image
+Output: Hello, Docker!.
+
+If you pass an argument:
+
+bash
+Copy code
+docker run my-image "This is overridden"
+Output: This is overridden.
+
+Important Notes:
+
+ENTRYPOINT is often used for containers that are designed to act as single applications (e.g., a web server).
+You can combine ENTRYPOINT and CMD to provide flexibility (e.g., ENTRYPOINT defines the base command and CMD provides default arguments).
+If you want to override both the ENTRYPOINT and CMD commands, use the --entrypoint flag:
+bash
+Copy code
+docker run --entrypoint /bin/bash my-image
+Professional Use as a DevOps Engineer:
+As a DevOps engineer, you will frequently need to make decisions about how to structure Dockerfiles for both development and production environments. Here's what you should know about these commands in a professional context:
+
+ARG:
+
+Useful for parameterizing Docker builds. For example, when building Docker images across multiple environments (e.g., DEV, STAGING, PROD), you might pass different values to ARG to create environment-specific builds.
+Always think about secrets management; never pass sensitive data (e.g., API keys) via ARG.
+ENV:
+
+Set environment variables to configure applications. For instance, when deploying a Node.js app, you can set NODE_ENV to production.
+Use environment variables to pass database URLs, API endpoints, or feature toggles. You can override them dynamically at runtime.
+Follow best practices by keeping environment-specific settings outside your Dockerfile when necessary, and pass them at runtime.
+CMD:
+
+Typically used to set default commands for running applications.
+Ensure that CMD complements ENTRYPOINT. For example, if ENTRYPOINT defines a shell script, CMD can pass in default arguments to the script.
+ENTRYPOINT:
+
+When your container should always run a specific application (e.g., NGINX, a Python script, etc.), use ENTRYPOINT to make it non-optional.
+Ensure that your ENTRYPOINT is resilient to different arguments or flags being passed at runtime.
+Multistage Builds:
+
+Use multistage builds to ensure you keep development dependencies separate from production dependencies, resulting in smaller, optimized images.
+Example:
+ENV might configure production-specific variables in one stage and development variables in another stage.
+Conclusion:
+A well-structured Dockerfile ensures efficient containerized applications. As a DevOps engineer, mastering ARG, ENV, CMD, and ENTRYPOINT allows you to build flexible, efficient, and environment-specific Docker images. The right combination of these instructions is crucial for achieving seamless containerization across different environments.
+
+
+
+
+
+
+
+
+

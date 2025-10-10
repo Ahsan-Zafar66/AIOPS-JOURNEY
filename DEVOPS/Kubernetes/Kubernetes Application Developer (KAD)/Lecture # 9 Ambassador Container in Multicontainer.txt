@@ -1,0 +1,38 @@
+# create a yml file for creating ambassador container
+vim ambassador-container.yml
+
+
+# content of file
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: ambassador-pod
+  labels:
+    app: server
+spec:
+  containers:
+    name: nginx-server
+    image: nginx:stable
+    ports:
+    - containerPort: 80
+
+# defining mabassador service
+-------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: ambassador-service
+spec:
+  selector:
+    app: server # mentioning the server through label
+    ports:
+      protocol: TCP
+      port: 8081
+      targetPort: 80
+
+
+
+above file is for ambassador container. 
+we are creating a container with nginx image and using port 80 to use the nginx service.
+Then we are creating an ambassador service where we are changing the port from 80 to 8081.

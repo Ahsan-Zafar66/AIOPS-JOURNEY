@@ -1,0 +1,8 @@
+Variables that are important to run pods, containers and should be passed.
+
+We pass environment variable like this in pods
+env:
+- name: APP_COLOR  # name of environment variable
+  value: blue # value of environment variable
+
+these variables are crucial and they are must to define while creating pods or containers

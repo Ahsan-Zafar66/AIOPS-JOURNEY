@@ -1,0 +1,153 @@
+AWK command is used for data manipulation, Searching, task run, action, data generating report.
+
+It is same as cut command but more advanced.
+
+
+In awk commands:
+NR means number of records which means rows, it deal with rows
+NF means number of fields, which means columns, it deal with columns
+
+
+
+syntax of awk command
+
+cat filename | awk option {action}
+
+
+cat ahsan.txt | awk '{print ahsan}' --> it will print ahsan accoring to the number of lines present in the file, like 10 lines so ahsan will be written 10 times.
+
+
+cat ahsan.txt | awk {print $2} --> it will print second colomn of file
+
+cat ahsan.txt | awk '{print $1,$2}' --> it will print first and second colomn of file
+
+cat ahsan.txt | awk '{print NR}' --> number of record in a file
+
+cat ahsan.txt | awk '{print NR $1}' ---> will show index o and first column
+
+cat ahsan.txt | awk '{print NR --> $1}' --> it will show index than --> and than column 1
+
+cat ahsan.txt | awk '{print NR $0}' --> All records of the file.
+
+
+cat ahsan.txt | awk '{print NR "-->" $0 NF}' --> NF shows the values number in each row at the end.
+
+cat ahsan.txt | awk '{print NR "-->" $0 $NF}' --> $NF shows the value at the last of row not number but value that comes at last
+
+cat ahsan.txt | awk '{print $NR "-->" $0}' --> it will now show value at the index equal to the row, if index 3 of a row than the value of 3rd column in that row will be shown at place of index
+
+cat ahsan.txt | awk 'NR==1' --> it will print the first line
+
+cat ahsan.txt | awk 'NR==1 {print $2}' --> it will print the first line and then second column value
+
+cat /etc/passwd | awk -F ':' '{print $1,$2,$3}' --> -F when your file has special delimiter, by default it takes space but in this case delimiter is :. It will show three column values
+
+cat etc.passwd | awk -F ':' 'NR==1 {print $1,$2,$}' --> showing first line three columns of a file having : as delimiter
+
+cat ahsan.txt | awk -F ':' '/ahsan/ {print $2}' --> Show second column in the file but only show ahsan 
+
+===========================
+
+AWK Scripting Language
+
+Syntax
+
+filename | awk 'Begin {start_action} condition {action} END {stop_action}'
+
+
+date | awk 'OFS=":" {print $1,$2,$3}' ---> OFS means output field separator the output wil have : as a separator now.
+
+==============
+
+vim simple.awk ---> file
+
+BEGIN {
+	print "Hey I am ahsan"
+}
+
+awk -f simple.awk ----> now it will show Hey I am ahsan
+
+to run the file with ./simple.awk command do the following things
+
+chmod +x simple.awk --> give executable permission to file
+
+vim simple.awk --> edit the file
+
+#!/usr/bin/awk -f ------> add the shebang line -f refers to a file
+
+./simple.awk --> now run the file.
+
+
+-----------------
+
+cat /etc/passwd | awk -F ":" '$3>= {print $1 " --> " $3}' ---> it will first take colon (:) as a delimiter for file and $3 contain userid so greater than 1000 means a user so I applied that condition which bash will automatically understand.
+
+cat /etc/passwd | awk -F ":" '$3>= {print $1 " --> " $3}' > myusers.txt --> saving the output of command in a file.
+
+# in awk scripting you can directly call variables no need of using $ sign
+awk 'BEGIN {ali=100; print ali}' --> ; is used becuase ali=100 and print ali are both separate statements, either you write them separately or separate them using ;. awk does not require $ sign for calling variable within BEGIN statement
+
+
+awk -v num=100 'BEGIN {print num}' --> -v is used for variable, and as variable is defined with in awk command so no need of using dollar sign $
+
+# as
+n=51
+
+awk -v num=$n 'BEGIN {print num}' --> $ is used to call variable outside of BEGIN statement
+
+
+cat passwd | awk 'BEGIN {print "STARTING BLOCK"} \ahsan\ {print $0} END {print "Ending Block"}' --> this code will first write begin statement, then look for ahsan in the file and will bring lines which contain ahsan, then the ending block statement
+
+
+
+# we can use any separator in -F, rather , ":" or even text. For example
+echo "Ahsan is a good boy" | awk -F is '{print $1}' --> it will print Ahsan and in $2 it will print a good boy, is will be treated as a separator
+
+==========
+adding if condition to awk
+rememeber if condition is written inside the {} where print is written, so that if condition will work for that specific print statement
+
+cat numbers.txt | awk '{if ($1 >= 30) print $1}' ---> it will print numbers of the first column that are greater than or equal to 30
+
+cat numbers.txt | awk '{if ($1 >= 30 && $1 <=40) print $1}' --> now two conditions applied
+
+=============
+
+using a for loop in awk
+# to call variable assigned during for loop, call it outside of double quotation marks ""
+awk 'BEGIN {for (i=1; i<=20; i++) print "The number is" i}' ---> statring from 1, end at 20, i++ operation to carry on i 
+
+using a while loop in awk
+
+# in while loop variable is defined first unlike for loop
+awk 'BEGIN {i=1; while (i<=10) {print "Number is" i++}} --> i starts with 1 and loop will run until the i is less than 10
+
+
+
+
+===============================
+# using tab searator
+ls -ltrh | awk -v OFS='\t' '{print $9,$5}'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

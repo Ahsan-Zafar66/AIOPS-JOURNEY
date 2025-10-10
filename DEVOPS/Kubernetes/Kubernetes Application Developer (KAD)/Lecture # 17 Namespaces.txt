@@ -1,0 +1,326 @@
+What are namspaces:
+Consider Namespace like different homes.
+Suppose we have home1 and home2, both of these homes have their different memebers, different tools and resources and etc.
+
+In kubernetes, namespaces are use to keep things isolate, you can make namesace for development environment and can specify that it can make this number of nodes, can take this much space and etc. 
+Namespace resources are separated or isolated from each other. Pods, services, nodes of different name spaces are isolated.
+The same way you dont know whats is happening in the house next to you, in same way namespace resources like pods, nodes dont know about other namespace pods and nodes.
+So, in this way different namespaces made for different purposes are totally isolated from one another.
+Like production namespace has its own resources than development namespace and they are isolated.
+
+
+In Namespace, we can define or limit resources for that Namespace.
+So, what comes in resources?
+CPU, RAM, Storage
+
+
+In a Namespace, different things like pods, services and other things can directly communicate with each other by calling name.
+If pod of one namespace want to interact with pod of another different namespace, then it needs to mention the namespace as well, mean complete path. It cannot do just by calling name of another pod in another namespace.
+
+Example
+pod1 is present in production namespace
+pod2 is present in development namespace
+service2 is service in development namespace for communication or pod2 with other things
+
+So, now if pod1 want to connect with pod2 which is different namespace it wil do like following
+service2.development.svc.cluster.local
+
+svc.cluster.local --> it is kubernetes DNS
+
+service2 --> it is name of service in development cluster
+development --> it is the namespace name
+
+so, it means go to service2 in namespace development. and we communicate with pods through services if you remmeber
+
+
+# normally when we make pods, deployment 
+kubectl apply -f file.yml  --> this code create pod inside default namespace, as not namespace is mention in terminal or file
+
+# command to make a pod in a namespace called dev
+kubectl create -f file.yml --namespace=dev
+
+# if you dont want to specify namespace in command line you can define it in file inside metadata, namespce: dev
+
+# getting pods of dev namespace
+kubectl get pods --namespace=dev
+
+
+# if you want to make dev namspace your default namespace so you dont need to mention it again and again you can run following code
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+now your dev namespace is default and if you want to check pods of previously default namespace you need to mentione its name now
+# getting pods of previous default namespace
+kubectl get pods --namespace=default
+
+
+# when you will use
+kubectl get pods  -> now you will get pods off dev namespae which is default noww
+
+# getting pods from all namespaces
+kubectl get pods --all-namespace
+
+
+
+NameSpace hands on:
+# getting all namespaces, you can use ns as short form
+kubectl get namespace 
+
+# command to get config commands, it will show you all commands of config
+kubectl config --help
+
+# getting the current context
+kubectl config current-context
+
+# creating a namespace ahsan
+kubectl create namespace ahsan
+
+
+# changing the namespace from default to ahsan
+kubectl config set-context $(kubectl config current-context) --namespace=ahsan
+
+
+# to find all resources pods, nodes, services, deployments and etc in a namespace
+kubectl get all -n kube-node-lease
+
+
+# to get all the resources in kube system
+kubectl get all -n kube-system
+
+
+# command to see all of your clusters
+kubectl config get-clusters
+
+# command to get your contexts
+kubectl config get-contexts
+
+
+Resource Quoat:
+Setting resources for a namespace
+
+# content of resource quoata yml file
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: ahsan
+spec:
+  hard:
+    pods: "2"
+    requests.cpu: "2"
+    requests.memory: 2Gi
+    limits.cpu: "3"
+    limits.memory: 3Gi
+
+
+# above file is creating quote of resources for namespace ahsan, that this namespace can request this number of pods, cpu and memory and defining the limits for cpu and memory that it cannot exceed.
+
+# now whenever we will make a pod in this namespace we need to define how much resources that pod can take, if we dont specify the resources it will give us an error
+
+# pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  namespace: ahsan
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    ports:
+    - containerPort: 80
+    resources:
+      requests:
+        cpu: "1"
+        memory: "1Gi"
+      limits:
+        cpu: "2"
+        memory: "1.5Gi"
+
+
+# in above file we are creating a pod in ahsan namespace, this pod has one container of nginx image running in it, and we have defined the resources for container how much it will request initially and how much maximum it can take.
+
+
+
+
+Communication of pod with another pod in same namespace:
+
+# we will make a pod that has a image which can be used to test if we can interact with another pod 
+
+# vim default.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  namespace: default
+  labels:
+    name: blue
+spec:
+  containers:
+  - name: internal
+    image: kodekloud/webapp-conntest
+    env:
+    - name: APP_NAME
+      value: Blue - Marketing Application
+    - name: BG_COLOR
+      value: blue
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+
+
+# above yml file creates a service which can be used to test connections of a pod with another pod
+
+# creating a service to access the above pod, default-svc.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-service
+spec:
+  type: NodePort
+  selector:
+    name: blue
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+
+NOTE: in above service yml file we included type: NodePort, this is used to access pod through the service externall.
+To access pod externally, know in which node the pod is created
+
+# command to check in which node the pod is created
+kubectl get pods -o wide
+
+# now get ip of node
+kubectl get nodes -o wide
+
+# now get nodeport of service, n
+kubectl get svc
+
+# to access service just use nodeip and nodeport, nodeport is given randomly the one you defined in your file is not nodeport 
+node_ip:node_port
+
+
+# after you have created above service , now lets create  apod in same namespace to test if we can communicate with it directl
+
+# vim db-pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-pod
+  labels:
+    name: ahsan
+spec:
+  containers:
+  - name: reddis-container
+    image: redis:alpine
+    env:
+    - name: REDIS_ROOT_PASSWORD
+      value: paswr
+    ports:
+    - containerPort: 6379
+      protocol: TCP
+
+
+# now lets create  a service to acces above pod
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  type: NodePort
+  selector:
+    name: ahsan
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+
+
+# now go to webpage and use default pod service, it will ask hostname and hostname to see if you can communicate with it
+hostname is service name which is db-service
+hostport is service port which is 6379
+
+enter both things and see if you get success
+
+
+Communication of pod of one namespace with pod of another namespace.
+
+NOTE: you need to use type: NodePort in selector of service, if you want to access pods or make it accesible to outside worl
+you wil combine the ip address of node, in which pod is present with the nodeport.
+you can use ip address of node and nodeport to access the pod or container running in it from outside now.
+
+
+For internal communication of pods with same namespace, you will give the servicename and port specified in service for communication between pods.
+
+
+Pods which are in different namespace:
+
+# first create  as separate namespace 
+kubectl create namespace dev
+
+
+# creating a pod 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dante-pod
+  labels:
+    name: dante
+spec:
+  containers:
+  - name: reddis-container
+    image: redis:alpine
+    env:
+    - name: REDIS_ROOT_PASSWORD
+      value: paswr
+    ports:
+    - containerPort: 6379
+      protocol: TCP
+
+
+
+# now lets create  aservice to access above pod
+apiVersion: v1
+kind: Service
+metadata:
+  name: dante-service
+  namespace: dev
+spec:
+  type: NodePort
+  selector:
+    name: dante
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+    
+
+
+# now you need to enter hostname and port
+hostname will be
+
+# following is the hostname of accessing above pod from pod of another namespace, as default service and pod is in default name space and above service and pod is in dev namespace.
+# So, let's see if using service of a pod in another namespace we can access pod of dev namespace
+
+# hostname will be
+dante-service.dev.svc.cluster.loca
+
+# hostport will be
+6379
+
+
+
+NOTE: we always acess pods through service, so use service name and service port, it will lead you to your pod and its port
+
+
+
+
+
+
+
+
+
+
+

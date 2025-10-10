@@ -1,0 +1,125 @@
+JIRA by Atlassian is a popular tool for project management and issue tracking, widely used in software development and other industries. It helps teams plan, track, and manage their projects and tasks effectively. Here's a breakdown of the basic concepts to help you get started:
+
+1. Project:
+A project in JIRA is a collection of tasks, issues, and goals. It can represent anything you are working on (e.g., a software product, a website redesign, a research project). Projects in JIRA can have different types:
+
+Software projects: For managing software development tasks, including bugs and new features.
+Business projects: For general project management (non-software).
+Service projects: For managing customer service or support issues.
+Each project has its own settings, workflow, and can contain multiple boards.
+
+2. Issue:
+An issue is a fundamental unit of work in JIRA. It can represent a task, bug, feature request, improvement, or any action that needs to be done.
+
+Issues are tracked within a project and have details like title, description, priority, status, and assignee.
+Issues can have different types such as Task, Bug, Story (a user feature), or Epic (a large body of work that can be broken into smaller stories).
+3. Board:
+A board in JIRA is a visual tool used to organize and display issues in a project. It allows teams to manage their tasks visually and track the progress of issues.
+
+Kanban board: Useful for managing continuous workflows. It shows tasks as cards moving through columns (e.g., To Do, In Progress, Done).
+Scrum board: Used for managing sprints (time-boxed work periods). It helps teams work in iterative cycles, usually following agile methodology.
+4. Ticket:
+A ticket is another name for an issue in JIRA. It refers to any task, bug, or request that is being tracked. Each ticket has a unique identifier (e.g., PROJ-123) and contains details such as:
+
+Summary: A short description of the issue.
+Description: A detailed explanation.
+Priority: Defines how critical the issue is (e.g., Low, Medium, High).
+Assignee: The person responsible for resolving the issue.
+Status: The current stage of the issue (e.g., Open, In Progress, Closed).
+5. Log Time:
+In JIRA, users can log time against issues to track the amount of work they've done. This feature is particularly useful for managing deadlines and resource allocation.
+
+You can log how many hours or minutes you've worked on an issue, and the total time spent will be tracked in the issue's details.
+This helps teams understand how long tasks take and improve future planning.
+6. Workflow:
+A workflow defines the steps or stages that an issue moves through in its lifecycle. For example, a bug might go from "Open" to "In Progress" to "Resolved" to "Closed."
+
+Workflows are customizable and can vary based on the project's needs. Some workflows may have more steps, while others have fewer.
+Each issue moves through these workflow steps as the team works on them.
+7. Backlog:
+The backlog is a list of all the tasks, features, and bugs that need to be done, but haven't been started yet. It’s a way to prioritize and organize upcoming work. Typically, in Scrum projects, the team pulls issues from the backlog into a sprint to work on them.
+
+8. Sprint (for Scrum boards):
+A sprint is a time-boxed period (usually 2-4 weeks) during which a team works on specific tasks or issues from the backlog. The sprint starts with planning and ends with a review of what was completed.
+
+9. Components and Labels:
+Components: Subsections of a project that help you group issues based on specific areas (e.g., frontend, backend). They help organize work in larger projects.
+Labels: Tags you can attach to issues to categorize them. Labels are flexible and allow for filtering issues based on keywords.
+10. Reporting:
+JIRA provides various reporting tools, including:
+
+Burn-down charts (for tracking progress in sprints).
+Velocity charts (to measure the amount of work completed in a sprint).
+Issue reports that provide detailed insights into how issues are being handled and resolved.
+How Things Work in JIRA:
+Creating a Project: Projects are created to track work. Each project has boards (Kanban, Scrum) that help visualize tasks.
+Adding Issues: You create issues (tickets) within a project. Each issue has details like assignee, priority, and status. The team works on these issues.
+Tracking Progress: Using boards, you can see the status of each issue as it moves through different stages of the workflow. For example, a Kanban board will show issues moving from "To Do" to "In Progress" to "Done."
+Logging Work: Team members log time spent on each issue, which helps in tracking progress and time allocation.
+Managing Backlogs and Sprints: For agile teams using Scrum, work is planned in sprints, and issues are pulled from the backlog into the sprint for focused work during that period.
+Practical Tips:
+Explore your JIRA dashboard to familiarize yourself with your projects, boards, and reports.
+Learn how to filter and search for specific issues using JQL (JIRA Query Language).
+Try using both Kanban and Scrum boards to understand which fits your workflow better.
+Use notifications to stay updated on issues assigned to you or issues you’re watching.
+With these basics, you'll be able to get started and navigate JIRA more confidently. Let me know if you'd like more details or examples!
+
+
+
+
+
+
+
+
+
+
+
+
+In JIRA, issue links are used to create relationships between different issues (tickets) within a project or across projects. Linking issues helps teams understand how different tasks, bugs, or features are related, allowing for better tracking and collaboration.
+
+Types of Links in JIRA:
+Blocks/Blocked by:
+
+Blocks: Indicates that the issue blocks the progress of another issue.
+Blocked by: Shows that the issue cannot proceed because it's blocked by another issue.
+Example: If Issue A depends on Issue B being resolved first, then you would link Issue A as "Blocked by" Issue B.
+
+Relates to:
+
+This is a general link used when two issues are related, but there’s no strict dependency between them. It's useful for indicating a loose connection between issues.
+Example: Two features that are part of the same functionality but can be worked on separately.
+
+Duplicates/Duplicate of:
+
+Duplicates: Marks the current issue as a duplicate of another issue.
+Duplicate of: Indicates that another issue has been identified as a duplicate of the current issue.
+Example: If two users report the same bug, you can link one issue as a duplicate of the other to avoid duplicate work.
+
+Clones/Cloned by:
+
+Clones: Creates a copy (clone) of an issue. This is useful when the same task needs to be repeated or re-done in a different context.
+Cloned by: Shows that the issue was cloned by another issue.
+Example: If a bug occurs in multiple versions of software, you might clone the issue to track it separately for each version.
+
+Causes/Caused by:
+
+Causes: Suggests that the issue has caused another issue to occur.
+Caused by: Indicates that the current issue was caused by another issue.
+Example: A code change (Issue A) might cause a new bug (Issue B). You can link Issue A as the cause of Issue B.
+
+Benefits of Issue Links in JIRA:
+Traceability: You can track how issues are connected and their dependencies, helping the team resolve issues in the right order.
+Dependency Management: For issues that block others, linking helps ensure blocked work is identified and prioritized accordingly.
+Organized Workflows: By relating or linking issues, you can see the bigger picture of how tasks fit together in the project, reducing confusion or duplicate work.
+Clear Communication: Linking issues communicates to all team members the relationship between tasks, such as whether one task needs to be completed before another can start.
+How to Link Issues in JIRA:
+Open an issue that you want to link.
+Look for the "More" dropdown menu or the "Link" button (this may vary depending on your JIRA setup).
+Click "Link", then select the type of relationship (e.g., "Blocks," "Relates to," etc.).
+Search for or enter the issue key of the issue you want to link.
+Click "Link" to establish the connection.
+After linking, you'll see the related issue displayed on the issue screen under the "Issue Links" section.
+
+Example:
+Issue "FEAT-101: Create login page" is blocked by Issue "API-202: Create authentication API", meaning that the login page design cannot proceed until the authentication API is completed. By linking the issues, the team can track the dependency and work in the correct order.
+Issue linking in JIRA helps teams coordinate better, especially when handling complex projects with multiple related tasks or issues.

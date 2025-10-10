@@ -1,0 +1,45 @@
+1. Web Based application --> Selenium framework , QTP and UFT tools (90% market using selenium Google, Facebook , adobe )
+
+2. Desktop based application   --> QTP support desktop  and VB script
+
+
+3. Database application --> Python SQL , hadoop
+
+4. Mobile application --> calabash, Appium
+
+
+5. Webservices (REST/SOAP API) --> Postman , Soap UI
+
+1. Web Based application-->
+
+Selenium --> it will support every --> IE, Chrome , Safari , Opera , Firefox , edge , etc
+
+Selenium also work with diffrent languages -->
+Python
+Java
+JS
+C#,
+ruby
+
+
+
+
+1. IDE --> Similar like pycharm --> not use wide env
+
+2. Web-Driver --> Automate you web browser , its also use now a days
+
+3. Grid --> its combine with webdrive and grid , you can access multiple browser at same time
+
+
+4. RC --> RC is deprecated
+
+
+Versioning :-
+Selenium 1.0  --> IDE + RC version
+
+Selenium 2.0  --> Webdriver and RC
+
+Selenium 3.0  --> Webdriver but its adding some features
+
+
+Selenium 4.0(Latest) --> its announce at 2019 Bangalore by simon stewart

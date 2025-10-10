@@ -1,0 +1,99 @@
+1. IT company --> Development --> Code developed
+2. Code Developed --> Containerization (Dockerization , Kubenetes)
+3. Scratch application run --> locally --> Package/Port/open install
+4. Dockerfile create your own --> That's why there are hire you
+5. Docker image --> Policy need to apply --> Register every company --> DockerHUB --> private
+6. Docker image pull --> like run the container
+7. Application port change --> container/Host port --> ENV , variable then you need to run docker
+8.  Docker data persistent --> Permanent data saved into your shared or local drive
+a. Docker Volume
+b. BInd mount
+c. tmpfs
+
+we can create volume for persistant storage while creating a container from an image. we need to use -v storage_name in the command to create a volume.
+
+#docker run -it --name container1 -v /my_storage alpine /bin/sh
+the volume created by above command will be inside container not the base os machine.
+
+when you create a volume in a container that container data is stored also in the base os , so that when container is exited next time you run it its data is as it is
+
+so /mystorage is created in container
+
+# checking where the files of this /mystorage is stored in base os we can use inspect command
+docker inspect container1
+
+# now look for /mystorage in the results of above command, you will find source directly above on my storage.
+In that source will be the path where the file created in /mystorage is stored in base os
+
+path wil be like following
+source path is docker area
+source :  /var/lib/docker/volumes/3366c1fe14ec42ba976237f222eb5e193bb1833f7f88b0b2bbf4968a289a7649/_data
+the id refers to container1 :3366c1fe14ec42ba976237f222eb5e193bb1833f7f88b0b2bbf4968a289a7649
+
+the above id is mapped with /mystorage
+Default docker path : /var/lib/docker
+
+
+How to remove a volume?
+
+Step # 1
+Stop the container
+
+Step # 2
+Remove the container
+docker remove container_id
+
+step # 3
+now, remve the volume
+
+docker volume rm volume_id
+
+
+
+
+
+Bind Mount:
+#mkdir /first_bind
+Method 1 :-
+#docker run -it --name container3 -v /first_bind:/opt/data alpine /bin/sh
+
+above command will create a bind mount, /first_bind:/opt/data left side /first_bind is for base machine and right side is for container
+
+now /first bind in base machine and /opt/data directory in container are binded, whatever you do in either of directories will appear in the other directory
+
+
+
+
+
+
+
+Method : 2
+#docker run -it --mount type=bind,source=/home/aadmin/my_data/,destination=/opt/data alpine /bin/sh
+
+
+
+
+
+
+
+3.tmpfs :-
+Method1:-
+docker run -d -it --name tmptest1 --mount type=tmpfs,destination=/app alpine /bin/sh
+
+Method2:-
+#docker run -d -it --name tmptest2 --tmpfs /app alpine /bin/sh
+
+
+
+Bind Mount application example:-
+docker run --name mynode1 -p 8000:8000 -d -v /root/docker/lect-10/src/:/app/src node_app
+
+
+
+
+
+
+
+
+
+

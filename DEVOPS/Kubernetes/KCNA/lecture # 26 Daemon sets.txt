@@ -1,0 +1,23 @@
+It is k8s controller that manages the deployment and lifecycle of a pod on each node in a cluster
+
+Ye her node ky andar aik pod create krta hai, jo us node ki monitoring wagaira krta hai. Or jab node mar jata hai to ye bhi mar jata hai
+
+Use case of daemon set:
+run pod in each node
+
+what pod does:
+Running monitoring agen on each node
+managing logging or data collection on each node
+ensuring networking or storage components are available on each node
+
+
+behavior:
+1) When a new node is added to the cluster the daemonset automatically schedules a pod on that node.
+
+2) If a node goes down or removed, the daemonset ensures the coreesponding pod is terminated
+
+3) daemonsets can be used to run system level services or crtical infrastructure component
+
+
+
+

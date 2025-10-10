@@ -1,0 +1,91 @@
+Video Notes:
+
+echo "enter the number"
+read abd
+
+
+abd --> Abdeali
+$abd
+
+a=10
+a
+$a
+
+$0 --> Program or script name
+$1..$9 --> parameter passed
+$# --> Count the total number of parameter
+$*  --> Display the parameter passed
+$@ same as $* both are same
+$$ --> Provide the current PID of shell
+
+
+#!/bin/bash
+echo "This is positional parameter example script" $0
+echo "Hello, My name is : " $1
+echo "Here is " $2
+echo "this is " $3
+echo "total count value is " $#
+echo "Display the parameter the passed" $*
+echo "Fetch information" $@
+echo "PID of current shell"
+echo "Exit status of last executed command " $?
+
+
+root@abdealidodia:~/bash/lect8# ./test.sh King Queen Prince ABD alnafi
+This is positional parameter example script ./test.sh
+Hello, My name is :  King
+Here is  Queen
+this is  Prince
+total count value is  5
+Display the parameter the passed King Queen Prince ABD alnafi
+Fetch information King Queen Prince ABD alnafi
+PID of current shell
+Exit status of last executed command  0
+
+
+#!/bin/bash
+echo  "Enter the service name which you want to check"
+read service_name
+echo  "Enter the status"
+read status
+sudo systemctl $status $service_name
+
+
+#!/bin/bash
+#echo  "Enter the service name which you want to check"
+#read service_name
+#echo  "Enter the status"
+#read status
+service_name=$1
+status=$2
+sudo systemctl $status $service_name
+
+#./service_status.sh docker status
+
+
+
+#!/bin/bash
+#echo  "Enter the service name which you want to check"
+#read service_name
+#echo  "Enter the status"
+#read status
+
+if [[ $# -ne 2 ]]
+then
+echo "Hey Admin, Please run the script as per instruction"
+echo "Example : $0 <servicename> <ActiontoBeExecuted>"
+echo "Example : $0 docker status"
+echo "Action valid : status, stop, start , restart"
+else
+service_name=$1
+status=$2
+sudo systemctl $status $service_name
+fi
+
+root@abdealidodia:~/bash/lect8# ./service_status.sh docker
+Hey Admin, Please run the script as per instruction
+Example : ./service_status.sh <servicename> <ActiontoBeExecuted>
+Example : ./service_status.sh docker status
+Action valid : status, stop, start , restart
+root@abdealidodia:~/bash/lect8# ./service_status.sh docker status
+docker.service - Docker Application Container Engine

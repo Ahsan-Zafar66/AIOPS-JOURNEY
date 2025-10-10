@@ -1,0 +1,69 @@
+
+
+We have inventory file which is called hosts by default and its path is defined in ansible.cfg file.
+Suppose we have multiple invetory files with different names containing different machines.
+
+we can define the worker nodes differently in these inventory files as we like
+
+Suppose I want to connect to worker node ahsan from jhon from master node:
+1) I can create an ssh key of jhon and copy it in ahsan and can do password free communication
+
+2) i can define username and password of ahsan in the inventory file, whenever it do communication with ahsan it will use the password and username of inventory file
+# example
+[dante]
+192.168.43.63 ansible_ssh_user=ahsan ansible_ssh_pass=Ahsan?1122?
+
+Now, you don;t need to copy an ssh key of jhon into ahsan
+
+
+What if their are 10 worker nodes you will you define user and password for each?
+In such case you can define variables.
+
+Suppose all 10 worker nodes are in same network and have same username and password
+[vars:all]
+ansible_ssh_user=ahsan
+ansible_ssh_pass=Ahsan?1122?
+
+
+[centos1]
+192.168.43.63
+192.168.43.64
+192.168.43.65 and so on
+
+
+now, for interacting with all these machines ahsan and Ahsan?1122? will be used.
+
+Case 1 if all machines have same username and password:
+[worker_nodes]
+192.168.43.64
+192.168.43.65
+192.168.43.66
+192.168.43.67
+192.168.43.68
+192.168.43.69
+192.168.43.70
+192.168.43.71
+192.168.43.72
+192.168.43.73
+192.168.43.74
+192.168.43.75
+
+[worker_nodes:vars]
+ansible_ssh_user=a
+ansible_ssh_pass=ABC
+
+
+Case 2 if all machines have different username and password, then we define individually for all worker nodes
+[worker_nodes]
+192.168.43.64 ansible_ssh_user=user1 ansible_ssh_pass=password1
+192.168.43.65 ansible_ssh_user=user2 ansible_ssh_pass=password2
+192.168.43.66 ansible_ssh_user=user3 ansible_ssh_pass=password3
+192.168.43.67 ansible_ssh_user=user4 ansible_ssh_pass=password4
+192.168.43.68 ansible_ssh_user=user5 ansible_ssh_pass=password5
+192.168.43.69 ansible_ssh_user=user6 ansible_ssh_pass=password6
+192.168.43.70 ansible_ssh_user=user7 ansible_ssh_pass=password7
+192.168.43.71 ansible_ssh_user=user8 ansible_ssh_pass=password8
+192.168.43.72 ansible_ssh_user=user9 ansible_ssh_pass=password9
+192.168.43.73 ansible_ssh_user=user10 ansible_ssh_pass=password10
+192.168.43.74 ansible_ssh_user=user11 ansible_ssh_pass=password11
+192.168.43.75 ansible_ssh_user=user12 ansible_ssh_pass=password12

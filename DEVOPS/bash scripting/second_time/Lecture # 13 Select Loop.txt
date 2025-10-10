@@ -1,0 +1,137 @@
+Select loop:
+It is used for menu driven program
+
+oop Types:-
+
+
+1. For loop
+2. While Loop and While IFS
+3. Until Loop
+4. Select Loop
+
+Select Loop : Used for menu driven program.
+
+Select Loop Syntax:-
+
+Question :-
+
+case <variable> in
+pattern)
+statement
+;;
+
+patter)
+statement
+;;
+*)
+statement
+;;
+esac
+
+
+
+
+root@abdealidodia:~/bash/lect13# cat simple.sh
+#!/bin/bash
+echo "Please enter the number betweeen 1 to 3"
+read num
+
+case $num in
+1)
+echo "You have enter the one number"
+;;
+2)
+echo "You have enter two"
+;;
+3)
+echo "You have enter the Three"
+;;
+*)
+echo "Sorry You have enter the wrong number"
+;;
+esac
+
+
+
+
+root@abdealidodia:~/bash/lect13# ./simple.sh
+Please enter the number betweeen 1 to 3
+2
+You have enter two
+
+
+root@abdealidodia:~/bash/lect13# ./simple.sh
+Please enter the number betweeen 1 to 3
+4
+Sorry You have enter the wrong number
+
+
+
+
+root@abdealidodia:~/bash/lect13# ./simple.sh
+Please enter the number between 1 to 3
+1
+You have enter the one number
+
+#!/bin/bash
+
+clear
+echo "Enter your file extension: "
+read ext
+
+case $ext in
+".txt")
+ls -ltrh *.txt
+;;
+".sh")
+ls -ltrh *.sh
+;;
+*)
+echo "Sorry, You have enter the invalid file extention"
+;;
+esac
+
+
+root@abdealidodia:~/bash/lect13# cat menudriven.sh
+#/bin/bash
+echo -e " \n1. Operating System information\n"
+echo -e "\n2. Hostaname inforamtion\n"
+echo -e "\n3. Memory details\n"
+echo -e "\n4. My disk usage\n"
+echo -e "\n5 Exit\n"
+
+echo "Enter your choice"
+read choice
+
+case $choice in
+1)
+echo "Your linux system information : $(uname -a)"
+;;
+2)
+echo "Hostname is : $(hostname)"
+;;
+3)
+echo "$(free -g)"
+;;
+4)
+echo "$(df -h)"
+;;
+5)
+echo "Bye Bye"
+exit 1
+;;
+esac
+
+TASK :- 
+
+Please make menu script with below details using select case. 
+
+
+1. OS
+2. Hostname
+3. Memory
+4. Disk details
+5. Network IP details
+6. Last Logged users
+7. Process usage
+

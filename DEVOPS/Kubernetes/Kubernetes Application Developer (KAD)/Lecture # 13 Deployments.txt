@@ -1,0 +1,78 @@
+Replication Controller, ReplicaSet and Deployment all three do the same things, they provide avaiability.
+So, why everyone use Deployment?
+Deployment is used in industry the most because it has benefits that replication controller and replicaset dont provide.
+
+
+What is a deployment?
+A deployment defines a desired state for a set of replica Pods. 
+Kuberentes constantly works to maintain that desired state by creating, deleting and replacing those Pods.
+
+
+Deployments trigger replica sets which make pods, in other words deployments use replicaset.
+
+
+Deployments Hands On:
+when you create a deployment, it uses replicase set. The replicaset then create pods.
+Pods are controlled by replica set, you delete one a new one is created by replicaset.
+Replicaset is controlled by deployment, you delete one replicaset a new one is created by deployment.
+
+
+# deployment yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: first-deployment
+  labels:
+    app: deploy-app
+spec:
+  replicas: 5
+  template:
+    metadata: # name is not necessary for pods as they are given random names, you give name or not it doesnt matter
+      labels:
+        app: deploy-pods
+    spec:
+      containers:
+      - name: deploy-container
+        image: nginx
+  selector:
+    matchLabels:
+      app: deploy-pods # use the same label given in template metadata so that it uses that template
+
+
+# now deploy
+kubectl apply -f deployment.yml
+
+
+# see pods
+kubectl get pods
+
+# see replicaset
+kubectl get rs
+
+# see deployment
+kubectl get deployment
+
+# describe deployment
+kubectl describe deployment first-deployment
+
+
+# try to delete rs
+kubectl delete rs rs-name
+
+
+# enhacing number of pods in deployment from 5 to 15
+kubectl scale deployment first-deployment --replicas 15
+
+# now check pods
+kubectl get pods
+
+
+# another way to scale up r down the deploymen is usin edit
+kubectl edit deployment first-deployment
+
+
+
+NOTE: 
+if we use replicaset alone, if one pod wih same label exist then replicaset look in cluster and it needs to create 4 pods, one already exist with same label so it will create 3 more pods so total 4.
+If we use deployment, if a pod with label cat exist and deployment template also has label cat, deployment needs to make 5 pods it will make 5 and total 6. the already existing pod with same label is not take into consideration by deployment.
+

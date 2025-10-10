@@ -1,0 +1,42 @@
+In a normal pod, when a container dies the pod dies as well.
+You need to manually make the pod again.
+
+In practical scenario this thing is not good.
+replicaset is a technique that checks the container, suppose you create 3 containers in a pod, one container id down. 
+Replicaset will check that number of containers have decreased from 3, so it will make one new container to make the number equal to 3.
+
+
+Scaling is making new pods when there is need and destroying pods when load is decreasing.
+
+REMEMBER: By default kubernetes does not give replica of pods, you need to define if you want replicasets.
+
+we need to mention replicationset in the yml file.
+
+apiVersion: v1
+kind: replicationset
+
+
+
+Lecture # 13 Demo of Replicasets
+
+vim replicasets.yml
+
+apiVersion: apps/v1
+kind: Replicaset
+metadata
+  name: myapp-replicaset
+  labels:
+    app:myapp
+spec:
+  replicas: 3
+  selector:
+    matchlabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: nginx
+          image: nginx

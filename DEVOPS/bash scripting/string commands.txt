@@ -1,0 +1,53 @@
+msg="Ahsan Zafar"
+-----
+echo ${#msg} --> checks the length of text.
+-------
+# concatenating strings
+first="Ahsan"
+last="Zafar"
+
+fullname=$first$last
+-------
+# call string like this
+echo "${name}"
+
+echo "${msg^^}" --> make the text capital
+
+"${msg,,}" --> make the text small
+
+--------
+
+echo $name | tr [a-z] [A-Z] --> capital
+
+echo $name | tra [A-Z] [a-z] --> small
+
+
+---------
+changing text
+msg ="Learning bash is so much fun"
+
+echo ${msg/Learning/Reading} --> learning will be replaced with reading
+
+echo ${msg/Learning} --> learning will be removed
+
+echo ${msg/L/l} -->L replaced with l
+
+echo ${name:0:5} --> bring five letters of the variable
+
+echo ${name::0}
+
+echo ${name:-1}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,122 @@
+When we make a dockerfile, we add all the things and build.
+When we run the build command on a docker file it create a docker image
+when we run a docker image it creates a docker container
+
+
+Docker Image:-
+
+- Docker image: Non writable hoti hain file only readable
+- Docker images --> Readymade image download kar sakte ho --> Google / Internet/ Docker HUB
+- Docker image : --> Create own docker file
+
+#docker image pull
+#docker pull image (First it will be find local from your machine then download from website like Docker HUB )
+#docker run hello-world
+#docker run alpine (First it will be find from your local machine then download image and will create container)
+
+Recipe:-
+1. Dockerfile--> Docker image
+2. We should know docker file me kya likhna hain, How to write instruction
+3. Create the image from dockerFILE (Create dockerfile to docker image )
+
+
+DockerFile syntax :-
+
+FROM : to define base image for docker
+RUN : to execute the command in dockerfile
+
+Dockerfile created..
+#docker build -t
+-t : Stand for tag the image --> Give name of the image
+Build : Create the image from docker file
+
+
+
+
+Steps to create a docker file
+1) Create a directory and enter in it
+
+2) create a DockerFile using "vim Dockerfile" command
+
+3) Now after opening the file write things you want to do when you run this image
+
+For example
+# use the alpine os
+FROM alpine
+
+# install the python
+RUN apt-get install python
+
+# show current working directory
+RUN echo $(pwd)
+
+# create a file
+RUN touch fileindocker.txt
+
+
+4) create image of docker file
+
+docker build -t firstimage . --> firstimage is name of image that is to be created. "." is used to capture the docker file in the directory
+
+
+# creating versions of an image
+docker build -t firstimage:v1 .
+
+# second version of same file
+docker build -t firstimage:v2 .
+
+
+# now when you are running the image you must specify the version
+docker run -it firstimage:v1 /bin/sh --> interactive terminal of firstimage v1
+
+# to run v2
+docker run -it firstimage:v2 /bin/sh
+
+
+
+
+
+
+
+
+
+
+
+FROM alpine
+RUN echo "Hello from dockerfile"
+RUN echo $(pwd)
+RUN touch file.txt
+RUN cd /tmp && touch abd.txt
+
+
+1. How many layer will create for this command ?
+Ans : one layer will create
+2. Will be image ID same ?
+
+Interview Question:-
+If you want to reduce the count of image layers while building the docker image , What will you do
+
+Answer: User && (AND operator)
+
+
+Webimage: v1,v2,v3 v4 --> versioning
+Docker version 20 , Docker version 21
+
+
+# Concept of docker image, container and exec command
+docker run image --> command run image and create the container
+
+# starting a exited container
+docker container start container_id
+
+# now running commands on a started container without entering it's shell
+docker container exec container_id command 
+
+
+
+# to show the output of a container using in start command
+docker start container_id --attach
+
+
+# using detach command to run process in background
+docker run -dit alpine /bin/sh --> run /bin/sh shell in backgroup. d means detach

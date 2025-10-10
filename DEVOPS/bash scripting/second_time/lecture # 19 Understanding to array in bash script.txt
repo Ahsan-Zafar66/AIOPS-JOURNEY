@@ -1,0 +1,215 @@
+Array: an array is a collection of elements'
+
+
+name=(ahsan zafar) -->array
+
+echo $name --> it will show only data before a space. For example it will show only ahsan not zafar
+
+echo ${name[*]} --> calling all elements of array. It will show both ahsan and zafar
+
+echo ${name[1]} --> indexin garray to get zafar which is at 1 index
+
+echo ${name[*]:1:3} --> bring info from 1 to 3 index.
+
+echo ${name[*]::2} --> first two elements will be brought
+
+
+echo ${#name[*]} --> total values in array.
+
+
+array=(1 2 3 4 5 "hostname -i") --> hostname -i will be treated as one element as it is inside quoatations
+echo ${array[5]}
+
+cmd=( $(docker -v) )
+
+echo "${cmd[@]}" --> this command will give docker version as we used quoatations around it 
+
+echo ${!name[@]} --> to find the indexing of variables
+
+age=( 24 years old ) ---> array
+
+profession=( pharmacist and data scientist) --> array
+
+
+desc=${name[*]}${age[*]}${profession[*]} --> combing 3 arrays into a variable
+
+echo $desc --> showing all arrays value
+
+
+------------
+
+cmd=( $(nginx -v) ) --> storing command in an array
+
+echo ${cmd[*]) --> showing all elements in an array 
+
+read name --> everything will be stored as one no array will be formed
+
+read -a name --> now text written will be in the form of array.
+
+
+you cannot convert a variable into a array once it is created
+
+
+key-value pair in bash
+
+declare -A abc
+
+abc=([name]=ahsan [age]=24 [12]=34 [14]=50)
+
+echo ${abc[*]} --> selecting all values
+
+echo ${!abc[*]} --> index or keys
+
+echo ${#abc[*]} --> counting values
+
+echo ${abc[name]} --> selecting a value by key
+
+
+when you don;t use declare -A abc
+
+then you cannot specify string key value pairs, such array are simple and only work for intergers
+
+test=([1]=10  [2]=20) --> it will work for both key and values
+
+but
+
+test=([name]=ahsan [1]=10) --> this array will not work.
+
+
+
+simple array which are defined withoud declare statement does not recognize the string in key or value, it gives blank or zero in their place
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

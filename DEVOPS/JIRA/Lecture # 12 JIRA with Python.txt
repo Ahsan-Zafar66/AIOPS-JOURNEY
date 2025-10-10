@@ -1,0 +1,21 @@
+ADD THIS PROJECT IN YOUR RESUME
+
+
+If you are not able to login in jira with user and password, use api tokens
+
+
+
+How to work with jira api?
+jira api: https://your-domain.atlassian.net/rest/api/3/issue/DEMO-1
+
+# you need to enter your domain and issue such as
+https://ahsanzafarqau.atlassian.net/rest/api/3/issue/SCRUM-1
+
+it will bring details of issue SCRUM-1
+
+
+
+# after getting the data of issue as json
+# go to online json viewer and paste the data there
+
+ 

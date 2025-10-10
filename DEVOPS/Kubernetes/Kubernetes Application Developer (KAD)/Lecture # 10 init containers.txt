@@ -1,0 +1,16 @@
+Init Container:
+It is a container that runs to complete a task before a Pods main container starts up
+
+Why we use Init Containers?
+Separate Image:
+init containers can use separate image to perform start-up tasks using software that the image does not include or need
+
+
+Delay startup:
+Init containers can be used to delay the startup of the main container until certain pre-conditions are met 
+
+Security:
+Init containers can perform sensitive startup step like consuming secrets, in isolation from the main container
+
+ 
+init containers are not defined inside main containers, they are defined seaprately

@@ -1,0 +1,11 @@
+Kubernetes Cluster Component Security
+API Server
+API Server is a critical component of the Kubernetes control plane. It acts as central entity that
+exposes Kubernets API in Contorl plane.
+All Operation on Kubernetes cluster, e.g. deploying application, scaling workload, manage
+cluster resources.
+Authentication : Certificates, Tokens.
+Authorization : RBAC = Role Based Access Control (Least Privilege)
+Admission Control : PodSecurity, ResourceQuota
+Encryption : TLS encryption
+Audit Logging: Always keep it Enable

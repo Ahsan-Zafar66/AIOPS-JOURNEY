@@ -1,0 +1,21 @@
+In jira we have project templates and these templates have issues by default
+such as scrum template has
+1) Epic
+2) Story
+3) Bug
+4) Task
+5) Subtask
+
+But I want an issue with name ALERT, so how can i create it?
+
+Click on settings --> then go to issues --> go to issue types, her eyou will see a button create issue, create an issue with name ALERT
+
+Now, go to issue schema tab, and add your newly created issue in your project schema, this issue ALERT will now appear there.
+
+
+You can also add custom fields that appera while creating an issue,
+You have to go to custome field, create the field and integrate it with the screen you want it to appear on
+
+
+Go to settings --> custom field --> create custome field --> it will ask you where you want to see the newly created field --> you chose the board, screen anywhere you want to see in the available options
+

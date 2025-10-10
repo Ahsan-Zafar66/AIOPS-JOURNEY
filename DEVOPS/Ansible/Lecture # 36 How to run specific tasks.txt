@@ -1,0 +1,97 @@
+Running specific tasks:
+you can run specific tasks by assigning tags with the task in yml file.
+
+never: when you add never in your tag it means, when you rin normally ansible playbook withut mentioning a tag nothing will be executed.
+tasks will only be executed unless the task tag is mentioned.
+
+
+# Example:
+
+
+---
+- name: This is playbook for tags
+  hosts: rhel
+  become: yes
+  tasks:
+  - name: Installation wget
+    yum:
+      name: wget
+      state: present
+    tags:
+      - wget_install
+  - name: Installation vim
+    yum:
+      name: vim
+      state: present
+    tags:
+      - vim_install
+  - name: Removing wget
+    yum: 
+      name: wget
+      state: absent
+    tags: 
+      - wget_remove
+  - name: Remvoing vim
+    yum:
+      name: vim
+      state: absent
+    tags:
+      - vim_remove
+
+# only task which install wget is executed
+ansible-plabook my.yml --tags wget_install
+
+
+===================================================================
+
+How to run multiple task with a single tag and not to run any task when ansible playbook is run wthout mentioning a tag?
+
+
+
+# you can imp tag in first two tasks, you can run these task by mentioning imp
+# example
+ansible-playbook my.yml --tags imp
+
+# never means do not run task in normal mode, those task with never tag will not run by following command
+ansible-playbook my.yml
+
+# how to run all task except the wget_install task, following command will skip wget_install task (will also not run task including never tag)
+ansible-playbook my.yml --skip-tags wget_install
+
+---
+- name: This is playbook for tags
+  hosts: rhel
+  become: yes
+  gather_facts: false
+  tasks:
+  - name: Installation wget
+    yum:
+      name: wget
+      state: present
+    tags:
+      - wget_install
+      - imp
+      - never
+  - name: Installation vim
+    yum:
+      name: vim
+      state: present
+    tags:
+      - vim_install
+      - imp
+      - never
+  - name: Removing wget
+    yum: 
+      name: wget
+      state: absent
+    tags: 
+      - wget_remove
+      - never
+  - name: Remvoing vim
+    yum:
+      name: vim
+      state: absent
+    tags:
+      - vim_remove
+      - never
+

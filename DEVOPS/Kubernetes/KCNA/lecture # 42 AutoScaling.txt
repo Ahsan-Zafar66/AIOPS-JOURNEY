@@ -1,0 +1,38 @@
+Architecture design krty wy bht c cheezein dekhni prti hain
+
+architecture istrhan sy design ho ky scale ho skay
+
+scaling automatixc honi chahiye 24/7 koi bnda to nhi betha rhy ga na service ko dekhny mn
+
+scaling bidirection ho jab load barhay to new pods ban jain, jab load kam ho jaye to jo create kiye thy unko remove kr dy or back to normal architecture a jaye
+
+Scaling is of two types horizontal and vertical.
+Horizontal: new pods with same specs will be created
+
+Vertical: Pods resources will be increased such as CPU and RAM NOT MEMORY kyn ky memory mn data hai
+
+
+Horizontal Pod Autoscaler:
+make new pods when required and vice verse
+
+Vertical Pod Autoscaler:
+jab ham vertical pod autoscaler bnaty hain usmy defing krty hain ky by default tum ny itna CPU ot RAM dena hai.
+Agar zyada required hai to ham limit define krty hain ky maximum itny CPU or RAm dy dena zaroorat paray to 
+
+jab maximum limit jo CPU or RAm ki define ho gi pod us sy bhi oper janay lagay ga to POD DESTROY ho jaye ga.
+jab pod destroy hota hai to uski jagah new pod ban jata hai kyn ky hamny define kiya hai ky pod mojood hona chahiye default specs ky sth
+
+
+
+CLuster AUTOSCALER:
+Suppose aik cluster mn 3 nodes thy, sabku resources consume ho gaye.
+Ab?
+CLuster new nodes bnaye ga with default resources.
+
+
+
+Serverless:
+Run application without traditional server infrastructure
+Servers in cloud, pay for what you use.
+
+

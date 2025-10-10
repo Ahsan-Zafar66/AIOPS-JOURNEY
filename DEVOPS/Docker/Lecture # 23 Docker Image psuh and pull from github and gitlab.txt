@@ -1,0 +1,76 @@
+GitLab is advance as compare to github
+
+
+Step # 1 
+Register on GitLab
+
+Step # 2
+Create a project
+
+Step # 3
+Create a Token and select all the scopes in the scope section
+
+Step # 4
+Copy the token 
+
+token: glpat-_hAFV97u7PxzdNxJg3YJ
+
+you can check the newly made token in preferences section
+
+Step # 5
+Go to Deploy section, then go to container registry
+
+Step # 6
+Copy the command and run it in terminal and enter username and password
+
+Step # 7
+Now, name the image according to the mentioned command in container registry in gitlab
+
+Now, after renaming the image, push it to the gitlab
+
+
+
+
+GITHUB procedure
+
+
+step # 1
+create a personal access token
+How to generate Token PAT --> Profile --> Settings --> Developer Setting --> PAT
+
+tick all the options of the scope
+
+token: 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
+
+Step # 2
+create a environment variable in terminal
+GIT_PATH=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
+
+
+echo $GIT_PATH | docker login ghcr.io -u username --password-stdin
+
+# example of above command
+echo $GIT_PATH | docker login ghcr.io -u Ahsan-Zafar66 --password-stdin
+
+
+Step # 3
+go to projects and create a repository
+
+for example you created repo docker_repo
+
+# now tag your image for example busybox
+docker tag busybox ghcr.io/ahsan-zafar66/docker_repo
+
+# push the image
+docker push ghcr.io/ahsan-zafar66/docker_repo
+
+
+the image pushed will go in packages section, not in docker_repo
+
+# you can push images directly without mentioning or using any repo name, such images go in packages section
+for example
+docker tag busybox ghcr.io/ahsan-zafar66/mybox
+
+# push command
+docker push ghcr.io/ahsan-zafar66/mybox
+

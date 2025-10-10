@@ -1,0 +1,192 @@
+1. OPA Fundamentals
+What is OPA?
+A policy engine that decouples policy decisions from application code.
+
+Uses Rego (declarative language) to define policies.
+
+Works with Kubernetes via Gatekeeper (admission controller).
+
+Key Components:
+Component	                 Purpose
+ConstraintTemplate:	Defines policy logic (Rego code)
+Constraint:	        Applies template to specific resources
+Gatekeeper:	        Enforces policies during admission control
+
+
+
+
+
+
+
+Step # 1 Install Gatekeeper
+kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.7/deploy/gatekeeper.yaml
+
+
+Step # 2 Create polcies
+
+# privileged-containers-template.yml
+
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sblockprivileged
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sBlockPrivileged
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sblockprivileged
+        violation[{"msg": msg}] {
+          containers = input.review.object.spec.containers
+          c_name := containers[_].name
+          containers[_].securityContext.privileged
+          msg := sprintf("Privileged container '%v' is not allowed", [c_name])
+        }
+
+
+# next file is privileged-containers-constraint.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sBlockPrivileged
+metadata:
+  name: no-privileged-containers
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+
+# now create both resources
+kubectl apply -f privileged-containers-template.yaml
+kubectl apply -f privileged-containers-constraint.yaml
+
+
+after deploying above two pods any resource which has privileged: true in security context will be restriced and no pod will be created which has privileged powers.
+only those pods which are non-privileged will be create from now on as I have made policy about pods.
+
+
+
+You can make any policy you like, can restrict anythin.
+
+
+
+
+# example # 2 Suppose you want the kubernetes pods to download images from only dockerhub registries
+
+# registry-template.yml
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sallowedrepos
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sAllowedRepos
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sallowedrepos
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not startswith(container.image, "docker.io/trusted/")
+          msg := sprintf("Container '%v' uses untrusted registry", [container.image])
+        }
+
+
+# registry-constraint.yml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedRepos
+metadata:
+  name: only-trusted-registries
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+
+
+# now after creating above two Policy and rule your pods will download images only from dockerhub registries
+
+
+
+
+# example # 3, Only deploy those pods that have defined cpu and memory resource block all pods that do not have cpu and memory defined in their spec
+
+#  resource-template.yml
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sresourcelimits
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sResourceLimits
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sresourcelimits
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container.resources.limits
+          msg := sprintf("Container '%v' has no resource limits", [container.name])
+        }
+
+
+
+
+# resource-constraint.yml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sResourceLimits
+metadata:
+  name: require-resource-limits
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+
+
+after creating above rule you need to define memory, cpu resources for your pods in each yaml file otherwise they wont be deployed.
+
+
+
+
+# getting the constraint and templates
+kubectl get constraints
+
+# kubectl get constrainttemplates
+
+
+
+How to delete templates and constraints?
+
+# structure to delete a constraint which is present inside template
+kubectl delete template-name constraint-name
+
+
+# deleting no-privileged-containers constraint present in K8sBlockPrivileged Template
+kubectl delete K8sBlockPrivileged no-privileged-containers
+
+
+# structure to delete template
+kubectl detelte ConstraintTemplate template-name
+
+# command to delete the template
+kubectl delete ConstraintTemplate K8sBlockPrivileged
+
+
+
+
+# OR for resource limits:
+kubectl delete K8sResourceLimits require-resource-limits
+
+
+
+
+
+
+

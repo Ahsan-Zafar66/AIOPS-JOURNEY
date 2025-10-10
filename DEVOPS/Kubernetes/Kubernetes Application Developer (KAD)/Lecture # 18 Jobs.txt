@@ -1,0 +1,78 @@
+What is a job?
+jobs are designed to run a containerized task successfully to completion
+
+Types of restart Policies:
+1) Always
+2) Never
+3) On Failure
+
+
+Difference Between Deployment and Job is that deployment creates replicaset and replicaset create pods BUT job directly create pod.
+
+
+# some parameters of job
+completions: how many times to do the job? aik task kitni bar karna hai?
+backoffLimits: 10, mtlb 10 bar try krna hai agar 10 bar mn job na ho to job terminate kr do
+activeDeadlineSeconds: 50, mtlb ky 50 second mn job khtm krni hai sari ki sari na ki to job terminate kr do
+
+
+# vim job.yml
+apiVersion: batch/v1 # job is present in this path in kubernetes
+kind: Job
+metadata:
+  name: first-job
+spec:
+  completions: 5 # task ko 5 bar krna hai
+  backoffLimits: 10  # task ko 10 bar try krna hai us sy zyada nhi, agar 10 bar mn 5 bari task na ho to job band kr do
+  activeDeadlineSeconds: 100 # 100 second mn 5 bar task krna hai, 100 second mn na kiya to job band kr do
+  template: # task krna kiya hai
+    spec: # pod ki specifications
+      containers:
+      - name: busybox
+        image: busybox:stable
+        command: ["echo","my name is ahsan"]
+      restartPolicy: Never # ye pod ki policy hai na ky container ki. isky do option hoty hain aik Never dsra OnFailure.
+
+
+# oper wali file mn aik job define ki hai, job ye hai ky pod bnana hai usmy busybox image or command run krna hai. Completions 5 hain to yehi kam 5 bar krna hai.
+Mtlb 5 pods bnanay hain or ye task perform krna hai or pod shutdown then. Total 10 bari try krna hai, agar 10 bar mn 5 pods ban liye or 100 second mn sara task complete kr liya to job successful.
+
+
+
+
+
+
+-------------------
+
+vim dice-job.yml
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dice-job
+spec:
+  completions: 5
+  backoffLimits: 30
+  template:
+    spec:
+      containers:
+      - name: dice-contaner
+        image: kodekloud/throw-dice
+      restartPolicy: Never
+
+
+# oper wali file mn job define hai, jo task hai wo 5 bar krna hai or total 30 tries hain, agar 30 tries mn ho gaya task 5 bar to job succesfult otherwise terminate it
+# jo image use huwa hai wo dice throw krta hai or dekhta hai konsa number aya hai, agar 6 aya hai to task successful koi or number aya hai to not successful
+# aik pod banay ga, dice throw karay ga or dekhy ga number kiya hai.
+
+
+# command to get job description
+kubectl describe job dice-job
+
+# command to see jobs
+kubect get job
+
+
+# commadn to se eoutput of a pod
+kubectl logs pod_name
+

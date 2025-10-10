@@ -1,0 +1,83 @@
+In docker, we make a docker file with our instructions.
+From docker file we make an immutable image and run the image to do the task define in docker file
+
+# Structure of a docker file
+
+OS name in first line is mandatory
+
+App configuration in second line
+
+package installation in third line
+
+Image port listen
+
+environment variable
+
+
+
+Revision:-
+1. We have seen 3 problem to find out docker important
+2. Images --> Docker images vo read only hota hain, Immutable cant edit but execute
+3. Container: Its as a process run from images
+
+Container: As a package of software because it contains application / Library /
+Dependencies , packages installation
+
+4. 3 thing architecture : Server , Client , Registry
+
+
+5. Docker installation
+6. Some docker commands
+7. Docker benefits
+
+
+
+ Question Time:-
+
+1. Is docker run command able to pull the image ?
+2. How to list the docker images in the local ?
+3. Steps to create docker images --> In theory steps
+
+Answer :
+1. Yes it will pull image from docker registry
+Docker run hello-world
+
+2. sudo docker images or #sudo docker image ls
+
+3. Dockerimage --> Docker file se banta hain --> We can write our own file --> docker images --> If we dont want write the docker file --> We can pull images or download images from docker registry
+
+#Docker run hello-world
+
+Aaj hum log ese hi dekhege
+
+OS flavor in linux :-
+Centos, ubuntu and its family ,fedora ,Mint, suse, debian , kali, opensource, openlinux, arch linux, rockey linux, amazon linux, boss solaris, alma linux, zorin linux, AIX, backtrack, puppet, oracle  etc
+
+CentOS : 2-10 GB
+
+IT --> Industry , production --> Always avoid to use all above mentioned OS
+
+
+If you don't want to make a docker file, you can pull or download it from docker registry.
+
+In docker we have two images especially for docker
+1) BusyBox: for print statements such as docker run hello-world
+2) Alpine image: web server, python, java, mysql, promethis and nagios etc
+
+What is difference between other OS and alpine image?
+in industry where there are thousands of server, and normal OS have size ranges from 10-30GB, now for each server 10-30GB space is used by os and then comes services size
+Alpine image is very lightweight image of like 50MB and then other services are installed. So, in this way space is saved.
+
+
+
+# running hello-world image
+docker run hello-world
+
+# giving name to the process
+docker run --name ahsanfirstcontainer hello-world
+
+# check with command to see name
+docker ps -a
+
+# to remove docker record after container is run
+docker run --rm --name ahsanfirstcontainer hello-world

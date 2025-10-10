@@ -1,0 +1,49 @@
+Cronjob run jobs periodicaaly according to a schedule.
+
+For example:
+Roz rat 10 bjy report banni chahiye
+
+* * * * * 
+
+1st * --> minute (0-59)
+2nd * --> hour (0-59)
+3rd * --> day of month (1-31)
+4th * --> month (1-12)
+5th * --> day of week (0-6)
+
+
+
+CronJob --> Job --> Pod
+
+
+vim cronjob:
+
+# vim cronjob file content
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-first-cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      completions: 5
+      backoffLimit: 30
+      template:
+        spec:
+          containers:
+          - name: my-container
+            image: busybox:stable
+            command: ["echo","$(df -h)"]
+          restartPolicy: Never
+
+
+creat a job every minute that creates 5 pods and has 30 tries. When it create a pod it should run the command define and then shut it down,
+
+
+hr minute aik job create karo, job mn jo task define hai wo 5 martaba krna hai or tries apky pass 30 hain.
+
+hr minute bd aik job create ho gi jisky 5 pods hon gy.
+
+
+cronjob sirf last three jobs ko show krta hai, mtlb agar cronjob ko 10 minute ho gaye hain or isny hr minute aik job create krni hai to ye 1-7 wali jobs ko delete krdy ga or akhri 3 jobs jo 8,9,10 minute mn create hui hon gin unko rakhy ga.

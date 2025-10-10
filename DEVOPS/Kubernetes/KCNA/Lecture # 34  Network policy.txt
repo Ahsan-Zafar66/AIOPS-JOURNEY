@@ -1,0 +1,14 @@
+when we make kubernetes architecture, by default pods can communicate with each other.
+
+We need to define our own networking policy for pods if we have restrictions or special configurations
+
+Cluster networking:
+if things are not working check the ports are they working?
+
+Pod Networking:
+Every pod should have an IP address
+Every POD should be able to communicate with every other POD in the same node
+Every POD should be able to communicate with every other POD on other nodes as well without NAT
+
+
+DNS in kubernetes:

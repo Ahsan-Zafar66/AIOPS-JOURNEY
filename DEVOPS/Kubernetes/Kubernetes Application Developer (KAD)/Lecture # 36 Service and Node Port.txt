@@ -1,0 +1,38 @@
+Service accounts enhance the security of cluster.
+
+We have two types of accounts user and service accounts.
+
+user accounts are used by admin, developer like different users ahve different type of user accounts.
+
+Service accounts are used by services/applications.
+
+
+Suppose I have a service or application such as a dashboard for a cluster. 
+This dashboard needs information of cluster like pods, nodes and etc.
+To fetch this information this dashboard needs a service account, which it will use to fetch information from cluster.
+When it has service account and it goes to cluster for fetching information, kubernetes check what is this account, as it is a service account so kubernetes easily provides it with information it needs.
+
+Now, you have seen like how we protect information in kubernetes, you have a account then you can see the information you are allowed to else vice verse.
+
+
+when we create a service account, we create an object, this object create a token and this token is stored in a secret.
+
+service account --> service account object ---> creates token --> token is stored in secret
+
+Each namespace has a default service account. when pod interact with kube api, pods use the service account in default namespace.
+
+
+When you host the application within the kubernetes cluster, you mount the service account in a volume, so application fetch token from this volume and communication happens.
+
+
+In kubernetes old version when we create a service account, a secret is created in which there is a token. This token was not time bound, not object bound and etc.
+
+Now, in kubernetes, when we create a service account, it is empty. We need to create a token ourself and it has an expiry and object bound.
+
+
+# command to create a service account
+kubectl create serviceaccount dashboard-sa
+
+# now creating token inside the service account dashboard-sa
+kubectl create token dashboard-sa
+

@@ -1,0 +1,38 @@
+In this project we will deploy flask server in a docker container.
+
+The app will enter data into mysql database, or when retrieved it will show data from mysql database.
+
+You can use all the html files and app.py file from database in flask folder
+
+
+# Project # 1
+In project one, we used the mysql databse on linux as we did in database with flask lecture.
+We used database from linux and ran flask onwindows vscode.
+
+Now, i will deploy flask in docker but database will be in linux.
+
+I have successfully executed this project you can refer, /flask_in_docker_project in ubuntu.
+
+# how I did this project:
+It took me 4 hours to execute this project.
+
+I copied the files from database with flask directory and paste it in a directory in ubuntu.
+
+I created a dockerfile that uses python and alpin image, installed mysql database, copied files from present directory and ran app.py file.
+
+It successfully ran.
+
+
+
+Project # 2
+In this project we will run mysql database on docker and flask also in docker.
+
+# so let'e take backup from mysql in ubuntu linux
+mysqldump -u root --databases alnafi mysql > alnafi.sql -p
+
+I am taking backup of two databases alnafi and mysql, so i dont need to set up them manually, 
+i have taken backup and i will use it to set them automatically.
+
+
+
+

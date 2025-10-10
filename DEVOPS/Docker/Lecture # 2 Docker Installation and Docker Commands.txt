@@ -1,0 +1,110 @@
+🔹 Key Docker Components
+
+Docker Daemon (dockerd)
+
+It’s a background process that actually does the work: building, running, and managing containers.
+
+It listens for requests from the client (via REST API over a Unix socket or TCP).
+
+Think of it as the engine of Docker.
+
+Docker Client (docker CLI)
+
+This is what you type in the terminal:
+
+docker run nginx
+
+
+The client doesn’t run containers itself — it just sends your request to the Docker daemon.
+
+You can run the client on the same machine as the daemon, or even remotely (client on your laptop, daemon on a server).
+
+Docker Server
+
+This is just another way of saying “the machine running the Docker daemon.”
+
+In your case: Ubuntu is acting as the Docker server because the daemon is running there.
+
+🔹 How They Work Together (Step by Step)
+
+Imagine you type this command on Ubuntu:
+
+docker run hello-world
+
+
+Docker Client (CLI): Sends the request → “Hey daemon, please run the hello-world container.”
+
+Docker Daemon: Checks if the hello-world image exists locally. If not, it pulls it from Docker Hub, creates a container, and runs it.
+
+Ubuntu Kernel: Provides namespaces & cgroups (Linux features) that Docker uses to isolate the container.
+
+🔹 Your Example (Ubuntu machine)
+
+Ubuntu (the OS) → This is your Docker server because it hosts the daemon.
+
+User X on Ubuntu → When they type docker commands, they are the client.
+
+Docker Daemon (dockerd) → Runs in the background, does the actual work.
+
+Ubuntu Kernel → Provides the low-level containerization features.
+
+🔹 Analogy for Student
+
+Daemon = Restaurant kitchen (cooks actually prepare the food).
+
+Client = Waiter (takes your order and tells the kitchen).
+
+Server (Ubuntu) = The building where the kitchen runs.
+
+Kernel = Electricity & plumbing (without it, kitchen can’t function).
+
+✅ So yes:
+
+Ubuntu = your Docker server.
+
+User X typing commands = Docker client.
+
+Docker Daemon = uses Ubuntu kernel to run containers.
+
+
+
+
+
+
+
+Install docker by seing from google.
+docker install centos7 --> to open official page on google for installing docker in centos
+
+
+Go version means go programming language
+
+git commit means community version of repository
+
+when you write a docker command it goes to docker-cli it is executed in docker client and then goes to server
+docker command --> docker cli --> docker client --> server 
+commands are executed in docker clients and output is given by docker server
+
+
+Docker CE --> Open Sorce, Community ENgine
+Docker EE --> Docker Enterprise Engine --> has a price need to by license
+
+Interview Questions:-
+It is necessary to run docker server in same machine where we have docker client ?
+
+Note: Docker server same machine --> Not necessary
+
+
+Docker Daemon ka version X he and client version Y hain , jaha docker client Y X se kum he like docker server 20 and docker client 15 so it will be communicate ?
+YES
+
+
+# docker command to chek images
+docker image ls
+
+# docker command to check runing processes or images
+docker container ps
+
+# command to check stopped images
+docker container ps -a
+
+

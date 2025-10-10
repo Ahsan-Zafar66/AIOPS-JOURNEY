@@ -1,0 +1,31 @@
+Taint, Toleration and Node Affinity
+
+Suppose I have 4 nodes
+
+
+Node 1: GPU tainted
+
+Node 2: More hardware tainted
+
+Node 3: No taint
+
+Node 4: No taint
+
+I have 4 pods, one require GPU and One more hardware and two can run on any pod.
+
+
+Ab mn ny nodes ko taint to kr diya, likin scheduler unhein kaisay place karay ga.
+
+Ab jo pod 1 hai wo node 1, 3,4 kisi mn bhi ja skta hai, likin uski correct jagah node 1
+
+or pod 2 wo 2,3,4 node kisi mn bhi ja skta hai likin uski correcto jagah node 3 hai.
+
+
+Ab ham use krty hain node affinity, ky jo pod 1 hai uska rule ye hai ky wo aisy node mn jaye jisky pass GPU xyada hai. to pos 1 ab node 1 mn jaye ga, kyn ky baki 3 nodes sy ab uska rule match nhi ho ga
+
+Istrhan pod 2 ki node affinity mn ham rule define kr dein gy ky aisa node jisky apass hardware zyada ho. To ab pod 2 node 2 mn hi jaye ga kyn ky uska rul sirf node 2 sy match ho ga
+
+Isi trhan pod 3,4 ko ham rule define krky node 3,4 mn place kr dein gy.
+
+Tainting of nodes, toleration of pods and node affinity all these work together for precise and accurate placement of pods
+

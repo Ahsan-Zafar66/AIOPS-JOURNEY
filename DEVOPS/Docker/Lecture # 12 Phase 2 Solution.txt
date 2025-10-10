@@ -1,0 +1,160 @@
+Lecture 12 : Docker Notes
+
+
+1.
+cat Dockerfile
+# Use the official Ubuntu 18.04 as base
+FROM ubuntu:18.04
+# Install nginx and curl
+RUN apt-get update && apt-get upgrade -y && apt-get install -y nginx curl && rm -rf /var/lib/apt/lists/*
+
+#docker build -t mypract1:V3 --rm=true --no-cache=false .
+#docker tag mypract1:V3 abdealidodia/mypract1:V3
+# docker push abdealidodia/mypract1:V3
+
+
+
+
+Q- 2 :
+mkdir miniapp
+#Vi package.json
+{
+"name": "docker_web_app",
+"version": "1.0.0",
+"description": "Node.js on Docker",
+"author": "First Last <first.last@example.com>",
+"main": "server.js",
+"scripts": {
+"start": "node server.js"
+},
+"dependencies": {
+"express": "^4.16.1"
+}
+}
+Vim Dockerfile
+FROM node:14
+# Create app directory
+WORKDIR /usr/src/app
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+# Bundle app source
+COPY . .
+EXPOSE 8080
+CMD [ "node", "server.js" ]
+
+
+
+vim server.js
+'use strict';
+const express = require('express');
+
+vim .dockerignore
+node_modules
+npm-debug.log
+
+
+===================
+Q3:-
+
+docker container run --rm --name nginx --publish target=80,published=127.0.0.1:8081,protocol=tcp -d nginx
+
+docker container run --rm --name nginx -p 80:127.0.0.1:8081/tcp -d nginx
+=============
+Q4:-
+#docker ps
+#docker run -it --name abdealione busybox /bin/sh
+#mkdir -p /data/html
+#vim /data/html/index.html
+Abdeali dodiya from docker container
+:wq!
+
+CTRL + p + q (EXIT hoga but container band nahi hoga)
+#docker ps
+docker commit -p -a "Abdeali Dodiya <abbdealipython@gmail.com>" -m "increase index.html Webpage" <container-name> <newimage-name>
+docker run -it --name abdeali:v3 abdeali:v2 /bin/sh
+#ls
+#cat /data/html/index.html
+#docker exec -it <container> /bin/sh
+httpd -h
+
+docker commit -a "ali<ali@gmail.com>" -c 'CMD ["/bin/httpd","-f","-h","/data/html"]' -p abdeali2 champu/httpd:V0-1-1-3
+# docker inspect 4b69f7ed490f | grep IPAddress
+# curl 172.17.0.5
+
+
+
+Q: 5
+FROM tecadmin/ubuntu-ssh:16.04
+LABEL maintainer="champu@gmail.com"
+RUN apt-get update \
+&& apt-get install -y apache2
+COPY html/* /var/www/html/
+WORKDIR /var/www/html
+CMD ["apachectl", "-D", "FOREGROUND"]
+EXPOSE 80
+
+
+
+
+
+Q:6
+docker run ubuntu:18.04 /bin/sh -c "while true; do echo Abdeali Dodia; sleep 1; done"
+docker run -d ubuntu:18.04 /bin/sh -c "while true; do echo Abdeali Dodia; sleep 1; done"
+
+
+Q7:
+docker kill 03588425759b
+docker container prune
+docker rm $(docker ps -aq -f status=exited)
+
+
+Q8:-
+docker pull busybox
+docker run -it busybox /bin/sh
+docker commit 5fc65202a6b1 abdealidodia/my_box_abd:version1
+docker images
+docker run -it abdealidodia/my_box_abd:version1 /bin/sh
+docker commit --change "ENV DEBUG=true" cb34a3a94a25 abdealidodia/my_box_abd:version2
+docker inspect -f "{{ .Config.Env }}" abdealidodia/my_box_abd:version2
+
+
+
+Q9:
+
+Vim Dockerfile
+FROM alpine
+RUN touch /tmp/abd.txt
+
+
+docker build -t image1:v1 .
+docker build -t image1:v2 .
+docker build -t image1:v3 .
+docker tag image1:v1 abdealidodia/image1:v1
+docker tag image1:v2 abdealidodia/image1:v2
+docker tag image1:v3 abdealidodia/image1:v3
+
+docker login
+docker push abdealidodia/image1:v1
+docker push abdealidodia/image1:v2
+docker push abdealidodia/image1:v3
+
+
+docker pull abdealidodia/image1:v2
+docker rmi abdealidodia/image1:v2
+docker pull --all-tags abdealidodia/image1
+
+
+Q10:
+docker pull jenkinsci/jenkins
+
+docker run -d --name my_jenkins -p 7000:8080 jenkinsci/jenkins
+docker exec -it 17f91471072e /bin/bash
+cat /var/jenkins_home/secrets/initialAdminPassword
+
+Please provide the below link to your developers :-
+http://192.168.1.8:7000/

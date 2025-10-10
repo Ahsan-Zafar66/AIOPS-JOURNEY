@@ -1,0 +1,139 @@
+This lecture focus on creating directories, files, removing directories/files, fetching files, installing packages on worker nodes.
+
+
+Ansible do communication with remote nodes through:
+1) Ad-hoc Command
+2) Playbook
+
+Ad-hoc:
+It is used for simple task or single task execution to remote machine
+
+
+Playbook:
+It can run multiple task at same time
+
+
+
+Adhoc command:
+How to run command from master machine into worker/node machines
+
+# command to run commands from master into worker
+ansible machine_name -m shell -a command_to_run
+
+# example let's check centos8 ip which is my worker node from my master node which is ubuntu
+ansible centos -m shell -a "ifconfig"
+
+ansible --> use ansible, centos --> worker machin  name, -m --> module to run which is shell, shell --> run shell in that machine, -a argument to pass in shell which is command, "ifconfig" argument
+
+
+# using root user of worker node
+ansible centos -m shell "df -h" --user=root --ask-pass
+
+it will ask password for root user of centos machine. 
+
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+192.168.1.14 | CHANGED | rc=0 >>
+alnafi:x:1006:1008::/home/alnafi:/bin/bash
+
+
+ansible docker -m file -a "path=/home/aadmin/test_ansible state=directory mode=0777"
+
+# in ansible we can also use command keyword in place of shell, but command don't work in pattern matching
+ansible centos -m shell -a "df -h"
+
+# above same command using command keyword
+ansible centos -m command -a "df -h"
+
+ansible centos -m command -a "cat /etc/*-release" --> will not work, use shell
+
+
+WORKING WITH FILES THROUGH ANSIBLE:
+
+# following command will create a directory in remote machine (centos8) whose name is TestAnsible
+ansible all -m file -a "path=/home/jhon/TestAnsible state=directory"
+
+
+# now creating a text file in that path
+ansible all -m file -a "path=/home/jhon/TestAnsible/test.txt state=touch"
+
+
+# removing files
+ansible all -m file -a "path=/home/jhon/TestAnsible/test.txt state=absent"
+
+
+# giving or removing permissions from a file or directory, permissions are controlled by mode
+ansible all -m file -a "path=/home/jhon/TestAnsible/test.txt mode=0777"
+
+
+NOTE:
+I am working on a normal user on master machine and using a normal user ahsan on centos 8.
+Suppose, I need to create some files or remove some files from /etc directory, normal users are not permitted to make changes in this directory
+So, what we can do?
+We can add ahsan which is a normal user of centos 8 in the sudoers file. Now, ahsan has been entered in sudoers file with permissions
+
+ahsan ALL=(ALL)  NOPASSWD:ALL
+
+now we can use -b argument with our commands.
+
+# command to make files or remove file
+ansible centos -m file -a "path=/etc/testfile.txt state=touch mode=777" -b
+
+-b b does the same thing if we ar ein centos 8 ans using ahsan, sudo touch /etc/testfile.txt
+
+Installation of packages on remote machines:
+# you can install package in two ways
+ansible centos -m shell -a "yum install zip" -b --> -b for sudo
+
+
+# other way
+ansible centos -m yum -a "name=zip state=present" -b
+
+# uninstallation
+ansible centos -m yum -a "name=zip state=absent" -b
+
+# updating
+# uninstallation
+ansible centos -m yum -a "name=zip state=latest" -b
+
+# for ubuntu
+ansible ubuntu -m apt -a "name=zip state=absent" -b
+
+
+
+TRANSFERING FILES USING ADHOC COMMAND:
+copy --> when we copy dfile locallay
+
+scp --> when we copy files from one system into another
+rsync --> remote copy 
+
+
+# command to transfer files from master into worker
+ansible centos -m copy -a "src=/home/jhon/master.txt dest=/home/ahsan" -b
+
+# copying content directly into  afile in worker node, it will overwrite
+ansible centos -m copy -a "content='Hello this is ahsan' dest=/home/ahsan/master.txt" -b
+
+# creating backup of old file and copying content directly into file in worker node, it will overwrite
+ansible centos -m copy -a "content='Hello this is ahsan' dest=/home/ahsan/master.txt backup=yes" -b
+
+
+# fetching files from worker node into master node, now source will be node and destination will be master machine
+ansible centos -m fetch -a "src=/home/ahsan/master.txt dest=/home/jhon/" -b
+
+not only master.txt is copied, a new directory in master machine is created whose name is worker node ip address, and complete path and file is fetched like
+192.168.43.63 --> home --> ahsan --> master.txt
+
+above is the format in which file is fetched
+
+but above way is not good, in which multiple directory structure is created.
+
+# command to fetch files without directorry structure
+ansible centos -m fetch -a "src=/home/ahsan/master.txt dest=/home/jhon/ flat=yes" -b
+
+# copying files with machine ip mentioned and our name of file
+ansible centos -m fetch -a "src=/home/ahsan/master.txt dest=/home/jhon/{{inventory_hostname}}_master.txt flat=yes" -b
+
+inventory_hostname --> ip address of centos machine
+
+
+

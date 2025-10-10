@@ -1,0 +1,155 @@
+XPATH Axes :-
+
+1. Ancestor
+2. parents
+3. Sibling
+4. Child
+5. Descendant
+
+
+
+Self :-
+gmail.com
+
+//div[@class='rFrNMe N3Hzgf jjwyfe QBQrY zKHdkd sdJrJc Tyc9J CDELXb']
+
+//div[@class='rFrNMe N3Hzgf jjwyfe QBQrY zKHdkd sdJrJc Tyc9J CDELXb']/self::div
+
+Ancestor:-
+Select all ancestors (Parents , grandparents) of the current elements
+
+A -->
+B --> current
+
+
+Means top of elemetns:-
+//div[@class='rFrNMe N3Hzgf jjwyfe QBQrY zKHdkd sdJrJc Tyc9J CDELXb']/ancestor::div
+
+
+//div[@class='rFrNMe N3Hzgf jjwyfe QBQrY zKHdkd sdJrJc Tyc9J CDELXb']/parent::div
+
+
+
+Descendant :0
+Select all descendant (Childer , grand childer , etc )
+
+//div[@class='rFrNMe N3Hzgf jjwyfe QBQrY zKHdkd sdJrJc Tyc9J CDELXb']/descendant::*
+
+//div[@class='rFrNMe N3Hzgf jjwyfe QBQrY zKHdkd sdJrJc Tyc9J CDELXb']/child::div
+
+//div[@class='aXBtI Wic03c']
+
+//div[@class='aXBtI Wic03c']/div[1] ---> Sibling
+
+
+
+//div[@class='aXBtI Wic03c']/div[3]
+
+
+//div[@jsname='dWPKW']
+
+
+
+//div[@jsname='dWPKW']/div[@jsname='Vsb5Ub']  --> Child
+
+//div[@jsname='dWPKW']/div[@jsname='Vsb5Ub']/div/div/div[@class='Xb9hP']   ---> sibling
+
+
+//div[@jsname='dWPKW']/div[@jsname='Vsb5Ub']/div/div/div[@class='Xb9hP']/parent::div
+
+
+
+
+Preceding-sibling :-
+Select karta hain sibling ko lekin current elemwetns ke alava hi karega
+
+
+//div[@class='aXBtI Wic03c']
+
+
+
+
+//div[@class='aXBtI Wic03c']/div/preceding-sibling::div
+
+
+
+//div[@class='aXBtI Wic03c']/div/preceding-sibling::*
+
+
+
+Follwoing-siblings :-
+select karta hain sab sibling ko lekin current ke baad hi select karega
+
+//div[@class='aXBtI Wic03c']/div/following-sibling::div
+
+
+
+preceding :-
+Select all node that appear before the current node in the documents
+
+https://dev.alnafi.com/sign-up
+//input[@id='password']
+
+
+//input[@id='password']/preceding::input[@id='email']
+
+
+Following :-
+Select all the nodes after the closing tag of the current.
+
+ID =confirmPassword
+
+//input[@id='password']/preceding::input[@id='confirmPassword']   --> preceding
+
+//input[@id='password']/following::input[@id='confirmPassword']
+
+
+
+
+
+#########################
+Preceding and preceding-sibling
+
+
+//label[@for='userName']/preceding::div
+
+
+
+
+//input[@name='userName']
+
+
+
+//input[@name='userName']/preceding-sibling::*
+//input[@name='userName']/preceding::div
+
+
+
+Following and follwoing-sibling
+
+//input[@name='userName']/following-sibling::*
+
+//input[@name='userName']/following::div
+
+
+Hot key point diffrent :-
+Follwoing can work with siblings's child but following-sibling only travese between sibling --> After node
+preceding can work with siblings's child but preceding-sibling only travese between sibling --> Before node
+
+
+
+2. Abosolate path :-
+
+
+
+
+
+
+
+
+
+
+
+
+
+

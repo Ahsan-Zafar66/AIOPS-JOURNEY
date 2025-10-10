@@ -1,0 +1,49 @@
+when we run a container from an image, when container stops or killed data or workdone is LOST
+
+So, we do not want our data to be lost.
+
+Docker Volume:
+we need to store data permanently, our containe ris removed killed stopped oe etc data is not lost at any cost
+
+we can work in a container and then create image from this container, and this container data will be present in the new image created.
+But above way is not very much suitable.
+
+So we need to find a storage where we can store the container data
+
+Docker Storage Types:
+1. Volumes (important)
+2. Bind Mount (important)
+3. tmpfs (not important)
+
+
+Volumes:
+we have a container and theri is a docker area. we connect the container with the docker area. Now, we can use the docker area. 
+This is volume connection of container with docker area
+
+Bind Mount:
+their are file system in docker area. Connection of container with file system inside docker area is Bind Mount 
+bind mount is also known as docker bind
+in bind mount there is no docker area, data is direclty stored in file systems
+
+
+
+tmpfs:
+Container data is stored in RAM, is tmpfs
+
+docker area is in base machine in virtual box
+
+
+docker area is in docker home. Docker home is in docker database.
+
+# docker database path
+cd /var/lib/docker/volumes
+
+# docker servic path
+vim /lib/systemd/system/docker.service
+
+# docker socket path
+vim /lib/systemd/system/docker.socket
+
+
+# docker images path
+cd /var/lib/docker/overlay2/imagedb/content/sha256 --> in this path there are images stored

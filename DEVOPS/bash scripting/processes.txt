@@ -1,0 +1,19 @@
+ps --> to show your processes
+
+ps -x --> details of proceses
+
+ps s --> sleeping processes
+
+ps r --> running processes
+
+pstree --? to see all the structure of processes in tree form, helps in monitoring of system
+
+
+printenv ----> to see all the environment
+
+printenv USER --> to see user in printenv
+
+set | less --> show in alphabateical order
+
+
+alias --> to see aliases and make alias

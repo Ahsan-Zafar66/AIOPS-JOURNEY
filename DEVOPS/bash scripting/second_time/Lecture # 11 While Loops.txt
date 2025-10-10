@@ -1,0 +1,53 @@
+Interview related question.
+
+How to read a file in bash scripting
+
+Method # 1
+file="names.txt"
+
+while read line
+do
+	echo "$line"
+done < $file
+
+Method # 2
+
+cat names.txt | while read line
+do
+	echo "$line"
+done
+
+=====================
+How to take output of a command line by line?
+
+ls -ltrh | while read line
+do
+	echo "$line"
+done
+
+=============
+
+Interview question read csv file and print only ip addresses
+
+file server.csv
+1,Ansible,192.168.1.8
+2,Node1,192.168.1.9
+3,Node2,192.168.1.10
+4,Node3,192.168.1.11
+
+#!/bin/bash
+file="/root/bash/lect11/server.csv"
+cat $file | while IFS="," read var1 var2 var3
+do
+	echo "$var3"
+done
+
+OR
+
+#!/bin/bash
+file="/root/bash/lect11/server.csv"
+while IFS="," read var1 var2 var3
+do
+	echo "$var3"
+done < $file
+

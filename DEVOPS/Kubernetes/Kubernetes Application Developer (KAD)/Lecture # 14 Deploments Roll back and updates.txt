@@ -1,0 +1,124 @@
+Rollout and Versioning:
+Deployments offer you updating your images being used to make containers or other update.
+
+Supose you made a deployment where nginx:1.2.2 is being used, you have one replicaset and 5 pods with this image.
+New nginx image comes and you want to make new pods with image nginx:1.2.3, there are two ways to do this
+
+First way:
+all your old pods are destroyed and replicaset is down
+new replicaset with new pods containing new version of nginx is made
+
+Second way:
+your old pods die one by one and replacing themselves with new pods.
+If one old pod die, one new pod in new replicaset is created, then second old pod dies second new pod in new replicaset is created.
+
+
+
+NOTE:
+old pods are in one replicaset, when new pods will be created they will be created in a separate replicaset not in previous one or old one.
+
+Summary of commands:
+create:
+# creating  a deployment
+kubectl create -f deployment.yml 
+
+get:
+# fetching deploymnet
+kubectl get deployments
+
+update:
+kubectl appy -f deploymeny.yml
+
+# updaing the deployment pods with a new image rolling out
+kubectl set image deployment myfirst-deployment container_name=nginx:1.9.1
+
+Status:
+# checking status of roll out
+kubectl rollout status deployment first-deployment
+
+# checking history of roll outs
+kubectl rollout history deployment first-deployment
+
+Rollback:
+# now rolling back to old version, or moving back from new version to old version
+kubectk rollout undo deployment/first-deployment
+
+ 
+
+Deployments Hands On:
+
+# my deployment file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+  labels:
+    app: deployment-app
+    type: development
+spec:
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: deploy-pod
+    spec:
+      containers:
+      - name: deploy-container
+        image: nginx:stable
+  selector:
+    matchLabels:
+      app: deploy-pod
+
+
+
+# making the deployment
+kubectl apply -f deployment.yml
+
+
+# now checking the pods, make sure to note the replicaset randon value
+kubectl get pods
+
+
+# now lets change the image from nginx:stable to nginx:latest
+kubectl edit deploy my-deployment --record=true
+
+# or you can change image thorugh imperative command
+kubectl set image deploy my-deployment container_name=nginx:1.23.3
+
+we are editing the deployment name my-deployment and keeping its record, change the image in file and note changes.
+
+# getting pods agan
+kubectl get pods
+
+you will se eolder pods will be terminated and new pods in new replicaset will be created. note the previous replicaset random value and after editing image replicaset value
+
+# get pods again after some time to see that replicaset will be new
+kubectl get pods
+
+
+# now lets shift back to nginx:stable image from nginx:latest
+kubectl rollout undo deploy deployment
+
+aboe command will roll back the pods to previous version of nginx which was nginx:stable
+
+# note the replicaset and pods now
+kubectl get pods
+
+you will see replicaset will the first one in which older pods were create first time with image nginx:stable but pods will be new, because pods was destroyed but replicaset was there.
+So, now we have successfully rolled back the appliucation to its older version in it older replicaset with new pods
+
+# to see how many changes you have done to deployment
+kubectl rollout history deploy my-deployment
+
+# to see details about a specific revision, like show the details of second revision
+kubectl rollout history deploy my-deployment --revision=2
+
+
+# if you make an update and image is not found, deployment has rolling update strategy by default, it will terminate one old pod and try to create on new pod, as image os not fpund new pod will not be created, and you still have 4 old pod and your app is working.
+
+
+# command to roll back to a specific revision, suppos eyou made a lot of changes to your deployments and you did 5 revisions. you are standing at 5th revision but you want to roll back to 2nd revision or point of update, you can do it with folloiwng command
+kubectl rollout undo deploy my-deployment --to-revision=2
+
+# make sure to check at which revision number lies youor desired state, by using rollout history
+

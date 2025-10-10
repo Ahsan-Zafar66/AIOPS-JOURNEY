@@ -1,0 +1,2 @@
+Ansible is a configuration, automation and software deployment tool.
+

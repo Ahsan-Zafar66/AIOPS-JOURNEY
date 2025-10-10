@@ -1,0 +1,20 @@
+Docker containers:
+ubuntu, centos, fedora, solaris, suse, parrot , kali and etc
+they all are flavors of linux made for different needs BUT they use linux kernel at the root.
+
+you can deply containers of docker each with a different flavor of linux, on linux os.
+Because docker containers use host os kernel
+
+you cannto deploy a container with windows os if the host os is linux.
+because kernel of windows and linux are different. and docker contianers use host os kernel
+
+In the same way you cannot deploy linux containers on wndows os.
+becuas econtainer will use host kernel and host is wondows container os is linux so they are not compatible
+
+
+
+What is orchestration:
+the process of automatically deploying and managing containers is known as container orchestration.
+
+orchestration tool or platform also ensures connectivity between containers.
+

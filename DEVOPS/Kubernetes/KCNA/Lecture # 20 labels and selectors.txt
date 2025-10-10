@@ -1,0 +1,14 @@
+Label: this is a car and it has red color
+this is a truck and it has green color.
+bicycles are green color
+truck are of yellow color as well
+
+Selector:
+bring everything which is green it will bring truck and bicycles
+
+bring truck and they should be green
+
+
+So, in kubernetes labeling is done to get the pods which are executing desired task
+For example, 
+bring pods of development environment

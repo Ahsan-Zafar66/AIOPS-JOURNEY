@@ -1,0 +1,109 @@
+Ansible master do communication with worker or worker nodes through python.
+What if python is not installed in worker nodes? Will ansible still be able to do the communication?
+Yes, by using raw command. When we use shell command or module it uses python for communication,
+When python is not available in worker nodes, raw module do communication virtually through socket.
+
+
+Ansible Playbook:
+A playbook in ansible is set of instruction
+instruction write in yml file --> yaml file --> yml or yam --> its recommended --> yml
+
+yml script performs action in worker node to run task that are specified
+
+playbook is compose which plays or run set of tasks
+
+Theory of playbook:
+hosts file ---> the list of worker or remote nodes
+
+variable --> data can be customized through variables
+
+tasks --> what action you want? Installation of packages? Service? What you want
+
+handlers --> notifying other tasks
+
+all things are writted in ansible playbook, which is run to execute the yml script and perform tasks that are mentioned
+
+
+
+Ansible Playbook VS Ansible AdHoc Command:
+Ad-hoc command are useful for one time task, while AP is usefull for multiple task
+Ad-hoc command small changes, multiple changes AP
+
+Ansible playbook is structure and organized your automation, when you have complex requirement you can use ansible playbook rather then adhoc command
+
+Adhoc command is used for troubleshooting as it gives quick results.
+
+
+yml file:
+yml is not a markup language.
+it is human readable data serialization.
+
+when you use yml, you need to use three dashes in the beginning of file, it is a good practice.
+we write task in ansible playbook
+
+# example
+vim apache2.yml
+
+---
+- name: Installing apache package
+  yum:
+    name: httpd
+    state: latest
+
+
+
+
+# Yaml file content for installing apache/httpd in rhel
+
+# starting yml file
+--- 
+
+# name of yml file
+- name: This yaml file focus on installation of httpd
+  hosts: centos # defining the worker node in which httpd will be installed
+  become: yes # to run command with sudo privileges
+  tasks:
+    - name: Httpd installation # task name or description
+      yum:  # task to perform
+        
+        name: httpd # package name which is t be installed
+        state: present # state of package, want to install or remove?
+
+
+
+# command to run ansible playbook
+ansible-playbook -i hosts apache.yml
+
+# if ssh key is intalled then
+ansible-playbook
+
+
+==========================================================================
+# multiple packages at once and using key value
+---
+- name: this file installs multiple package
+  hosts: centos
+  become: yes
+  tasks:
+    - name: Installation of zip
+      yum: name=zip state=present
+    - name: Installation of wget
+      yum: name=wget state=present
+
+===========================================================================
+
+# installation using shell
+# multiple packages at once and using key value
+---
+- name: this file installs multiple package
+  hosts: centos
+  
+  tasks:
+    - name: Installation of zip
+      shell: "sudo yum install zip -y"
+    - name: Installation of wget
+      shell: "sudo yum install wget -y"
+
+
+
+===========================================================================

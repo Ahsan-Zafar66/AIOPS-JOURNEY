@@ -1,0 +1,65 @@
+Multicontainers mean more than one (not same image) containers in a pod.
+
+If both containers are from same image then they cant exist.
+
+Multicontainers can only exist in a pod if they are from different image and serve different purposes
+
+
+Types of Multicontainers:
+1) Sidecar
+2) Ambassador
+3) Adapter
+
+A sidecar container performs a task to assist the main container
+for example: main container serve files from a shared volume and sidecar container periodically updates those files
+
+
+An ambassador container proxies network traffic to and/or from the main container
+example: the main container reaches out to a service on port 80, but the port changes to 81. An ambassador container proxies traffic from port 80 to 81 making it configurable
+
+
+An adapter container transforms the main containers output in some way
+example: The main container outputs log data to the container log in a non-standard format without timestamps. the adapter transforms the data into a standard format by adding timestamps.
+
+
+
+Configuration of Sidecar Container:
+
+# creating a yaml file for multicontainers
+vim sidecar-container.yml
+
+# content of ile
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-container-pod
+spec:
+  containers:
+  - name: main-container
+    image: busybox:stable
+    command: ['sh','-c', 'echo "My name is ahsan and I am learning Kubernetes" > /output-dir/data.txt; while true; sleep 5; done']
+    volumeMounts:
+      name: shared-volume
+      mountPath: /output-dir
+  - name: sidecar-container
+    image: busybox:stable
+    command: ['sh','-c','while true; do cat /input-dir/data.txt; sleep 5; done']
+    volumeMounts:
+      name: shared-volume
+      mountPath: /input-dir
+  volumes:
+  - name: shared-volume
+    emptyDir: {}
+
+
+
+# now creating pod
+kubectl apply -f sidecar-container.yml
+
+
+# now see description of pod
+kubectl describe pod sidecar-container-pod
+
+# now we will see logs of a specific contaner in a pod, we need to mention the pod then the container inside the pod if there are multiple containers
+kubectl logs sidecar-container-pod -c
+

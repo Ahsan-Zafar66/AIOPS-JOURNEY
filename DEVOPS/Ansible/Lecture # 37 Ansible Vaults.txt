@@ -1,0 +1,24 @@
+Ansible Vault:
+It secures the yml file and its content with a password.
+After securing it neither you can read it, edit it or run it without password
+
+
+# command to secure yml file
+ansible-vault encrypt sample.yml
+
+# now see the file
+cat sample.yml
+
+# command to run the file secured with vault
+ansible-playbook task.yml --ask-vault-pass
+
+
+# command to read file like cat command does
+ansible-vault view sample.yml
+
+
+# command to decrypt the file, now it will be a normal file
+ansible-vault decrypt sample.yml
+
+# taking ansible vault help
+anisble-vault --help

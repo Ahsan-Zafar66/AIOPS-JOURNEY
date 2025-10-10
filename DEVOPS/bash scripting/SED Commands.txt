@@ -1,0 +1,193 @@
+Sed command is also one type of filter and sed command also use one kind of stream editor
+
+Sed useL
+1. Display contents
+2. Find
+3. Replace
+4. Modification
+
+
+Sed syntax
+
+filename | sed [options]
+
+sed [option] filename
+
+see the sed_command folder in centos in path /etc/bash/sed_commad
+
+----------------
+
+cat sed.txt | sed 'p' --> it will show every line twice
+
+cat sed.txt | sed '3p' ---> bring everything but the mentioned line twice. In this case the 3rd line.
+
+cat sed.txt | sed -n '$p' --> will bring last line
+
+
+cat sed.txt | sed -n '3p' --> it will show the 3rd line now only
+
+
+cat sed.txt | sed -n '1,5p' --> it will show from 1st to five line data
+
+cat sed.txt | sed -n '5,$p' --> it will show data from 5th line till last line
+
+cat -n sed.txt | sed -n '1~2p' --> will show lines that have odd index
+
+cat -n sed.txt | sed -n '0~2p' --> will show even number lines
+
+# interview question
+cat -n sed.txt | awk 'NR>=3 && NR<=8 {print $0}' --> printing 3-8 lines using awk command
+
+cat -n sed.txt | sed -n '/ahsan/,$p' --> it will bring line containing ahsan and till the end 
+cat -n sed.txt | sed -n '/ahsan/p' -->  will bring all lines containing the mentioned pattern, here it is ahsan 
+
+
+SEARCHING BY KEYWORD
+p --> print or show lines
+d --> delete or hide these lines
+
+cat sed.txt | sed '/ahsan/p' --> searching for ahsan directly
+
+name=ahsan
+
+cat sed.txt | sed '/$name/p' --> it will not work because calling a variable needs double quotation marks
+
+cat sed.txt | sed "/$name/p" --> it will work now.
+
+cat -n sed.txt | sed -n '1,10d' --> it will not show anything because we used -n in the condition
+
+# to show lines while skipping other lines we don;t use -n
+cat -n sed.txt | sed '1,10d' --> it will bring all data except 1-10 lines in the data.
+
+# -i directly effects the file, so be carefule while performing any function with it
+sed -i '1,10d' sed.txt --> delete 1-10 lines in fle sed.txt, rememeber to use i and this syntax
+
+sed -i.bck '/ahsanzafar/d' sed.txt --> delete ahsanzafar line and store that data in a back file, it will create backup of the sed.txt with all data but the sed.txt original file will not have the line containing ahsan
+
+sed -i.bck '/ahsanzafar/!d' sed.txt ---> it will keep the line containing ahsanzafar and will delete all other lines
+
+
+===============
+
+Commands to replace data in a file
+-i is used when you want to make changes in the file and save them
+
+cat sed3.txt | sed 's/ahsanzafar/AhsanZafar/' ---> s stands for subtitute, subtitute ahsanzafar by AhsanZafar, but i original file change will not be made
+
+sed -i 's/ahsanzafar/AHSAN ZAFAR/' sed3.txt --> to make change in original file
+
+sed -i 's/ahsanzafar/AHSAN ZAFAR/g' sed3.txt --> g stand for group to replace all ahsanzafar in that file
+
+cat sed3.txt | sed -n 's/ahsan/AHSAN/2' --> 2 means change the second ahsan in a line with AHSAN. It will ignore the first ahsan. In every line where there are two ahsan, the second one will be changed and first one will remain same in each line
+
+
+# i means insert and 1i means insert at first line
+sed -i '1i ahsan is inserting data' sed3.txt --> to insert a line into data, to inser in a csv file you can use delimiter like name,age,profession
+
+# a means after, 2a means after 2nd line
+sed -i '2a 'ahsan is inserting data after second line' sed3.txt --> a refers to after mentioned line, so data will be inserted in 3rd line which comes after 2nd line
+
+sed -i '/ahsan/d' sed3.txt --> delete the line contaning ahsan
+
+sed -i '$d' sed3.txt --> remove the last line whether a space or written line
+
+---------------------
+
+cat sed3.txt | sed -n '/ahsan[1,2]/p' ----> if you have ahsan1 and ahsan2 in your file, it will show them both.
+
+cat sed3.txt | sed -n '/ahsan*/p' --> to bring all lines containing ahsan
+
+cat sed3.txt | sed -n '/^ahsan/p' --> show lines where ahsan appears in the beginning of the line
+
+cat sed3.txt | sed -n '/ahsan$/p' --> show lines where ahsan appear at the last of line
+
+===========
+
+Interview question deleting empty lines in a file
+
+sed -i '/^$/d' sed3.txt --> ^$ it refers to empty lines
+
+sed -i '/^#/d' sed3.txt --> removing all line with # from a file.
+
+cat /etc/passwd | head -5 | sed -n '/daemon\:x\p' -- to extract a text or line string are written with / and special characters with \. this code will extract line having "daemon:x"
+
+
+# for space \s, for colon \: for any special character in pattern use \
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

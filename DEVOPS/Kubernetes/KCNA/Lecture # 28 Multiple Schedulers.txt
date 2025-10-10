@@ -1,0 +1,25 @@
+Default Schedulers do the placement of pods in kubernetes
+
+Multiple schedulers in k8s refer to using one or more than one scheduler for determining where pods are placed on the nodes in the cluster
+
+Use cases:
+Special preferences: Different Schedulers can have specific preferences based on node properties, geograpgy or other factors
+Resource Optimization: Utilize custom schedulers to optimize resource allocation for specific workloads or hardware configurations.
+Combining schedulers: K8s allows the use of both default and custom schedulers simultaneously
+
+Advantages:
+Customized pods placement: Tailor pod placement based on the application requirements or HW specifications.
+
+
+Enhanced Resource management: Optimize resource utilization and distribution within the cluster
+
+
+
+
+Do we need our own schedulers than the one provided by kubernetes
+
+
+One scheduler may do the allocation of pods in nodes
+
+Another scheduler may monitor the resources used by pods 
+

@@ -1,0 +1,76 @@
+this lecture is totally opposite of previous lectures, where we defined linux commands in a json file.
+read the json file in python, and ran the commands.
+
+
+Now, we will run commands directly in ansible playbook
+
+
+---
+- hosts: all
+  tasks:
+  - name: Collecting hostname 
+    shell: "hostname | tr -d '\n'" # running command in ansible playbook and storing its output then calling output through debug command
+    register: hostname_details
+  - debug:
+      var: hostname_details.stdout
+  - name: Collecting IP address
+    shell: "hostname -I | awk '{print $1}' | tr -d '\n'"
+    register: ip_details
+  - debug:
+      var: ip_details.stdout
+  - name: Collecting the disk storage output
+    shell: "df -h | grep -v 'tmpfs'"
+    register: df_details
+  - debug:
+      var: df_details.stdout_lines
+
+
+
+====================================
+Now, we will save the output of commands in a csv file.
+
+
+
+
+
+
+
+
+
+---
+- hosts: all
+  tasks:
+  - name: Adding the header to CSV file 
+    lineinfile:
+      path: /home/aadmin/OS_OUTPUT.csv
+      line: "HOSTNAME,IP ADDRESS,DF -h (mount details)"
+      create: yes 
+  - name: Collecting hostname 
+    shell: "hostname | tr -d '\n'"
+    register: hostname_details
+  - debug:
+      var: hostname_details.stdout
+  - name: Collecting IP address
+    shell: "hostname -I | awk '{print $1}' | tr -d '\n'"
+    register: ip_details
+  - debug:
+      var: ip_details.stdout
+  - name: Collecting the disk storage output
+    shell: "df -h | grep -v 'tmpfs'"
+    register: df_details
+  - debug:
+      var: df_details.stdout_lines
+  - name: Save data to CSV file 
+    lineinfile:
+      dest: /home/aadmin/OS_OUTPUT.csv
+      line: "{{ hostname_details.stdout }},{{ip_details.stdout }},\"{{ df_details.stdout }}\""
+      delimiter: ','
+  - name: Fetchinf the /home/aadmin/OS_OUTPUT.csv file to ansible master machine (/home/aadmin/ansible/OS_OUTPUT.csv)
+    fetch: 
+      src: /home/aadmin/OS_OUTPUT.csv
+      dest: /home/aadmin/ansible/OS_OUTPUT_{{ansible_hostname }}_{{ansible_date_time.hour}}{{ansible_date_time.minute}}.csv
+      flat: yes
+     
+     
+
+

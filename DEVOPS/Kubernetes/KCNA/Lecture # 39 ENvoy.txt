@@ -1,0 +1,19 @@
+We have a application such as amazon.com.
+
+People come here to buy things.
+
+Each individual has a account on Amazon, you log in through that account and do shopping
+
+Previously developer use to design the application alon with user authentication.
+
+Now, companies have come that can do authentication on businesses behalf.
+
+When we have a main container containing the application, we have a side container to do authentication and other things.
+
+Now, authentication is handeled by proxies. 
+
+One is envoy this is a company that offers business the proxy services, it do authentication on the behalf of company.
+
+
+Like amazon is running, authentication od users is done by envoy proxy which is hosted or working in a side container.
+

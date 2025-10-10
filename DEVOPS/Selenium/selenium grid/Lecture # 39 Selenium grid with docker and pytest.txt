@@ -1,0 +1,374 @@
+Once a node is connected with hub you wil run scripts in node machines.
+
+Start thr hub then register the node
+
+we are working on file test_lecture_32.py in selenium grid directory
+
+
+Now, we will work selenium grid with docker:
+Go to the machine where docker is installed mine is ubuntu in my virtual box
+
+pull selenium/chrom-standalone image from docker hub
+
+# now after pullling the image you need to create container
+docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/chrom-standalone
+
+-p for port mapping host_machine:container_port
+
+-v for volume binding host_binding:container_binding
+
+
+# now check if selenium grid is live on 4444 port
+check machine ip using ifconfig and copy ip address of enp03s: 192.168.43.26
+
+now run on browser: http://192.168.43.26:4444
+
+# now copy use the 192.168.43.26 as hub url and note down the specifications of the chrome browser and OS (linux in this case)
+
+after running script you can go to hub and see sessions running in nodes, to see a session click on node and enter password secret to see you results
+
+# the ip address displayed in selenium grid wndow along browser is the ip address of node.
+# the ip address that you used along with port to open selenium grid page on chrome it is the hub ip address
+
+
+# kill the above container now run a new container with vnc port
+# ADDING VNC PORT AS WELL
+docker run -d -p 4444:4444 -p 7900:7900 -v /dev/shm:/dev/shm selenium/chrom-standalone
+
+to assess VNC: 192.168.43.26:7900   VNC password:secret
+
+to assess hub: 192.168.43.26:4400 
+
+
+# when you run your script you can see now on vnc or on hub both sites
+
+
+
+
+# running grid with docker compose
+# making a docker compose file
+vim docker_selenium.yml
+
+# content of file
+version: "3"
+services:
+	chrome:
+		image: selenum/standalone-chrome
+		privileged: true
+		hostname: chrome
+		volumes:
+			- /dev/shm:/dev/shm
+		ports:
+			- "4444:4444"
+			- "7900:7900"
+
+# now save the baove file and run using following command
+docker-compose -f docker_selenium.yml up
+
+# now you server of selenium grid is on hub can be accessed using 4444 port and vnc with 7900 port
+
+
+
+
+
+
+
+=====================================================
+Video Lecture Notes
+You need to work on your pytest project , if not then you need to setup everything on your project, If any doubt for pytest so you need naviagate our pytest lecture
+
+
+
+
+import pytest
+from allure_commons.types import AttachmentType
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+import  time
+
+def setup_function():
+global driver
+hub_url = "http://192.168.1.7:4444/wd/hub"
+driver = webdriver.Remote(command_executor=hub_url , desired_capabilities={"browserName":"chrome"})
+driver.get('https://alnafi.com/auth/signin')
+driver.maximize_window()
+
+def teardown_function():
+driver.quit()
+
+def my_cred():
+return [
+('abdeali@gmail.com', 'abdeali@123'),
+('ali@gmail.com', 'ali@123'),
+('abd@gmail.com', 'abd@123')
+]
+@pytest.mark.parametrize("username,password",my_cred())
+def test_login(username,password):
+print("My pytest login")
+driver.find_element(By.ID,'Username/ Email').send_keys(username)
+time.sleep(10)
+driver.find_element(By.ID, 'Password').send_keys(password)
+time.sleep(10)
+
+
+
+pytest.ini
+
+[pytest]
+addopts = -n3
+markers =
+phase1
+phase2
+
+
+
+#Now you need to copy chromedriver or firefox driver at your pytest project
+
+Check hub location then will show all three mode a=connection will be active.
+
+
+##########################################################################
+
+Selenium grid integrated with docker
+
+
+Website :-
+
+https://hub.docker.com/r/selenium/standalone-chrome
+
+you can pull your docker image from docker hub :-
+#docker pull selenium/standalone-chrome
+
+# docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome
+
+now you can check your docker client ip address and access from your node machine.
+
+
+http://192.168.1.11:4444/ui
+
+
+Now we will run our selenium code from your node machine :-
+import time
+
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+
+hub_url = "http://192.168.1.11:4444/wd/hub"
+driver = webdriver.Remote(command_executor=hub_url , desired_capabilities={"browserName":"chrome"})
+
+driver.get("https://alnafi.com")
+
+driver.maximize_window()
+driver.implicitly_wait(5)
+print(driver.title)
+time.sleep(2)
+driver.quit()
+
+###
+Then you can check node session at hub location.
+http://192.168.1.11:4444/ui
+
+session --> connect -->
+password --> secret
+
+#################
+Please remove your chrome container avoid to conflict
+#docker pull selenium/standalone-firefox
+
+#docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-firefox
+
+
+
+NODE CODE :-
+import time
+
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+
+hub_url = "http://192.168.1.11:4444/wd/hub"
+driver = webdriver.Remote(command_executor=hub_url , desired_capabilities={"browserName":"firefox"})
+
+driver.get("https://alnafi.com")
+
+driver.maximize_window()
+driver.implicitly_wait(5)
+print(driver.title)
+time.sleep(2)
+driver.quit()
+
+
+
+Then you can check node session at hub location.
+http://192.168.1.11:4444/ui
+
+session --> connect -->
+password --> secret
+
+
+#########################
+Now vanish everything from your container
+
+We will open vnc port in same image
+
+
+# docker run -d -p 4444:4444 -p 7900:7900 -v /dev/shm:/dev/shm selenium/standalone-firefox
+
+VNC Password : secret
+
+CODE : import time
+
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+
+hub_url = "http://192.168.1.11:4444/wd/hub"
+driver = webdriver.Remote(command_executor=hub_url , desired_capabilities={"browserName":"firefox"})
+
+driver.get("https://alnafi.com")
+
+driver.maximize_window()
+driver.implicitly_wait(5)
+print(driver.title)
+time.sleep(30)
+driver.quit()
+
+
+Now you can check both URL :-
+VNC --> http://192.168.1.11:7900/
+HUB --> http://192.168.1.11:4444
+
+
+
+############################
+
+
+
+
+Now we will create docker compose
+venish everything
+
+
+root@abdealidodia:~/lecture39_selenium_grid# cat docker-compose-sel_grid.yml
+version: "3"
+services:
+chrome:
+image: selenium/standalone-chrome
+privileged: true
+hostname: chrome
+volumes:
+- /dev/shm:/dev/shm
+ports:
+- "4444:4444"
+- "7900:7900"
+
+
+
+
+root@abdealidodia:~/lecture39_selenium_grid# docker-compose -f docker-compose-sel_grid.yml up
+WARNING: The Docker Engine you're using is running in swarm mode.
+
+
+
+http://192.168.1.11:4444/ui#
+
+
+CODE :-
+import time
+
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+
+hub_url = "http://192.168.1.11:4444/wd/hub"
+driver = webdriver.Remote(command_executor=hub_url , desired_capabilities={"browserName":"chrome"})
+
+driver.get("https://alnafi.com")
+
+driver.maximize_window()
+driver.implicitly_wait(5)
+print(driver.title)
+time.sleep(30)
+driver.quit()
+
+
+Now we need to down our docker-compose file
+
+#docker-compose -f docker-compose-sel_grid.yml down
+
+
+
+
+
+####################
+We are combining two image in docker-compose
+
+root@abdealidodia:~/lecture39_selenium_grid# cat docker-compose-sel_grid_two.yml
+version: "3"
+services:
+chrome:
+image: selenium/standalone-chrome
+privileged: true
+hostname: chrome
+volumes:
+- /dev/shm:/dev/shm
+ports:
+- "4441:4444"
+- "7901:7900"
+firefox:
+image: selenium/standalone-firefox
+privileged: true
+hostname: firefox
+volumes:
+- /dev/shm:/dev/shm
+ports:
+- "4440:4444"
+- "7900:7900"
+# docker-compose -f docker-compose-sel_grid_two.yml up
+#docker ps
+
+Firefox --> PORT --> 4440
+Firefox VNC --> PORT --> 7900
+
+
+Chrome PORT --> 4441
+Chrome VNC port --> 7901
+
+
+
+FREFOX :-
+###################
+
+Now we will run firefox code :-
+import time
+
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+
+hub_url = "http://192.168.1.11:4440/wd/hub"
+driver = webdriver.Remote(command_executor=hub_url , desired_capabilities={"browserName":"firefox"})
+
+driver.get("https://alnafi.com")
+
+driver.maximize_window()
+driver.implicitly_wait(5)
+print(driver.title)
+time.sleep(30)
+driver.quit()
+
+
+Now you can checkyour session with below URL :-
+
+http://192.168.1.11:4440/ui#
+http://192.168.1.11:7900/
+
+
+####
+You can do same as chrome it will access from node
+
+
+
+
+
+
+
+
+

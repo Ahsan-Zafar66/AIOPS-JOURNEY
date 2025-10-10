@@ -1,0 +1,76 @@
+Selenium Grid:
+It is a tool to do testing on multiple things at once or parallely,
+these things can be different browsers at the same time, multiple virtual machines where you want to do testing at once, or different OS
+
+
+Selenium Grid can be used to execute 
+same or different test scripts on
+multiple platforms and browsers
+concurrently so as to achieve distributed test execution.
+
+It allows running test cases in parallel
+thereby saving test execution time.
+It allows multi-browser testing.
+It allows multi-OS testing.
+It allows multi-platform testing (desktop, mobile).
+
+
+Selenim Components:
+Client where you write code or run
+Hub which is a control node, where you register you machines, ou browsers
+Nodes: these are machines, browsers where the code is executed
+
+So, flow is
+client --> hub --> nodes
+
+
+
+====================================
+Selenium Grid :-
+
+Selenium grid is a tools.
+
+it is distrbuted the test across mutliple physicall machine or virtual machines so that we can execute in pareller (Simutaneously) and manage from hub machine.
+
+
+paraller and sequance both supported.
+
+
+Diagram :-
+https://www.selenium.dev/documentation/grid/components/
+
+
+Selenium grid :-
+https://www.selenium.dev/downloads/
+
+
+Its setup of mutliple java files and class (method or function)
+
+jar --> java function
+
+exe --> code
+
+mkdir selenium_grid
+
+paste your download in this location
+
+
+you need to set your env variable in your machine
+
+
+set for JAVA
+
+you need to open your cmd --> C:\Users\AbdealiDodiya>java -version
+java version "1.8.0_211"
+Java(TM) SE Runtime Environment (build 1.8.0_211-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)
+
+
+Java download link :-
+
+https://www.oracle.com/in/java/technologies/javase/javase8-archive-downloads.html
+
+
+Myu java location : C:\Program Files\Java\jdk1.8.0_211
+
+

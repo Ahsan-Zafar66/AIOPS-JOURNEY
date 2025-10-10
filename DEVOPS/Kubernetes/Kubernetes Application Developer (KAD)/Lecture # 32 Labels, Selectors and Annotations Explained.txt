@@ -1,0 +1,10 @@
+# command to fetch pods with specific labels
+kubectl get pods --selector app=dev --> bring all pods which has label app=dev
+
+
+# anything which has label app=dev whether pod, replicaset, deployment, service and etc
+kubectl get all --selector app=dev --no-headers | wc -l
+
+
+# command to fetch anything with multiple labels
+kubectl get all --selector app=dev,tier=frontend --no-headers | wc -l

@@ -1,0 +1,80 @@
+Provision in IT means setting up IT infrastructure.
+
+
+Provision in vagrant:
+allows you to automatically install software
+modify configuration
+
+
+# go to Vagrant file
+vim vagrantfile
+
+# add the same ip address in network as we entered in public network
+host_ip: "192.168.43.103"
+
+
+# now install vim
+sudo apt-get update
+
+apt-get install vim
+
+# apt-get install apache2
+
+# if you get error got to
+vim /etc/gai.conf
+
+uncomment line precedence one which says for website error ipv4
+
+
+# check status of apache2
+service apache2 status 
+
+make sure apache2 is running
+
+
+
+# go to /var/www/html directory
+cd /var/www/html
+
+# take backup of index.html file
+mv index.html index.html_bkp
+
+
+# now create new index.html
+vim index.html
+
+# content of file
+<html>
+<h1> hello and welcome from vagrant apache2 server </h1>
+</html>
+
+# now go on any browser
+http://192.168.43.103
+
+apache2 use 8080 and 80 port by default
+
+# command to check if http (appache2) is working
+wget http://192.168.43.103
+
+======================
+# install php
+apt-get install php5
+
+# mysql package
+
+apt-get install php5-mysql
+
+# creat info.php file in /var/www/html
+
+content of fie
+<?php
+phpinfo();
+?>
+
+
+# now run
+http://192.168.43.103/info.php
+
+
+# install mysql
+apt-get install mysql-server

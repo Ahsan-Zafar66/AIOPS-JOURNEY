@@ -1,0 +1,8 @@
+Step # 1 
+create  auser in windows machine
+open run and type lusrmgr.msc
+it will open user management and now you can create a user
+
+make this new user the memeber of administator group. such as right click on user and click on properties. 
+go to member of section > add > advance > find > chose administrator
+remove the other group other than administrator

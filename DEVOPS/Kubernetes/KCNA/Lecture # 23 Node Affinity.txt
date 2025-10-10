@@ -1,0 +1,28 @@
+Node slector jo hai usy ham bta dety hain ky pod ko is node mn rakho, masla large medium.
+
+Likin somtimes hamari condition asis hoti hai, like NOT SMALL. Iska mtlb hai aisay node jinki node specifications small nhi hain kisi mn bhi dal do.
+Likin Node selector yahan fail ho jata hai. Usy Or ya and ki conditions smjht nhi atin.
+
+to is problem ko node affinity solve krta hai
+
+
+Node affinity:
+Node affinity is a k8s features that allows you to specify preference for scheduling pods onto particular nodes in the cluster
+
+Purpose:
+its used to influence pod placement based on node characteristics or constraints
+
+
+
+Node affinity is a concept in Kubernetes that allows you to control where your pods are scheduled based on the labels assigned to nodes. It’s a way of defining rules that determine which nodes a pod can or cannot run on.
+
+In simple terms, node affinity is like saying, "I want this pod to run only on nodes with certain characteristics."
+
+There are two types of node affinity:
+
+RequiredDuringSchedulingIgnoredDuringExecution: This means the pod must be scheduled on a node that satisfies the affinity rules. If no node meets the requirements, the pod won't be scheduled.
+
+PreferredDuringSchedulingIgnoredDuringExecution: This is a more relaxed rule. It specifies preferences, so the scheduler will try to place the pod on nodes that meet the affinity rules, but if no nodes match, the pod can still be scheduled elsewhere.
+
+Node affinity is often used when you want to place certain pods on specific types of nodes (for example, nodes with GPUs, specific hardware, or geographical location).
+

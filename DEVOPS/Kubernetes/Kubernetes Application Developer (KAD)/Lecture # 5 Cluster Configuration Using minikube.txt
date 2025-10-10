@@ -1,0 +1,90 @@
+we will create cluster thorugh minikube.
+
+Minikube is a single node cluster. it menas it has only one node in the cluster
+
+it uses virtual machines and hypevisor technology and use a flag --driver
+
+
+Step # 1
+Install minikube on linux by visiting minkuber kubernetes website on internet
+
+pixie kubernetes it is a tool to visualize kubernetes, from where you are getting traffic, like you can see things of your cluster
+
+kubecost is a tool that helpts you optimize your cost for kuberneters usage
+
+CNCF visit and see which tools are graduated
+
+
+step # 2 
+after installing minikube, you can create cluster with minikube and minikube offers a variety of drivers it can use for making cluster
+for example, virtual box, docker, qemu, podman and drivers as well
+
+# command to make a cluster with minikube and using docker as a driver
+minikube start --driver=docker
+
+
+
+# EXPLORE NODE
+kubectl get nodes
+
+# check minikube status
+minikube status
+
+# check dashboard
+minikube dashboards
+
+dashboard command creates a user interface for you where you can use GUI to do things
+
+# command to check pods
+kubectl get pods
+
+# command to check deployments
+kubectl get deployments
+
+
+
+How to make cluster using hypervisor mean virtual machine manager suh as virtual box?
+
+Step # 1
+Stop docker desktop before using any hypervisor
+to stop docker desktop is necessary because it uses virtualization technology to run.
+When you run virtual bos it also uses virtualization technology, if docker desktop is running then virtualization is being used by docker desktop.
+So, to make virtual box use the virtualization you need to stop docker desktop
+
+
+step # 2
+# create cluster in virtual box
+minikube start --driver=virtualbox
+
+
+# check cluster
+kubectl get nodes
+
+# check wide information
+kubectl get nodes -o wide
+
+
+# pause the cluster
+minikube pause
+
+# unause cluster
+minikube unpause
+
+# stop cluster
+minikube stop
+
+# start cluster, whichh is stopped and already present 
+minikube start
+
+
+# checking status
+minikube status
+
+# minikube dashboard
+minikube dashboard
+
+
+# getting pods of a specifc namespace, bring pods of name space kube-system only
+kubectl get pods -n kube-system
+
+

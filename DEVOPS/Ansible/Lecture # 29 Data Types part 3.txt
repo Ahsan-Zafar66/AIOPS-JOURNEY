@@ -1,0 +1,18 @@
+in this lecture we will use data types like list to store the name of packages to install 
+
+
+sudo vim packages.yml
+
+---
+- name: this yml file is dedicated to installation of packages
+  hosts: centos
+  become: yes
+  vars:
+    packages: ["wget","zip","curl"]
+  tasks:
+  - name: installation of packages using yum
+    yum: 
+      name: {{ packages }}
+      state: present
+
+

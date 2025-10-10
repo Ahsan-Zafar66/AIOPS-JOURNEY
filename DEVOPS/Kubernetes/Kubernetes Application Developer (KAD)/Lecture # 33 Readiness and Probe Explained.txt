@@ -1,0 +1,271 @@
+what is probing or probe?
+Probes are part of the container spec in Kubernetes. They allow you to customize how Kubernetes detects the state of a container.
+
+Types of Probes:
+Liveness:
+Liveness probes check whether a container is healthy so that it can be restarted if it becomes unhealthy
+
+Readiness:
+Readiness probes determine when a container is fully started up and ready to receive user traffic.
+
+
+
+pod statuses:
+1) Pending : when a pod is not scheduled on any node by scheduler
+2) ContainerCreating: when  apod has been scheduled on a node, but not ready image used in container is being downloaded.
+3) Running: when a pod is running on the node it is scheduled on.
+
+
+Pod Conditions:
+1) PodScheduled
+2) Initialized
+3) ContainersReady
+4) Ready
+
+initially all pod conditions are false, they become true one vy one in order from 1-4
+
+
+Sometimes pod get ready but the container inside pod is still in creating stage, so when a user comes to use your service, service redirects it to the pod and user get error or page unavailable  message because container is not runnnig correctly it is still in creating stage..
+To avoid this bad user experience we can use readinessProbe in containers, it means when my container is fully ready and running then redirect traffic towards it, otherwise do not send traffic towards it.
+
+Readiness probe verifies that our container is running, then it gives success status to container and then kubernetes directs traffic towards the pod so that users always get application running.
+
+
+We can add readainess probe test after every 5 seconds or any seconds, after 5 seconds it will run the probe test again and see what is the status if success is the status then it do nothing pod runs and application runs normally,  but if it gives failure result after running test then it restarts the pod.
+periodSeconds: 5 --> run probe test after every 5 seconds and check what is the status.
+
+
+failureThreshold: 8 --> 8 means restart pod if test fails for 8 times, after 8 time it will not restart the pod. by default failureThreshold has value 3.
+
+
+Readiness probe is used to check if your container is fully ready and running, then it gives status success and after success status kubernetes service redirects traffic towards it which is good and best for user experience.
+Without readiness probe, when your pod is running and container status is not fully ready and running, kubernetes service redirects traffic towards it and container is not fully up, so webpage will not be available and user experiences will not be good.
+So, Readiness probe makes sure that contiane ris fully up and functional before it gives success status to kubernetes and then kubernetes directs traffic towards this pod.
+
+
+
+Readiness Hands on:
+We will create two pods and one pod will be activated immediately and othe rpod will be delayed for 120 seconds and we will create a service to interact with pods
+
+# first pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: first-pod
+  labels:
+    app: development
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-delayed-start
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+
+
+# now creating second pod which will be delayed for 120 seconds
+apiVersion: v1
+kind: Pod
+metadata:
+  name: delay-pod
+  labels:
+    app: development
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-delayed-start
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    env:
+    - name: APP_START_DELAY
+      value: "180"
+
+# now creating a service that will interact wih these two pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: development
+
+
+# now lets deploy both pods and service for pods
+
+# after deploying describe servie and see which endpoints it has and what is the nodeport assigned to it
+# now use the internal ip of a node and combine it with NodePort and check it in browser.
+# you will be directed to frist working pod and second non-working pod (not working for 3 minutes)
+# you can see how user will see working webpage and some user not working webpage
+# to deal with this issue you can use readinessprobe in your second pod
+
+
+# second pod with readiness probe
+apiVersion: v1
+kind: Pod
+metadata:
+  name: delay-pod
+  labels:
+    app: development
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-delayed-start
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    env:
+    - name: APP_START_DELAY
+      value: "180"
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 8080
+
+
+# now delete previous second pod and create this new second pod.
+
+# now when you go to webpage combining Node Internal ip and nodeport, you will see that you will be directed to 1st pod only, until the second pod is ready completely for working then you will be directed to second pod.
+# now user will see only working webpage. They will be directed to second pod only when it has started working fully, otherwise they will see first pod.
+
+
+# use /crash for example 172.0.4.0:30090/crash, and see your pods one of them will be restarted. This is readinessProbe, it restarts when a container crashes.
+
+# now use /freeze for example 172.0.4.0:30090/freeze, and see none of the pods will be restarted but one pod will give error on webpage, this error is due to error in application code not in container state.
+# So, users will see error due to application code bug or failure but none of the pods will be restarted or kubernetes pods will not know there is some error, because readiness probe deals with container state, not webpage state.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Liveness Probe:
+Suppose your pod is up and your container is also up and fully ready running fine, but there is a bug in your application code.
+Your infrastructure pod and container are fine there is no problem with that, but your application code has some error and end user are unable to use it.
+
+Now, you need to restart pod, how you will do it?
+We will use liveness check which checks the status of application is it healthy or unhealthy, if it is unhealthy then restart the pod.
+
+
+
+Readiness probe runs test on container whether it is fully ready.
+Liveness probe runs test on application code and see if application is healthy or unhealthy.
+
+
+
+
+
+# when you use readinessProbe in a pod and you have delayed it like say for 120 seconds and you want to use LivenessProbe along with it, you need to add initialDelaySeconds: 130 in the pod, 
+otherwise Liveness Probe will check the status of pod as it is run, as we have delayed functioning of container for 120 seconds, so when liveness probe runs tes immediately without any delay it will restart your pod  3 times and default restart limit is reached. 
+So, your pod will never be in running state.
+
+So, while using delay with readinessprobe also delay the livenessprobe, so liveness test is run when the container has been created and fully running state, otherwise container will not run immediately and liveness probe will start testing liveness of webpage, so restart attempts are exhausted.
+
+
+
+
+
+# first pod with liveness probe
+apiVersion: v1
+kind: Pod
+metadata:
+  name: first-pod
+  labels:
+    app: development
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-delayed-start
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /live
+        port: 8080
+
+
+# second pod with readiness probe
+apiVersion: v1
+kind: Pod
+metadata:
+  name: delay-pod
+  labels:
+    app: development
+spec:
+  containers:
+  - name: simple-webapp
+    image: kodekloud/webapp-delayed-start
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    env:
+    - name: APP_START_DELAY
+      value: "180"
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 8080
+      periodSeconds: 2 # it will not show any internal server error, because test will be run every 2 seconds.
+    livenessProbe:  # use int data type with livenessprobe
+      httpGet:
+        path: /live
+        port: 8080
+      initialDelaySeconds: 190 # wait for 190 seconds before running the liveness test, otherwise pod will be restated again and again and restart limit is reached which is 3
+      periodSeconds: 5 # Run liveness test every 5 seconds
+
+
+
+# now if you use /freeze with firts pod, it will show internal server error for sometime until it restarts because it DOES NOT CONTAIN Readiness Probe.
+# now, if you freeze he second pod, it will not show internal server error or any other error because it has readiness and liveness probe. Liveness probe will restart it and readiness will make sure that traffic is not directed towards it until it is fully live.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

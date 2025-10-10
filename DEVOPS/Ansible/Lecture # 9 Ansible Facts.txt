@@ -1,0 +1,59 @@
+# checking the setup of a machine
+ansible rhel -m setup
+
+# using filters with setup module
+ansible centos -m setup -a "filter='ansible_python_version'"
+
+
+#getting information of master machine
+ansible localhost -m setup -a "filter='ansible_python_version'"
+
+
+Creating custom facts:
+Make sure apache 2 is installed in your master machine
+
+step # 1 
+go to /etc/ansible path on master machine
+create a facts.d directory here
+
+Step # 2
+make a script in facts.d
+
+vim apache2_status.fact --> for ubunt 
+vim httpd_status.fact --> for rhel
+
+Fact file output should be in json format
+
+==============================================================
+# content of fact file in ubuntu for apache2 service
+#!/bin/bash
+
+status=$(systemctl is-active apache2)
+
+if [[ $status == "active" ]]
+then
+	state="Apache2 is Running"
+else
+	state="Apache2 is not running"
+fi
+echo "{\"apache_status:\":\"$state\"}" ---------> this line is the output of script and it must be in json format
+=====================================================================
+
+you can see after fi, the output is in json format
+
+# now calling local host ansible setup and fetching the status of apaches by applying cutom filer
+ansible localhost -m setup -a "filter=ansible_local"
+
+the above command output will show apache2 status from the setup information
+
+Step # 3
+yo need to create facts.d directory in both master and worker machine.
+As my machine ubuntu is master i will create apache2_status.facts file
+as my machine centos  8 is a worker node, i will create httpd_status.facts file
+
+# you can create both files in ubuntu and can copy in rhel
+such as
+ansible centos -m copy -a "src=/etc/ansible/facts.d/httpd_status.facts dest=/etc/ansible/facts.d" -b
+
+make sure you have facts.d directory in worker
+

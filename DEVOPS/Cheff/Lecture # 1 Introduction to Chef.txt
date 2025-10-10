@@ -1,0 +1,37 @@
+Chef is an configuration management tool.
+Configuration of machines is of two types:
+1) Push based, in this type updates are pushed to worker nodes through a server. Forexample ansible or salt stack
+2) Pull based, in this type updates come in server and each node attach to server pull updates to itself. For examle cheff or puppet
+
+
+Cheff is mage in Ruby or Erlang language
+Adam Jacob made cheff in 2009
+
+What is infrastructure as code?
+Infrastructure ko build krna code ki madad sy. For example ansible, salt, puppet, chef
+
+
+
+Architecture of Chef:
+
+We have followint hing sin cheff architecture:
+
+Workstation: jahan ham code ko likhty ya bnaty hain
+Chef server: jahan code of save krty hain
+Chef Node: jahan code ko run krty hain
+
+jab chef node connect hota hai chef server ky sth isko khty hain bootstrap
+
+workstation or server ky daramayan communication hoti hai knife ky through.
+
+jo bhi chz new ati hai ya ham bnaty hain ham wo save krt hain chef server mn
+
+jab koi chz chef server mn ati hai, server of node ky darmaya ki communication chef client krta hai. 
+Chef client ohai jo hr node mn hota hai or isky pass node ki sari configuration save hoti hai, is sy pochta hai tumharay pass ye chz hai?
+agar nhi hai to download kr lo ya pull krlo.
+
+
+workstation --> knife --> server --> chef client --> node --> ohai
+
+
+Cookbook is acollection of recipe, it is created in workstation

@@ -1,0 +1,19 @@
+We have a master node that control all the worker nodes.
+
+Suppose a node without a master node, whos driving captain is kubelte. Such a pod which is managed by kublet is know as static pod
+
+
+Static pods, in k8s are are pods that are not managed by the kubernetes control plane such as API server. Instead they are directly controlled by the kublet on a specific node.
+Essentially, static pods are created and managed by the kublet daemons running on each node, rather than by kubernetes controllers like deployments or daemonsets
+
+
+Use Cases:
+Control Plane components: static pods are often used for critical control components, ensuring they start even before the kubelt starts and can operate in the absence of a functioning k8s control plane
+
+Node-Specific Applications:
+they can also be used for applications that are specified toa node and do not need to be managed and scheduling capabilities of the k8s control plane
+
+Advantages:
+simple and light weight
+Usefule for bootstrapping the k8s control plane componnets
+

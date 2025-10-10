@@ -1,0 +1,48 @@
+The developer team develops an application code and ask the devops engineer to send the code in production.
+So, as a devops engineer ask the developer team how they run the code understand all the dependencies and other things.
+
+Now, developer will send you everything code, dependicies, packages everything
+
+after getting the code and everything from developer team run in your local system
+
+
+# we have a archive file node.js extract it and it has code
+
+Node JS installation steps in ubuntu os
+
+curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install -g nodemon
+npm install express
+
+
+# exit command exite the container process, if you want the contianer to be running and get out then?
+
+ctrl + p + q --> this command will keep the container running and get you out as well
+
+
+# defining contianer and host specific port for accessin web server
+my_port=5000
+
+docker run --name my_node_app2 -p 9000:$my_port -d -e PORT=$my_port my_node_app:latest
+
+in above command 9000:$my_port where my_port is set to 5000.
+now left side is host port and right side is container port.
+So, host port is 9000 and container is 5000
+
+curl localhost:9000 --> now, we will use 9000 to access the webserver
+
+
+# how we set up the nginx server?
+Go to linux os
+
+Create  a directory and paste the package.json file in that directory and paste the src folder, these files you will get after extracting the archive file
+
+After create Dockerfile in the same directory where you copied the package.json file and src directory
+
+After creating Dockerfile run the commands, refer file in ubunt in path /lecture_10 and look for Dockerfile. it has the commands
+
+Now, build image from this file and run the image. Get the shell of the container. and look.
+
+
+

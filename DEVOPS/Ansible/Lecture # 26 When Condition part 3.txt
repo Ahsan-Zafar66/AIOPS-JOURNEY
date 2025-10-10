@@ -1,0 +1,73 @@
+In this lecture we studied about checking the status of service, starting it 
+
+
+in service module we have 4 options for state which are started, stopped, restarted, reloaded
+
+
+first run the service with started and then check if state is not started then restarted the service
+
+if you ar egtting at a specific task you can use ignore_erros: yes to ignore the error of that task and move to next task, otherwise next tasks execution is topped and you get erro
+
+
+---
+- hosts: ubuntu
+  become: yes
+  tasks: 
+  - name: Check Apache service restarting on Ubuntu  
+    service:
+      name: apache2
+      state: started
+    register: apache_status
+
+  - name: Restart apache service 
+    service:
+      name: apache2
+      state: restarted
+    when: apache_status.state != 'started'
+
+  - name: Display the apache2 service status
+    debug:
+      msg: "Apache2 service is running"
+    when: apache_status.state == 'started'
+
+
+=======================================================
+---
+- hosts: all
+  become: yes 
+  tasks: 
+  - name: Check Apache service restarting on Ubuntu 
+    service: 
+      name: apache2
+      state: started 
+    register: apache_status
+    when: ansible_os_family == "Debian"
+
+  - name: Restart apache service 
+    service:
+      name: apache2
+      state: restarted
+    when: ansible_os_family == "Debian" and apache_status.state != 'started'
+
+  - name: Display the apache2 service status 
+    debug:
+      msg: "Apache2 service is running"
+    when: (ansible_os_family == "Debian") and apache_status.state == 'started'
+
+  - name: Check Apache service restrting on RHEL
+    service:
+      name: httpd
+      state: started
+    register: httpd_status
+    when: ansible_os_family == "RedHat"
+
+  - name: Restart apche service 
+    service:
+      name: httpd
+      state: restarted
+    when: ansible_os_family == "RedHat" and httpd_status.state != 'started'
+
+  - name: Display the httpd service status 
+    debug:
+      msg: "Apache2 service is running"
+    when: ansible_os_family == "RedHat" and httpd_status.state == 'started'

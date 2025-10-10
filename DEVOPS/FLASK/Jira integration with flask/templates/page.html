@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jira Integration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Jira Issue Form</h2>
+        <form method="POST" action="{{ url_for('information')}}">
+            <!-- Project Name -->
+            <label for="project">Project Name:</label>
+            <select id="project" name="project" required>
+                <option value="LP">Learning Project (LP)</option>
+                <option value="SCRUM">Alnafi Cloud (AC)</option>
+                <option value="Project3">Project 3</option>
+                <!-- Add more project options as needed -->
+            </select>
+
+            <!-- Issue Type -->
+            <label for="issue">Issue Type:</label>
+            <select id="issue" name="issue" required>
+                <option value="Bug">Bug</option>
+                <option value="Task">Task</option>
+                <option value="Story">Story</option>
+                <!-- Add more issue options as needed -->
+            </select>
+
+            <!-- Reporter Name (Combo Box) -->
+            <label for="reporter">Reporter Name:</label>
+            <select id="reporter" name="reporter" required>
+                <option value="712020:1e81b910-027d-4b0e-bfd0-9053aa482579">AhsanZafarQAU</option>
+                <option value="712020:a16b5f52-74ef-4c10-a148-bfd621331a41">AhsanZafar0501</option>
+                <option value="Reporter3">Reporter 3</option>
+                <!-- Add more reporter options as needed -->
+            </select>
+
+            <!-- Priority -->
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority" required>
+                <option value="Highest">Highest</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+                <option value="Lowest">Lowest</option>
+            </select>
+
+            <!-- Summary -->
+            <label for="summary">Summary:</label>
+            <input type="text" id="summary" name="summary" placeholder="Short summary of the issue" required>
+
+            <!-- Description -->
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" placeholder="Detailed description of the issue" required></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Example script to handle form submission (you can integrate it with your Python backend)
+        document.getElementById('jiraForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Collect form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Example: Log data (in a real scenario, send it to a Python backend)
+            console.log(data);
+
+            // You can now send this data to your Python backend (using fetch, XMLHttpRequest, etc.)
+        });
+    </script>
+
+</body>
+</html>

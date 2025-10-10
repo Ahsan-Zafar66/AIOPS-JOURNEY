@@ -1,0 +1,8 @@
+---
+- name: Download file to remote machine
+  hosts: rhel
+  tasks:
+  - name: Downloading...
+    get_url:
+      url: "https://www.python.org/ftp/python/3.10.8/Python-3.10.8.tar.xz"
+      dest: "/home/aadmin/data_copy"

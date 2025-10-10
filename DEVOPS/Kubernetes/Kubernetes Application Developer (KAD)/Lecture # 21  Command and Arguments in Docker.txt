@@ -1,0 +1,89 @@
+# suppose i have a following docker filr
+
+# vim Dockerfile
+From Ubuntu # using ubuntu image
+
+CMD ["sleep","10"] # when container run sleep for 10 seconds
+
+# let build image of above file
+docker built -t sleep_image .
+
+# now let's create a container from sleep_image
+docker run --name mycontainer sleep_image
+
+now above container when it is for it will sleep for 10 seconds, but let sa you want it to sleep more
+
+# lets modify the Docker file
+From Ubuntu
+
+ENTRYPOINT ["sleep"]
+
+# now you can mention how much time you want it to slee while runnning image
+docker run --name mycontiner sleep_image 20
+
+now it will sleep for 20 seconds, but if you dont pass any argument while running a container from sleep_image you will get error
+
+
+# now lets modify docker file wheich works whether we give argument or not
+FROM Ubuntu
+
+ENTRYPOINT ["sleep"]
+
+CMD ["5"]
+
+now, above image will work if you pass argument or not
+
+docker run --name mycontainer sleep_image --> it will run and sleep for 5 seconds
+
+docker run --name mycontainer sleep_image 25 --> it will run and sleep for 25 seconds
+
+# now lets change entrypoint command
+docker run --name mycontainer --entrypoint echo sleeprt_image 10
+
+now, we ran the same image but changes the entry point command.
+
+
+ABove concept is necessary to understand arguments in pods.
+args are CMD in pods.
+
+command is entrypoint in pod.
+
+NOTE: there are many ways to edit a existing pod, one way is to modify th eyam file, delete old pod and create new pod.
+Other way is to use edit command, and edit the things you want to change, what it does it creates another temporary yaml file, you can copy its location and replace old pod by deleting old pod and creating new pod using this new file created by kubenetes.
+
+
+# lets create a pod through imperative command
+NOTE: when you use -- in comand it means after this all are arguments, everything written after it is treated as argument so you need to write main command before it
+
+# example
+kubectl run mypod --image=kodekloud/webapp-color --dry-run=client -o yaml -- --color red  > pod.yml
+
+inabove command everything is written before "--" because after it everything is argument, so --color red are arguemnts
+
+# now run the file
+kubectl apply -f pod.yml
+
+# lets create a service to expose above pod
+kubectl expose pod mypod --port=8080 --type NodePort --name test-service -o yaml > svc.yml
+
+# now let's create the service
+kubectl apply -f svc.yml
+
+# now get node in which pod mypod is created and Nodeport
+node_ip:nodeport --> to access service internally
+
+
+# now if you want to access pod from outside you need to create and port and forward it to service port which is 8080
+# we need to use listening port which is target port of pod, we use target port here NOT SERVIC PORT
+kubectl port-forward pod/mypod 2222:8080
+
+# now run
+127.0.0.1:2222 --> it will be redirected to 8080 port of service which takes to 8080 port of pod
+
+
+# you can edit pod without making changes to pod file
+kubectl edit pod mypod
+
+# when you make changes it will show you a path of temporary file with your changes and rest things are same
+kubectl replace --force -f file_path
+

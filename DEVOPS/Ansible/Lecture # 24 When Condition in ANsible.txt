@@ -1,0 +1,57 @@
+---
+# using when conditions
+# as apache2 is on ubuntu and httpd is on redhat for same service
+# to make a script that has different commands and command is only run when a specific condition is met
+# so we can run apache --version on ubunut and get output
+# in the same way we can run httpd -v on redhat and get output
+# so to run commands we need to check the operating system family first
+
+# in the following script i am running apache2 --version if os family is ubunt 
+# and httpd -v if th eos family is redhat
+# as running the command and printing output using debug are different tasks, 
+# so we need to use same when condition in both of them
+
+- hosts: all
+  gather_facts: true
+  tasks:
+  - name: Check apache2 version
+    shell: apache2 -v
+    register: apache2_ver
+    when: ansible_os_family == "Debian"
+
+
+
+  - name: Printing the apache2 version and httpd version
+    debug:
+      var: apache2_ver.stdout
+    when: ansible_os_family == "Debian"
+
+  - name: Check HTTPD version on RHEL
+    shell: httpd -v 
+    register: httpd_ver
+    when: ansible_os_family == "RedHat"
+
+  - name: printing the httpd version
+    debug: 
+      var: httpd_ver.stdout
+    when: ansible_os_family == "RedHat"
+
+
+
+# advance form of above task:
+# where i am defining both commands side by side
+# in when condition i am passing os family together
+# in debug i just need to tell that my variable which i am calling is defined
+---
+- hosts: all
+  gather_facts: true
+  tasks:
+  - name: Check apache2 version
+    shell: apache2 -v || httpd -v
+    register: apache_version
+    when: ansible_os_family in ["Debian","RedHat"]
+
+  - name: Printing the apache2 version and httpd version
+    debug:
+      var: apache_version.stdout
+    when: apache_version is defined

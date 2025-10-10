@@ -1,0 +1,25 @@
+---
+- name: Installing httpd and firewalld entry
+  hosts: rhel
+  become: true 
+  tasks: 
+  - name: Installing httpd package
+    yum: 
+      name: httpd
+      state: present
+  - name: Allow port 80 in firewall
+    firewalld:
+      port: 80/tcp
+      permanent: yes 
+      state: enabled 
+      immediate: yes 
+  - name: Copy webpage project to apahce server
+    copy:
+      src: /home/aadmin/ansible/Practical/index.html
+      dest: /var/www/html/index.html
+
+  - name: Starting the httpd service
+    systemd:
+      name: httpd
+      state: started
+      enabled: yes

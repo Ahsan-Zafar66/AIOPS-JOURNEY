@@ -1,0 +1,29 @@
+This lecture was about using implicit and explicit wait in one code
+
+Difference in implicit and explicit wait, it is important and asked in interviews
+
+Implicit wait :-
+
+1. It is global wait and applied to all emenets i n the webpage
+2. Specific amount of time to wait the load of DOM page.
+3. Its does not required any condition.
+4. Its very simple because we need to declare at starting of the code.
+5. its affect the execution speed since each steps waits for elements to be ready
+
+
+
+Explicit wait :-
+1. its not global wait and applied to perticuler scenario.
+2. the driver is asked to wait till a certains condition is match.
+3. its required condition then we will applied
+4. its lit bit complex because we need declare of time to wait and we need to applied that condition of perticuler elements.
+5. its does not affect the execution speed since its applicable to perticuler elements of the page.
+
+Task :-
+
+you need to login gmail account or alnafi account via microsoft edge.
+
+
+
+
+

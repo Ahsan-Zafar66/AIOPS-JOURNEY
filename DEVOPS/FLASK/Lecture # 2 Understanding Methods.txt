@@ -1,0 +1,68 @@
+HOW Communication works?
+
+Client --> internet --> server ---> database
+
+# API manages the communication between internet and server
+
+client ---> internet ---> API --> server --> database
+
+API makes communbication more faster between internet and server
+
+===============================
+
+Application programming interfaceClient to Server communication --> API
+
+
+API are mechnism that enable two software components to communicate with each other using set of definition and protocols .
+
+
+what is JSON :-
+
+JSON is open standard file format.
+
+it is data interchange format that uses of human-readable text to store and transmit data of key-value pairs and arrays.
+
+It is common data format with diverse uses in electronic data interchange , including that of web application with servers.
+
+
+
+Get VS Post :-
+
+1. Get and post methods are http request method.
+2. Which is used inside the form tag to send form data to the server.
+3. Http protocols enable to communication between client and server.
+
+What is GET :-
+1. The get method can retrive information identified by request-URI
+(Uniform resource identifier)
+2. Get request can be viewer in the browser history
+3. It enable you to save results of html form
+4. You can easily use get method to request required data.
+5. Get method value visible
+6. values you can set as 255 character
+7. Get performance are better compered to post
+8. String data types supports
+
+What is POST :
+
+1. Post is used to send data to server to create a resource
+2. Some notes on post request : Post request are never cached
+3. Post request do not remain in the browser history
+4. not visible format
+5. no mimitation
+6. its lower performance as compared to get method.
+7. string , numeric , binary etc
+
+
+
+
+
+
+
+
+
+
+
+
+
+

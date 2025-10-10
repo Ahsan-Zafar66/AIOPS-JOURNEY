@@ -1,0 +1,64 @@
+if you create a pv of 100Mi and create a pvc of 50Mi, when it will bound it will take full 100Mi
+if your pv is created and pvc is not bounding with it check storage class, accessmodes of both are same or not.
+
+
+If you have multiple nodes in a cluster and you create pv then pvc, you will be wondering on which node they are created?
+So, answer lies in your pod, node that will host your pod will have th epv and pvc in it.
+So, when you create pod it gets a node and in taht node pv and pvc are created.
+
+
+When you create pv you mention only hostpath, when you attach pvc with pv and then you attach pvc with pod automatically in that hostpath of pv directory is created on the node.
+
+suppose I have /persistent-volume in my hostpath of pv. When pvc is attached with pv and in next step we create pod and attach it with pvc, this directory persistent-volume is created automatically in node in which pod is scheduled.
+
+
+
+# persistent volume yaml file
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-vol
+  labels:
+    app: vol
+spec:
+  persistentVolumeReclaimPolicy: Retain  # policy is reatin which means if pvc is deleted pv holds data of pod and it is not available to any other pod
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 100Mi
+  hostPath:
+    path: /persistent-volume 
+
+
+# persistent volume claim yaml file
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: first-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: ""
+
+
+# pod yaml file
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-pod
+spec:
+  containers:
+  - name: pvc-cont
+    image: nginx
+    volumeMounts:
+    - mountPath: /data
+      name: my-storage
+  volumes:
+  - name: my-storage
+    persistentVolumeClaim:
+      claimName: first-pvc
+
+

@@ -1,0 +1,11 @@
+this lecture was based on running linux commands through python. and running pythons script through ansible playbook
+
+we define linux commands in a json file
+
+then read the json file in python, and call the commands. and saved information in a csv file
+
+then we run copied the python and json file in remote host, run the python script and fetched the data.csv file from remote machine into master machine
+ 
+
+
+refer to /home/jhon/lecture_20 files for this lecture, it is in ubuntu linux.

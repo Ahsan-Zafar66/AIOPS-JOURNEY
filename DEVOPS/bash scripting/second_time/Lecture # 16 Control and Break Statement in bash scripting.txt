@@ -1,0 +1,74 @@
+Control Statement VS Break Statement
+
+Break :-
+Break is use for exit your loop.
+Break command is use for terminate/exit your current loop.
+
+
+Continue :-
+Continue will use skip the current then continue next.
+
+root@abdealidodia:~/bash/lect16# cat break_st.sh
+#!/bin/bash
+
+echo "Starting the loop"
+for i in $(seq 1 10)
+do
+echo $i
+done
+echo "Ending the loop"
+
+
+
+root@abdealidodia:~/bash/lect16# cat break_st.sh
+#!/bin/bash
+
+echo "Starting the loop"
+for i in $(seq 1 10)
+do
+if [[ $i -eq 5 ]]
+then
+break
+else
+echo $i
+fi
+done
+echo "Ending the loop"
+
+
+root@abdealidodia:~/bash/lect16# ./break_st.sh
+Starting the loop
+1
+2
+3
+4
+Ending the loop
+
+
+root@abdealidodia:~/bash/lect16# cat cont_st.sh
+#!/bin/bash
+
+echo "Starting the loop"
+for i in $(seq 1 10)
+do
+if [[ $i -eq 5 ]]
+then
+continue
+else
+echo $i
+fi
+done
+echo "Ending the loop"
+
+root@abdealidodia:~/bash/lect16# ./cont_st.sh
+Starting the loop
+1
+2
+3
+4
+6
+7
+8
+9
+10
+Ending the loop
