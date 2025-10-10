@@ -1,0 +1,106 @@
+you should prefer node affinity where node selector is not satisfying your situation.
+
+Node selector mn ap nodes ko label krty ho phly, usky bd ap btaty ho ky ye pod is label walay node pr schedule krdo.
+
+Likin node selector fails in two situations:
+1) Is pod ko medium ya large walay node py place krdo is condition mn node selector kam nhi krta kyn ky you can give only one option
+2) Small ky ilawa kisi bhi node py pod ko schedule krdo, is condition mn bhi node selector fail ho jata hai.
+
+
+# example of a pod which can be scheduled on nodes labeled as medium or large
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: my-container
+    image: nginx:latest
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: size
+            operator: In
+            values:
+            - medium
+            - large
+
+
+# example of pod which will be scheduled on any node except large
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: my-container
+    image: nginx:latest
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: size
+            operator: NotIn
+            values:
+            - large
+
+
+# example of pod which can be scheduled on nodes which has key size
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: my-container
+    image: nginx:latest
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: size
+            operator: Exists
+
+
+
+requiredDuringSchedulingIgnoredDuringExecution
+preferredDuringSchedulingIgnoredDuringExecution
+
+
+
+# example of creating a deploy ment with 6 pods and scheduling them on a node labeled platform=alnafi
+
+# lets label the node
+kubectl label node kind-worker3 platform=alnafi
+
+# now lets make deployment
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 6
+  template: # template of pods
+    metadata:
+      label:
+        app: my-node-affinity
+    spec:
+      containers:
+      - name: my-nginx
+        image: nginx
+      affinity: # remember node affinity is property of pod not container
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpression:
+              - key: platform
+                operator: In
+                values:
+                - platform
+  selector: # now mention label used in metadata of template, it is done so that selector could create 6 pods with the matchin label of template. as template contains information on how to create ad what to create 
+    matchLabels:
+     app: my-node-affinity  

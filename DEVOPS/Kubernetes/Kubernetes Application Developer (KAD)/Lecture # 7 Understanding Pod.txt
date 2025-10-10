@@ -1,0 +1,42 @@
+Heirarchy of kubernetes cluster:
+
+Cluster ---> Nodes --> Each Node has multiple pods 
+
+
+Note: One pod has only one container, two same container cannot exist in one single pod
+
+Suppose there is a container in pod that needs some other container for its functionality, then you can place these two containers in one pod.
+Two same containers cannot exist in one single pod.
+
+Multiple containers in one pod has same fate, it means when pod is up they both are up and when pod is down both are down. One up and one down condition cannot happen they share same fate either both up or both down
+
+# command to create cluster from a yaml file
+kind create cluster --config filename
+
+
+# after creating cluster define pod specifications in a yaml file
+apiVersion: v1
+kind: Pod
+metadat:
+  name: first-pod
+  labels:
+    app: frontend
+    version: development
+spec:
+  containers:
+  - name: first-pod-container
+    image: nginx
+
+
+# command to run pod in cluster
+kubectl apply -f pod_file.yml
+
+# now a pod is created with mentioned specifications, check
+kubectl get pods --watch
+
+# creating a pod directly without making a yaml file
+kubectl run first-pod --image nginx
+
+
+# command to delete pod
+kubectl delete pod first-pod

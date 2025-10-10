@@ -1,0 +1,17 @@
+CRI --> Container Runtime Interface
+
+OCI --> Open Container initiative is the body that regulates the standard for companies that have container products like docker, kubernetes, containerd,
+
+All the containers that are coming in the market, if they fullfil the standard of OCI then they can work with kubernetes
+
+CRI is a plugin, that is installed and containers are run
+
+The kubernetes CRI defines the gRPC protcol for the communication between the cluster componnents kublet and container runtime
+
+As different container maker have made the containers differently. When they connect kubernetes they need to make changes in the kubernetes code to make it compatible with their container. But, CRI enables them to integrate with kubernetes without the modification of code of kubernetes
+
+
+To use kubernetes with docker, we need to make modifications in the kubernetes code as docker does not support CRI
+
+For other containers like rkt, containerd they support CRI so no need of any modification of code of kubernetes, CRI enables the integration of containers with kubernetes.
+

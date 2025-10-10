@@ -1,0 +1,99 @@
+4s are code, container, cluster, cloud
+
+Understanding the 4Cs of Cloud Native Security: 
+
+Code, Container, Cluster, and Cloud
+
+Code:
+
+It’s the innermost part or layer of an application.
+
+Code quality vs code security.
+
+What is code vulnerability?
+
+    Is a flaw of glitch in a code that can lead to a security risk and creates opportunities for threat actors to attach the code to any endpoint and extract or delete all data. In addition, code developers and users.
+
+Understanding the 4Cs of Cloud Native Security: 
+
+Code, Container, Cluster, and Cloud
+
+Code:
+
+It’s the innermost part or layer of an application.
+
+Code quality vs code security.
+
+What is code vulnerability?
+
+ Is a flaw of glitch in a code that can lead to a security risk and creates opportunities for threat actors to attach the code to any endpoint and extract or delete all data. In addition, code developers and users. 
+
+What is security code analysis?
+
+ Is an examination process that can be automated or manual, designed to identify any existing security vulnerabilities by checking logic errors.
+
+One of the Code review tools are SAST (Static Application Security Testing)
+
+How do I provide security to code?
+
+ DAST (DYNAMIC) 
+
+IAST (INTERACTIVE)
+
+LIMIT YOUR PORT RANGES
+
+PERFOMRING AUTO SCANS OF 3RD PARTY LIBRARIES
+
+Definition: This layer deals with the security of the application code running within the containers.
+
+Responsibility: mostly developers
+
+Example: performing static and dynamic scan to identify security vulnerabilities in the code.
+
+Implementation of secure coding practices. Like input validation, to prevent issues like       SQL injection,  or XSS.
+
+ Review the code regularly and updates to patch any security holes.
+
+Container:
+
+ It’s a 2nd layer of cloud-native security
+
+What is a docker container security?
+
+ How to secure your container?
+
+ Scan the containers and the OS running in it (known vulnerabilities) while building a docker image.
+
+Robust IAM 
+
+User creation with the least privileges.
+
+Responsibility: developers and security teams
+
+Example: Scanning the containers in regular intervals
+
+Robust IAM 
+
+User creation with the least privileges.
+
+Cluster:
+
+ This layer focuses on the security of the SW that manages the resources used by the application. 
+
+Responsible: kubernetes admins (CKA, CKS), security teams(CKS), 
+
+Enforcing RBAC control to restrict who can do what within the cluster.
+
+Keeping up to date the control plane and its components with security patches.
+
+Cloud: infrastructure 
+
+Responsible: inside company (cloud admin - infrastructure)
+
+Outside (AWS, GCP, Azure, IBM)
+
+Example: isolation of VMs from each other.
+
+ Securing API access with authentication 
+
+ Using encrypted communication for data transfer.

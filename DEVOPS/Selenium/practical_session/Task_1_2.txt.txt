@@ -1,0 +1,113 @@
+TASK1 :-
+Solution :-
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+
+driver.get('https://m.cricbuzz.com/cricket-stats/icc-rankings/men/batting')
+driver.maximize_window()
+driver.implicitly_wait(5)
+
+rows_data = driver.find_elements(By.XPATH,'//*[@id="top"]/div/div[5]/div[2]/div/table/tbody/tr')
+total_rows_data = len(rows_data)
+
+
+cols_data = driver.find_elements(By.XPATH,'//*[@id="top"]/div/div[5]/div[2]/div/table/tbody/tr[1]/td')
+total_cols_data = len(cols_data)
+
+print("Total rows are : ",total_rows_data, "and Total columns are : ",total_cols_data)
+time.sleep(3)
+driver.quit()
+
+
+Output :-
+Total rows are :  16 and Total columns are :  4
+
+
+TASK 2 :-
+
+Method 1 :-
+
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+
+driver.get('https://m.cricbuzz.com/cricket-stats/icc-rankings/men/batting')
+driver.maximize_window()
+driver.implicitly_wait(5)
+
+rows_data = driver.find_elements(By.XPATH,'//*[@id="top"]/div/div[5]/div[2]/div/table/tbody/tr')
+total_rows_data = len(rows_data)
+
+
+cols_data = driver.find_elements(By.XPATH,'//*[@id="top"]/div/div[5]/div[2]/div/table/tbody/tr[1]/td')
+total_cols_data = len(cols_data)
+
+
+for i in rows_data:
+print(i.text)
+time.sleep(3)
+driver.quit()
+
+
+Output :-
+
+Rank Name Team Rating
+1 Joe Root England 887
+2 Marnus Labuschagne Australia 885
+3 Babar Azam Pakistan 879
+4 Steven Smith Australia 848
+5 Rishabh Pant India 801
+6 Kane Williamson New Zealand 786
+7 Usman Khawaja Australia 766
+8 Dimuth Karunaratne Sri Lanka 748
+9 Rohit Sharma India 746
+10 Jonny Bairstow England 719
+11 Daryl Mitchell New Zealand 715
+12 Virat Kohli India 714
+13 Litton Das Bangladesh 694
+14 Travis Head Australia 678
+15 Dinesh Chandimal Sri Lanka 673
+
+
+
+TASK 2 :-
+Method 2 :-
+
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+
+driver.get('https://m.cricbuzz.com/cricket-stats/icc-rankings/men/batting')
+driver.maximize_window()
+driver.implicitly_wait(5)
+
+start_range = '//*[@id="top"]/div/div[5]/div[2]/div/table/tbody/tr['
+middle_range =']/td['
+end_range = ']'
+
+rows_data = driver.find_elements(By.XPATH,'//*[@id="top"]/div/div[5]/div[2]/div/table/tbody/tr')
+total_rows_data = len(rows_data)
+
+
+cols_data = driver.find_elements(By.XPATH,'//*[@id="top"]/div/div[5]/div[2]/div/table/tbody/tr[1]/td')
+total_cols_data = len(cols_data)
+
+for row in range(1,total_rows_data+1):
+for col in range(1,total_cols_data+1):
+print(driver.find_element(By.XPATH,start_range+str(row)+middle_range+str(col)+end_range).text,end = " ")
+print()
+time.sleep(3)
+driver.quit()
+
+
+

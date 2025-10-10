@@ -1,0 +1,132 @@
+Step # 1
+Make an ec2 instance on AWS and click on instance actions, then on connect and then on ssh connection.
+Copy the command for ssh coneection
+
+Step # 2
+Go to linux machine and copy the pem key in the location where you are standing and run the command
+you will develop the ssh connection from linux machine of AWS ec2 instance
+
+# run this command to give permission to key
+chmod 400 "ansible_ec2.pem"
+
+# run the following command to get ssh connection
+ssh -i "ansible_ec2.pem" ec2-user@ec2-34-224-72-91.compute-1.amazonaws.com
+
+Step # 3 
+# now ping the ec2 server from linx machines
+ping ec2-34-224-72-91.compute-1.amazonaws.com
+
+above ping will not work, because you have not allowed inbound traffic in security group of this ec2 instance
+
+step # 4
+go to security group of ec2 instance, go to inbound rules and allow all traffic.
+
+Step # 5
+Now, create a user in ec2 instance, any user
+take root control using sudo -i and make a user
+
+# command to create user
+useradd aadmin
+
+# command to add user in sudo grouo
+usermod -aG wheel aadmin
+
+
+# now go to your linuc user and enter .ssh directory
+cd /home/jhon
+
+# entering .ssh directory which is present in home of user
+cd .ssh
+
+# now copy the content of file id_rsa.pub 
+cat id_rsa.pub
+
+# now go to ec2 server user aadmin which we created, go to its home directory and go to .ssh directory, if .ssh directory not present create one
+# creating .ssh directory in aadmin user of ec2 instance
+mkdir /home/aadmin/.ssh
+
+# now enter .ssh directory
+cd .ssh
+
+# now create a file authorized_keys and paste the content on id_rsa.pub file from linux user of other machine
+vim authorized_keys
+
+# now we did things through root user, which makes the root the owner of ssh directory we created in ec2 instance, it causes permission problems, so we change ownership of .ssh directory in ec2 instance
+chown -R aadmin:aadmin .ssh
+
+# also give
+chmod 700 .ssh
+
+# give read wite permission to authorized keys
+cd .ssh
+
+chmod 600 authorized_keys
+
+# now make entry of aadmin user in visudo file in ec2 instance
+visudo
+
+# entry
+aadmin ALL=(ALL) NOPASSWD:ALL
+
+
+Step # 6
+Now, make entry of ec2 server in your linux master machine ansible hosts file
+
+Step # 7
+get the access key and secret key by going into you AWS account and secrity credentials section.
+
+acess key: AKIA6K5V75ZVIPDBYVZI
+
+secret key: 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
+
+ec2 instance region: us-east-1a
+
+
+Step # 8
+when we switch off ec2 instance and turn it on again, the public p address changes unless we use elastic ip
+
+So, to deal with it we need to retrieve the public ip automatically from the ec2 instance. So, we will develop a python script to fetch public ip of ec2 instances automatically.
+We will run this code in ansible master machine not in ec2 instance.
+We will first give credentials of AWS into ansible master machine like access key, secret key and region
+
+# example fo entering credentials
+export AWS_ACCESS_KEY_ID='AKIA6K5V75ZVIPDBYVZI'
+export AWS_SECRET_ACCESS_KEY='sraDV29boHV2eM24ZoKLq0Lof+PiegxPrN8xD9Am'
+export AWS_DEFAULT_REGION='us-east-1'
+
+# run the following python code in a ece_instances.py file and first instal boto3 and boto that do session management with AWS
+python3 -m pip install boto3 boto
+
+# python code to run in ansible master machine
+#!/usr/bin/python3
+import boto3
+import json
+
+def get_ec2_instacnes():
+    session = boto3.Session()
+
+    ec2= session.resource('ec2')
+
+    instances = ec2.instances.all()
+
+    inventory = {'_meta': {'hostvars':{}}, 'all':{'children': ['ungrouped']},'ungrouped':{'hosts':[]}}
+
+    for instance in instances:
+        if instance.state['Name']=='running':
+            inventory['ungrouped']['hosts'].append(instance.public_ip_address)
+            inventory['_meta']['hostvars'][instance.public_ip_address] = {
+                    'ansible_host': instance.public_ip_address,
+                    'ansible_user': 'aadmin',
+                    'ansible_ssh_private_key_file': '/home/aadmin/.ssh/id_rsa'
+
+                    }
+    return inventory
+if __name__ == '__main__':
+    inventory=get_ec2_instacnes()
+    print(json.dumps(inventory))
+
+
+
+=======================================
+ansible aws ec2 module link:
+https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_instance_module.html

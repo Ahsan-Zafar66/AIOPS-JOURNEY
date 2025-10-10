@@ -1,0 +1,108 @@
+In canry deployment we have main stable app and newly designed app.
+We direct most of the traffic to main app but also direct little traffic to ne version to check its stability, reliability and other issues.
+
+# How to configure canry deployment?
+Step # 1 Create main deployment with stable image, this deployment has more replicase then canry deployment
+Step # 2 Create canry deployment with newly designed image, it has less number of replicas then main-deployment
+step # 3 attach the service with both
+
+
+# Step # 1 Creating main-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: canary-test
+        environment: main
+     spec:
+       containers:
+       - name: main-container
+         image: linuxacademycontent/ckad-nginx:1.0.0
+         ports:
+         - containerPort: 80
+  selector:
+    matchLabels:
+      app: canary-test
+      environment: main
+
+
+# above file is for main deployment which contains stable image and where most of traffic is directed.
+
+# now making canary deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels: 
+        app: canary-test            # note that this label is same as that of main-deployment pods label
+        environment: canary         # note this is different than main deployment pod
+    spec:
+      containers:
+      - name: canary-container
+        image: linuxacademycontent/ckad-nginx:canary
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: canary-test
+      environment: canary
+
+
+# as both deploylments main and canary are created with comman label app: canary test for their pods, we can create service now
+
+# creating service file
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-service
+spec:
+  selector:
+    app: canry-test    # we are asking service to look for pods that have label app: canary-test, pods created by main deployment and canary deployment have same label canary-test. So service will direct service to both of deployments pod
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+
+Now above service will find pods with labels "app: canary-test", pods created by main deployment and canary deployment both have this label.
+So, service will direct traffic randomly to these pods.
+But, most traffic will be directed to main deployment pods becasue they are more in number as compare to canary deployment pods.
+Mian deployment has 3 pods and canary deployment has 1 pod.
+So, more traffic towards main deployment pods containing stable and old image.
+And less traffic towads canary deployment pod containing new image for testing.
+
+
+# now makr deployments and service
+kubectl apply -f main-deployment.yml
+
+kubectl apply -f canary-deployment.yml
+
+kubectl apply -f canary-svc.yml
+
+
+# now check the pods in which node they are
+kubectl get pods -o wide
+
+# now check servie ip
+kubectl get svc
+
+# now take ssh of node if custer create dwith kind tool
+docker exec -it node_name bash
+
+
+# now curl service and see how it directs traffic
+curl service_ip:80
+
+
+
+
+

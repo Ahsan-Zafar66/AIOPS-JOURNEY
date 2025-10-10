@@ -1,0 +1,33 @@
+Docker monitoring
+
+We use Ctop command in docker for monitoring
+
+Docker monitoring
+
+
+We used Ctop command in docker.
+
+URL : https://github.com/bcicen/ctop
+
+We can install C top cammand via two ways :-
+1. You can install ctop via Docker
+2. Wget pull and run the script
+
+
+Installation for Ctop :-
+1. Way
+docker run --rm -ti \
+--name=ctop \
+--volume /var/run/docker.sock:/var/run/docker.sock:ro \
+quay.io/vektorlab/ctop:latest
+
+
+2. Way
+
+echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
+wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
+sudo apt update
+sudo apt install docker-ctop
+
+
+Another monitoring tools for Docker container : # docker stats

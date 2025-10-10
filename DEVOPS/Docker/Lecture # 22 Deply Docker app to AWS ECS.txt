@@ -1,0 +1,135 @@
+ECR --> Elastic Container Registry, we discussed it in lecture 21
+
+In this lecture we will discuss ECS.
+ECS --> Elastic Container Services
+
+
+Docker --> Docker file --> docker image --> container --> networking --> volumes --> Multiple container run with docker-compose
+
+
+ECS --> Cluster, task and definition, services, Container
+
+
+Google GCS --> same work but method is diff
+
+EC2 server is called machine we can create
+
+VPC --> virtual private cloud 
+
+ELB --> Elastic Load Balancer
+
+
+
+ECS:
+after creating a registry and pushing an image to it the next step are following
+
+Step # 1
+Copy the image URI
+
+Step # 2
+Go to ecs and click on custom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AWS ECS services.
+
+ECS --> Elstic Container services
+ECR --> Elstic Container registry
+
+ECS is best services for docker in AWS services and its only service for docker.
+
+Docker --> Docker file , Docker image , Container, Networking , Volumes , Multiple container run with docker-compose
+
+ECS --> Cluster, task and definition , Services, Container
+Google GCS --> Same work but method is diff
+
+Ec2 server is called machine we can create
+VPC --> Virtual private cloud  --> take care only networking
+ELB --> ELB load balancer
+IAM role --> User create and assigned role of specific service or admin priv
+Security group --> Port, Expose, access services
+Auto scalling -->
+
+
+
+Cluster --> more than one node load balance with diffrent node.
+
+Image : 483301552061.dkr.ecr.us-east-1.amazonaws.com/mynode:v1
+
+Load balacner type in AWS
+1. Network load balancer
+2. Clasic load balancer
+3. Application load balancer
+
+Docker user --> Linux Base OS --> Docker host --> Container run
+
+ECS have two types of services :
+1. EC2 --> ECS
+2. FARGATE --> it is use for running container with host , You cant troubleshooting at container lever ,
+EC2 server
+FARGATE :
+
+
+Public IP address:
+52.72.120.240
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+Workflow on gitlab
+
+Gitlab --> Workflow create --> CICD --> Pipeline --> RUN
+
+
+
+Steps to establish a pipeline
+
+url: https://gitlab.com/ahsanzafar/my-testing-project.git
+
+Step # 1
+Create a new project in gitlab
+
+Step # 2
+Create a WEB IDE of that project
+
+types of files 
+gitlab yml file --> .gitlab-ci.yml
+
+github yml file --> .github/file.yml
+
+Step # 3
+Create a gitlab.yml file and a directory called public and create a index.html in this public directory
+Create a Docker file outside of public directory
+
+
+# write something in html file and write something in dockerfile
+html file content:
+
+<html>
+<head>
+<h1>My testing workflow creation from GITLAB </h1>
+</head>
+
+</html>
+
+
+FROM nginx:alpine
+COPY ./public /usr/share/nginx/html
+
+Step # 4
+Create  a token 

@@ -1,0 +1,103 @@
+What Does "Update Kubernetes Frequently" Mean in CKS?
+🔹 Short Answer:
+It refers to updating the Kubernetes control plane and worker nodes — i.e., the entire Kubernetes cluster.
+
+ It Includes:
+The Kubernetes control plane components: kube-apiserver, kube-controller-manager, kube-scheduler, etc.
+
+The kubelet and kube-proxy on each node.
+
+The tools like kubeadm, kubectl.
+
+Addressing security vulnerabilities by updating to newer releases.
+
+⚠️ Outdated Kubernetes clusters often have known security flaws, deprecated APIs, and missing security features — which is why the CKS exam focuses on keeping your cluster secure and updated.
+
+
+
+
+
+What Does "Update Kubernetes Frequently" Mean?
+This CKS objective refers to:
+
+Keeping your Kubernetes control plane and worker nodes up to date.
+
+Ensuring you are not using deprecated APIs, vulnerable components, or outdated features.
+
+Patching security vulnerabilities in kubeadm, kubelet, kubectl, api-server, etc.
+
+Staying current with the Kubernetes release cycle, which is ~every 3 months.
+
+⚠️ Security vulnerabilities in outdated Kubernetes versions can allow unauthorized access, privilege escalation, or data leakage.
+
+📌 Two Common Setups
+Setup	                        Tool	     Upgrade Method
+Production-grade clusters	kubeadm	     Manual upgrade per node
+Local/lab/testing	        kind	     :Delete and recreate cluster with newer image
+
+
+
+Method of updating kind and kubeadm are different.
+
+How to Update kind cluster?
+updating a kind cluster is quite easy and simple.
+
+Step # 1 remove kind old version and install binary of new version
+
+# Remove old version (if any)
+sudo rm -f /usr/local/bin/kind
+
+# Download latest version
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.23.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+
+# Confirm version
+kind version
+
+
+Step # 2 delete the existing kind cluster
+Make sure to get backup or manifest yaml files for resources running in old cluster like pods, services, secrets and etc
+
+
+# deleting cluster
+kind delete cluster
+
+
+# create new cluster with latest kind cluster image
+kind create cluster --image kindest/node:v1.30.0
+
+
+# example of creating multinode cluster
+# cluster-config.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+- role: worker
+
+
+# now run the following command
+kind create cluster --config cluster-config.yaml --image kindest/node:v1.30.0
+
+
+
+REAL WORLD PRODUCTION SCENARIOS:
+For kubeadm-based Clusters (Just for Your Info)
+In real-world clusters, upgrades are done using kubeadm upgrade. It involves:
+
+1) Backing up etcd
+
+2) Upgrading kubeadm
+
+3) Running kubeadm upgrade plan
+
+4) Upgrading the control plane and then each node
+
+5) Updating kubelet and kubectl
+
+You don’t need to do this for kind, but CKS expects you to understand it conceptually.
+
+

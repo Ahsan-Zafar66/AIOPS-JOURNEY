@@ -1,0 +1,35 @@
+monolithic old time application infrastructure.
+Suppose aj sy 15 saal phly jo applications thin uska kisi part ka code break ya non functional ho jata that
+to pori application down ho jati thi kyn ky code linked thy.
+
+ab saray code ko ly ky troubleshoot krty, or jab application thk ho gi tab hi up ho gi
+
+Monolithic application mtlb ky sari application linked hai. jaisa ky motorcycle, tyre puncture to motocycle nhi chalay ga. tyre thk ho ga to motorcycle chalay ga
+puranay waqton mn monolithic applications thin, aik jagah bug ya error to sari application down.
+phir devops aya or unhein smjh ai ky cheezon ko aik sth pora nhi bnana chahiye, tor tor ky pieces mn different services bnain or unhein jor kr pori application.
+agar koi service down ho to sirf wohi ho bakiyon ko fark na paray, this is called microservice.
+
+Jahan hr kam aik alag service krti hai, or agar kharab ho to sirf aik hi kharab hoti hai.
+
+Example of microservices:
+suppose aik game bnai mn ny
+
+interface: java sy banaya
+characters: ruby language sy
+scoring system: python mn bnaya
+
+agar ab kahin code kharan ho ga wo sirf aik part ka ho ga.
+Suppose scoring system nhi chl rha iska mtlb sirf python ky code mn masla hai, na ky baki cheezon mn ya game ky parts mn 
+
+
+
+Service Mesh:
+Ab microservices hain, har service apna kam krti hai.
+Likin aik application kafi microservices ko jor kr bnti hai.
+Application ki functionality ky liye important hai ky sab miucroservices apas mn bt karein
+
+Ab ya to ham hr microservice ky code mn changes karein ky wo dsri microservice sy communicate karay.
+Yahan ati hai service mesh:
+Service mesh is a dedicated and configurable infrastructure layer that handles the communication between services without having to change the code in a microservice architecture.
+ab microservice ki communication ham service mesh sy krty hain. jis sy hamein microservice ky code mn changings nhi krni parein gin.
+

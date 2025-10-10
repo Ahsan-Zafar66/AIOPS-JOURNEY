@@ -1,0 +1,237 @@
+1. Commands and their uses (multiples commands )
+2. Loops
+For loop
+while loop
+case statement
+
+3. Conditional statements (Mostly use with loops )
+if -- else , nested if else
+
+
+
+echo $?  ==> It will be check your previous command ran success or not , if you received 0 value then its means of that success else failed
+
+root@abdealidodia:~/bash# [ "abc" == "def" ]; echo $?
+1
+root@abdealidodia:~/bash# [ "abc" == "abc" ]; echo $?
+0
+root@abdealidodia:~/bash# [ "abc" == "ABC" ]; echo $?
+1
+
+root@abdealidodia:~/bash# [ 265 -gt 10 ]; echo $?
+0
+root@abdealidodia:~/bash# [ 25 -gt 10 ]; echo $?
+0
+root@abdealidodia:~/bash# [ 25 -gt 25 ]; echo $?
+1
+
+
+root@abdealidodia:~/bash# [ 25 -lt  25 ]; echo $?
+1
+root@abdealidodia:~/bash# [ 25 -le  25 ]; echo $?
+0
+root@abdealidodia:~/bash# [ 25 -le  10 ]; echo $?
+1
+root@abdealidodia:~/bash#
+
+
+
+
+Bash if syntax :-
+if (condition)
+then
+statement
+else
+stetement
+fi
+
+Diagram :-
+
+
+root@abdealidodia:~/bash/lect5# cat num.sh
+#!/bin/bash
+echo -n "Enter any number of your choice"
+read NUM
+
+if [[ $NUM -gt 5 ]]
+then
+echo "The number is greater than 5. "
+else
+echo "The number is less than 5. "
+fi
+
+
+
+
+root@abdealidodia:~/bash/lect5# cat pass.sh
+#!/bin/bash
+echo -n "Your score is = "
+read score
+
+if [[ $score -gt 80 ]]
+then
+echo "You have passed the exam"
+else
+echo "Sorry , You are fail"
+fi
+root@abdealidodia:~/bash/
+
+root@abdealidodia:~/bash/lect5# cat largenumber.sh
+#!/bin/bash
+
+echo -n "a value: "
+read a
+echo -n "b value: "
+read b
+echo -n "c value :"
+read c
+
+if [[ $a -ge $b ]] && [[ $a -ge $c ]]
+then
+echo "a is BIG because value is $a"
+elif [[ $b -ge $a ]] && [[ $b -ge $c ]]
+then
+echo "b is BIG"
+else
+echo "c is BIG"
+fi
+
+==============================
+
+Lecture # 6
+#!/bin/bash
+
+echo "Enter the service which you want check install or not: "
+
+read service_name
+
+command=$(which $service_name)
+
+status=$(echo $?)
+
+#echo $command
+
+#echo $status
+
+
+
+if [[ $status -eq 0 ]]
+
+then
+
+echo "$service_name is installed on this machine"
+
+echo "The docker version is : $($service_name -v)"
+
+else
+
+echo "THe $service_name is not installed"
+
+fi
+
+
+
+#/bin/bash
+
+commands=$(ps -ef | grep docker | wc -l)
+
+
+
+
+
+
+
+#/bin/bash
+
+commands=$(ps -ef | grep docker | wc -l)
+
+echo $commands
+
+
+
+if [[ $commands -ne 1 ]]
+
+then
+
+echo "Docker is installed"
+
+else
+
+echo "Docker is not installed"
+
+fi
+
+
+
+
+
+
+
+#/bin/bash
+
+echo "Enter the service name which you want check installed or not"
+
+read service_name
+
+commands=$(ps -ef | grep $service_name | wc -l)
+
+
+
+if [[ $commands -ne 1 ]]
+
+then
+
+echo "$service_name is installed"
+
+else
+
+echo "$service_name is not installed"
+
+fi
+
+
+
+
+
+We have learn two way:-
+
+1st you can check service installed or via which command and echo $?
+
+2nd You can check service installed or not via ps -ef | grep <service name>
+
+
+
+
+
+Lecture # 7
+
+if --> has "then" and "fi"
+else --> has no "then "and no "fi"
+elif --> has "then" but no fi
+
+
+#!/bin/bash
+echo -n "Enter the first number:"
+read var1
+echo -n "Enter the second number:"
+read var2
+echo -n "Enter the third number"
+read var3
+
+if [[ $var1 -ge $var2 ]]
+then
+	if [[ $var1 -ge $var3 ]]
+	then
+		echo "$var1 is largest number"
+	else
+		echo "$var3 is largest number"
+	fi
+else
+	if [[ $var2 -ge $var3 ]]
+	then
+		echo "$var2 is largest number"
+	else
+		echo "$var3 is largest number"
+	fi
+fi
+

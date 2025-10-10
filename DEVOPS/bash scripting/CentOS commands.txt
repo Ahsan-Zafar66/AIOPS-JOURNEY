@@ -1,0 +1,237 @@
+date  --> to check date
+
+cal --> to check calendor
+
+df --> to check disk space used or free
+
+free --> Tells you about free memory
+
+pwd --> tells you the directory where you are it's absolute path
+
+ls /foldername --> to see the files of a folder
+
+ls ~ /foldername --> ro see the files in the mentioned folder and furthr files in the folder
+
+ls -lt --> show the files in long format
+
+ls -lt --reverse --> bring the bottom files to top and vice verse
+
+ls -a --> show the files in alphabatical order
+
+ls -d directory1 directory2 --> to showthe files in multiple directories at once
+
+ls -F --> shows files with append indicator
+
+ls -d -l --> show root
+
+ls -h --> human readable form
+
+ls -r --> show the files in reverse order
+
+ls -S --> sort files by size
+
+ls -t --> show files based on their time
+
+ls -l | less --> brings less files and move forward by presseng spacebar till it shows all files
+
+WORKING WITH DIRECTORIES:
+
+cp -r filetocopy/absolutepath  pathwheretocopy/absolute path --> will copy file to a desired path
+
+mv filtomovepath wheretomovefilepath --> it moves a file to the desired destination
+
+rmdir dir1 di2 --> to remove multiple directories. In linux there is no undelete once deleted then deleted.
+
+type ls --> tells you something about ls
+
+command --help --> it will tell you about all things for hat command. It is very useful
+
+ls --help --> will show all commands related to ls
+
+info --> give information
+
+type test --> tell about test
+
+ls -l >> filename --> it copies the directories name where you ar standing to a mentioned file
+
+ls -l > filename --> It overwirte on te previous information the new information
+
+ls-l directorypathofwhichfilestosave >> Destinationfilepath --> this command will save the file name in a directory to a specified files. It will copy
+
+ls -l directorypath > destinationfilepath --> this command will overwrite
+
+ls -l /usr/bin | sort | less --> it will show the files of bin folder after sorting it.
+
+
+ls /usr/bin | sort | uniq | less --> it will show sorted unique files with control to show more by pressing spacebar
+
+head -10 filename/filepath --> will show the first ten line sin that file, tail will show last 10
+
+echo whi is ahsan --> it will print the sentence
+
+echo D* -> will show all the files that start with D in a directory
+
+echo * --> to see the hidden files
+
+echo $((2+2)) --> will do summation
+
+id --> shows you your id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

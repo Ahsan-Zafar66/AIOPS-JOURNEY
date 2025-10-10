@@ -1,0 +1,17 @@
+<input value="" name="email" max="" min="1" required="" type="email" placeholder="Email" class="md:p-4 p-3 bg-transparent w-full h-full focus:outline-1 outline-Bluish">
+
+<button class="w-full md:py-4 py-3 bg-Bluish text-white disabled:bg-blackCow">Login</button>
+
+
+<input value="" name="email" max="" min="1" required="" type="email" placeholder="Email" class="md:p-4 p-3 bg-transparent w-full h-full focus:outline-1 outline-Bluish">
+
+
+<a href="/auth/sign-in" class="py-2 px-4 whitespace-nowrap btn-light text-base font-sans" data-v-89436f54=""> Login </a>
+
+
+
+
+
+
+
+

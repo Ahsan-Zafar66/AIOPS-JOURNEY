@@ -1,0 +1,49 @@
+When you create a vm and work in it create files and directories in it, where the data is stored in host machine?
+
+By default /vagrant directory in vagrant vm is synced with the host directory where vm is created.
+
+Suppose i create a vagrant vm in /D/AIOPS/DEVOPS/Vagrant/lecture3
+
+the above directory is by default synced with /vagrant directory in vm.
+In this directory whatever you do directly appear in your folder lecture3
+
+
+# you can synced any folder or change the path by configuring the Vagrantfile, which has configurations of a VM.
+
+suppose i synced . "/home/vagrant"
+
+now in vm in path /home/vagrant whatever i do create file remove it will directly appear in my host machine directory where this vm is hosted.
+
+If i do work in other directories in vm that won't appear in this directory because they are not linked or sysnced with the present directory in host
+
+Now, the directory in vm and directory in host machine which is synced, in either diectory you work it will appear on both sides.
+If you create file in host they will also appear in vm and vice verse
+
+
+# syntax of syncing command or line
+config.vm.synced_folder {host_path} {vm_path}
+
+# example
+config.vm.synced_folder "." "/home/vagrant/testdir"
+
+now, the present working directory of host machine is sysnced with /home/vagrant/testdir in vm
+
+
+# Scenariao
+Suppose i synced first . on host and /home/vagrant on vm and created some files. That files appeared on both sides.
+
+Now i changes the path in vm, I changed it to /new, now all the files which were created in /home/vagrant will appear here because . is same which is host.
+Now, i have synced . and /new, so everything in . will appear in /new
+
+Scenario # 2
+What if i change both paths in host and vm?
+You can use any path any directory on both host and vm to synce.
+such as
+
+config.vm.synced_folder "D:" "/synced"
+
+i am dyncing D directory of host with /synced directory of vm. It is possible you can use any path any directory on both sides. All the content of both directories will appear on both sides
+
+
+
+

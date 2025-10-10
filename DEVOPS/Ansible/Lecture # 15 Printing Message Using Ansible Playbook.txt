@@ -1,0 +1,46 @@
+# writing or printing messages 
+vim print.yml
+
+---
+- name: This file is dedicated for prinitng message
+  hosts: centos
+  tasks:
+    msg:
+      - "Ahsan Zafar"
+      - "Ahmed Jamal"
+      - "Infinix"
+
+
+==================================
+
+If you have multiple inventory files (hosts), such as hosts, inv, inv2.
+You can mention which inventory file to use while running the command
+# for example
+ansible-playbook -i inv print.yml
+
+# now it will use inv file to look for the host mentioned in print.yml file
+===================================
+
+Using variables in messages:
+- name: This file is dedicated for prinitng message
+  hosts: centos
+  tasks:
+    msg:
+      - "{{inventory_hostname}}"
+      - "{{ansible_hostname}}" # name of worker node not set by us in inventory file, actual name of host
+      - "Infinix"
+
+
+gather_facts:
+if you set it no then above thing will not work it will give you error
+
+gather_fact is setting of control whether or not to gather remote node information
+By default gather_facts is true value in ansible-playbook or ad-hoc command
+gather_facts working with boolean value  --> true/false or yes/no
+
+example:
+- name: gathering information
+  hosts: rhel
+  gather_facts: yes/no OR true/false
+
+

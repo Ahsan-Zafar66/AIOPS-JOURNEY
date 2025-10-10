@@ -1,0 +1,9 @@
+containers are portable, they have a repository known as container repository
+
+
+Docker virtualizes application layer, it uses the kernel of host, it does not have its own kernel. It is in megabytes
+
+Virtual Machine has its own kernel and application layer. It is in gigabytes.
+
+We cannot run a docker image created on linux in windows kernel. Image crated in linux may not be compatible wiht windows kernel.
+Check whether your host can run docker natively. Install Docker Toolbox, it enables host to run different docker images.

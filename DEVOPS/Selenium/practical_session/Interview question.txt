@@ -1,0 +1,7 @@
+What is the difference between driver.quit() and driver.close()?
+
+Suppose you open chrome and open alnafi, you click on linkedin button and now two pages are opened in chrome alnafi and linkedin.
+
+driver.quit() --> it will quit both the pages 
+
+driver.close() --> it will close only the alnafi page, linkedin page will be there open

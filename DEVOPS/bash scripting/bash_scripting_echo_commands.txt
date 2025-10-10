@@ -1,0 +1,155 @@
+echo "ahsan zafar" --> will write ahsan zafar
+
+name="ahsan"
+
+echo -e "My variable is \$name and value in it is $name" --> $name will give ahsan, \$name will give variable which is name
+
+echo -e "my name is "\ahsan zafar\" --> it will pring ahsan in quotations
+
+echo -e "\a my name is ahsan" --> \a will create a sound
+
+echo -e "ahsan \zafar" --> \ will remove anything in fromt of it upto one space
+
+echo -e "My name is \cahsan" --> \c will remove anything after it or cut it.
+
+echo -e "\fMy name is ahsan" --> it will show text clearly, clear the screen
+
+echo -e "My name is \tahsan" --> \t to put a tab space
+
+echo -e "My name is \vahsan" --> give vertical space 
+
+echo -e "My name is ahsan" | tr [a-z] [A-Z] --> converting text into capital letters
+
+tr [a-z] [A-Z] <<< "My name is ahsan" --> do the same thing
+
+
+
+======
+a way to run a script without echo
+
+#!/bin/bash
+
+cat << ABD 
+
+
+My current user is $USER
+My current working directory is $PWD
+
+ABD
+
+=================
+
+
+cat << ABD > filenametosavescript
+
+
+My current user is $USER
+My current working directory is $PWD
+
+ABD
+
+above command can be used to write something withou echo in a script.
+
+========
+# how to give multiline comments withou using #
+
+<< ABD
+cooment 1
+comment 2
+comment 3
+ABD
+
+another method
+: '
+comment1
+comment 2
+'
+
+space is necesary between : '
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

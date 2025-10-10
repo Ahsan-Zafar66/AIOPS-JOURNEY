@@ -1,0 +1,179 @@
+Nagios is a monitoring toole, which is used to moniter server and services in the sever.
+
+
+Phases of continous monitoring:
+1. Define: develop the monitoring strategy what you will monitor and wy
+2. Establish: How frequently you are going to monitor a thing
+3. Implement: Implement the designed strategy
+4. Analyze data and repeat finding
+5. Repond to the findings
+6. Review the strategy and update if needed
+
+
+
+What is Nagios?
+Nagios is an open-source monitoring system that helps monitor systems, networks, and infrastructure. It allows you to detect and respond to infrastructure issues before they affect critical business processes.
+
+It can monitor:
+
+Server resources (CPU, memory, disk, etc.)
+
+Network services (HTTP, FTP, SMTP, etc.)
+
+Hosts (whether they are up or down)
+
+Logs and custom application metrics (with plugins)
+
+How Does Nagios Work?
+Nagios operates on a client-server architecture:
+
+Nagios server (monitoring host): The central server that schedules and runs checks (using plugins) for hosts and services.
+
+Nagios clients (monitored hosts): These are the machines being monitored. They run agents like NRPE (Nagios Remote Plugin Executor), NSClient++, or use SSH to allow the server to check their metrics.
+
+The Nagios server:
+
+Uses plugins to gather metrics.
+
+Schedules regular checks for host and service statuses.
+
+Notifies admins via email, SMS, or other methods when problems occur.
+
+Logs events for auditing and analysis.
+
+Do You Need to Learn Nagios as a DevOps or MLOps Aspirant?
+DevOps: Basic to intermediate knowledge of Nagios is good to have, especially if you apply to companies that use it for monitoring legacy systems.
+
+MLOps: It's not a high-priority tool. Monitoring in MLOps often focuses on tools like Prometheus, Grafana, or more specialized ML monitoring tools like Evidently, WhyLabs, etc.
+
+✅ Summary: You don’t need to memorize it "by heart," but understanding how it works, its architecture, and basic setup will strengthen your DevOps profile.
+
+Nagios Client-Server Architecture
+Nagios Server:
+
+Runs Nagios Core and plugins.
+
+Periodically checks the health of client systems/services.
+
+Receives results from clients if using passive checks.
+
+Nagios Clients:
+
+Run agents like NRPE or NSClient++.
+
+Respond to queries from the server about CPU, disk usage, etc.
+
+How to Set Up Nagios Server and Clients (Basic Commands)
+🔧 Prerequisites:
+3 Linux systems: 1 Nagios server + 2 client machines
+
+Assume all are running Ubuntu/Debian for this guide
+
+Step-by-Step Setup
+🖥️ 1. On Nagios Server
+sudo apt update
+sudo apt install -y autoconf gcc make wget unzip apache2 php libapache2-mod-php \
+libgd-dev libmcrypt-dev libssl-dev bc gawk dc build-essential snmp \
+libnet-snmp-perl gettext
+
+# Add user and download Nagios
+sudo useradd nagios
+sudo groupadd nagcmd
+sudo usermod -a -G nagcmd nagios
+sudo usermod -a -G nagcmd www-data
+
+cd /tmp
+wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.1.tar.gz
+tar -xvf nagios-4.5.1.tar.gz
+cd nagios-4.5.1
+./configure --with-command-group=nagcmd
+make all
+sudo make install
+sudo make install-commandmode
+sudo make install-init
+sudo make install-config
+sudo make install-webconf
+
+# Set password for web interface
+sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+# (Enter a password)
+
+# Start services
+sudo systemctl enable apache2
+sudo systemctl enable nagios
+sudo systemctl start apache2
+sudo systemctl start nagios
+
+📦 2. Install Nagios Plugins
+cd /tmp
+wget https://nagios-plugins.org/download/nagios-plugins-2.4.0.tar.gz
+tar -zxvf nagios-plugins-2.4.0.tar.gz
+cd nagios-plugins-2.4.0
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
+make
+sudo make install
+
+🧑‍🤝‍🧑 3. On Client Machines (Client1 & Client2)
+Install NRPE and Nagios Plugins:
+sudo apt update
+sudo apt install -y nagios-nrpe-server nagios-plugins
+Edit the NRPE config file:
+sudo nano /etc/nagios/nrpe.cfg
+Add the Nagios server's IP to allowed_hosts:
+allowed_hosts=127.0.0.1,<NAGIOS_SERVER_IP>
+Restart NRPE:
+sudo systemctl restart nagios-nrpe-server
+
+🔗 4. Back to Nagios Server: Add Clients to Nagios Monitoring
+Edit Nagios config:
+sudo nano /usr/local/nagios/etc/nagios.cfg
+Uncomment this line:
+cfg_dir=/usr/local/nagios/etc/servers
+
+Create the servers directory:
+sudo mkdir /usr/local/nagios/etc/servers
+Create a config file for each client:
+
+sudo nano /usr/local/nagios/etc/servers/client1.cfg
+Example content for client1.cfg:
+define host {
+    use                     linux-server
+    host_name               client1
+    alias                   Client 1
+    address                 <CLIENT1_IP>
+    max_check_attempts      5
+    check_period            24x7
+    notification_interval   30
+    notification_period     24x7
+}
+
+define service {
+    use                             generic-service
+    host_name                       client1
+    service_description             Check Load
+    check_command                   check_nrpe!check_load
+}
+Repeat for client2.cfg (change host_name and address).
+
+✅ 5. Restart Nagios
+sudo systemctl restart nagios
+You can now access the web interface:
+http://<NAGIOS_SERVER_IP>/nagios
+Login with nagiosadmin and the password you set earlier.
+
+Summary
+Concept	                Explanation
+Nagios			Monitoring system
+Architecture		Client-server
+Server			Runs checks, sends alerts
+Client			Shares data using NRPE
+Key Tools		nagios-core, nagios-plugins, nrpe
+DevOps Use		Useful for legacy infra, good to know basics
+MLOps Use		Not primary, learn Prometheus/Grafana instead
+
+Let me know if you want a Docker-based setup or want to monitor custom metrics.
+
+
+
+
+

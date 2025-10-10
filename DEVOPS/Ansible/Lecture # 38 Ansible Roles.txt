@@ -1,0 +1,31 @@
+Interview Question:
+What is ansible roles?
+ansible roles are way to organize playbook
+It is task in  a structured way
+It is making easier to manage and reuse ansible code
+a role is essentially a collection of tasks, templated, files and variables
+
+
+In ansible roles we have a directory roles, then project directory which is inside roles.
+In project directory there are multiple directories each containing main.yml file. It has tasks,vars, meta and other directories.
+We define task in task directory main.yml file, variables in var directory main.yml file.
+
+Then we have a yml file outside of roles directory, we define host and other things here and mention project in roles argument.
+
+In this way we run things in an organized way
+
+
+# creating ansible role
+ansible-galaxy init <project name> --offline
+
+
+
+# first make a directory roles
+mkdir roles
+
+# now make project inside roles directory
+cd roles
+
+# making project
+ansible-galaxy init project --offline
+

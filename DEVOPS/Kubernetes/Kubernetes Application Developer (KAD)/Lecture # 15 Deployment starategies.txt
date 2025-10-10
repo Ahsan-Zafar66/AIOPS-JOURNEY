@@ -1,0 +1,179 @@
+what is a deployment strategies?
+A deployment strategy is a method of rolling out new code that is used to achieve some benefit such as increasing reliability and minimizaing risks
+
+Blue/gree deployment strategy:
+This deployment strategy involves 2 identical production environments, usually called blue and green.
+the traffic goes to blue environment. Green is there but no traffic is going. 
+blue environment contains version 1 of your app which is stable and working and is being used by customers.
+green environment contains v2 of your application. this green environment which containe v2 of application is first confirmed to be stable and working before users are directoed to this new version of app
+when green is stable, working and users are directed, then we close the blue environment.
+
+when we move from blue environment to green make sure green environment is stable and working.
+
+if a new version v3 comes, the green environment is now your blue environment with v2 working fine and being used by users.
+this v3 become green environment which is tested for stability and reliability. and the cycle goes on.
+
+
+
+
+Canary Depoyment:
+it also uses 2 environment just like blue/green type
+
+In canry deploymnet strategy we have 2 environments.
+Most users use the stable version of application, only a samll portion of users are directed to second environement towards new version so that issues could be exposed if there are any n v2 before it is passsed to all customers.
+
+
+
+Blue Green Deployment Hands On:
+In order to access pods in kuberentes you need to have a service through which you can access the pod
+
+
+Steps:
+step # 1 Create the Deployment
+step # 2 Create service that redirect users to the pod attach with it (in short pod of above deployment)
+step # 3 check the node in which pod is made and take ssh of node
+step # 4 after taking ssh of node, curl service_ip:80 and see what you get
+
+
+STEP # 1
+# creating blue deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: blue-test
+        color: blue
+    spec:
+      containers:
+      - name: container-pod
+        image: linuxacademycontent/ckad-nginx:blue
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: blue-test
+      color: blue
+
+above deployment make one pod and image is given to practice blue deployment and we are opening container port 80.
+In kubernetes to talk to pod we need a service, now we will make a service which when exposed to user will connect user and the pod.
+
+
+STEP # 2
+# service yml file
+apiversion: v1
+kind: Service
+metadata:
+  name: bluegreen-svc
+spec:
+  selector:
+    app: blue-test
+    color: blue
+  ports:
+  - protocol: TCP
+    port: 80 # user will come at this port of service
+    targetPort: 80 # whne user come to service to which port to redirect the user to POD port. It means which port of pod should be exposed to user.
+
+# in above service file, anyone who comes to service at port 80 will be redirected to the pod bind to service using selector and labels of the pod will be matched with those define in service.
+
+
+
+
+# creating deployment and svc
+kubectl apply -f deployment.yml
+
+kubectl apply -f blue-svc.yml
+
+# above svc when created will have an ip, you can check svc ip through following command
+kubectl get svc -o wide
+
+# note the ip of service
+
+# now check the pod in which node the pod is created
+kubectl get pods -o wide
+
+
+STEP # 3
+# now if the cluster is made with kind tool use following commadn to take ssh of node
+docker exec -it node_name bash
+
+
+STEP # 4
+# you will be looged in the node with root privileges.
+# now curl the service on port 80
+curl servic_ip:80
+
+# you will get response I am Blue!
+
+# so when you go to the service using its ip, it redirected you to the pod attached with it.
+
+
+
+
+GREEN DEPLOYMENT HANDS ON:
+now we will first create green deployment and will check if it working fine before attaching it to the service.
+
+step # 1 create green deployment
+step # 2 check in which node pod is created, take ssh of node.
+step # 3 after taking ssh of node, curl pod_ip and see if you get right results which is i'm green
+step # 4 after you have test that version 2 is working fine then attach the pod with service.
+
+
+Step # 1 Green Deployment yml file
+# creating green deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: green-test
+        color: green
+    spec:
+      containers:
+      - name: container-pod
+        image: linuxacademycontent/ckad-nginx:green
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: green-test
+      color: green
+   
+
+# take ssh of node in which above deployment pod is created
+docker exec -it node_name bash
+
+# check if pod is working fine
+curl pod_ip
+
+
+# if pod is working fine then edit the service, now inside service change the labels to find the green pod, previously it was attached with blue pod
+kubectl edit svc service_name
+
+# after changing the service, check in which node the green deployment is present
+kubectl get pods -o wide
+
+# get ip of service
+kubectl get service
+
+# take ssh of node in which green pod
+docker exec -it node_name bash
+
+# now curl the service_ip:80
+curl service_ip:80
+
+
+
+

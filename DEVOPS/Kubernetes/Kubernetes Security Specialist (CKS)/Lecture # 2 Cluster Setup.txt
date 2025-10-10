@@ -1,0 +1,9 @@
+minimizemicroservice vulnerabilities:
+1) Runtime Sandboxes
+2) OPA Gatekeeper
+3) mTLS Certificates
+
+
+Security is done on 4 levels:
+1) Cloud Level
+2) Custer Level

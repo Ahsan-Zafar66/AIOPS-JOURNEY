@@ -1,0 +1,11 @@
+We need to download webdriver for each different browser and version changes after a month or two, wo it is hectic and not work friendly.
+
+So, we use webdriver manager to solve this problem
+
+# installing webdriver manager
+pip install webdriver_manager
+
+
+IN SELENIUM 4 we no longer need any manual driver setting or using webdriver-manager library,
+it has been automated we just need to mention the browser and selenium will do driver management automatically.
+

@@ -1,0 +1,230 @@
+Cluster Ip:
+ClusterIp establishes communication between different microservices of an application.
+
+Suppose we have front-end, back-end and redis service.
+
+
+
+front-end
+
+
+back-end
+
+
+
+redis
+
+
+
+ip to ip communcation between pods is not good, because pods ip is not static. A pod crashed and a new one created on its place, this new pod will have new ip.
+But, you configured old pod ip now communincation won't happen until you configure newly made pod ip. So, this is not good.
+
+
+When we use clusterip as a service, we use selector for pods, that direct the traffic to pods that have this label.
+Now, when a pod is destroyed and new one is created, it's ip becomes different but labels remain same.
+So, communication doesn't break.
+
+
+
+
+# clusterip yaml file demo
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end
+
+spec:
+  type: ClusterIP # note we use to write NodePort here, ClusterIp is for internal cluster communication
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector: # in selector we write the pod labels to whom the service should forward the traffic.
+    matchLabels:
+      app: pods
+
+
+
+
+
+Note:
+
+Our application flow front-end --> back-end --> redis
+
+# as front end is used by users we will use NodePort as type in service of front-end and will add labels of pods hosting front-end.
+
+
+
+
+NodePort, Service and ClusterIp hands on:
+ClusterIp is for internal communication, like pods within same cluster.
+
+
+
+When you have used clusterip as a service, then you need to enter in your node through ssh connection to interact with pods or application, you cannot access application without entering in node.
+As, clusterip is for internal communication in a cluster, you need to enter in node.
+# example of coomunication after entering node
+pod_ip:port
+
+Nodeport is for external communiation, like traffic from outside the cluster.
+when you have used nodeport in your service then you can access your application from anywhere from outside network, you dont need to enter in the node and access application.
+# example of communication
+node_ip:nodeport
+
+
+
+
+
+Cluster Ip Hands on:
+
+
+
+Flow Sumary:
+USER (via browser)
+     ↓
+NodePort Service (frontend) at node_ip:30080
+     ↓
+Frontend Pod (app: frontend)
+     ↓
+ClusterIP Service (backend)
+     ↓
+Backend Pod (app: backend)
+     ↓
+ClusterIP Service (redis)
+     ↓
+Redis Pod (app: redis)
+
+
+
+
+
+
+
+
+
+
+# front-end yml file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: your-frontend-image:latest  # replace with your real frontend image
+        ports:
+        - containerPort: 80
+        env:
+        - name: BACKEND_HOST
+          value: "backend"
+
+# see in front-end yml file we have environment variables name BACKEND_HOST and value backend, it wil direct front-end PODS traffic to backend service
+
+
+# front-end service yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30080  # Exposes the app on node's IP at port 30080
+  type: NodePort
+
+
+
+
+# backend yml file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: your-backend-image:latest  # replace with your real backend image
+        ports:
+        - containerPort: 5000
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+
+# now you can see environment variables, backend pod will direct traffic to redis service as we have provided in environment variable the name of redis service
+
+# backend service
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 5000
+    targetPort: 5000
+  type: ClusterIP
+
+
+
+
+
+# redis yml file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        ports:
+        - containerPort: 6379
+
+
+
+# redis servcice
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+    targetPort: 6379
+  type: ClusterIP
+
+
+

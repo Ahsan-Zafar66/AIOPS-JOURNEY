@@ -1,0 +1,19 @@
+Ansible variables:
+
+Default variable --> default variables of ansible. Default variables mean that are defined by default
+
+
+Inventory variable --> you define host variable, group variable
+
+Facts and local facts
+
+Register variable: variable that you need to register to use
+
+
+If you want to call any varaible in ansible you need to use double flower brackets
+# for example
+ansible all -m debug -a msg={{inventory_hostname}}
+
+
+ansible all -m debug -a msg={{hostvars}}
+

@@ -1,0 +1,28 @@
+In this lecture we studied how to install or remove packages with respect to different os flavors
+
+
+# yml file content
+---
+- name: this file is for installation of packages
+  hosts: all
+  become: yes
+  tasks:
+  - name: installation of package
+    yum:
+      name: httpd
+      state: present
+    when: ansible_os_family in ["RedHat"]
+
+  - name: instllation of apache in ubuntu
+    apt:
+      name: apache2
+      state: present
+    when: ansible_os_familiy in ["Debian"]
+
+
+======================================================
+if file is giving error that you need root then use -K to asj for pasword while running
+
+when you use -K the password you need to enter is of root user.
+
+

@@ -1,0 +1,43 @@
+The smallest working unit or component of kubernete is POD
+
+Master node contacts always the pod, not the containers.
+
+All the requests or directions of master node goes to pod, then pod do changes in the containers present in pod
+
+
+Kubernetes does not manage the containers directly.
+Kubernetes manages containers through pod
+
+kubernetes first create a pod and then deploy containers in it
+
+POD is only responsible for managing the container as a whole, pod manages the container not the things running inside container
+
+Kubernetes does not give any IP or any configuration to container, it allocates to POD
+
+Genenrally, we create one container in one pod. It is a best practice. You can make more than one container in one pod but that is not a good practice
+
+
+
+# hierarchy
+
+Cluster --> Node is inside cluster ---> Pod is inside node --> Container is inside of pod --> App is running inside container
+
+So,
+
+Cluser --> Node --> Pod --> Container --> App
+
+
+
+# Pod demo commands
+
+# create a pod and run nginx from docker nginx image
+kubectl run nginx --image=nginx
+
+# show pods
+kubectl get pods
+
+# describe the nginx pod
+kubectl describe pod nginx
+
+# it shows pods details more
+kubectl get pods -o wide

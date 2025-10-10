@@ -1,0 +1,78 @@
+alias means giving alternative names, it is quite important to know in daily life of a devops engineer
+
+# go in root directory
+cd /root/
+
+# look for file .bashrc
+vim .bashrc
+
+.bashrc file has the aliases
+
+# you can set alias like this
+alias a='ls -ltrh'
+
+now command ls -ltrh has been stored in variable a, whenever you call this variable you will get ls -ltrh
+
+
+
+# sometime in daily routine we need a desire formatting for output of some commands
+docker ps --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'
+
+make sure the spellings are correct
+
+above command will bring output of docker -ps but in mentioned format
+
+~ sign can be changed and any sign can be used
+
+now each time writing the above command is hectic, you can create the alias
+
+alias dkps="docker ps --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'"
+
+
+# let's chnage format of docker stat
+docker stats --format 'table {{.Name}} --> {{.CPUPerc}}'
+
+table means bring the headings and in table format
+in docker stats CPU % is there so we use CPUPerc, Perc for %.
+
+we need to make sure spellings are correct and then when we get the output we need, we can create alias of it.
+
+
+# getting containers which are exited
+docker ps -a -f status="exited"
+
+docker ps -a --> show the process
+
+-f means filter, status="exited" show processes which have been exited
+
+
+
+# you can rmove contianers that are exited
+docker rm $(docker ps -qa -f status="exited")
+
+# now you can save above command as an alias, which you can call to remove containers that are exited
+alias dkrm="docker rm $(docker ps -qa -f status='exited')"
+
+
+Video Notes:
+What is alias ?
+
+Alternative name you can give.
+
+rm --> delete
+rm --> delete
+
+#alias a="ls -ltrh"
+#a
+docker ps  --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'
+
+
+alias dkps="docker ps  --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'"
+
+docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}"
+alias dkt="docker stats --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}'"
+
+alias dki="docker images"
+alias dkclean="docker ps -a -f status=exited"
+
+alias dkclean="docker rm $(docker ps -q -a -f status=exited")

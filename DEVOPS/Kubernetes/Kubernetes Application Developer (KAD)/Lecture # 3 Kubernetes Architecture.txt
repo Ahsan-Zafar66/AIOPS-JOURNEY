@@ -1,0 +1,68 @@
+Node: any machine which has kubernetes installed is called node
+
+
+API server: we perform all the management activites through api server
+
+Scheduler: it is responsible fro scheduling workloads,  like placement of containers on nodes. Where to place a container on which node.
+
+Controller: It perform controlling activities. A node is down, it makes another node up
+
+Container Runtime: software to run containers. for example docker
+
+kublet: it is an agent that is present in every worker node, it provides information to master node. Master node directly communicates to kublet
+
+etcd: all information of cluster is stored in key-value pairs. How many nodes, we have, how many pods, what services we are running
+
+
+kubectl: it is a utility for command line, we use it to to run kubernetes commands
+
+
+
+
+Introduction to all tools:
+
+Kubernetes Setup:
+tools used to make a kubernetes environment
+Kind:
+used by developers alot, can set up a cluster within minutes
+kind is a tool for running local kubernetes cluster using docker container nodes.
+kind was primarily designed for testing kubernetes
+
+kind represent docker container as node.
+
+
+Minikube:
+it uses an iso image
+
+
+Kubeadm:
+it is the most widely used and conforms to industry best practices
+using kubeadm, you can create a minimum viable kubernetes cluster that conforms to best industry practices
+it is used to create a cluster on your local machine.
+
+Steps or workflow:
+1) Create nodes master and worker nodes
+2) Install kubernetes and docker on all machines
+3) install kubeadm
+4) Initialize cluster
+5) Make Pod Network
+6) Joining of nodes
+
+
+kubespray:
+(not used in industry, it is difficult, we will not use it)
+
+
+Kubernetes Setup on Cloud
+EKS (Elastic kubernetes Service) on AWS
+GKE (Google Kubernetes Engine) on GCP
+AKS (Azure Kubernetes Service) on Azure
+
+
+
+If your machine is weak, you can use ready made kubernetes cluster and practice:
+1) Play-with-k8s.com
+
+2) Killercoda.com
+
+

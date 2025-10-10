@@ -1,0 +1,29 @@
+Lecture 2 :-
+
+
+JIRA software platform:-
+
+1. Cloud 
+2. Server 
+3. Data Center 
+
+
+JIRA version :-
+https://www.atlassian.com/software/jira/pricing
+
+
+1. Free
+2. Standard 
+3. Premium
+4. Enterprise
+
+
+JIRA setup at cloud :-
+Setup as free account and you need verify :
+
+email : automation52786@gmail.com
+
+JIRA cloud : https://alnafi.atlassian.net
+
+alnafi_cloud -->Scrum --> Comapny based --> KEy --> AC -->
+

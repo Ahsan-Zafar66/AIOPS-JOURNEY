@@ -1,0 +1,70 @@
+Flow of Concept
+
+
+Docker File ----> build command ---> docker image ---> run command --> docker container
+
+we can create image from docker container using commit command
+
+docker container --> commit command ---> docker image
+
+docker commit command creates a docker image from docker container.
+
+# syntax
+docker commit container_name imagename:tag
+
+
+Why we need to create an image from container?
+Because whatever you do to create a docker file and we create image from docker file and docker image are non-writable.
+So, there always some configuration that is left or it is needed, so what we do we run the image, which create container do the changes in container and use commit command to create a docker image from container.
+In this way, our all needs are satisfied
+
+
+whenever you make changes in a container, ceate image and push it in docker hub so that it is always available
+
+When you change image name or tags image id remains same
+
+image id chnages only when you make an image from a file and update the file and make a new image from it, now both images will have different image id because both files are different
+
+
+
+Docker commit : It will be create docker image from docker container
+
+#docker commit <OLD container> <Newimage:tag>
+
+Question Time:
+
+Q: I take image ubuntu , Create the container from Ubuntu Image and when i run the ubuntu container the it exited
+
+Can i run this command :-
+
+docker commit <Ubuntu containerID> <Dockerimage>
+
+
+Q: Will the image-ID same ? means Ubuntu imageID and New image created both are same? docker commit command
+# docker run --name ali alpine
+containerID:cfebc166741b
+alpineImage: e9adb5357e84
+commit imageID: 01348df28fbc
+
+
+
+Q: Alpine image se --> 2 container banaya --> ek ka name rakha cont1 , cont2  --> docker commit kar diya , cont1 ka image1 and cont2 ka image2 diya hain , to image1 and image2 ka image ID same hoga or different ?
+Answer : Different
+
+
+
+
+#docker build .
+aapki image update ho jayega --> aapki image ID change --> jis image ka naam nahi hota hain to khali image ID ho ta he usko bolte dangling images
+
+If repo and tag name is none but image ID present in your docker images then its called dangling images
+# docker images  --filter "dangling=true"
+
+
+
+
+# Removing docker containers from ps -a
+
+docker ps -a -q --> -q will give only containers id
+
+docker rm $(docker ps -a -q)

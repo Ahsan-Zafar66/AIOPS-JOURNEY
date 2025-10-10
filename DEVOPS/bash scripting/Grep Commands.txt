@@ -1,0 +1,121 @@
+Grep command is used for filteration
+
+cat ahsan.txt | grep ahsan --> look for ahsan in the file
+
+echo -e "\nahsan \pharmacist \AIOPS" grep | ahsan --> will bring ahsan in the text
+
+
+ps -ef | grep ahsan --> look for ahsan in the processes.
+
+man grep --> to get all details of grep
+
+
+cat ahsan.txt | grep -i ahsan -->  -i used to ignore letter case, it will bring ahsan or AHSAN both now regardless of case of letters.
+
+cat ahsan.txt | grep -w ahsan --> it will bring only the matching strings ahsan only exact match.
+
+cat ahsan.txt | grep -v ahsan --> inverse findings, it will show all lines except line containing the word mentioned ahsan
+
+cat ahsan.txt | grep -o pharmacist --> -o case sensitive, will bring only small letter pharmacist
+
+cat ahsan.txt | grep -io pharmacist --> will bring any pharmacist with capital or smaller letters.
+
+cat ahsan.txt | grep -wo pharmacist --> exact match.
+
+cat ahsan.txt | grep -c pharmacist --> show the counts of keyword occuring.
+
+ps -ef | grep $USER --> using grep keyword from a command.
+
+cat ahsan.txt | gep -A 1 pharmacist --> it will show two lines, one containing pharmacist match and one line after this line. if you specify -A 2, it will show 3 lines one pharmacist and 2 lines below it that will come next.
+
+cat ahsan.txt | grep -B 1 pharmacist --> A means after and B means before, it will show one line before match and next line of match.
+
+
+cat ahsan.txt | grep -C 1 pharmacist --> C will show one line before match and one after match, total 3 lines.
+
+grep -r pharmacist --> it will show where pharmacist has been used in all files located in a directory.
+
+grep -l pharmacist * --> in which file or directory pharmacist is being used
+
+grep -L pharmacist * --> file or directory without pharmacist 
+
+grep -l pharmacist ahsan.txt --> is pharmacist is being used in ahsan.txt
+
+grep -h pharmacist --> hides the file and show the content
+
+cat ahsan.txt | grep -e ahsan -e pharmacist -e learning --> -e can be used to find multiple things in a file
+
+cat ahsan.txt | grep -E "pharmacist|ahsan|learning" --> it does the same thing as -e
+
+cat ahsan.txt | egrep "pharmacist|ahsan|learning" --> it does the same thing as -e
+
+=====================
+user.txt data
+ahsanzafar
+root
+
+cat etc/passwd | grep -f users.txt --> it will searchh passwd for data present in user.txt
+
+cat etc/passwd | grep -wf users.txt --> it will searchh passwd for data present in user.txt, exact as mentioned
+===========================
+cat ahsan.txt | grep -e "^Ahsan" --> it will search for Ahsan, like Ahsannss, Ahsan is present from start so it will look in the beginning.
+
+cat ahsan.txt | grep -e "^#" --> show only lines which have # in the beginning
+
+ls -ltrh | grep -E "^d" --> finding the directories in a directory
+
+
+ls -ltrh | grep -cE "^d" --> finding the directories in a directory and counting their number
+
+ls -ltrh | grep -cE "^-" --> finding the files in a directory and counting their number
+
+^ --> match the pattern in the starting line --> example "^pattern"
+$ --> match the pattern at the end of lines --> example "pattern$"
+cat ahsan.txt | grep -E "ahsan$" --> show only lines which have ahsan in the end
+
+cat ahsantxt | grep -E "^$" --> will show where are empty lines
+
+
+cat ahsantxt | grep -vE "^$" --> wil show everything except empty lines
+
+
+cat ahsantxt | grep -E "\+" --> wil show special characters line, like +
+
+cat ahsan.txt | grep -E "i." --> will show one character after matching alphabet such as i, increase the dots to increase characters to see after matching character
+
+cat ahsan.txt | grep -E "\bahsan\b" --> show only ahsan nothing before nothing after, if ahsanns will not bring, only ahsan will bring
+
+cat ahsan.txt | grep -E "in?" --> will bring i or in related text
+
+cat ahsan.txt | grep -E "in*" --> will bring all content i, in, inn, innn, innnnn all
+
+
+cat ahsan.txt | grep -E "in+" --> will bring all content in, inn, innn, innnnn all
+
+cat ahsan.txt | grep -E "[a|b|c]" --> character by character
+
+cat ahsan.txt | grep -E [abc] --> does the same thing like above command
+
+cat ahsan.txt | grep -E "in{5}" --> where n comes five times like innnnnm or innnnnnnn
+
+cat ahsan.txt | grep -E "in{5,7}" --> where n comes five times or seven time like innnnnm or innnnnnnn
+
+cat ahsan.txt | grep -wE "in{5}" --> where n comes exactly five time innnnn only 
+
+=======================
+extract only valid ips
+interview question
+ip.txt
+
+my ip address is 192.282.8.1
+my broadcaast ip is 193.282.6.2
+
+invalid ip is 255.255.255.255
+
+
+cat ip.txt | grep -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]\.[0-9]" ---> it will bring normal ips.
+
+cat ip.txt | grep -E "\b[0-9]{1,3}\.[0-9]{1,3}\.[0-9]\.[0-9]\b" ---> it will bring normal ips.
+
+
+

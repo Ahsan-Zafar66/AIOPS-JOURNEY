@@ -1,0 +1,158 @@
+Step # 1 Download jenkins war from its website 
+
+Step # 2 after downloading th ejenkins jar file paste it in directory where you are working
+
+Step # 3 Run following command from cmd after entering in the irectory where jenkins is present
+java -jar jenkins.war
+
+if it runs then good, if it gives you an error that jenkins want specifc version of java then install that java version and set the environment path of JAVA_HOME in advance system settings
+
+
+after running above command you wil see something a user and password will be created copy them and save them
+
+# example
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+f689b25b78ea4f458a8e8e09177ca77c
+
+This may also be found at: C:\Users\SaaD Computer\.jenkins\secrets\initialAdminPassword
+
+# after it find your machine ip
+mine is: 192.168.43.136
+
+
+# interview question
+jenkins work on 8080 port
+
+
+Now open your browser and hit
+192.168.43.136:8080
+
+# enter the password gven at the tie of jenkins startup
+now chose install plugins
+
+# now after all the plugins have been installed enter  username password
+
+now you will be on the dashboard of jenkins
+
+now go to github account and login in it and create  a public repository
+
+
+Now, install gitbash
+
+# now you nee to login from git bash into github account
+git config user.email "ahsanzafa0501@gmail.com"
+git config user.pass "password of github account"
+
+
+
+Now, take a pytest project and we will integrate this pytest project with jenkins
+
+Now, go to jenkins and create a new project and chose free style project
+
+Now, you need to isntall allure and shining panda plugins
+
+
+Now, experiement if your python project is working fine
+
+After that go to jenkins plugins
+
+Now, after installing allure and shining panda we will configure our project
+
+Now, go to your project in jenkins and go to configuration
+
+# now selecte in advance options custom workspace and here give path where your python proejct is located in your system
+
+# select source code none, no environe
+
+# go to build setup  and select executed windows bash command, chose htis option
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+======================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

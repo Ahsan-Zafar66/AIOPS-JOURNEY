@@ -1,0 +1,81 @@
+Monitoring:
+whenever you have a problem you do following things
+
+1) Locate: locate the problem, identify which components(s) may not be working
+
+2) Gather Info: Gather Information about the broken componnents to hellp determinne what is wrong
+
+3) Fix: Make changes to fix the issue
+
+
+Kubernetes Debuggng Tips:
+
+1) Check Ibject Status: Check the basic status of objects (pods, deployment, service, replicaset and etc). This can be a quick way to locate a broken Pod in the cluster
+
+2) Check Object Configuration: use kubectl describe and or view the full object manifest (yml file) o understand the relevant obkects in more detail
+
+3) Check Logs Check container logs, and even cluster lovel logs, for more insights into what is going on
+
+
+Tools for monitoring kubernetes:
+1) Metrics Server
+2) Prometheus
+3) Elastic Stack
+4) DataDog
+5) Dynatrace
+
+
+Metrics Server:
+Single cluster has one metric server configuration.
+you cannot configure multiple clusters with single metric server.
+
+Metric server has in-memory solution, it has limitation that you cannot save results in an external disk
+
+You cannot see historical metrics with metrics server, like yesterday metric, 7 days ago metircs, a month ago metrics. You cannot see historical metrics with metrics server.
+
+For historical metrics, you can use disk base solutions.
+
+
+kubernetes deploy a kubelet agent on each node in a cluster. kubelete provides complete information of a node to API server.
+kubelete do everything inside a node.
+deploying pods in a nodes and checking theri health is job of kubelet. 
+API server orders kubelet that create this pod in your node, kubelete creates pod. 
+
+kubelet has an internal component called cAdvisor, CAdvisor extract metrics of pod and node.
+
+The kubelet componnet cAdvisor extract metrics about node and pod and send it to the metrics server using kubelet API.
+
+
+metric server get the information from kubelet API, then aggregates the information, store it in memory and show the results
+
+
+
+
+
+
+
+
+
+Monitoring Hands On:
+
+# adding metrics server in minikube
+minikube addons enable metrics-server
+
+
+# command to cehck the node taking most resources
+kubectl top node
+
+# command to cehck the pod taking most resources
+kubectl top pod
+
+
+
+# metrics server configuration in KIND:
+
+# go to github metrics server and go to installation section.
+copy the installation line. and run in teminal
+
+# then search metrics server for kind
+# now open github and add one liner patch
+
+

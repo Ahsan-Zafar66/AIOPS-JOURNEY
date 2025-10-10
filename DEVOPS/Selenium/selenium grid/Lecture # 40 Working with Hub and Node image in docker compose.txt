@@ -1,0 +1,28 @@
+In this lecture we will see how to run hub and node image using docker compose
+
+# pull the hub and node images from docker hub
+
+# create a docker file docker_hub_node.yml
+
+# docker file content
+version: "3"
+services:
+	chrome:
+		image: selenium/node-chrome
+		volumes:
+			- /dev/shm:/dev/shm
+		depends_on:
+			- selenium-hub
+		environment:
+			- SE_EVENT_BUS_HOST= selenium-hub
+			- SE_EVENT_BUS_PUBLISH_PORT= 4442
+			- SE_EVENT_BUS_SUBSCRIBE_PORT= 4443
+			- SE_NODE_MAX_INSTANCES= 4
+			- SE_NODE_MAX_SESSION= 4
+			- SE_NODE_SESSION_TIMEOUT= 10
+	selenium-hub:
+		image: selenium/hub
+		container_name: selenium-hub
+		ports:
+			- "4444:444"
+

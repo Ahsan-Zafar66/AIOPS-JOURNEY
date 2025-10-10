@@ -1,0 +1,29 @@
+
+JQL:
+JQL stands for Jira query language, it is used to extract the issues or information we need
+
+# bring the issue in project with name learning_project, and assignee of th project is current user and status of the issue is Done and it contains "BUG (2)" in it.
+project = Learning_project AND assignee = currentUser() AND status = Done AND textFields ~ "BUG (2)"
+
+
+What is EPIC issue?
+Epic means that this issue is bigger issue very large one, it can be splitted into childs, we can also filter for childs of an epic issue
+
+# for example
+"Epic issue" = LP-7   ---> show the childs of epic issue LP-7
+
+
+
+# show me all issues from yesterday to till now
+created > startOfDay(-1)
+
+
+# show me all the issues resolved in this month
+resolutiondate >= startOfMonth() AND resolutiondate <= endOfMonth()
+
+
+Saving Filters and Subscribing them
+# You can also save a filter result by starring it, when you again click on the filter it will show you same reslts
+
+# you can also create automation of a filter, such as issues to do, task to do you can save a filter by running your query and then create a subscription for the target person, automatically at the specified time the results of the filter will be send to the targeted person
+

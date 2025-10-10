@@ -1,0 +1,3 @@
+A CKS  program or certificate provide assurance that a CKS has the skills, knowledge and competence on a broad range of best practices for securing container-based applications and Kubernetes platforms during build, deployment and runtime.
+
+you need to have CKA certification to sit in CKS exam.

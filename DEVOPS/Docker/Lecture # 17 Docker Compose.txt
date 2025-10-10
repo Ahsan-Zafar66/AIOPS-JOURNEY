@@ -1,0 +1,144 @@
+docker compose is an advance version of docker file
+
+when doing bind mount, use the samr src path in bas emachine and src path in container while creating a container
+# for examole
+
+
+docker run -d --name my_production_container -p 8020:8001 -e PORT=8001 -v /lecture_16/src:/app/src my_node_appp:prod
+
+
+
+Docker Compose:
+Docker Compose is an advance type of Docker file.
+We use to run containers from images each time a container stops
+
+Rather then defining container from an image we can define a container in a Docker Compose file and can run it
+
+# location os this practical in ubuntu is /docker_compose
+
+# requirements
+package.json file
+src directory containing index.js file
+
+Dockerfile with following configuration
+Vim Dockerfile
+FROM node:15-alpine as prod
+ARG PORT=8000
+ENV PORT=$PORT
+WORKDIR app
+copy src src
+copy package.json .
+RUN npm install --only=prod
+EXPOSE $PORT
+CMD npm run start:prod
+FROM prod as dev
+RUN npm install --only=dev
+CMD npm start
+
+
+docker-compose.yml file with following things
+version: "2.3.3" --> define the version of docker compose
+services:
+  my-app:
+    image: my_node_app:${MY_ENV}
+    ports:
+      - "8010:${MY_PORT}"
+    volumes:
+      - ./src:/app/src
+    environment:
+      PORT: ${MY_PORT}
+
+each tag will use two spacebar to place the values in side.
+
+# structure of above yml file
+version of docker compose
+services: here we define how many container or apps we want to run, anything defined inside services will be after pressing two spacbar
+  my_app: this is the tag or name of container
+    image: name of image with its tag from which we want to create container
+    ports: host and container ports are define here. 
+    volumes: bind_mount host:container path is defined
+    environment: here we need to define the container port in PORT argument
+
+variables are defined in yml file in {} brackets like ${MY_PORT}
+
+I used two arguments in above docker-compose.yml file, one is My_ENV and One is MY_PORT
+MY_ENV is the tag of my image my_node_app
+
+we have to define the above arguments in a .env file
+vim .env
+MY_PORT=8000
+MY_ENV=dev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MY_ENV=prod
+docker build -t my_node_app:$MY_ENV --target $MY_ENV .
+MY_PORT=8001
+path : /root/docker/lect-16/src
+
+docker run --name my_prod -p 8010:$MY_PORT -e PORT=$MY_PORT -v /root/docker/lect-16/src:/app/src my_node_app:$MY_ENV
+
+
+Steps to install docker compose :-
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+docker-compose --version
+/usr/local/bin/docker-compose --version
+
+root@abdealidodia:~/docker/lect-17/docker-compose# pwd
+/root/docker/lect-17/docker-compose
+root@abdealidodia:~/docker/lect-17/docker-compose# ls
+Dockerfile  package.json  src
+root@abdealidodia:~/docker/lect-17/docker-compose# tree
+.
+├── Dockerfile
+├── package.json
+└── src
+└── index.js
+
+
+
+vim docker-compose
+version: "3.8"
+
+
+
+docker-compose up
+docker-compose ps
+Note : make sure whenever you fire above command then you need to navigate to docker-compose yml file location then run the command
+
+docker ps
+root@abdealidodia:~/docker/lect-17/docker-compose# docker-compose ps
+Name                        Command               State                    Ports
+-----------------------------------------------------------------------------------------------------------
+docker-compose_my-app_1   docker-entrypoint.sh /bin/ ...   Up      0.0.0.0:8010->8000/tcp,:::8010->8000/tcp
+
+Name : docker-compose_my-app_1
+Syntax : <composedirectory name>_<service name>_<service_count> docker-compose_my-app_1 -->
+
+#docker-compose down
+
+
+#docker build -t abdimage .
+

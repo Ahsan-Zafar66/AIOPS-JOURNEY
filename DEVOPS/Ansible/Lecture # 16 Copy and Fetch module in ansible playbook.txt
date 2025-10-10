@@ -1,0 +1,43 @@
+sudo vim copy.yml
+=========================================================
+---
+- name: this yml file focuses on copying files
+  hosts: centos
+  tasks:
+    name: Copying ansible.cfg fil
+    copy:
+      src: /home/jhon/ansible/ansible.cfg
+      dest: /home/ahsan/
+
+=============================================================
+# you can check if there is error on your file or not
+ansible-playbook copy.yml --check
+
+# another way
+ansible-playbook copy.yml --syntax-check
+
+============================================
+Key value way
+
+---
+- name: this yml file focuses on copying files
+  hosts: centos
+  tasks:
+    name: Copying ansible.cfg fil
+    copy: src=/home/jhon/ansible/ansible.cfg dest= /home/ahsan/
+
+
+
+================================================
+
+fetching file from worker machine
+
+Key value way
+
+---
+- name: this yml file focuses on copying files
+  hosts: centos
+  tasks:
+    name: Copying ansible.cfg fil
+    fetch: src=/home/ahsan/ansible.cfg dest= /home/jhon/
+

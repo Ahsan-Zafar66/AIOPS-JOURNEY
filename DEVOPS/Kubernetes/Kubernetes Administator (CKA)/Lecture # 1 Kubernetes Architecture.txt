@@ -1,0 +1,39 @@
+Kubernetes Architecture:
+Etcd:
+Etcd is a datastore, which is a higly avaible store, it stores all the information of a cluster.
+It stores data in key-value format.
+
+Scheduler is reponsible for deplying pods on appropriate worker nodes.
+
+Controller Manager control all the other controllers, such as node controller whom duty is to monitor the nodes, replication controller who control replicase and etc
+All controllers are controlled or managed or monitor by controller manager
+
+
+
+We have now different offices like controller manager, etcd cluster and kube scheduler.
+Now, there should bw someone who should communicate these offices and control them that is kube-apiserver.
+
+kubeapiserver is the ceo of kubernetes, wll other departments respond to it and provide information.
+
+
+kubelet is installed on every worker node, kubeapi server interat or communicate with this agend which is kubelet.
+all information of a worker node its health, its cpu power, ots memory power and etc os provided by kubelet to kube-apiserver.
+kube-apiserver give actions to kubelet, kubelet perform these actions on worker node.
+
+
+suppose we have an application, it has app code on one worker node and database in another worker node.
+Now, for the communication between these two pods which are located in different worker nodes, we need a networking solution.
+So, that networking solution is called kube-proxy
+
+
+
+Master Node Components:
+kube-apiserver
+Etcd Cluster
+kube controller manager
+kube scheduler
+
+worker nodes componnents:
+kubelet
+kube-proxy
+container Runtime Engine (it can be docker, rkt and etc)

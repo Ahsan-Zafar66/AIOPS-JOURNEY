@@ -1,0 +1,74 @@
+You make  a selenium script then run it, and it works on web
+
+In selenium architecture there are three things:
+1) Script
+2) Webdriver
+3) Browser
+
+Script talks or nteract with webdriver, and then webdriver runs the script on browser
+
+for example
+google webdriver is chrome driver
+
+firefox webdriver is geekodriver
+
+
+In selenium 3 the communication between script and webdriver is done through JSON wire protocol
+
+
+In selenum 4 the communication between script and webdriver happens through W3c
+w3c provides standard
+W3c --> World wide web consortium
+
+selenium >-3.8 and slenenium 4.x use w3c
+
+
+Video Notes:
+Versioning :-
+Selenium 1.0  --> IDE + RC version
+
+Selenium 2.0  --> Webdriver and RC
+
+Selenium 3.0  --> Webdriver but its adding some features
+
+
+Selenium 4.0(Latest) --> its announce at 2019 bangalore by simon stewart
+
+
+Official website : https://www.selenium.dev/
+
+Python selenium script --> Browser works
+
+What is webdriver ?
+It is a web automation framework , which allows us to exe cute test across various browsers.
+
+
+--> Webdriver ek type ka module hain
+
+--> Webdrive also called API
+API --> Application Programming interfaces
+
+JIRA ticket tools
+
+www.jira.com/createticket
+
+
+
+
+
+Selenium 3 will work with json wire protocol
+
+Selenium 4 is work with W3c protocol.
+
+W3c --? World wide Web consortium
+
+
+
+
+
+
+
+
+
+Lecture 2.txt
+782 Bytes

@@ -1,0 +1,80 @@
+As we have studied that ansible has a master and worker nodes.
+
+Ansible does agentless communication, we are not installing an agent on host machines and you only need ot install ansible in master machine. You do not nned to install ansible in every worker machine
+
+Ansible does ssh communication which are of two types ad-hoc comand line and playbook.
+
+Now, ssh communication between master and worker node is done through either passwrod and password less communication
+
+
+ALWAYS MAKE A USER FOR ANSIBLE IN MASTER MACHINE WHILE WORKING IN PRODUCTIONS
+
+IT IS NOT GOOD TO WORK ON ROOT IN PRODUCTION
+
+My maste rmachine is ubuntu: 192.168.43.26
+
+My node machine is centos 8: 192.168.43.63
+
+
+# create a user jhon in ybuntu which is my master machine
+useradd -m -s /bin/bash jhon
+
+# logging in jhon
+su - jhon
+
+# now making jhon entry in visudo file, so that whatever jhon does it does not ask for password
+jhon ALL=(ALL) NOPASSWD:ALL
+
+now make this entry in both systems master and node in visudo file
+
+# command to open sudoers file
+visudo
+
+So, why we make entry of jhon in visudo file?
+So, if you dont make any entry in visudo for jhon, you need to add jhon in sudo group. (sudo usermod -aG sudo jhon)
+After adding it in sudo group, you need to define sudo password for jhon. (passwd jhon. suppose jhon123)
+Whenever you need to install something, it will ask for that sudo password, so each time you have to enter password (which is jhon user password jhon123) which is hectic and not good
+SO, we make entry of jhon in visudo file with no password, now when you run sudo install zip, it wont ask for any password.
+Now, after makng entry of jhon you are password less.
+
+
+
+
+Now, go to vi /etc/ssh/sshd_config file in both master and node and see if PasswordAuthentication is yes, if it is not yes make it yes in both master and node machine
+
+
+Now, restart ssh service in both master and node machine
+
+
+Now, we need to generate key:
+Go to your normal user in master machine and run ssh-keygen. i will go in jhon and then run it
+
+# command to create ssh key
+ssh-keygen
+
+Now, copy this ssh key on your worker node machine by following command
+
+# command to copy ssh jey to worker node
+ssh-copy-id ahsan@192.168.43.63
+
+# mention the user on worker node or else it will use the root user of worker node
+
+# command to take ssh of ahsan now
+ssh ahsan@192.168.43.63
+
+
+# now open file
+vim /etc/ansible/hosts
+
+# make entry of ahsan
+192.168.43.63 ansible_user=ahsan
+
+
+#now run command
+ansible all -m ping
+
+ansible --> use ansible, all --> all nodes, -m --> module, ping --> run ping
+
+
+
+

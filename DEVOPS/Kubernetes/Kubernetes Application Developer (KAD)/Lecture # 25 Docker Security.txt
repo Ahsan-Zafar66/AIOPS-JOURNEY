@@ -1,0 +1,138 @@
+Docker contianers are different from VIrtual Machines.
+Virual Machines has their own network layer, and other things
+Docker containers are isolated from processes running on your VM like sshd, httpd and others.
+Both docker container and VM use the same underlying kernel but are isolated.
+Consider that VM has its things in a namespace and docker container has its things in another namespace.
+Both namespaces are isolated from each other they dont know what hapening in each others namspace.
+But docker and VM use same underlying kernel and are isolated
+
+
+
+When you are login as a root user and you create a docker contianer, now a root user is created in docker container, root user of linux vm and root user of docker container DO NOT have same privileges.
+
+
+
+
+
+Security Context Hands On:
+
+# in context of docker, if you define a speciifc use rin container
+docker run --user=1001 ubuntu sleep 20 --> use th euser 1001 in container
+
+# giving specifiv capability to a user in docker container
+docker run --cap-add MAC_ADMIN ubuntu
+
+
+In context of kubernetes, there are two securties, one you can set at pod level and another one you can set at container level.
+
+Can you set security context on Pod and Container Both?
+Yes, we can do.
+
+
+You can set user both at pod level and container level
+
+You cannot set capability at pod level, you can only set capability at container level.
+
+
+You have set security context on Pod and you also set security context on container, the security context of container is going to overwrite the security context of Pod.
+
+if you didn't set any security on container, then automaticall it will take security context of Pod.
+
+If you didnt specify user and security context for container, then user and security context of Pod will be used.
+
+Capabilities are only supported at Container level Not Pod Level
+
+
+
+# create a normal container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: ubuntu:stable
+    command: ["sleep","20"]
+
+
+# now create above pod with a container of ubuntu
+kubectl apply -f pod.yml
+
+# command to run a command inside a pod's container
+kubectl exec  name_of_pod -- command_to_run_in_container
+
+# example
+kubectl exec my-pod -- whoami
+
+# how to enter a node and take control of a node
+docker exec -it node_name bash
+
+# how to enter a pod and use its terminal
+kubectl exec -it pod_name -- /bin/bash
+
+# example, /bin/bash dont work use /bin/sh
+kubectl exec -it my-pod -- /bin/bash   
+
+
+
+# lets create a pod with securtiy context which has at pod and container level
+# create a normal container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod2
+spec:
+  securityContext:
+    runAsUser: 1008
+  containers:
+  - name: my-container
+    image: ubuntu:stable
+    command: ["sleep","20"]
+    securityContext:
+      runAsuser: 1012
+
+# in above file we set security context at pod as well as contianer level, but if you run command to see which user the containe has, it will has the container security context.
+
+# now create a pod from above file
+kubectl apply -f pod2.yml
+
+# now run whomi command to see which user the contianer has the containe rone or the pod one
+kubectl exec my-pod2 -- whoami
+
+
+
+
+
+# suppose you have multiple container sin a pod, in one container you have define security context but for others you dont
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod4
+spec:
+  securityContext:
+    runAsUser: 1008
+  containers:
+  - name: my-container
+    image: ubuntu
+    command: ["sleep","20"]
+    securityContext:
+      runAsuser: 1012
+  - name: sidecar-container
+    image: ubuntu
+    command: ["sleep","2000"]
+
+# now if you see for sidecar container we dont have any security context defined
+
+# creating pod
+kubectl apply -f pod4.yml
+
+# now lets check security context for my-container in pod mypod4
+kubectl exec my-pod4 -c my-container -- whoami
+
+# now lets do for sidecar container
+kubectl exec my-pod4 -c sidecar-container -- whoami
+
+
+
+# you can also set capabilities of a contianer as you like, for this you just need to add capabilities in securityContext or refer to documentation

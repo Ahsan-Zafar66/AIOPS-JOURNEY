@@ -1,0 +1,40 @@
+Absolute path :-
+
+Start to end
+linux --> absolute and relative
+/home/abdeali/Desktop/abd.txt
+
+#cd /home/abdeali/Desktop
+#cat abd.txt
+
+
+always start with root directory
+
+https://dev.alnafi.com/sign-in
+
+absolate path start wiyh //
+
+
+//
+
+
+//html/body/div[1]/div/div/div[2]/div/form/div[2]/input
+
+
+COPY FULL path : //html/body/div[1]/div/div/div[2]/div/form/div[2]/input[@id='Password']
+COPY FROM elements : //html/body/div[1]/div/div/div[2]/div/form/div[2]/input
+
+partial absolate path :-
+//form/div[2]/input
+
+With ID
+//form/div[2]/input[@id='Password']
+
+
+TASK : gmail find absolate path for password elements
+
+
+
+
+
+

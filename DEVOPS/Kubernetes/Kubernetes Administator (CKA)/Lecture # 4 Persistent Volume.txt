@@ -1,0 +1,166 @@
+persistent volume allows you to abstract storage details away from pods and treat storage like  a consumable resource.
+
+
+persitant volume and persistent volume claims:
+
+persistent volume:
+It defines an abstract storage resource ready to be consumed by Pods
+
+It defines details about the type and amount of storage provided.
+
+
+Persistent Volume Claim:
+It defines a request for storage including details on the type of storage needed
+
+It automatically binds to n available persistent Volume that meets the provided requirements
+
+It is mounted in a pod like any volume.
+
+
+
+
+persisten volume and persistent volume claim they work together and are coupled together.
+
+How thngs work?
+
+Storage --> we make perissitent volumes on storage --> pods claim these persistent volumes using persistent volume claim --> data processed in pod is store don thes persistent volumes
+
+Storage --> persistent volume --> persistent volume claim by pods -> data is stored on persistent volume
+
+
+when we make a persistent volume, kubernetes has three accessmode for persistent volume, which are  ReadOnlyMany, ReadWriteOnce, ReadWriteMany
+
+For persistent volume storage you can use volumes like hostpath, emptydir, awb ebs storage and etc
+
+Persisten Volume Claims:
+
+suppose you have volume claim and it matches to more than one persistent volume, now whcih persistent volume is chosen by volume claim?
+It can chose either. If you want it to select a particular persistent volume then you can specify using labels.
+
+A small persistent volume claim can attach with  alarger perssitent volume.
+
+
+binding of persistent volume claim with persistent volume depends on:
+1) Sufficient Capacity
+2) Access Modes
+3) Volume Modes
+4) Storage Class
+5) Selector
+
+
+if you have bind a persistent volume claim with persistent volume and you delete the persistent volume claim what will happen to persistent volume?
+It depends upon the reclaim policy you defined for persistent volume
+
+by default it is retain, it means when persistent volume claim is removed persistent volume is retain it is not available
+
+retain: when PVC is removed data is retained in PV.
+delete: when PVC is removed data is removed in PV and PV is removed
+recycle: when PVC is removed, data is transferrred to some other place and PC is available for another claim
+
+
+
+Persistent Volumes Hands On:
+# suppose we have a pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mycont
+    image: kodekloud/event-simulator
+    env:                             # this environment variable is necessary for functioning of image
+    - name: LOG_HANDLERS
+      value: file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

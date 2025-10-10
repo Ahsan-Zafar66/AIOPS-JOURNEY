@@ -1,0 +1,54 @@
+erifying Platform Binaries in Kubernetes (CKS)
+This is an important security topic in the Certified Kubernetes Security Specialist (CKS) exam. Let me explain what it means and how to implement it.
+
+What is Verifying Platform Binaries?
+Verifying platform binaries means ensuring that all Kubernetes components (kubelet, kube-apiserver, etcd, etc.) running on your cluster are authentic, unmodified versions from the official Kubernetes distribution.
+
+This protects against:
+
+Malicious actors replacing binaries with compromised versions
+
+Accidental use of incorrect or modified versions
+
+Ensuring consistency across your cluster
+
+# search on google to open the kubernetes documentation
+verify signed artifacts kubernetes
+
+
+
+# go to kubernetes github and then on right side come down you wil see releases tag, open it
+# Now, here you will see all the kubernetes released versions.
+
+# checking your version of client and  server
+kubectl version
+
+
+Example of verifying your client binary
+Step # 1
+find your version in kubernetes releases suppor i have 1.32.3
+
+Step # 2 open the release and here you will see client, server binaries
+if you have linux and 64 bit operating system look for linuxamd64 binary
+
+for example:
+https://dl.k8s.io/v1.32.3/kubernetes-client-linux-amd64.tar.gz
+
+# now run following command on your system to download this binary
+curl -LO https://dl.k8s.io/v1.32.3/kubernetes-client-linux-amd64.tar.gz kubernetes-client-linux-amd64.tar.gz
+
+# now you will see a file kubernetes-client-linux-amd64.tar.gz in your directory
+
+Step # 3
+# calculating sha512 of the file
+sha512sum kubernetes-client-linux-amd64.tar.gz
+
+# now it will give you has copy it and go to the release page again in github
+
+Step # 4
+# now you need to match sha512 you calculated and present in front of your release
+# simple step is press ctrl+f now search bar will open and paste your calculated hash, if it shows you a result then your client binary is verified and is downloaded from authentic source.
+If no match is found then you may have download a compromised binary or may have calculate sha512 o a wrong file.
+
+ 
+

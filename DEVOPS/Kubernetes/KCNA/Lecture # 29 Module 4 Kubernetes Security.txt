@@ -1,0 +1,80 @@
+Make sure whatever you make an applcation, database in kubernetes it is secure
+
+Secure the kube API server because it directs everything to worker node, if it is copromised then whole architecture is compromised
+
+
+Types of Security
+Authentication (Who Can Access):
+1) Files-username & password
+2) Files-username & tokens
+3) Certificates
+4) External authentication provides - LDAP
+5) Service Accounts
+
+Authorization (What they can do?)
+RBAC Authorization
+ABAC Authorization
+Node Authorization
+Webhook Mode
+
+Kubernetes API server authentication is done through TLS
+
+
+By default one pod with another pod within cluster can communicate we can contrl this by making our own rules
+
+
+Kubernetes do not manage accounts natively.
+all user is managed by API server either through kubectl tool or directly
+
+API server authenticates the request first before processing the request
+
+we store users and their password in a file and give the path of file which is used by API server for authentication of coming user
+
+After authentication jab user ko access mil jata hai to sawal paida hota hai ky kis bndy ko kitna access hai? ye authorization hai
+
+Types of users:
+
+Admin: he can view, create or delete pods, nodes.
+
+Developer: can see pods and nodes but cannot delete them
+
+Bot: the cannot view pods, nods ot neither create them nor delete them
+
+Authorization in kubernetes has 4 types.
+1) Node Base: Node authorization is a security featurs that controls which noddes are allowed to join the k8s cluster
+It is security on nodes.
+It uses cryptographic identity to verify and authorize node during node authentication process.
+
+when a node is authenticated in a cluster, at the same time it is authorized for that cluster.
+mtlb ky node jab cluster mn enter hota hai authentication sy, usi time authorize ho jata hai ky ye node is cluster ka part hai
+
+It prevents unauthorized nodes from entering the cluster and ensuring a secure cluster environment
+
+
+
+
+
+2) Attribute Based Acess Control (ABAC)
+ABAC allows administrators define access policies on attributes associated with users or processes.
+Jo admin ny define kiya ho ga usi ky hisab sy access mily ga
+policies are written using attributes like usernames, user groups or other metadata.
+
+Specifying access polices based on user attributes, providing a flexible authorization system
+
+
+
+3) RBAC Role Base Access Control  (RBAC)
+It is fundamental and widely used authorization mechanism in k8s.
+RBAC defines roles and role bindings, allowing fine-grained control over what actions users or components can perform
+we make groups, like this group can create, view or delete
+another group only can view cannot delete nor create. 
+We attach user to these groups and they get access depending upon their roles
+
+4) Webhook
+like we login facebook through gmail. mtlb facebook ko access kr rhy hain based on gmail account
+
+this mechanism allows an external webhook to authneticate and authorize requests to the k8s API server
+The API server sends authentication & authorization requests to a configured webhook server for decision making
+Integrating with external sustem for custom authorization and logic
+
+

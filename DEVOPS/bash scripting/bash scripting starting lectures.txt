@@ -1,0 +1,361 @@
+BASH SCRIPTING:
+
+vim ahsan --> will create a vim file
+
+echo "ahsan how are you" --> write this in above ahsan file
+
+bash ahsan --> to execute the ahsan file
+
+to run file with ./ahsan, first change the permissions of file by commad chmod u+x ahsan, then run ./ahsan
+
+cat /etc/shells --> to see all the shells 
+
+abd=10, 10 is stored in abd.No space should be in abd=10 Now use echo $abd to show the value store in the variable
+
+a=$(ls) --> storing a linux command in a variable, now call echo $a to run the stored command in a variable
+
+b=$(ls -l) --> now call echo $b to run the command saved in variable b
+
+read --> now write what you want to write. now run echo $REPLY you will get that you wrote in read.
+
+read name --> now write what you want to write, now run echo $name to see what you stored in name
+
+read -p "Enter Your Name:" name --> now write anthing and it will be stored in name, now run echo $name to see the thing stored in name
+
+read firstvariable secondvariable --> it will store thing before space in first and after space in second, now run echo $firstvariable $secondvariable
+
+echo $(date) --> to run the date command
+
+echo file.$(date).txt --> file created will have name file.dateatthattime.txt
+
+STEPS FOR WRITING BASH SCRIPTING
+
+1) First you need to gather information
+
+2) You need to know manual command for shell scripting
+
+3) You need to mentione shebang line #!/bin/bash/
+
+4) Create file using .sh, write your command in this file
+
+5) Set permissions for the file and run using ./filename
+
+
+
+Shebang (#!):
+
+The #! sequence is interpreted by the Unix/Linux kernel when executing files. It indicates that the file should be executed using the interpreter specified after the #!.
+Interpreter (/bin/bash):
+
+Following #!, /bin/bash specifies the path to the Bash interpreter (bash shell) on the system. In this case, /bin/bash is the full path to the Bash shell executable.
+Purpose:
+
+When you run a script file that starts with #!/bin/bash, the system knows to use /bin/bash to interpret and execute the commands in the script.
+This line essentially tells the operating system that the script should be executed using the Bash shell, ensuring compatibility and correct execution of Bash commands within the script.
+
+
+cat etc/shells --> tells you how many shells you have and their paths
+
+cat etc/passwd --> tells you in which shell you are in
+
+chsh --> change shell give password and full path of shell to use, fro example chsh, then password, then path like /bin/bash and shell will be bash or /bin/sh then shell will be sh
+
+
+vim ahsan.sh --> create a file write following things in file
+
+#!/bin/bash
+
+read -p "Enter Your Name:" name
+
+echo "hello! $name"
+
+read -n3 -p "Press any three keys to exit"
+
+
+DEBUUGING:
+
+bash -x ahsan.sh --> it will debug this file line by line, it will show script and output of that line script and show error where there is error in the script
+
+set -x -->enable debugging
+
+set +x --> disable debugging
+
+for example:
+
+#!/bin/bash
+
+read -p "What is your name:" name
+
+echo "My name is $name"
+
+set -x 
+echo "present working directory is $(pwd)"
+
+echo "Today date is $(date)"
+
+set +x
+
+echo "Script ended"
+
+-------
+
+in above script we start debugging from set-x all lines after this will appear with their code and output, set+x terminates the debugging, lines after set +x will only show the output
+
+------
+
+
+root@abdealidodia:~/bash# cat second.sh
+#!/bin/bash
+echo "My current directory is : $(pwd)"
+cd /home/abdeali/
+echo "my changed directory is : $(pwd)"
+cd /home/abdeali
+
+Lecture 3 TASK solution :-
+#source second.sh`
+
+
+
+
+
+
+
+
+
+
+
+
+File Editor:
+vi/vim/nano
+
+touch filename --> it create empty files.
+-----------
+touch myfile
+
+myfile contains following numeric data
+
+1 2
+
+3 4 5
+
+6 7
+
+8 9 10 11
+
+12 13 14
+
+
+
+
+cat myfile | tr " " "\*"    --> it will replace all the spaces in my file with *
+
+cat myfile | tr " " "\n" | xargs -l2 --> arrange all the data in my file into two columns
+
+bc --> starts the calculator press ctrl +c to get out
+
+
+cat myfile |tr " " "\n" | xargs -l2 | tr " " "\+" | bc ---> it will take each integer to separate line than make two columns of the data, replace space with + sign, bc used will sum up the integers
+
+
+seq 20 -2 1 ---> Start from 20 and make difference of 2 and go back to number 1
+
+seq -w 01 10 ---> it will produce numbers upto 10 like 01, 02, 03 and etc
+
+man seq ---> to see other seq commands
+
+se -s "#" 20 --> it will produce numbers upto 20 like 1#2#3#4so on
+
+echo $? --> if answer is 0 then previous command ran succesfully.
+
+
+[ "abc" == "abd" ]; echo $? ---> checking if abc is equal to abd, if 0 comes than it is true, if some other thing comes it is wrong condition which you are checking
+
+
+[ 4 -gt 4 ] --> will check if 4 is greater than 4, remeber space is necesary after brackets [ 4 -gt 4 ], space is necessary
+
+[ 4 -ge 4 ] --> will check if 4 is greater than or equal to 4 
+
+[ 4 -lt 3 ] --> check if 4 is less than 3
+
+[ 4 -le 5 ] --> check if 4 is less than or equal to 5
+
+ps -ef --> currently running things on operating system
+
+ps -ef | grep docker --> will chekc if docker process is in running processes
+
+
+
+name="ahsan" --> variable creation has no space
+
+$name --> to call a created variable
+
+
+status=$(echo $?) --> to store a command in a variable we nee to wrtie $(command) but variable is called directly $name
+
+-------
+Conditional statemnt
+
+# a script to check if a serive or software is installed and what it's version"
+
+#!/bin/bash
+
+echo "Enter the name of service whoe version you want to check"
+
+read service
+
+command=$(which $service)
+
+status=$(echo $?)
+
+if [[ status -eq 0 ]]
+then
+	echo "Program ran succesfully"
+	echo "Version of service is: $($service -v)"
+
+else
+	echo "Service not installed"
+
+fi
+
+----------------
+
+cat ahsan.txt | wc ----> tells lines caharacters in a file
+
+cat ahsan.txt | wc -l --. to check lines in a file
+
+$0 --> program name
+
+$1-$9 --> parameter passed
+
+
+Positional Parameters:
+#######
+#!/bin/bash
+
+echo "Hello My name is" $1
+
+echo "I am a" $2
+
+echo "I have $3 years of experience"
+
+echo "Total parameters passed $#"
+
+echo "Parameters passed are $*"
+
+echo "Process Id is:" $$ 
+
+echo "Exit status of command $?"
+########
+
+the $# will count the number of variable passed
+
+$* will display the parameters passed such as ahsan, datascientis and etc
+
+now run the file in which you have above code
+
+./position.sh "Ahsan" "Data Scientist" "Three" 
+
+in above command we passed three variables and $# will show 3 value.
+
+as ahsan is $1, Data Scientist is $2 and Three is $3. this is known as postional placement
+
+$? --> status of command, when 0 command succesfully ran
+
+-------------------
+
+Lecture 9 Intriduction to loops
+
+Syntax of For Loop
+
+for variable in list
+do 
+	echo "somw line $variable"
+done
+
+
+
+how to create 10 files or more using a single command?
+
+touch file{1..10}
+
+----------
+
+syntax of for loop for c++
+
+#!/bin/bash
+for ((var=1; var=5; var++))
+do
+	echo "Hello $var"
+done
+
+
+var++ means ---> var = var + 1
+
+
+--------------
+
+
+until loop:
+
+until loop works until the condition which is false becomes true
+
+while loop works until the condition which is true becomes false
+
+syntax of until loop
+
+
+until condiiton
+do 
+	statements
+done
+
+
+--------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,182 @@
+Docker Role in IT market/IT industry:
+1) Bigger application --> Multiple Module --> AS micro services
+
+2) Resource Management for any application
+
+3) Your requirement will stored into one image and container.
+
+4) Different version of library in one machine
+
+
+Before Docker:
+
+Developer develop the code for application in  local machine 
+Code is checked by developers in DEV environement/QA/PRE Pro and testing of code is done and code is published in production
+Then code goes in production and operations team deploy it
+After 1-2 month developer added new features and update the application and changed some libraries but Development team didn't discuss the changes with operations team
+Now, operations team ran this code and application failed 
+
+If any application fail in production than financial loss will happen to company as services are down and customers are not happy
+So, no downtime is required by company.
+
+That's why companay gives a lot of salary to linux administrator and DEVOPS team so no downtime happens
+So, before applying changes devops team send notification to customers that service will be down for one to two hours or etc
+
+
+
+2. Use case:
+Server admin is managing 6 servers and 6 applications are running on these servers. 6 servers are needed to be maintained. Manager said company is in loss we need to do cost cutting.
+Now, manager said you have to use oly 3 servers and two applications will run in one server.
+1 server --> 2 applications same version x of apache
+2 server --> one application need x version of apache and other application need y version of apache (different ports/ different path)
+
+conflicts --> pathcing upgrading x --> y version --> z
+
+
+3. Usecase:
+Developer developed code
+operation team deployed via automation ansible/scripting
+one server --> 2- applications are deploye one application using java, second using tomcat third using python
+polyglot means an application using more than one programming languages
+
+
+When docker was introduced?
+Docker introduced at 2013 --> Officially --> before dotCloud --> after it was called docker
+docker was first called dotCloud
+
+Docker is first to bring containerization.
+Containers are introduced in 1970 and was used officially in 1979 in unix chroot
+2001 conatainers are introduced in linux jail mechanis kind of virtualization topic
+
+2000-2007 --> Solaris ny contianer word nikala, Oracle ny, openVZ
+
+2007 --> Linux --> Control group --> c group
+
+2008 --> LXc
+2013 --> Docker
+
+Docker is PAAS
+
+FAAS --> Functions as a service
+
+
+
+Docker Architecture:
+1) Docker Server
+2) Docker Client 
+3) Registry --> Storage/Directory 
+
+Docker Server:
+Docker install  --> Docker server --> work as a daemon/process, for example CentOS. Daemon means process will run in background
+
+Docker Client:
+It is for user docker commands and it will communicate with docker server. You write commands in client and it sends to server.
+
+Registry:
+Docker/DotCloud introduce docker files. We need to store files in a docker image. registry is public directory and anyone can use it
+
+
+Docker Terminology:
+1. Container
+2. Image
+
+Image:
+What is docker image?
+Docker image is called one type of docker file. We can create our own docker files.
+Docker file --> create by us --> docker image
+Docker images --> always read only --> you can't edit docker image But we can recreate it but cannot modify once it created.
+
+If we cant edit or write file what we can do?
+we can use readymade docker images from docker registry which is publicaly avaible and free of cost
+How can we take docker image from registry?
+By downloading
+
+
+Container:
+It use docker image (docker image is made form docker file or downloading from registry) and run as application and it is called container
+
+Docker File build --> Docker Image run --> Docker Container
+
+We make a docker file do configurations install dependencies all thins our application need, then we create a docker image and when we run the docker image it is called container as all the things that are required by my application are inside a container
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+Architecture of Ansible:
+
+Ansible server of ansible engine communicates with machines (servers) through ssh service.
+
+Communication type:
+1) Ad-hoc command --> simple command line, e.g free -g
+2) playbook --> yml file --> command and tell everything what configuration to do which machine to target
+
+
+
+
+# EXAMPLE Of architecture
+
+We have ansible installed. So, we have ansible server or engine.
+
+Now, suppose I hvae 4 machines each one has different OS:
+server/node/machine-1 ip: 192.168.43.1
+server/node/machine-2 ip: 192.168.43.2
+server/node/machine-3 ip: 192.168.43.3
+server/node/machine-4 ip: 192.168.43.4
+
+
+the information about all these machines will be in inventory file of ansibel which is in /etc directory
+
+Ad-hoc command, in it you will mention which machine to take from inventoey file either machine-1,2,3,4 which machine to take and what to run
+
+
+ansible.cfg --> very important file. It manages the remote server or machines
+
+

@@ -1,0 +1,27 @@
+Pod Security Standards
+
+Pod security standards are crucial for ensuring the security and
+
+integrity of applications running in a Kubernetes cluster. These standards
+
+define the best practices and guidelines for configuring and managing pods
+
+securely, minimizing vulnerabilities and protecting sensitive data.
+
+Pod security standards encompass a range of security measures,
+
+including setting security contexts, using PodSecurityPolicies (PSPs), and
+
+ensuring compliance with industry standards. By adhering to these
+
+standards, you can enhance the security posture of your Kubernetes
+
+environment.
+
+Pod Security Standards (PSS) and Pod Security Admission (PSA)
+
+are foundational concepts in securing your Kubernetes cluster. They work
+
+together to enforce security best practices at the pod level, the fundamental
+
+unit of deployment in Kubernetes.

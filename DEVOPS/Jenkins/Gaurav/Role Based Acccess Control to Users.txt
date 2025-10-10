@@ -1,0 +1,30 @@
+Role based access control means give those privileges to a person that are required for their roles.
+
+
+How to configure Role Based Access in Jenkins?
+
+Step # 1 
+Go to plugins and search "role based"
+
+you will see a plugin, install that plugin
+
+Step # 2
+GO to manage jenkins
+then go to security and change Authorization Strategy
+Usualay it is anyone can do anything
+
+Change anyone can do anything to Role-based Strategy
+
+
+Step # 3
+Now go to manage jenkins where you went to security section along security section you will see now another section
+which is "Manage and Assign Roles"
+
+Step # 4
+Go to manage and assign roles
+
+make a role and assign permissions to it according to your needs
+then assign the role to a user
+
+and now you have successfully configured role based access control to a user
+

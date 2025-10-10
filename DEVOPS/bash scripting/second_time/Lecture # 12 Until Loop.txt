@@ -1,0 +1,81 @@
+Until loop is used until a false statement becomes a true statement
+
+until works --> until false condition is converted to true
+
+while works --> true condition is converted into false
+
+
+#example
+
+number=1
+
+until [[ $number -ge 10 ]]
+do
+	echo "number is : $number"
+done
+
+
+above code output is  
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+10 is not included because condition is greater than or equal to 10, when number becomes equal to 10 condition becomes true and until loop stops
+
+
+
+
+Until Loop syntax :-
+Until <Condition>
+do
+statement
+done
+
+until --> False to true
+While --> True to False
+
+
+root@abdealidodia:~/bash/lect12# cat simple.sh
+#!/bin/bash
+start=1
+until [[ $start -ge 5 ]]        #False statement one the true then will return
+do
+echo "Num is : $start"
+((start++))
+done
+
+
+
+
+
+root@abdealidodia:~/bash/lect12# cat simple2.sh
+#!/bin/bash
+start=1
+while [[ $start -le 10 ]]  #True statement when false then terminate loop
+do
+echo "My Loop $start"
+#((start++))
+start=`expr $start + 1`
+done
+
+
+
+root@abdealidodia:~/bash/lect12# cat file_exist.sh
+#!/bin/bash
+until [[ -e /tmp/file ]]
+do
+echo "file is not exist"
+sleep 1
+done
+echo "File exist"
+
+
+
+Difference :- The main difference is that while loops are design to run while a condition is satisfied and the terminated once that condition returns false. on the other end until loops are designed to run while the condition return false and only terminate when the condition return true.

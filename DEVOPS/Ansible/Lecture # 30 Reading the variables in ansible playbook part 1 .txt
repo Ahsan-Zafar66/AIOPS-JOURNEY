@@ -1,0 +1,47 @@
+In this lecture we will see how to take input varibales from users
+
+
+sudo vim input_var.yml
+
+---
+- name: this yml file is for takinginput variables
+  hosts: localhosts
+  vars_prompt:
+    name: myname
+    prompt: "Enter your name:"
+    private: no
+  tasks:
+  - name: prinitng the variable 
+    debug:
+      msg: "my input varibale is {{ myname }}"
+
+
+==========================
+now we will tak input from user which package to target and what to do with that package present/absent/latest
+
+sudo vim user_input
+
+
+---
+- name: this yml file takes input fom user which package to target and what to do
+  hosts: centos
+  become: yes
+  vars_prompt:
+    name: "package_name"
+    prompt: "Enter the name of package"
+    private: no
+     
+    name: "package_state"
+    prompt: "Enter the state present/absent/latest"
+    private: no
+
+  tasks:
+    name: Now doing what the user wants
+    yum:
+      name: "{{package_name}}"
+      state: "{{package_state}}"
+
+
+:wq
+
+    

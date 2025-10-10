@@ -1,0 +1,43 @@
+Gradle is a build automation tool used to build, test, and deploy software projects.
+
+It is most commonly used in:
+1) Java and Kotlin projects
+2) Android app development
+
+But it can also be used for other languages like Groovy, Scala, C++, etc.
+
+
+What is Gradle used for?
+Main purposes:
+✅ Compiling code
+Turns your source code into executable code (e.g., .class files or .apk files for Android).
+
+✅ Managing dependencies
+Automatically downloads and manages third-party libraries your project needs.
+
+✅ Running tests
+Executes unit and integration tests.
+
+✅ Packaging applications
+Creates deliverables like .jar, .war, or .apk files.
+
+✅ Automating tasks
+You can create custom tasks for builds, deployment, and more.
+
+
+
+Is Gradle necessary to learn for DevOps or MLOps?
+🔧 For DevOps:
+❌ Not required for all jobs, but:
+
+If you're working with Java or Android apps, then YES — you’ll likely need to know Gradle to build and deploy those applications in CI/CD pipelines.
+
+Many DevOps pipelines (Jenkins, GitHub Actions, GitLab CI, etc.) include Gradle build steps.
+
+🤖 For MLOps:
+❌ Rarely needed unless:
+
+You're integrating with a Java-based ML system (not common).
+
+You're maintaining Java services that serve ML models.
+

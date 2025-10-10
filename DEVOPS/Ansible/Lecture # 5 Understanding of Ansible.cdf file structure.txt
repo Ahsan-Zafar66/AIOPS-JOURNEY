@@ -1,0 +1,57 @@
+In this lecture we are learning about ansible.cfg file which is created in path /etc/ansible/hosts
+
+# this file is created along installation of ansible, if not created then you can create manually ask chatgpt about its configuration
+
+after that I copied all files from path /etc/ansible/hosts into the home directory of user of master node which you created for managing the worker nodes.
+
+# my user i created in ubuntu linux is jhon, whose password is jhon123.
+
+I copied all files from /etc/ansible/* to /home/jhon/ansible/
+
+# command to copy files
+cp -vrf /etc/ansible/* /home/jhon/ansible
+
+
+# run ansible --version command, before it was taking configuration file /etc/ansible/ansible.cfg. Now, after copying files to /home/jhon/ansible.
+Now, when you check ansible --version, for configuration file it will show path. /home/jhon/ansible
+
+
+Now, ansible --version show you configuration file path depending upon your present location. if you are jhon then /home/jhon/ansible.cfg, if you are in / then /etc/ansible/ansible.cfg
+
+# to keep a permanent or only one path we can define path in environment
+# command to set path of ansible is
+export ANSIBLE_CONFIG=/home/jhon/ansible
+
+# now whereever your are standing it will take cfg file from path /home/jhon/ansible.cfg
+
+# but when your system is restarted this environment varibale is removed, if you want to set this permannet you can do ask chatgpt
+
+# you can check ansible.cfg file and see inventory path and set it to your desired hosts. such as i am using jhon and added ansible.cfg path /home/jhon/ansible/
+# now i need to change inventory path in ansible.cfg file so that it takes worker nodes or their configurations from here. 
+inventory = /home/jhon/ansible/hosts
+
+
+# if you have hosts file or any filename other than host then you can specify it while using ansible command
+ansible -i /home/jhon/env -m ping 
+
+-i --> inventory file path. as we have speciifed in ansible.cfg /home/jhon/ansible/hosts. But with -i it will take path that you mention
+
+
+# to target a specifc worker
+ansible worker_ip -m ping
+
+# example
+ansible 192.168.43.63 -m ping
+
+# checking more than one macine at once
+ansible machine_ip:second_machine_ip -m ping
+
+# example
+ansible 192.168.43.63:192.168.43.64 -m ping
+
+but in production we dont use ip we use machine names,
+such as 192.168.43.63 is my docker machine  i will see it in hosts file as
+
+hosts
+[docker]
+192.168.43.63

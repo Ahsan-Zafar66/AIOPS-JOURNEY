@@ -1,0 +1,72 @@
+Network policies are very important from interview and security perspective
+
+
+Ingress means request is moving towards a server or a pod
+egress means request is moving away from the server or pod.
+
+
+Suppose w ehave three pods front end in node 1
+frontend pod--> node 1
+backend pod --> node 2
+database pod --> node 3
+
+by default kubernetes networking allows all pods to cummunicate with each other in a cluster.
+front end pod can communicate directly with db pod with back end pod.
+in same way backend pod can commnicate with db pod and front end pod.
+
+But, we want to make a flow like front end pod communicate with back end and backend then communcate with database pod.
+We don't want front end pod to directly communicate with db pod.
+For this purpose we can use network policies. In network policies we chose a pod on which we want to apply policy and which pod can access to the pod.
+Suppose, I want database pod to accept request only from backend pod.
+So, i will create a network policy whos type will be ingress, it wil be applied on database pod and it will recieve ingress traffic from backend pod.
+
+
+if ingress rule is defined for backend pod on db pod, when dn pod gives reponse to this incoming request we do not need to defin an egress policy for this reponse.
+BUT, if db pod want to request any other pod like pod X, then you neeed to defin egress policy for db pod to send request to pod X.
+
+
+Scenario:
+suppose you have three different namespaces such as dev, staging and production,
+All these name spaces has backend pod, you have polcy on database pod to accept request from pod whose label is backend
+
+So, the question is will all these three pods can communicate with db pod in production namespace
+The answer is NO, only that pod whose namesapce is same with db pod,only that backend pod can communcatewith db pod.
+Other two pods which are in different namespace cannot communicate with db pod.
+
+Scenario # 2:
+Now, we want backend pod in all three namspeaces to communicate with db pod.
+for this you need to ad namespaceSelector along with the pod in yaml manifest file,
+Now, whateer pod and namespace you slect pod from that namespace can communcaite with db pod.
+
+Now, if you define namespace only but do not defin pod in that namespace, all pods from that namespace can communicate with db pod.
+
+
+It all depend on policy rule you have defined.
+you can define polic that recieve ingress traffic from any pod whose label is backend and namespace is prod
+you can define policy that recieve ingress traffic from any pod whose label is backend and it can be from any namespace
+you can define policy that recieves ingress traffic from backup cerver whose ip address is this.
+you can define policy that db pod should send egress traffic to backup server whose ip address is this.
+
+So, it all depend on policy, policies are defined with or and and conditions, if you define two rules withing one then this is and condition, if you define multiple conditions in multiple rules then this is or condition
+
+
+
+
+
+Network policies Hands On:
+
+website to visualize your network polices:
+https://artturik.github.io/network-policy-viewer/
+
+
+To implement network policies on pods, we need a networking solution. Without networking solution you can create network policies but they dont effect pods.
+
+Some netwrok providers support network policies such as Antrea, Calico, Cilium, Kube-router, Romana, weave net
+
+# for minikube, your os should be base os like you should not be using a virtual machine
+minikube start --driver=kvm2 --network-plugin=cni --cni=cilium
+
+
+# command to describe a network policy
+kubectl describe networkpolicies.networking.k8s.io network-policy-name
+

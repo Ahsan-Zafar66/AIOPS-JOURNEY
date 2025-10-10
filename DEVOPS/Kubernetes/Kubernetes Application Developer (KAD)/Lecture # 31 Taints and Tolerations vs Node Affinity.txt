@@ -1,0 +1,10 @@
+Taints and Toleration limitation:
+It prevents unwanted pods to be not scheduled on specific nodes BUT it does not guarrent that specific pods will always be scheduled on specific nodes.
+
+Node Affiniy Limitation:
+It guarrentess placement of specific pods on specific nodes, but unwanted pods are also get scheduled on specific nodes.
+
+
+Now, if we combine taints and toleration with Node affinity our limitations get solved.
+Now, using them together we can prevent unwanted pods to be scheduled on specific nodes using tiant and toleration property and we can schedule specifc pods on specific nodes using node affinity property.
+

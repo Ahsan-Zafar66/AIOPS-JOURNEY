@@ -1,0 +1,73 @@
+In kunernetes we have a cluster of nodes.
+
+The cluster has master/control panel node and worker nodes.
+
+Master Node:
+Master node is the one that has instructions to run in any case and manage other worker nodes
+
+It has an API server which is an Entrypoint to K8s cluster. Ways of accessing the API server are User Interface, API and Command Line Interface
+
+Then it has a controller manager which keeps track of whats happening in the cluster
+
+Then it has a scheduler which decides on which node new pods should be scheduled
+
+
+Node and Pod:
+Node is a physical server or virtual machine
+
+pod:
+smallest unit in kubernetes
+
+abstraction over container
+
+usually 1 application per pod
+
+Each pod gets it's own IP address
+
+Pods are empheral which means they can die easily
+
+when a pod dies, a new one is created with new ip address.
+
+Suppose there are two pods in a worker node, 
+pod1 = app
+pod2 = database
+
+suppose pod2 hosting the databse dies, now new pod will be created which will have new ip-address. now if pod hosting app is communicating with hosting db through ip then each time a pod dies you need to do configuration.
+To solve this issue, service is used which has permanent ip address, even if the pod dies and new one is created ip address does not change.
+
+
+now, to allow the users to access the website externally. Now, when you expose the pod hosting application externally but you can't expose pod hosting databse as it has sensitive information.
+So, while attaching service with a pod, you mention whether you will use service externally like you give acces to users and internally.
+
+When you open a pod using external service it has url like http://192.168.43.25:2:8000. the ip address is of node and port is of service attached with pod.
+
+But this url is not good, we need something like https://myapp.com, so for this purpose we use ingress service.
+So, when we used ingress, request goes to ingress and then it goes to service.
+
+the databse pod will have an endpoint url, normally it is defined in built file of app, but if you changed the url you need to build image again and pull it inside pod and it is a tedious task
+So, to solve this we have ConfigMap, what it does it contians urls and you attach it with your databse pods, if you want to change url you will chnage in ConfigMap, as pod is connected with ConfigMap it will automatically get the new information in ConfigMap
+
+To store the username and password we do not use plain text configmap we use secret service to store the data securely
+
+
+Volume:
+Data storage in db will be gone if pods with database is restarted.
+
+volume attaches a phsical storage hard drive with the pod.
+It could be local storage or remote storage on cloud.
+Now, when pod contianer db container is restarted data is not lost it is present on hardrive
+
+
+Deployments and stateful sets:
+Suppose I want to updae my application pod or my application pod dies, I will face downtime and customers won't be able to use the application.
+
+Now, what I can do is to replicate my application pod with same service so it has same ip-address. So, replicating an application pod and making a blue print of it is known as deployment.
+We can use the blue print of my application to replicate the application pod. And in deployment i can specify the number of replicas i want for my application pod
+
+But, we cannot make deployment of pod containing databse, because database will have some data and it has it's own state
+So, now if databse pod dies what to do?
+As dabase has physical or remote volumes attached, so if one pod dies and another is created it needs to refer to the same phsical or remote data storage source.
+But, if I have multiple pods containing databse, so which pod hosting database will write data to data source and which will read? In this way inconsisitancies are created.
+To solve this problem we have STATEFULESET, this statefultset is defined specifically for application using databases. It will take care of replicating database pods, scaling them up and down and preventing any data inconsisitancies
+
+A common practice is to host DB outside of kubernetes cluster

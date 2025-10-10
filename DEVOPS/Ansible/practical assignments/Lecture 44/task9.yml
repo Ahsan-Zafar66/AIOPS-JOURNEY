@@ -1,0 +1,8 @@
+---
+- name: Copy the file to windows server 
+  hosts: windows
+  tasks: 
+  - name: Copy file 
+    win_copy:
+      src: sample.txt
+      dest: C:\Users\aadmin\Desktop\sample.txt

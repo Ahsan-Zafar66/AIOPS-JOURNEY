@@ -1,0 +1,467 @@
+Kernel is the core component of the computer operating system
+
+
+ls --> to lst files
+
+ls - l --> to list files and details
+
+rm filname --> To remove files
+
+history --> to check the commands that you have run
+
+cd / --> to move out of directories into main
+
+nano ahsan.txt --> Command to create text file using nana
+
+vim ahsan.txt --> command to create text file using vim, press :wq (to get out of file after editing w stands for write and q for quit)
+
+mkdir directoryname/ --> command to create a directory
+
+rmdir directoryname/ --> to remove directory
+
+mkdir home/ahsan-zafar/downloads/directoryname --> For absolute path do not give any space between folders
+
+
+rm -dir directoryname/ --> to remove the directory
+
+ls | grep lo --> bring all the files that have "lo" in their names
+  
+ls > filename --> command to save all files name in a directory into a file, (warning if you write the name of an already exsting file than it will write the names of files into this file and cause it's original data to loss)
+
+ls >> filename --> Command does not cause data loss, save data below the data already present in a file.
+
+cd ~ --> brings you to home directory
+
+ls -lh --> list all the files and also show the file size.
+
+whoami --> tells you which user you are
+
+sudo -i --> to become the root user
+
+cp filetocopy pathcopyfile --> command to copy a file to a location, only root user can do it
+
+mv filename newname --> command to change the name of the file
+
+rm filename*.extension --> Command to remove all the similar files such as rm ahsan*.txt all text files having ahsan in name will be removed.
+
+tar -cf filename.tar file1 file2 file3 --> It will zip the files selected
+
+sudo tar -xf /home/ahsan-zafar/Documents/filename.tar/ - C /home/ahsan-zafar/Downloads/ --> it will unzip a tar file from document folder into the downloads folder
+
+
+cat filname.extension --> It allows you to READ  a file
+
+vi filename --> to edit the file, to get out press esc then :wq to write and quit. esc --> :wq
+
+
+
+CREATING USERS: 
+
+
+useradd username --> when you are root user you can add a user with this command
+
+useradd -m username --> to give home directory to user
+
+useradd -m -s "/bin/bash/" username --> to give home and bash access to user
+
+useradd - c "USERNAME STYLE" -m -s "/bin/bash" username --> To write the name of user in style and also giving it the acces to home and bash
+
+passwd username --> Change passwoord of a user OR Set the password of user created to make it appear on startup screen.
+
+userdel username --> to delete the user
+
+userdel -r username --> To remove the user and it's home directory
+
+usermod -L username --> For locking a user account
+
+usermod -U username --> For unlocking a user account
+
+observeIT to reduce insider threat. it is a tool.
+
+
+DIFFERENCE BETWEEN su and sudo:
+
+su switch to other account
+
+
+sudo makes the user root account.
+
+GROUPS:
+
+two types of groups
+
+user group
+
+admin group
+
+groupadd groupname --> a group ahsan is created
+
+
+usermod -G groupname username --> adding a user into group ahsan
+
+gpasswd -d username groupname --> removing a user from a group 
+
+
+groupdel groupname --> deleting a group 
+
+
+OWNERS:
+
+chown newowner filename --> changing the owner of a file.
+
+sudo chown -R ownername filename --> changing the owner of file to new owner directly without going to root user.
+
+chgrp groupname filename --> changing the group of the file.
+
+sudo chgrp -R newgroupname filename --> changing the group of the file without going to root user.
+
+chmod u+x filename --> To give full privileges of a file to a user. read, write, executable.
+
+chmod g+x filename --> To give full privileges of a file to a group
+
+chmod o+x filename --> to give full privileges of a file to everyone.
+
+chmod u+x,g+x,o+x filename --> To give privileges of a file to group and everyone and once.
+
+chmod u-x,g-x,o-x filename --> Taking away all the privileges.
+
+
+TEXT FILES:
+
+cat filename --> to read files
+
+ls -l >> filename --> to store all files name in a folder to a file
+
+touch filename --> This command will save the result of next command you will in the mentioned file.
+
+cat filename | more --> it will open file in steps each time you press space bar some few more lines are showed, it is used to read long files
+
+cat filename | grep wordsearch --> This command will bring the mentioned data in the file. 
+
+cat -b filename --> to give numbering to text written in the file while reading or showing it
+
+head filename --> To view the beginning of the file.
+
+head -5 filename --> to show the first five lines.
+
+tail filename --> Show the bottom of a file.
+
+less filename --> press ctrl + z to move out of file.
+
+
+vi filename --> to edit a file, press i to start editing, pres esc then :wq to write changes and get out of file.
+
+
+NETWORKING RELATED COMMANDS:
+
+
+ip addr show --> to see your  ip address
+
+sudo apt install net-tools --> to install net tools and use commands related to it
+
+ifconfig --> to check ip address details
+
+ip route --> tells you default route
+
+dhclient --> ip
+
+dhclient -r --> refreshes ip by killing old one
+
+ping ipaddress --> to check if ping is working or not.
+
+
+DISK:
+
+df --> show disk space usage
+
+df -h --> to see disk space usage in gb or mb
+
+du -sh /var --> tells you the space taken by var folder
+
+
+DEAMONS:
+
+
+Critical processes in linux are known as deamons
+
+ps -p --> To see the processes
+
+ps -e --> Ro see prcoesses in detail
+
+ps -el --> To see the processes in detail
+
+ps -elf --> Processes with date
+
+top --> to see resources used by each process.(PR is priority the lower the number the higher the priority)
+
+kill pidnumber --> To kill the process running.
+
+dpkg -i installer.deb --> To run the installr
+
+dpjg -r installer.deb --> To uninstall the installer.
+
+apt-get install packagename --> to install a package
+
+apt-get remove packagename --> to remove a package
+
+
+rpm -i installer.rpm --> to install rpm package
+
+rpm -e installer.rpm --> to uninstall rpm package
+
+yum install packagename --> to install package
+
+yum remove packagename --> to remove package
+
+apropos ext3 --> command about processes
+
+man pages --> command for manual page and show all commands in linux
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+Taint (paint) ka mtlb hai aik node ko specify krna, jaisay aik ghr hai usmy male ka kamra or females ka kamra hai.
+
+ab pods hain mtlb male or females or inhein kamron mn  bhejna hai. ab male female walay room ko tolerate nhi kr skta to wo udhr nhi jaye ga.
+wo male walay room mn jaye ga. istehan female pods male room (node) ko tolerate nhi kr sktin isliye wo wahan nhi jain gin, wo female node mn jain gin.
+
+To hamny nodes ko male or female ki specification sy taint kr diya.
+or jo pod jis node ko tolerate kr skta hai wo udhr chala jaye ga
+
+
+
+
+
+Taints & Tolerations
+
+Taints:
+
+What: Taints are like notes you put on a node in a k8s cluster, saying ‘handle with care’ or ‘Special node’
+
+Purpose: They are used to mark nodes to influence pod scheduling.
+
+Usage: taints ensure that only pods with matching tolerations (preference) can be scheduled on that node. 
+
+Tolerations:
+
+What: Tolerations are like preferences that pods (applications) have regarding taints on nodes.
+
+Purpose: They allow pods to tolerate (accept) node with specific taints, enabling them to run on nodes marked with those taints.
+
+Usage: Tolerations help pods ignore the “Spicy” note on a node (snack) if they are okay with it.
+
+TAINTS ARE SET ON NODES AND TOLERATIONS ARE SET ON PODS

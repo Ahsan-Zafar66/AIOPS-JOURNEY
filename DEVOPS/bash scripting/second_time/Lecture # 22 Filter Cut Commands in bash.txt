@@ -1,0 +1,60 @@
+Intervie Question And It's Solution
+
+# cat url.txt
+We have some url example so please find below for your grep command.
+Please check and let me know if you are solving.
+
+http://google.com
+https://google.com
+ftp://mywebserver.net
+ftp://myweb.edu
+https://mywebsite.com
+
+I hope you enjoyed.
+
+
+
+# cat url.txt  | grep -E "^(http|https|ftp):[\/]{2}([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,4})"
+http://google.com
+https://google.com
+ftp://mywebserver.net
+ftp://myweb.edu
+https://mywebsite.com
+
+====================================
+cut command bring content column wise.
+
+cat ahsan.txt | cut -c 1-6 --> -c stands for characters, will show 6 characters of each line
+
+cat ahsan.txt | cut -c 1 --> will show all characters
+
+cat ahsan.txt | cut -c 1-6, 10-15 --> will show 6 characters of each line and then 10-15 characters
+
+
+
+# make a file
+cat testing.txt
+my      name    is      abdeali dodiya
+I       am      from    bangalore
+I       am      working in      alnafi
+
+now in above file separator is tab.
+So, you can separate using -f which stands for field. by default the field is tab separation but you can use -d to denote any delimeter type and can use -f
+
+cat testing.txt | cut -f 1,2 --> it will bring 1st and second field of each line
+
+
+cat ahsan.txt | cut -f 1 --> show only first column of a file which has tab separation
+
+cat ahsan.txt | cut -d ":" -f 1 ---> here the delimiter is colon for files which have colon as a separator by default it works for space and tab.
+
+cat ahsan.txt | cut -d ":" -f 1-10 --output-delimiter=" " ---> it will show 10 words of each line and delimiter will be space in the output rather then colon
+
+cat ahsan.txt | cut --complement -d ":" -f 1 ---> complement is used to not show the mentioned cut, like it will not show the first column of each line now
+
+
+
+
+
+
+

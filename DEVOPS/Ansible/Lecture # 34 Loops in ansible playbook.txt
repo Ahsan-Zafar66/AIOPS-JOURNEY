@@ -1,0 +1,84 @@
+---
+- name: Printin the words
+  hosts: localhost
+  vars:
+    data:
+      - Abdeali
+      - Kazim
+      - Ali
+      - Sarah
+  tasks:
+  - name: Display the data
+    debug:
+      var: item
+    loop: "{{data}}"
+
+===========================================
+
+
+
+---
+- name: Installation package
+  hosts: rhel
+  become: yes
+  vars:
+    pacakges:
+      - name: wget
+        state: present
+      - name: git
+        state: present
+  tasks:
+  - name: Install package
+    yum: 
+      name: "{{item.name}}"
+      state: "{{item.state}}"
+    loop: "{{pacakges}}"
+
+
+=================================
+
+Interview question: How to make multiple users in ansible playbook.
+
+---
+- hosts: centos
+  become: yes
+  vars:
+    my_bulk_users:
+      - username: abdeali
+        password: Admin@123
+      - username: kazim
+        password: Admin@123
+      - username: ali
+        password: Admin@123
+  tasks:
+  - name: Bulk user creation
+    user:
+      name: "{{item.username}}"
+      password: "{{item.password | password_hash('sha512') }}"
+      update_password: on_create
+    loop: "{{my_bulk_users}}"
+
+
+==========================================
+How to create multiple files and their content in ansible playbook
+
+---
+- name: FIles creation 
+  hosts: rhel
+  become: true 
+  vars:
+    my_files:
+      - name: /tmp/abd1.txt
+        content: "This is my abd1 file"
+      - name: /tmp/abd2.txt
+        content: We have abd2 data
+  tasks:
+  - name: Creation files 
+    copy: 
+      dest: "{{item.name}}"
+      content: "{{item.content}}"
+    loop: "{{my_files}}"
+
+
+
+we need to provide only destination in copy section, as we are creating new files not copying that is why source is not needed

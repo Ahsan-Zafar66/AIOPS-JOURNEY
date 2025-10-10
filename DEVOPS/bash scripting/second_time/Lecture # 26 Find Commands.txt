@@ -1,0 +1,98 @@
+file syntax
+
+
+find <path> <action> <file or pattern>
+
+
+
+find /etc/bash -name ahsan.txt ---> go to the mentioned path and see if a file name ahsan.txt exist, it shows for all files and directoried by defaults
+
+find . -name ahsan.txt --> . means that directory in whcih you are present
+
+find /etc/bash -type d -name ahsan --> look specially for a directory named ahsan
+
+find . -type f -name ahsan.txt --> to look for a file named ahsan.txt, file extension is important.
+
+find . -type f -name '*.csv' --> to get all the csv files in the directory
+
+find . -user root --> checking the user
+
+find . -group root --> show the root user groups 
+
+find . -type f -perm 0775 -print --> print the permission of files
+
+find . -perm /u=r --> u means users, checking the files of which users have read permission
+
+find . -perm /u=x --> u means users, checking the files of which users have execution permission
+
+find /etc/bash -type f -name "*.txt" -exec rm -f {} \; --> removing the files with txt extension, take care of spacing
+
+find . -type d -perm 777 -print --> print the directories that have 777 permission
+
+find . -type d -perm 777 -print -exec chmod 775 {} \; ----> change the directories that have 777 permission to 775 permission
+
+find . -type d -size 0 --> checking the files with 0 count
+
+find . -type f -size 0 | wc -l --> count the number of files that have 0 size
+
+find . -type f -name ".*" --> checking hidden files
+
+
+===========
+-mtime +10 --> modifies more than 10 days ago
+-mtime -10 --> modified less than 10 days ago
+
+m stands for modified
+
+c stands for created time 
+
+find . -mtime -10 --> show the files that have been modified within the 10 days.
+
+find . -type d -mtime -10 --> show the directories that have been modified within last 10 days.
+
+find . -cmin -60 --> show the files that have been modified within the 60 minutes.
+
+# show files that were modifed in last 60 minutes
+find . -type f -mmin -60
+
+find . -size 1MB --> Show me files that have 1mb size.
+
+find . -type d -size -10M --> show directories that have size less than 10 MB
+
+find . -type f -size +10M --> show directories that have size 10MB +
+
+find . -mmin -10 --> file modified less than 10 minutes ago
+
+# interview question, show files that were modifed in last 24 hours
+find . -newermt "yesterday" --> files that have been modified yesterday uptil now
+
+# through grep command, supose today is 17 decemever, we need files of 16 december 
+ls -ltrh | grep "16 dec"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

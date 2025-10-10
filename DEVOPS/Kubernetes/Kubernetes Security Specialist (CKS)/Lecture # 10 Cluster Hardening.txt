@@ -1,0 +1,150 @@
+What Does “Restrict Access to Cluster API” Mean?
+The Kubernetes API server (kube-apiserver) is what all components and users interact with to manage the cluster.
+
+Goals of this topic:
+Restrict who can access the API server (users, services, components).
+
+Restrict what they can do when they access it.
+
+Apply network-level restrictions as well as RBAC-based restrictions.
+
+✅ Ways to Restrict Access to the API Server
+We will cover:
+
+1) API server port access control (via firewall/iptables)
+
+2) RBAC (Role-Based Access Control)
+
+3) API Server Admission Controllers
+
+4) Use of NodeRestriction Admission Plugin
+
+5) Use of NetworkPolicies (for API server when CNI supports it)
+
+6) API server --authorization-mode flags
+
+7) Webhook authentication/authorization
+
+
+We will focus on Method number 2 RBAC (Role Base Access Control)
+Scenario: I need a person who can see my pods only nothing else, and tell me when a pod is down or pending or suspended.
+
+Step # 1 Create the Role
+
+# rbac-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+
+
+Step # 2 Create Role Binding Now
+# rbac-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods-binding
+  namespace: default
+subjects:
+- kind: User
+  name: ahsan       # Replace with your actual user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+
+
+# we have bind the role of seeing pods with a user name "ahsan"
+
+
+Step # 3 Genrating Private key for user ahsan so that it became a context permanently
+
+# Generate private key
+openssl genrsa -out ahsan.key 2048
+
+# Generate CSR (Certificate Signing Request)
+openssl req -new -key ahsan.key -out ahsan.csr -subj "/CN=ahsan"
+
+
+# now you need to copy both files in control-plane node in path /etc/kubernetes/pki or you can create above two files also in control-plane path directly
+
+# copying csr file from current directory in host machine to control-plane node
+docker cp ahsan.csr kind-control-plane:/etc/kubernetes/pki/ahsan.csr
+
+
+# entering the control plane node and going to the directory
+docker exec -it kind-control-plane bash
+cd /etc/kubernetes/pki
+
+
+# now we will sign certificate here in directory /etc/kubernetes/pki in control-panel
+openssl x509 -req -in ahsan.csr \
+  -CA ca.crt -CAkey ca.key -CAcreateserial \
+  -out ahsan.crt -days 365
+
+
+Step # 4 Copy the generated signed certficate for user ahsan in host machine directory containing key and csr
+exit  # exit from container
+
+# i am coping signed certificate from control plane into host machine in directory /home/kubernetes/rbac/ahsan.crt
+docker cp kind-control-plane:/etc/kubernetes/pki/ahsan.crt /home/kubernetes/rbac/ahsan.crt
+
+
+Step # 5 now add the new user ahsan with certificate,key and csr
+
+# Add the new user with embedded certs
+kubectl config set-credentials ahsan \
+  --client-certificate=ahsan.crt \
+  --client-key=ahsan.key \
+  --embed-certs=true
+
+
+
+
+Step # 6 Get the kubernetes cluster of your choice and enter ahsan in it
+
+# seeing what clusters i have
+kubectl config get-clusters
+# Likely: kind-kind
+
+
+# making ahsan part of the cluster name kind-kind
+kubectl config set-context ahsan-context \
+  --cluster=kind-kind \
+  --user=ahsan
+
+
+# command to see what clusters or contexts you have
+kubectl config get-contexts
+
+# now set ahsan as the context of kind-kind cluster
+kubectl config use-context ahsan-context
+
+
+# now ahsan is user in kind-kind cluster
+kubectl get pods --> it should work
+
+# now get nodes it should not work you must get forbidden error with ahsan
+kubectl get nodes
+
+# now change context again
+kubectl config use-context kind-kind
+
+# now run get nodes and it should work because it is not user ahsan it is default user with all privileges and powers
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask DevOps Practice</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Welcome to Flask DevOps Practice</h1>
+        </header>
+
+        <div class="content">
+            <p>This page is designed for your Flask practice. Below are some links to help you:</p>
+            <ul>
+                <li><a href="{{ url_for('about_data')}}">About Flask</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/details">Looking For Details?</a></li>
+                <li><a href="{{ url_for('movies_data')}}">Movie Details</a></li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Flask DevOps Practice. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

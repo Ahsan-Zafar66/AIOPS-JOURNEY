@@ -1,0 +1,176 @@
+Ingress security control mean securing communication between user and cluster using tls protocol.
+
+Steps:
+
+Step # 1 
+Create a kind cluster, in kind cluster ingress-nginx run only when its pods are scheduled on control plane node and port mapping are already done
+
+# yml file
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 80
+        protocol: TCP
+      - containerPort: 443
+        hostPort: 443
+        protocol: TCP
+
+
+above is yml file for kind cluster in which ingress controler works fine
+
+
+
+Step # 2 Install the nginx controller in (for kind cluster nginx works only on control plane node make sure you schedule all nginx controller 3 pods on control plane and make you port 443 and 80 are mapped)
+
+# command to install nginx ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.4/deploy/static/provider/cloud/deploy.yaml
+
+
+Step # 3 Create a self signed certificate
+
+
+Create a certificate and a key using openssl to secure the communication between cluster and user
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout tls.key \
+-out tls.crt \
+-subj "/CN=dosti.com/O=dosti.com"
+
+
+# my domain name is dosti.com
+
+# now store this certificate and key created in directory where you are present in kubernetes secret
+kubectl create secret tls dosti-tls --cert=tls.crt --key=tls.key
+
+
+Step # 4 create your deployments or pods
+
+app1-deployment.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      containers:
+      - name: app1
+        image: hashicorp/http-echo
+        args:
+          - "-text=Hello from App 1"
+        ports:
+        - containerPort: 5678
+
+
+
+app2deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+      - name: app2
+        image: hashicorp/http-echo
+        args:
+          - "-text=Hello from App 2"
+        ports:
+        - containerPort: 5678
+
+
+
+Step # 5 create services for these two deployments
+# now services for these two deployments
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-service
+spec:
+  selector:
+    app: app1
+  ports:
+  - port: 80
+    targetPort: 5678
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-service
+spec:
+  selector:
+    app: app2
+  ports:
+  - port: 80
+    targetPort: 5678
+
+
+
+Step # 6 create ingress resource with TLS Certificate
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dosti-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+      - dosti.com
+    secretName: dosti-tls  # we are using the secret we created which has the certificate and key
+  rules:
+  - host: dosti.com
+    http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: app1-service
+            port:
+              number: 80
+      - path: /app2
+        pathType: Prefix
+        backend:
+          service:
+            name: app2-service
+            port:
+              number: 80
+
+
+
+
+Step # 7 Apply everything
+kubectl apply -f app1-deployment.yaml
+kubectl apply -f app2-deployment.yaml
+kubectl apply -f services.yaml
+kubectl apply -f ingress.yaml
+
+
+
+Step # 8 now we will connect domain dosti.com with local host
+vim /etc/hosts --> go to this file and add following line in it
+
+# line to add in the file, now your local host is connected with domain dosti.com
+127.0.0.1 dosti.com

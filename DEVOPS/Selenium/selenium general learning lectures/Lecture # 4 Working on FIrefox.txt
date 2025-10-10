@@ -1,0 +1,103 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+path = Service(r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\chromedriver.exe")
+
+driver = webdriver.Chrome(service=path)
+
+driver.get("https://dev.alnafi.com/")
+
+
+
+
+#How to maximize your browser
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+path = Service(r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\chromedriver.exe")
+
+driver = webdriver.Chrome(service=path)
+
+driver.get("https://dev.alnafi.com/")
+driver.maximize_window()
+
+
+
+#How to Quit your selenium browser :-
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+path = Service(r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\chromedriver.exe")
+
+driver = webdriver.Chrome(service=path)
+
+driver.get("https://dev.alnafi.com/")
+driver.maximize_window()
+
+
+driver.quit()
+
+
+
+
+#####Now we will go firefox browser :-
+
+Firefox Download : -https://www.mozilla.org/en-US/firefox/windows/
+
+
+Full Driver link list : -
+https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
+
+
+Webdriver of firefox :- https://github.com/mozilla/geckodriver/releases
+
+
+how to check your firefox version : Setting --> Help --> About
+105.0.3 (64-bit)
+
+
+
+Firefox Script.py
+
+from selenium import webdriver
+from selenium.webdriver.firefox.service import Service
+
+path = Service(r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\geckodriver.exe")
+driver = webdriver.Firefox(service=path)
+driver.get("https://dev.alnafi.com/")
+driver.maximize_window()
+driver.quit()
+
+
+
+OR
+
+Without service
+
+from selenium import webdriver
+driver = webdriver.Firefox(executable_path=r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\geckodriver.exe")
+driver.get("https://dev.alnafi.com/")
+driver.maximize_window()
+driver.quit()
+
+
+OR
+
+
+from selenium import webdriver
+
+path=r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\geckodriver.exe"
+driver = webdriver.Firefox(executable_path=path)
+driver.get("https://dev.alnafi.com/")
+driver.maximize_window()
+driver.quit()
+
+
+
+
+
+
+
+
+

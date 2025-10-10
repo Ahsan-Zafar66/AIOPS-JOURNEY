@@ -1,0 +1,18 @@
+File provision means that you can copy files from host into vm without syncing the directories.
+
+# How to provision a file?
+
+Step # 1 Go to Vagrant filt
+
+Step # 2 write configuration
+config.vm.provision "file",
+	source: "D:\\AIOPS\\DEVOPS\\filename",
+	destination: "/home/vagrant"
+
+# now suppose my filename is abde.txt and content is "file from host"
+now, the content of abde.txt will be copied and it is pasted in vm in path /home/vagrant/vagrant a vagrant file will be created in /home/vagrant
+this vagrant file will contain the content of abde.txt
+
+
+# now use vagrant provision command to execute changes
+

@@ -1,0 +1,63 @@
+Step # 1 Install Jenkins on your Machine
+
+I used jenkins documentation and installed on debian/ubuntu
+make sure java is installed if not then in documentation java installation is given install that
+
+after installing java and jenkins see jenkins service is running successfully
+
+Step # 2
+Now, check jenkins is available on localhost:8080.
+
+# Now, get the jenkins password
+cat /var/lib/jenkins/secrets/initialAdminPassword 
+
+# now run jenkins store this path or password it is admin user password
+user: admin
+password: above file output
+
+
+Step # 3 Now you need to make jenkins available to outside world
+
+# use ngrok for it go tongrok and make an account
+# after making account get your authentication token copy it
+# run command to add your authorization token
+ngrok config add-authtoken 2NtHxxxxxxxWQAbcd1234SomeTknn
+
+# now run, it will open something in terminal and will give you link for outside world that redirects traffic to localhost:8080
+ngrok http 8080
+
+
+Step 3 can be done by various methos, if you ar eusing kubernetes or docker then it is very easy or using aws ec2 instance.
+
+
+Step # 4 Linking github repository with jenkins
+
+Now, log into jenkins and click on creating a job
+Chose pipeline or freestyle project as you like.
+
+Now, go to github repository you want to link, go to its settings and then go to webhook. Paste the link of jenkins server here.
+jenkins-link/github-webhook/
+
+Now, create this webhook, if github can access the jenkins server it will show successfull sign else it wil show unsuccessfule sign
+
+Now, copy the repository link by going in that repository and paste it in jenkins job in github project box/section
+Now, in source code management section in jenkins, select git and paste the git link, by going in github repository click on green code icon you will get git link there.
+Now, make sure what is your branch of repository is it master, main, brach1 or whatever make sure you enter correct name here
+Now in trigger section select "GitHub hook trigger for GITScm polling"
+
+
+Step # 5
+Now, make changes in the files of repository on github and check in workspace of job in jenkis if files are edited or not
+
+
+
+
+
+
+
+
+
+
+
+
+

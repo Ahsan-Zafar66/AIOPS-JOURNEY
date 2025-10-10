@@ -1,0 +1,66 @@
+what is configuration?
+In simple words, configuration is installation of packages to configure the machine to run the services needed.
+
+What is Shell Provision?
+Installing softwares automatically by configuring the Vagrantfile
+
+Go to the vagrant file in botom you will see config.vm.provision "shell"
+
+uncomment the above line and write the package you want to instal in next line
+
+# complete syntax for installing git through shell provision is in bottom of vagrantfile
+
+
+# you can install multiple packages at once by writing them alon each other
+
+
+Recommended way.
+We make a file and define packages in it
+and run this file
+
+# code and syntax
+$myscript = <<-"MYABD"
+  apt-get remove -y git
+  echo "Ahsan Zafar" >> /home/vagrant/ahsan.txt
+  MYABD
+
+  config.vm.provision "shell",
+    inline: $myscript
+
+
+above i am creating a script call myscript and saving it in a variable
+
+then i am writing my lines or script like removing git and making a text file in path /home/vagrant/ahsan.txt and writing something in it
+
+then i am using shell in vm and calling the mysscript and running it 
+
+
+
+RUNNING a script:
+we can create our script to run vm in host machine.
+suppose i create a following script, it is avialble in /D/AIOPS/DEVOPS/Vagrant
+
+script.sh
+# content of myscript.sh
+#!/bin/bash
+apt-get install zip
+apt-get install vim
+apt-get remove -y zip
+
+echo "My name is ahsan and i am runing a script" > /home/vagrant/result.txt
+free -g > /home/vagrant/memory_details.txt
+
+
+# now after making thist script.sh file we need to call it in vagrant file
+# code of ruby to call myscript.sh in vagrant vm
+
+config.vm.provision "shell",
+ path: "D:\\AIOPS\\DEVOPS\\Vagrant\\script.sh"
+
+# now rung vagrant provision command and your script.sh file will be executed in vm
+
+
+
+
+
+

@@ -1,0 +1,1 @@
+The issue discussed in this lecture is about time.sleep() abd implicit wait, you can refer jupyter notebook to understand it

@@ -1,0 +1,65 @@
+docker networking:
+when we install docker, a lot of libraries are installed with it.
+
+docker network model is CNM, container networking model.
+
+When a container is made from an image it comunicates with CNM through Docker engine, which uses libnetwork to communicate with CNM.
+container ---> DE --> Libnetwork ---> CNM
+
+
+There are two libraries that is used by docker engine to make the network layer.
+they are network driver and IPAM driver.
+IPAM driver act as dhcp, which has two jobs, one to create a pool of ip addresses and second one is to assign the ip addresses
+
+network driver has the job of network creation, attaching a container, removing a container from network.
+
+Network sandobox does the routing between containers, it also does ip management
+
+
+
+
+Lecture Notes:
+Docker networking --> Concepts --> Imp --> Kubernets --> Networking complex
+
+VIRT library :-
+Virt --> base os --> ubuntu
+
+Virt share --> DE
+
+Docker engine is who [ Layed role moving library from host OS to container
+Example: -
+Virtual Library -->Host  OS --> 2 container
+
+
+
+Docker network model --> CNM --> Container networking model
+Kubernetes --> CNI --> Container networking interface
+
+Networking product:--> Calico , sweeper,
+
+
+CNM --> 5 main components --> Docker Engine --> Libnetwork --> CNM communication
+#yum install docker-cli #yum install container.io
+#ls
+
+IPAM driver : IPAM driver same as DHCP , 2 role --> 1 , Making IP pool 2 --> allocated IP from pool
+
+
+Network Driver :Network create/Delete or add/remove allocation
+
+Network --> NAT , Bridge, Host
+
+Network Sandbox --> Routing bw two or more container , ip managed
+
+
+Docker networking
+1. None : No ip assigned on this driver
+2. Host: host to host communication : there is no concept of NAT
+3. Bridge : It will be communicate container to host machine , use NAT
+a. Default --> Docker0
+b. User define --> you can create your own name
+
+Host machine : 192.168.1.1
+Container 172..17.0.1
+Docker0 --> Gateway NAT
+

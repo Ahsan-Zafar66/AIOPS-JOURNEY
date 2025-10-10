@@ -1,0 +1,10 @@
+Imperative and declarative are approaches for designing the yaml file
+
+Imperative: 
+In imperative approach we give instructions in yaml file to kubernetes what to do.
+For example:
+Hey robot create 3 toy blocks, color them red, blue and green and then stack them on top of each other
+
+Declrative
+In declaative approach we show a sample to robot and ask it to make it.
+

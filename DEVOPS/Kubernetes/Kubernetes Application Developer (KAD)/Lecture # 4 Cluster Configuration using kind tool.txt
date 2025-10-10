@@ -1,0 +1,33 @@
+First install kubectl by going on kubernetes official website. Search on browser "kubectl install", open kubernetes link and follow procedue
+
+Then install docker and docker desktop
+
+Then install kind.
+
+# creating a cluster using kind, this command wll create a cluster name kind
+kind create cluster
+
+
+# command to see clusters
+kind get clusters
+
+# command to check nodes
+kubectl get nodes
+
+# command to get all details about nodes in a cluster
+kubectl get all -A
+
+# command to delete a cluster
+kind delete cluster --name kind
+
+
+# command to create a cluster with specific name
+kind create cluster --name al-nafi
+
+
+# creating a cluster from a yml file
+kind create cluster --config file.yml
+
+
+# getting more details about nodes
+kubectl get nodes -o wide

@@ -1,0 +1,20 @@
+Node Selector mtlb ye node select karay ga jo pod ham create kr rhy hain uska
+
+nodes ky pass different resources hotin hain kisi ky pas szyada kisi ky pass kam
+
+# suppose
+node 1 has high resources
+
+node 2 and node 3 have low resources
+
+mn ny 3 task bnaye or 3 pod create kiye for each task, likin mn ny pod mn mention nhi kiya ky kis node mn ye run ho.
+
+ab jab mn ny spcify nhi kiya to random assignment ho gi pods ki nodes mn.
+
+likin jo pod 3 tha uska task heavy that usy zyada resources chahiye thy to technically usy node 1 mn jana chahiye that, likin mn ny specify hi nhi kiya to wo kisi mn bhi ja skta hai.
+
+
+yahan pr ata hai NODE SELCTOR, jo ham pod bnaty waqt define krty hain ky pod 3 ko node 1 mn dalo.
+
+this is the concept of node selector.
+

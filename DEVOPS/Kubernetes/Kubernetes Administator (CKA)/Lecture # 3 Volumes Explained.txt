@@ -1,0 +1,74 @@
+what is a volume?
+a volume provides external storage for containers outside the container file system.
+
+Volume types:
+
+hostPath:
+Data is stored in a specific location drectly on host file system, on the kubernetes node were Pod is running
+Data is stored on the node where Pod is running.
+
+emptyDir:
+Data is stored in an automatically managed location on the host file system. Data is deleted if the Pod is deleted.
+
+persistentVolumeClaim:
+Data is stored using a PersistentVolume. 
+
+
+volume are part of pod not part of container.
+
+Why we need volumes?
+Previously when volumes are not available, when a container is created in a pod it do its job generates data and when it is deleted or it finishes it's job the data created along with it is also lost.
+
+Now, we have volumes, volumes are at pod level, and we attach these volumes with containers, now data is created in container and it is also stored in volume.
+When you delete or remove container, data is stored in node which you can access easily.
+
+
+# volumes hands on
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-pod
+spec:
+  containers:
+  - name: volume-container
+    image: busybox:stable
+    command: ["sh","-c"," echo 'my name is ahsan' > /opt/myfile.txt "]
+    volumeMounts:
+      mountPath: /opt
+      name: first-volume
+  volumes:
+    name: first-volume
+    hostPath: 
+      path: /data/mydir 
+      type: DirectoryorCreate     # if mydir directory is not present in /data, it will create it due to the option selected here.
+
+
+# now in above pod, I create a volume in /data/mydir of node and I mounted /opt directory of container on this volume. 
+Whatever is stored in /opt of container it is also stored in /data of node. Now, when pod is removed data is availble in node
+
+
+
+
+# empty directory hands on
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: empty-dir-pod
+spec:
+  containers:
+  - name: volume-container
+    image: busybox:stable
+    command: ["sh","-c"," echo 'my name is ahsan' > /opt/myfile.txt "]
+    volumeMounts:
+      mountPath: /opt
+      name: first-volume-empty
+  volumes:
+    name: first-volume-empty
+    emptyDir: {}
+
+
+
+in empty dir volume type when pod is removed data is also removed along with pod.
+
+    
+

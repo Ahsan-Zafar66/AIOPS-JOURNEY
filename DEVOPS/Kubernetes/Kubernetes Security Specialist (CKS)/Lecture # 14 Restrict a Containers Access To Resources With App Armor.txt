@@ -1,0 +1,85 @@
+In this topic we will learn how to restrict a containers access to cluster resources using AppArmor
+
+So, what comes under resources?
+kernel network and permission of files. we secure files using app armor by restricting the operations  a pod can do to a file like write, create, delete and etc.
+
+App armor provides protection at file level and seccomp provides protection at kernel level
+
+
+
+
+How App Armor Works?
+First we define a profile, there are two types of profile
+1) Enforce Mode: it will enforce the rules defined in the profile
+2) Complain Mode: It will just make a complain and create system log
+
+# path where profiles should be kept or define is:
+/etc/apparmor.d/name-of-profile
+
+
+# now after making the profile we attach the profile in meatadata section of pods as annotation. Now, whatever the profile type is and whatever the rules we have defined in the profile will be in effect
+
+
+Where app-armor should be present in VM HOST Linux or in cluster nodes for kind cluster?
+So, answer is that kind cluster use base OS kernel. Nodes have minimal linux/debian installed but they use kernel of host.
+So, apparmor should be insatalled or running in VM HOST Linux not in cluster nodes.
+You make apparmor profiles and keep them in path /etc/apparmor.d/profile-name
+And you attach these profiles with the pod in metadata section of pod as a annotation.
+
+
+For Kubeadm clusters where app armor should be present?
+As in kubeadm each node has its own kernel and it is a separate OS like ubuntu. Kind runs nodes as containers which uses host os linux kernel.
+But, in kubeadm each node is a spearate virtual machine of ubuntu with its own kernel.
+So, to use apparmor in kubeadm clusters, you need to install apparmor Separately on each node.
+
+
+
+
+
+
+Hands On Apparmor in kind cluster:
+
+# check if apparmor service is installed and active
+systemctl status apparmor
+
+# check if armor is enables as well, you will see Y if apparmor is enables
+cat /sys/module/apparmor/parameter/enabled
+
+# check privileges of apparmor
+aa-status
+
+
+# now go to following directory and create a profile to enforce in kubernetes pod
+cd /etc/apparmor.d/
+
+
+# create file vim k8s-apparmor-example-deny-write and create a profile that deny all file wrtie, following profile is taken from kubernetes documentation
+
+#include <tunables/global>
+
+profile k8s-apparmor-example-deny-write flags=(attach_disconnected) {
+  #include <abstractions/base>
+
+  file,
+
+  # Deny all file writes.
+  deny /** w,
+}
+
+
+# now load this profile in apparmor
+sudo apparmor_parser -r /etc/apparmor.d/k8s-apparmor-example-deny-write
+
+
+# now check if your profile has been loaded
+aa-status | grep -i k8s-app
+
+if your profile appear then it has been successfully loaded
+
+then add the profile in your pod see an example from kubernetes documentation.
+
+apparmor does not work virtual machine kind cluster. you can use minikube, kubeadm or EKS in aws.
+
+
+
+

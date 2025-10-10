@@ -1,0 +1,69 @@
+We configure DNS for node_ip and use proxy server to configure node-port.
+
+# Suppose our application is hosted on address, node_ip can be anything
+node_ip:33200
+
+# now we will resolve node_ip by using DNS and 33200 port will be resolved by proxy-server
+
+Suppose we used DNS only and ou website name is comb.com, so without proxy-server addres of website will be
+www.comb.com:33200
+
+# now most people do not remember ports and ip so we need to resolve node_port using proxy-server
+# after using proxy-server to resolve node-port the website address will become
+www.comb.com
+
+
+# FLow of communication
+user comes on website www.comb.com ---> it goes to proxy-server, proxy server has node-port --> proxy-server forward request to nodeport
+
+
+
+
+Scenario:
+Suppose I have a website www.comb.com and I sell combs and video tuorials how to make different hairstyles.
+Now, I have two things my clients can visit combs and tutorials.
+
+www.comb.com/comb --> show customer the combs
+www.comb.com/video --> show tutorials
+
+Now, my users will come to my website and they will choose a service and i need to show content separately.
+
+If this applcation is on cloud then we need to use load balancers.
+
+www.comb.com/video ---> load_balancer_1 --> video_service --> pods containing video page application
+www.comb.com/comb ---> load_balancer_2 --> comb_service --> pods containing comb selling page application
+
+
+# now using load balncers we get a lot of cost and their is lot of clutter,
+#
+
+Instead of using load balancers we can use ingress service in kubernestes.
+Ingress service can control where to send the traffic to which service.
+So, kubernetes does not have ingress service by default you need to configure it.
+
+Ingress handles the traffic like where to direct traffic when you have multiple things.
+
+You can configure ingress through nginx or HAPROXY or traefik or istio or contour or GCP HTTP(s) Load balancer(GCE)
+
+
+
+NOTE: We will configure nginx ingress controller
+GCP HTTPS Load Balancer (GCE) and ingress nginx these two are maintained by kubernetes official.
+
+Architecture of ingress nginx:
+Following are the components of nginx ingress:
+1) Ingress Controller (it is actually a deployment)
+2) Config Map for different things to include in ingress controller like eror log path, keep alive threshold and etc
+3) ingress service to interact with ingress cotroller which contains pod.
+4) Service accpunt with proper roles, clusterroles and rolebinding
+5) Ingress resource is passed to ingress controller, it has all the policies according to which controller needs to work
+Ingress resource has rules, each rule can have multiple paths.
+
+
+# search nginx ingress controller and go to website kubernetes ingress github, and after going on github click on get started
+
+
+# HANDS ON INGRESS NGINX
+
+# creating a separate namespace to execute this lecture
+kubectl create ns app-space

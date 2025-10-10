@@ -1,0 +1,12 @@
+Node: aisi machine chahy virtual or physical can be called a node if kuburnetes is installed in it.
+
+A machince in which kuburnetes is installed is called a node.
+
+Cluster:
+Multiple nodes or combination of nodes is called a cluster
+
+Master Node:
+Node which has all the information is known as master node.
+During configuration of nodes, we declare which node is master node and which nodes are worker nodes.
+
+master node dones the orchestration of worker nodes

@@ -1,0 +1,15 @@
+---
+- name: Copy and extracting the application of the file 
+  hosts: rhel 
+  become: yes 
+
+  tasks:
+  - name: Copy application archive the file
+    copy:
+      src: /home/aadmin/ansible/Practical/application.tar.gz 
+      dest: /home/aadmin/data_copy
+  - name: Extracting....
+    unarchive:
+      src: /home/aadmin/data_copy/application.tar.gz
+      dest: /home/aadmin/data_copy
+      remote_src: true

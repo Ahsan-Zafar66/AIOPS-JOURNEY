@@ -1,0 +1,94 @@
+NOTE: "" are used mostly when we are calling the variable, you can skip them file defining variables or reading file.
+But they are must to use when you want to call a variable
+
+
+
+how to read json files in ansible playbook
+
+# first i will define  ajson file that contains my package name and state
+sudo vim package.json
+
+{
+	"package_info":
+	{
+		"package_name": "zip"
+		"package_state": "present"
+	}
+}
+
+
+now, as i have defined my package name and state in a key called package info.
+
+
+# creating a yml file to read the json file
+sudo vim read_json.yml
+
+---
+- name: this yml file read json file and use variables defined in it
+  hosts: centos
+  become:yes
+  tasks:
+    name: reading file
+    include_vars:    # include vars mean file reading
+      file: "{{file_data}}"  # passing the file name stored in file_data variable
+    vars:
+      file_data: "package.json"  # storing file name in a variable file_data and passing this variable in file of include_vars which read file
+    name: now installing the packages as our file has been read
+    yum:
+      name: "{{package_info.package_name}}"
+      state: "{{package_info.package_state}}"
+
+
+when I read my file, its variables ar enow avaialble, so as I am calling the package name and state now.
+
+
+# we can also directly read the file
+
+---
+- name: this yml file read json file and use variables defined in it
+  hosts: centos
+  become:yes
+  tasks:
+    name: reading file
+    include_vars:    # include vars mean file reading
+      file: "package.json"  # passing the file name 
+    name: now installing the packages as our file has been read
+    yum:
+      name: "{{package_info.package_name}}"
+      state: "{{package_info.package_state}}"
+
+=====================================
+
+reading packages from yml file instead of json file.
+make sure to keep dictionary format in json and yml file.
+
+package.yml
+
+---
+packages:
+  package_wget:
+    name: wget
+    state: absent
+  package_vim:
+    name: vim
+    state: present
+
+
+
+creating a yml file now
+
+
+---
+- name: Readiing yml file from playbook
+  hosts: rhel
+  gather_facts: false
+  become: yes
+  tasks:
+  - name: Reading the yml file 
+    include_vars:
+      file: package.yml
+
+  - name: Installation wget
+    yum:
+      name: "{{ packages.package_wget.name }}"
+      state: "{{ packages.package_wget.state }}"

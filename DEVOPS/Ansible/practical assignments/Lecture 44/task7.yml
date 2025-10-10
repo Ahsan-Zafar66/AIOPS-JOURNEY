@@ -1,0 +1,27 @@
+---
+- name: Creating user and setting password 
+  hosts: rhel
+  become: yes 
+
+  vars: 
+    new_user: "kazim1"
+    new_user_password: "123@abd"
+
+  tasks:
+  - name: Creating new user
+    user:
+      name: "{{new_user}}"
+      state: present
+
+  - name: Setting new user password
+    user:
+      name: "{{new_user}}"
+      password: "{{new_user_password | password_hash('sha512')}}"
+      update_password: on_create
+  - name: Add new user entry on sshd_config file 
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^\s*AllowUsers\s+(.*)$'
+      line: 'Allowusers {{new_user}} \1'
+      state: present
+      backrefs: yes

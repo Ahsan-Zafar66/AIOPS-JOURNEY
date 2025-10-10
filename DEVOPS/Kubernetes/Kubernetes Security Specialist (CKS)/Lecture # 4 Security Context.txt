@@ -1,0 +1,44 @@
+Security context is specification that you add in spec section of pod and container to apply certain security and access control to pod and container.
+Security context applied on pod level is applied on all containers inside a pod.
+Security context can be separately applied on containers
+
+
+By default every pod scheduled in a node is at root user level, now think for a moment if your pod i hacked by a hacker he is root user now in the pod and can do anything
+
+
+# example of a pod in which security context is defined for pod and container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-sc
+spec:
+  securityContext:
+    runAsUser: 1000 # making the user to have only read or write access
+    runAsGroup: 2000
+  containers:
+  - name: my-cont
+    image: busybox
+    command: ["sh","-c","sleep","3600"]
+    securityContext:
+      runAsUser: 2000
+
+
+You have defined security context for pod and container in above yaml script. Container level security context will overwrite the security context of pod, as in above pod has 1000 UID but container uses 2000 UID
+Now, you cannot access root user all task and things will be run as user 2000 inside container.
+This is done for security and safety of pods and containers and data inside them
+
+Can I become root user again in container?
+The simple answer is NO DIRECTLY YOU CANT. To become root user again you need sudo or other specfications to run outside of container to become root user.
+you can use sidecar container or help container, where one container which has main application is set to 1000 UID and helper container has root privileges and both have shared volumes.
+You can do modifcation of files and things in helper container as volume path is shared it will also appear in main app container.
+
+
+root user = 0 UID
+normal user = 1000 UID the other UIDs like 2000, 3000 are custom but 1000 is default linux understand it
+GID = 1000 primary group, the other GIDs 2000,3000 are custome same like UID, if you want to have custom configurations inside linux you can use any number
+
+user with 1000 UID can read system files but cannot write them
+user with 1000 UID cannot create new files in directories owned by root user
+It can create directories in place where it has ownership like its home directory
+
+

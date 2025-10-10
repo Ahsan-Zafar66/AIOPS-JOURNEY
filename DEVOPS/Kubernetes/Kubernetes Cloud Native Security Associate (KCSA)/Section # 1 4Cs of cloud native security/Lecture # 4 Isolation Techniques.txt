@@ -1,0 +1,65 @@
+zero trust model means block everything in start, and what you need start unblocking only that.
+mtlb sab cheezon ko block krdo, jis chz ki zarrorat ho usy open krty jao istrhan sirf wo cheezein open hon gin jinki zaroorat hai.
+
+Kubernetes Isolation Techniques Checklist
+
+
+
+1. Namespace Isolation
+
+Create separate namespaces for different environments (e.g., Development, Testing, Production).
+
+Apply Role-Based Access Control (RBAC) to limit access based on namespace.
+
+Regularly review and manage access permissions for each namespace.
+
+
+
+ 2. Network Policies
+
+Define and implement network policies for each namespace to control pod communication.
+
+Test network policies to ensure they correctly restrict access as intended.
+
+Update network policies in response to changes in application architecture or security requirements.
+
+
+
+  3. Pod Security Policies (PSP)
+
+Enable Pod Security Policies on the cluster.
+
+Define and enforce policies that limit the use of privileged containers.
+
+Ensure all deployed pods meet the PSP requirements before allowing them on the cluster.
+
+
+
+  4. Resource Quotas and Limits
+
+Set resource quotas for each namespace to prevent overconsumption of shared resources.
+
+Define CPU and memory limits for each pod to ensure predictable performance.
+
+Monitor resource usage and adjust quotas and limits as necessary.
+
+
+
+  5. Node Isolation and Pod Affinity
+
+Apply taints to nodes to control which pods can schedule on them.
+
+Define pod affinity and anti-affinity rules to optimize and secure workload placement.
+
+Regularly review node and pod configurations to align with security and performance needs.
+
+  6. Service Mesh Implementation
+
+Choose and implement a service mesh (e.g., Istio) to manage service-to-service communications securely.
+
+Configure mutual TLS (mTLS) through the service mesh to secure data in transit.
+
+Set up detailed logging and monitoring via the service mesh to detect anomalies in communication patterns.
+
+
+COM

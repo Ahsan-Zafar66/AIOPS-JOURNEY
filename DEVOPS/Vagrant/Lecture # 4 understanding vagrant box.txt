@@ -1,0 +1,56 @@
+# go to the following path and run ls -la
+c/users/Saad-Computers
+
+# now after entering this directory run
+ls -la
+
+it will show normal and hidden files
+
+# now go in directory .vagrant.d/, now you will see vagrant files here. you will see .boxes/, here vagrant boxes are stored
+cd .vagrant.d/
+
+
+# command to check boxes you have it is like docker images, you can run this command anywhere
+vagrant box list
+
+
+# like virtual box whch manages vm hyper-v is windows default software to manage virtual environemnts or machines
+
+# run this in run box
+appwiz.col 
+
+# go to windows add or of features option
+# you will see hyper-v there. if you want to use it enable it then windows will use hyper-v rather than vitual box
+
+
+# to add a vagrant box run following command
+vagrant box add box_name
+
+# example
+vagrant box add hashiscorp/precise64
+
+
+# now you have succesfully added a vagrant box now you can use it in your desire directory
+# now go to desire directory and use vagrant init vagrant_boxname a vagrant will be created in that directory containing configurations of that vagrant box
+
+# to check if your vagrant boxes updates are available
+vagrant box update
+
+
+# command to remove vagrant box like docker rmi
+vagrant box remove box_name
+#example
+vagrant box remove hashicorp/precise64
+
+
+
+# the directory where vagrant file is created after you run vagrant init vagrant_box command, vagrant suspend, halt and destroy will work for this vm in this directory. 
+FOr other vms you need to go to their respective directory where vagrant file containing the configurations of that vm is present
+
+
+
+
+HOW TO ADD BOX EXTERNALLY?
+
+
+

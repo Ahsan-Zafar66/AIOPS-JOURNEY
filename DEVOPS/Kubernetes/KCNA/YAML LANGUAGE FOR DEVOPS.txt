@@ -1,0 +1,189 @@
+YAML is a data serialization language
+
+Yaml is a serialization language, it means that applications written with different technologies, languages and etc which have different data structures can transfer data with each other using a common agreed upon and or a standard format. The most popular format is yaml.
+
+File extention of yaml are
+.yaml and .yml bothare same
+
+
+YAML format compared to other formats
+human readable and intuitive
+
+configurations are define in yaml through line separation and indentation
+
+
+YAML usecases:
+1) docker compose
+
+
+YAML SYNTAX
+
+key-value pairs:
+app: user-authentication
+port: 9000
+version: 1.7
+
+# if you want to write things in new line using \n you need to use quotes, for example
+
+app: "user-authentication \n "
+
+
+# comments are given by #
+
+Objects:
+Objects in YAML are created by indentation
+for example
+
+microservices:
+ app: user-authentication
+ port: 9000
+ version: 1.7
+
+spaces are very important in yaml file so use yaml validation tools to write yaml files
+
+
+Lists:
+Having multiple services or groups
+
+for example
+microservices:
+ - app: user-authentication
+   port: 9000
+   version: 1.7
+ - another app: user-browsers
+   port : 8000
+   version: 1.8
+
+
+Boolean expressions in yaml:
+boolean values can be true/false or yes/no or on/off
+microservices:
+ - app: user-authentication
+   port: 9000
+   version: 1.7
+ - another app: user-browsers
+   port : 8000
+   version: 1.8
+   deployed: true
+
+microservices:
+ - user-authentication
+ - shopping-cart
+
+
+
+# list inside list
+
+microservices:
+ - app: user-authentication
+   port: 9000
+   version: 1.7
+ - app2: user-face
+   versions:
+    - 1.7
+    - 2.0
+    - 3.0
+   port: 7000
+
+
+alignment of lists inside lists can vary
+
+microservices:
+ - app: user-authentication
+   port: 9000
+   version: 1.7
+ - app2: user-face
+   versions: [1.7, 1.9, 2.0]
+   port: 7000
+
+
+
+
+# apractical yaml code
+apiVersion: v1
+kind: Pod
+metadata:
+ name: nginx
+ labels:
+  app: nginx
+spec:
+ containers:
+ - name: nginx-container
+   image: nginx
+   ports:
+   - containerPort: 80
+   volumeMounts:
+   - name: nginx-vol
+     mountPath: /usr/nginx/html
+ - name: app-container
+   image: busybox
+   ports:
+   - containerPort: 80
+   command: ["/bin/bash"]
+
+
+
+let's decode above code
+apiVersion is a key-value pair
+kind is also a key-value pair
+
+metadata is an object
+
+name is a key-value pair of object metadata
+
+labels is a object withing an object metadata
+app is a key-value pair
+
+spec is an object
+containers is list of objects
+
+ports is a list
+
+volumeMounts is a list of objects
+
+
+===================================
+multiline strings
+
+multilineString: |
+ this is a multiline string
+ and this is second line
+ and this is third line
+
+# multiple linesa as single line
+multilineString: >
+ this is single line
+ this is another single line
+
+# practical rxample of multiline
+apiVersion: 1.7
+kind: ConfigMap
+metadata:
+ name: mosquitto-config-file
+data:
+ mosquitto.conf: |
+   log_dest stdout
+   log_type all
+   log_timestamp true
+   listener 9001
+
+
+Environment variables in YAML:
+
+command: ["/bin/sh", "$variable_name"]
+
+
+Placeholders:
+placeholders ar eput using double curly braces
+name: {{ .Values.service.name }}
+
+
+multiple componenents in one yaml file:
+we can separate components using ---  in a yaml file
+
+apiVersion: 1.7
+kind: Pod
+
+---
+apiVersion: 2.0
+kind: ConfigMap

@@ -1,0 +1,23 @@
+Kubernetes Trust Boundaries and Data Flow
+
+Understanding trust boundaries and data flow in a Kubernetes cluster
+
+is crucial for identifying potential security risks and implementing
+
+appropriate security measures. Trust boundaries define the limits within
+
+which data can be trusted, while data flow describes how data moves
+
+within and between these boundaries.
+
+Trust boundaries in Kubernetes delineate the areas where data is
+
+exchanged and processed securely. These boundaries are essential for
+
+maintaining data integrity and preventing unauthorized access. Data flow
+
+refers to the movement of data within the cluster, including communication
+
+between pods, nodes, and external systems. Securing these aspects helps
+
+in mitigating potential threats and vulnerabilities.

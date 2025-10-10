@@ -1,0 +1,44 @@
+Controller is person that do automation of our work.
+It see everything that happens.
+
+Controller is brain behind kubernetes.
+
+Replication Controller:
+RC is an object like pod
+
+What is the purpos of Replication Controller?
+All time availability of your application.
+
+Suppose you application is hosted in a pod in a container, that pod dies or get destroys now your product is not available to the customers.
+Now, replication controller comes to the rescue, you define how many replications of your pod you need in a situation where something happen to  apod.
+It exactly replicates your pod and make your application available.
+
+
+
+Replication Controller Hands On:
+
+# creating a yml file for replication-controller
+vim rc-configuration.yml
+
+# content of file
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: rc-first
+  labels:
+    app: rc-frontend # these are labels to reach to this replication-controller
+    type: development
+spec:
+  template:
+    metadata: # in template it is pod specifications, you dont need to write apiVersion and kind
+      name: rc-pod
+      labels:
+        app: frontend
+    spec: # these are container specifications inside pod
+      containers:
+      - name: rc-container
+        image: nginx
+  selector:
+    app: frontend # we need to mention which template we are refering, as i gave label frontend for template so i am using frontend here to refer to above template
+  replicas: 5 # number of pods you need always up for above template
+  

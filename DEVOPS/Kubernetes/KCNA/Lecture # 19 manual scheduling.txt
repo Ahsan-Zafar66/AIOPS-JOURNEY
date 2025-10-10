@@ -1,0 +1,8 @@
+think of a toy factory where you build toys.
+
+Now you instruct your worker to place cars in this box, planes in that box and barbies in another box
+
+You manually told the workers where to place which type of toy.
+
+In the same way when we have tasks, we specify that this task is carried out by which node,
+So, we are scheduling the tasks but MANUALLY.

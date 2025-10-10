@@ -1,0 +1,56 @@
+etcd was a independent project, it was not only made for kubernetes.
+etcd can be used for other things as well apart from kubernetes.
+
+etcd is a distributed reliable key-value store that is simple, secure and fast
+
+etcd is a non-sql database. it is a non-relational database. It stores data as documents in key-value format. 
+Each entry or data point in etcd has it's own document.
+
+etcd is not ONLY used for kubernetes, it is an independent project, you can use it anywhere where it fullfils your needs.
+
+
+
+etcd in kubernetes:
+any resource tha tis created in kubernetes suc as pods, nodes, secrets, roles and etc. their all information is stored in etcd
+
+there are two ways etcd can be setup with kubernetes:
+1) Manual Setup using binary
+2) Auto Setup using kubeadm/minikube/kind and etc
+
+
+How etcd store information in kubernetes?
+
+/registry/construct/namespace/name_of_construct
+
+suppose I have a nginx pod in default namespace and it's data will be stored like this
+/registry/pods/default/nginx
+
+
+2380 is the port using which nodes in a cluster having etcd communicate with each other
+
+2379 is the port that etcd uses to recieve requests from clients
+
+Making highly avaulabl etcd cluster:
+
+create a two directories in ubuntu, in one directory keep all the vagrantfile and bootstrap.sh. Now, make another directory in this directory named etcdbinaries and run the commands given in pdf file in this directory.
+
+
+the certificate whch you create for encrypted communication or secure commounication is signed by certificate authority
+
+
+In kind cluster we have etcd pod by default.
+
+# command to enter etcd pod
+kubectl exec pod pod-name -n kube-system
+
+
+
+# now to interact with etcd pod you need specifc things endpoints, ca.cert, cert, key. 
+kubectl exec etcd-kind-control-plane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl --endpoints https://172.18.0.6:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/server.key --cert /etc/kubernetes/pki/etcd/server.crt get name"
+
+in above command you can get things by describing the etcd pod
+kubectl describe pod etcd-kind-control-plane
+
+# command to get all resources, it will show you everything pods, nodes and etc
+kubectl exec etcd-kind-control-plane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl --endpoints https://172.18.0.6:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/server.key --cert /etc/kubernetes/pki/etcd/server.crt get / --prefix --keys-only"
+

@@ -1,0 +1,172 @@
+# shift parameter moves parameters from right to left
+
+# for example
+
+vim shift.sh
+
+#!/bin/bash
+
+echo "words are $1,$2,$3"
+
+shift
+
+echo "first_parameter: $1, second_parameter:$2, third parameter: $3"
+
+
+./shift ahsan ahmed ali
+
+
+after shif the last line answer
+ahmed and ali. ahsan will not be present as shift moves parameters from right to left
+
+
+we can do multiple shifts using
+shift 2, it will cause 2 shifts 
+
+
+Interview qustions are asked from shift and positional parameters
+
+
+
+Diff $@ and $* 
+
+==============================================================================================================
+CASE # 1
+
+# cat diff.sh
+#!/bin/bash
+
+echo -e "Example of : \$*\n"
+for each in "$*"
+do
+echo $each
+done
+
+echo -e "Example : \$@\n"
+for each in "$@"
+do
+echo $each
+done
+
+Difference between $@ and $*?
+if "$*" in quotations: $* deals all parameters at once in a for loop. Number of iteration is one doesn't matter how many parameters are passed
+if "$@" in quotations: $@ deals all parameters separately in a for loop, number of iteration is equal to number of parameters passed
+
+===================================================================================================================
+
+CASE # 2
+
+#!/bin/bash
+
+echo -e "Example of : \$*\n"
+for each in $*
+do
+echo $each
+done
+
+echo -e "Example : \$@\n"
+for each in "$@"
+do
+echo $each
+done
+
+
+
+if $* is not in quotatios it deals all parameters separately in a for loop even if they are grouped like "ahsan" "ahmed laptop", all three will be dealth separately
+if $@ is not in quotations it will behave separately with all parameters.
+But, if "$@" is in quotations and we pass parameters in group for like "ahsan" "ahmed laptop", it will make two groups one ahsan and other "ahmed laptop" will be dealt together
+
+
+refer to lecture_15 in ubuntu in bash scripting directory the file is diff.sh
+
+==================================================================================================================
+
+Position parameter :-
+
+$0 --> Program or script name
+$1..$9 --> parameter passed
+$# --> Count the total number of parameter
+$*  --> Disply the parameter passed
+$@ same as $* both are same
+$$ --> Provide the current PID of shell
+
+
+#!/bin/bash
+echo "This is positional parameter example script" $0
+echo "Hello, My name is : " $1
+echo "Here is " $2
+echo "this is " $3
+echo "total count value is " $#
+echo "Display the parameter the passed" $*
+echo "Fetch information" $@
+echo "PID of current shell"
+echo "Exit status of last executed command " $?
+
+
+
+Shift position parameter :-
+
+Single shift position:-
+
+root@abdealidodia:~/bash/lect15# cat shift.sh
+#!/bin/bash
+echo "count $#"
+echo "$1 $2 $3"
+shift
+echo "$1 $2 $3"
+echo "count $#"
+
+
+# ./shift.sh Abdeali Dodiya Ali
+count 3
+Abdeali Dodiya Ali
+Dodiya Ali
+count 2
+
+Multi position shift :-
+
+# cat  shift.sh
+#!/bin/bash
+echo "count $#"
+echo "$1 $2 $3 $4 $5"
+shift 2
+echo "$1 $2 $3 $4 $5"
+echo "count $#"
+
+
+# ./shift.sh Abdeali Dodiya Ali ABd Kazim
+count 5
+Abdeali Dodiya Ali ABd Kazim
+Ali ABd Kazim
+count 3
+
+
+
+
+
+
+
+
+# ./diff.sh Abdeali Dodiya Ali "1 2" "3 4" 5
+Example of : $*
+
+Abdeali
+Dodiya
+Ali
+1
+2
+3
+4
+5
+Example : $@
+
+Abdeali
+Dodiya
+Ali
+1 2
+3 4
+5
+
+
+
+

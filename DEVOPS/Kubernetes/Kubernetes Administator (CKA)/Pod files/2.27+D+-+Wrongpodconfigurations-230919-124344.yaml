@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wrong-config-pod
+  labels: 
+    app: frontend
+    version: development
+spec:
+  containers:
+  - name: beta
+    image: nginx:125

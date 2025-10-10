@@ -1,0 +1,152 @@
+# systemctl status apache2 | awk 'NR==5' | awk -F : '{print $2}' | awk '{print $1}'
+
+# systemctl status sshd | awk 'NR==3' | awk -F : '{print $2}' | awk '{print $1}'
+
+# systemctl is-active sshd
+
+# systemctl is-active apache2
+
+# systemctl is-active apache3
+
+
+# cat services_Stats.sh
+#!/bin/bash
+
+STATUS=$(systemctl is-active sshd)
+echo $STATUS
+
+if [[ $STATUS == "active" ]]
+then
+echo "Service is running"
+else
+echo "Sorry..!! Service is not running"
+exit 1
+fi
+
+
+
+# cat services_Stats.sh
+#!/bin/bash
+echo "enter your service"
+read service_name
+STATUS=$(systemctl is-active $service_name)
+
+if [[ $STATUS == "active" ]]
+then
+echo "$service_name service is running"
+else
+echo "Sorry..!! $service_name ervice is not running"
+exit 1
+fi
+
+
+#!/bin/bash
+echo "enter your service"
+read service_name
+STATUS=$(systemctl is-active $service_name)
+
+if [[ $STATUS == "active" ]]
+then
+echo "$service_name service is running"
+else
+echo "Sorry..!! $service_name ervice is not running"
+echo "Sorry..!! $service_name ervice is not running" | mail -s "Service Down $service_name | ALERT"  automation52786@gmail.com
+exit 1
+fi
+
+
+
+check the service using ps command:-
+
+# ps -ax  | grep apache2  | grep -v grep
+
+
+#ps -ax  | grep apache2  | grep -v grep   | wc -l
+
+#!/bin/bash
+echo "ENTER THE SERVICE NAME"
+read service_name
+count=$(ps -ax  | grep $service_name  | grep -v grep | wc -l)
+
+if [[ "$count" != "0" ]]
+then
+echo "$service_name service is running, Everything is fine...!!!"
+else
+echo "$service_name is not running due to some problem"
+fi
+
+
+#Disk status
+# df -h  | grep /dev/mapper/ubuntu--vg-ubuntu--lv | awk '{print $5}' | tr '%' ' '
+
+#!/bin/bash
+disk_status=$(df -h  | grep /dev/mapper/ubuntu--vg-ubuntu--lv | awk '{print $5}' | tr '%' ' ')
+
+if [ $disk_status -le 90 ]
+then
+echo "Size is Good"
+else
+echo $disk_status
+echo " Disk Space is full"
+fi
+
+
+
+# df -h  | awk 'NR>1'
+udev                               461M     0  461M   0% /dev
+tmpfs                               99M  708K   98M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv  8.8G  5.2G  3.3G  62% /
+tmpfs                              493M     0  493M   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+tmpfs                              493M     0  493M   0% /sys/fs/cgroup
+/dev/sda2                          976M  220M  689M  25% /boot
+tmpfs                               99M     0   99M   0% /run/user/1001
+tmpfs                               99M     0   99M   0% /run/user/1000
+
+
+# df -h  | awk 'NR!=1'
+# df -h  | tail -n +2
+
+# df -h  | awk 'NR>1' | sed s/%//g
+
+#df -h  | awk 'NR>1' | sed s/%//g | awk '{ print $5}'
+# df -h  | awk 'NR>1' | sed s/%//g | awk '{ if ($5 > 50 ) print $0}'
+PRTG alett space --> L1 --> L2  and L3
+
+
+# vim disk_log.sh
+#/bin/bash
+time=$(date +%d-%m-%y-%H)
+
+disk_status=$(df -h  | grep /dev/mapper/ubuntu--vg-ubuntu--lv | awk '{print $5}' | tr -d %)
+
+
+if [ "$disk_status" -le 50 ]
+then
+echo "$disk_status is Good"
+else
+cd /root/lect28/log
+tar cvf - auth.log | gzip -c > /root/lect28/log/auth.log-$time.tgz
+echo "" > auth.log
+echo "Var log alert has been archivd"
+fi
+
+
+
+
+TASK :--
+
+I want generate below output using filter command in linux:-
+
+1,udev,461M,0,461M,0%,/dev,23-07-22,192.168.1.8,abdealinode2.local
+
+
+
+2,tmpfs ,99M,708K,98M,1%,/run
+3,/dev/mapper/ubuntu--vg-ubuntu--lv,8.8G,5.2G,3.3G,62%,/
+4,tmpfs,493M,0,493M,0% /dev/shm
+tmpfs,5.0M,0,5.0M,0% /run/lock
+tmpfs,493M,0,493M,0% /sys/fs/cgroup
+/dev/sda2,976M,220M,689M  25% /boot
+tmpfs,99M,0,99M,0%,/run/user/1001
+tmpfs,99M,0,99M,0%,/run/user/1000

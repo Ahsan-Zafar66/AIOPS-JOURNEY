@@ -1,0 +1,174 @@
+TASK1:-
+$ ansible 192.168.1.13 -m copy -a "src=/home/aadmin/ansible/Practical/data.csv dest=/home/aadmin"
+
+TASK2:-
+$ ansible 192.168.1.13 -m shell -a "free -gt"
+192.168.1.13 | CHANGED | rc=0 >>
+               total        used        free      shared  buff/cache   available
+Mem:               0           0           0           0           0           0
+Swap:              1           0           1
+Total:             2           0           2
+
+
+TASk3:-
+$ ansible rhel -m setup -a "filter=ansible_memory_mb"
+192.168.1.13 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_memory_mb": {
+            "nocache": {
+                "free": 501,
+                "used": 263
+            },
+            "real": {
+                "free": 239,
+                "total": 764,
+                "used": 525
+            },
+            "swap": {
+                "cached": 0,
+                "free": 1843,
+                "total": 1843,
+                "used": 0
+            }
+        },
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false
+}
+
+
+TASK4:
+---
+- name: Copy and extracting the application of the file
+  hosts: rhel
+  become: yes
+
+  tasks:
+  - name: Copy application archive the file
+    copy:
+      src: /home/aadmin/ansible/Practical/application.tar.gz
+      dest: /home/aadmin/data_copy
+  - name: Extracting....
+    unarchive:
+      src: /home/aadmin/data_copy/application.tar.gz
+      dest: /home/aadmin/data_copy
+      remote_src: true
+aadmin@ansible_master:~/
+
+
+
+
+TASK5:
+---
+- name: Installing httpd and firewalld entry
+  hosts: rhel
+  become: true
+  tasks:
+  - name: Installing httpd package
+    yum:
+      name: httpd
+      state: present
+  - name: Allow port 80 in firewall
+    firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: enabled
+      immediate: yes
+
+
+
+
+
+TASK6:
+
+---
+- name: Installing httpd and firewalld entry
+  hosts: rhel
+  become: true
+  tasks:
+  - name: Installing httpd package
+    yum:
+      name: httpd
+      state: present
+  - name: Allow port 80 in firewall
+    firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: enabled
+      immediate: yes
+  - name: Copy webpage project to apahce server
+    copy:
+      src: /home/aadmin/ansible/Practical/index.html
+      dest: /var/www/html/index.html
+
+  - name: Starting the httpd service
+    systemd:
+      name: httpd
+      state: started
+      enabled: yes
+
+TASK7:
+
+---
+- name: Creating user and setting password
+  hosts: rhel
+  become: yes
+
+  vars:
+    new_user: "kazim1"
+    new_user_password: "123@abd"
+
+  tasks:
+  - name: Creating new user
+    user:
+      name: "{{new_user}}"
+      state: present
+
+  - name: Setting new user password
+    user:
+      name: "{{new_user}}"
+      password: "{{new_user_password | password_hash('sha512')}}"
+      update_password: on_create
+  - name: Add new user entry on sshd_config file
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^\s*AllowUsers\s+(.*)$'
+      line: 'Allowusers {{new_user}} \1'
+      state: present
+      backrefs: yes
+
+TASK8:
+
+---
+- name: Download file to remote machine
+  hosts: rhel
+  tasks:
+  - name: Downloading...
+    get_url:
+      url: "https://www.python.org/ftp/python/3.10.8/Python-3.10.8.tar.xz"
+      dest: "/home/aadmin/data_copy"
+
+TASK9:
+---
+- name: Copy the file to windows server
+  hosts: windows
+  tasks:
+  - name: Copy file
+    win_copy:
+      src: sample.txt
+      dest: C:\Users\aadmin\Desktop\sample.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

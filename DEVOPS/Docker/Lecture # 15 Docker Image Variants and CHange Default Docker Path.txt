@@ -1,0 +1,114 @@
+Image Variants
+====================================
+
+Docker pull node:14
+Docker pull node:15
+Docker pull node:14-slim
+Docker pull node:14-alpine
+
+
+root@abdealidodia:~# docker image ls  node
+REPOSITORY   TAG         IMAGE ID       CREATED         SIZE
+node         14          7d03025aad90   6 days ago      946MB
+
+node         15-slim     dd6ccbd57bbd   10 months ago   160MB
+node         15          3d3f41722daf   10 months ago   936MB
+node         15-alpine   75631da67663   11 months ago   112MB
+
+1. node         15          3d3f41722daf   10 months ago   936MB
+Total 946 = 10 MB data + 936 MB Image
+
+
+2:-
+node         15-alpine   75631da67663   11 months ago   112MB
+112 MB Image + 10 MB data = 122 MB Image with data
+
+Two types of image
+1. Alpine
+2. Busybox image
+
+Best size you need manage for docker admin or devops admin
+
+2+3 exp you will gain once you finish my course
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+There are different variants of an image
+You can use any variant according to you needs
+
+
+This lecture is dedicated for docker path change
+
+Mostly comes a requirement that we need to store data on a path other then default docke rpath which is /var/lib/docker/
+
+SO this thing is very important
+
+How to Change Docker Default Path?
+
+Step # 1
+Create a directory name docker in the location where you want to create new path
+
+# for example
+mkdir /home/docker
+
+# new path is /home/docker
+
+Step # 2
+Stop the docker service and docker socket using following commands
+systemctl stop docker.service
+
+systemctl stop docker.socket
+
+
+# Step # 3
+Create a file using following command in /etc/docker/ path
+vim /etc/docker/daemon.json
+
+# in this file write the new path of docker
+{
+	"data-root": "/home/docker"
+
+}
+
+
+Step # 4 
+Now copy everything from the previous path to new path using folowing command
+
+cp -axT /var/lib/docker/ /home/docker/
+
+Step # 5
+Now open the docker service file and add your new path to it
+vim /lib/systemd/system/docker.service
+
+And add the new path in the following line
+
+Before adding path:
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+After adding path
+ExecStart=/usr/bin/dockerd -H fd:// -g /home/docker --containerd=/run/containerd/containerd.sock
+
+step # 6
+reload daemon process using following command
+systemctl daemon-reload
+
+# now start the docker service
+systemctl start docker.service
+
+systemctl start docker.socket
+
+# now run docker as you want

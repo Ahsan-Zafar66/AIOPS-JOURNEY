@@ -1,0 +1,12 @@
+For services like nginx, sshd we have sockets and we can use systemctl commands to check their statuses or to run them
+# example
+systemctl status nginx
+service nginx status
+
+
+For services which are defined or created by us such as alnafi_service, no socket they have
+we can check them using ps -ef command
+ps -ef | grep alnafi_service
+
+if it shows you more than 1 entry something then your service is installed else not.
+

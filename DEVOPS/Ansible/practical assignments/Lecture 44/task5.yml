@@ -1,0 +1,15 @@
+---
+- name: Installing httpd and firewalld entry
+  hosts: rhel
+  become: true 
+  tasks: 
+  - name: Installing httpd package
+    yum: 
+      name: httpd
+      state: present
+  - name: Allow port 80 in firewall
+    firewalld:
+      port: 80/tcp
+      permanent: yes 
+      state: enabled 
+      immediate: yes 

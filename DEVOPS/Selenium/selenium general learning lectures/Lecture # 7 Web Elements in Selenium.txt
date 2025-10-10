@@ -1,0 +1,125 @@
+Sample website :-
+https://dev.alnafi.com/
+
+
+html --> Hypertext markup languages
+
+
+<h1> </h1> tag name
+
+Tags list :-
+<head>
+<body>
+<div>
+<p>
+<a>
+<img>
+<br>
+<h1> <h2> .. <h6>
+
+<li> --> List item
+<ol> --> Order list
+<ul> --> unorder list
+<table>
+<form>
+<td>
+<tr>
+<button>
+<submit>
+<input>
+<textarea>
+
+Alanfi :-
+
+URL : https://dev.alnafi.com/auth/signin
+
+
+<input type="text" required="" value="" placeholder="Enter Your Username or Email" id="Username/ Email" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-Bluish">
+
+<input> --> Tag name
+type --> Attribute hain
+required= --> Attribute hain
+id="Username/ Email"
+id is attribute
+while "Username/ Email" is value of attribute
+
+
+
+Gmail :-
+<input type="email" class="whsOnd zHQkBf" jsname="YPqjbf" autocomplete="username" spellcheck="false" tabindex="0" aria-label="Email or phone" name="identifier" value="" autocapitalize="none" id="identifierId" dir="ltr" data-initial-dir="ltr" data-initial-value="tes" badinput="false">
+
+
+Selenium having 8 locators
+priority :-
+1. ID
+2. name=
+3. cssSelector
+4. xpath
+5. TagName
+6. className
+7. Linktext
+8. partialLinkText
+
+
+
+Alnafi:-
+
+<input type="text" required="" value="" placeholder="Enter Your Username or Email" id="Username/ Email" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-Bluish">
+
+1. ID --> "Username/ Email"
+2. name= NULL
+3. cssSelector
+#Username\/\ Email
+
+
+
+
+4. xpath
+
+Copy Full xpath --> /html/body/div[1]/div/div/div[2]/div/form/div[1]/input
+copy xpath --> //*[@id="Username/ Email"]
+
+5. TagName  --> input
+6. className --> w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-Bluish"
+
+7. Linktext  ---> Watch Video
+8. partialLinkText  --> Video
+
+
+
+Gmail :-
+<input type="email" class="whsOnd zHQkBf" jsname="YPqjbf" autocomplete="username" spellcheck="false" tabindex="0" aria-label="Email or phone" name="identifier" value="" autocapitalize="none" id="identifierId" dir="ltr" data-initial-dir="ltr" data-initial-value="tes" badinput="false">
+
+1. ID -->"identifierId"
+2. name= --> "identifier"
+3. cssSelector  -->
+4. xpath
+Copy xpath --> //*[@id="identifierId"]
+
+
+
+5. TagName  --> Input
+6. className  -->"whsOnd zHQkBf"
+7. Linktext  -->
+8. partialLinkText -->
+
+--> Uniqness is very important
+--> cssSelector and xpath alwasys uniq hoti hain
+--> Id also uniq
+--> Sometimes class might be same
+
+
+Analyst --> https://www.saucedemo.com/
+
+
+
+
+<input class="input_error form_input" placeholder="Username" type="text" data-test="username" id="user-name" name="user-name" autocorrect="off" autocapitalize="none" value="">
+
+<input class="input_error form_input" placeholder="Password" type="password" data-test="password" id="password" name="password" autocorrect="off" autocapitalize="none" value="">
+
+<input type="submit" class="submit-button btn_action" data-test="login-button" id="login-button" name="login-button" value="Login">
+
+<input type="password" name="password" id="password" class="form-control form-control input-block js-password-field" autocomplete="current-password" required="required">
+
+<input type="text" name="login" id="login_field" class="form-control input-block js-login-field" autocapitalize="off" autocorrect="off" autocomplete="username" autofocus="autofocus" required="required">

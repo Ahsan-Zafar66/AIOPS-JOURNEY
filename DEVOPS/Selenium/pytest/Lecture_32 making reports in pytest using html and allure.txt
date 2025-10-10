@@ -1,0 +1,306 @@
+Web driver intergration with pytest
+
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+import  time
+
+def setup_function():
+global driver
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+driver.get('https://alnafi.com/auth/signin')
+driver.maximize_window()
+
+def teardown_function():
+driver.quit()
+
+
+@pytest.mark.parametrize("username,password",[('testuser','test123')])
+def test_login(username,password):
+print("My pytest login")
+driver.find_element(By.ID,'Username/ Email').send_keys(username)
+time.sleep(0.7)
+driver.find_element(By.ID, 'Password').send_keys(password)
+time.sleep(0.7)
+
+
+
+
+##############
+
+With two email ID :-
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+import  time
+
+def setup_function():
+global driver
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+driver.get('https://alnafi.com/auth/signin')
+driver.maximize_window()
+
+def teardown_function():
+driver.quit()
+
+
+@pytest.mark.parametrize("username,password",[('abdeali@gmail.com','abdeali@123'),('ali@gmail.com','ali@123')])
+def test_login(username,password):
+print("My pytest login")
+driver.find_element(By.ID,'Username/ Email').send_keys(username)
+time.sleep(0.7)
+driver.find_element(By.ID, 'Password').send_keys(password)
+time.sleep(0.7)
+
+
+
+###################
+
+
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+import  time
+
+def setup_function():
+global driver
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+driver.get('https://alnafi.com/auth/signin')
+driver.maximize_window()
+
+def teardown_function():
+driver.quit()
+
+def my_cred():
+return [
+('abdeali@gmail.com', 'abdeali@123'),
+('ali@gmail.com', 'ali@123'),
+('abd@gmail.com', 'abd@123')
+]
+@pytest.mark.parametrize("username,password",my_cred())
+def test_login(username,password):
+print("My pytest login")
+driver.find_element(By.ID,'Username/ Email').send_keys(username)
+time.sleep(0.7)
+driver.find_element(By.ID, 'Password').send_keys(password)
+time.sleep(0.7)
+
+
+##################
+
+06:54:05
+
+1 min time taking
+
+
+
+3 task 1 min
+
+6 task 2 min
+
+9 task 3 min
+
+
+5000 Server -->
+CODE devloped --> Automation
+8 server --> 20 min
+
+
+
+100 server -->
+
+
+
+So you need to install additional package
+
+
+#pip install pytest-xdist
+
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+import  time
+
+def setup_function():
+global driver
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+driver.get('https://alnafi.com/auth/signin')
+driver.maximize_window()
+
+def teardown_function():
+driver.quit()
+
+def my_cred():
+return [
+('abdeali@gmail.com', 'abdeali@123'),
+('ali@gmail.com', 'ali@123'),
+('abd@gmail.com', 'abd@123')
+]
+@pytest.mark.parametrize("username,password",my_cred())
+def test_login(username,password):
+print("My pytest login")
+driver.find_element(By.ID,'Username/ Email').send_keys(username)
+time.sleep(0.7)
+driver.find_element(By.ID, 'Password').send_keys(password)
+time.sleep(0.7)
+
+
+RUN :-
+python -m pytest .\test_abd.py  -n 3
+
+
+If you want to edit number in init file then you will access via pycharm run
+
+
+pytest.ini
+
+[pytest]
+addopts = -n3
+markers =
+phase1
+phase2
+
+
+
+
+
+
+####################
+I want to generat html report
+
+#pip install pytest-html
+
+
+CODE :-
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+import  time
+
+def setup_function():
+global driver
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+driver.get('https://alnafi.com/auth/signin')
+driver.maximize_window()
+
+def teardown_function():
+driver.quit()
+
+def my_cred():
+return [
+('abdeali@gmail.com', 'abdeali@123'),
+('ali@gmail.com', 'ali@123'),
+('abd@gmail.com', 'abd@123')
+]
+@pytest.mark.parametrize("username,password",my_cred())
+def test_login(username,password):
+print("My pytest login")
+driver.find_element(By.ID,'Username/ Email').send_keys(username)
+time.sleep(0.7)
+driver.find_element(By.ID, 'Password').send_keys(password)
+time.sleep(0.7)
+
+
+
+RUN :-
+python -m pytest  --self-contained-html --html=alnafi.html
+
+
+
+###############################################################
+
+
+Allure report :-
+
+
+Download Link :-
+https://docs.qameta.io/allure-report/#_installing_a_commandline
+
+Allure zip link :-
+https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/
+
+This is my system path of allure :-
+C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Pytest_project\learning\allure-2.19.0\bin
+
+
+You need to set envionement variable :-
+
+System variable --> path --> edit --> C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Pytest_project\learning\allure-2.19.0\bin
+
+Check and verify :-
+
+C:\Users\AbdealiDodiya>allure --version
+2.19.0
+C:\Users\AbdealiDodiya>
+
+
+Now you need to install allure package in python
+
+
+#pip install allure-pytest
+
+
+
+
+now you need to create directory
+
+mkdir allurereports
+C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Pytest_project\learning\allurereports
+
+RUN :-
+python -m pytest .\test_abd.py  --alluredir='./allurereports'
+
+Report json and txt download succesfully but reports are not readable
+
+
+>allure serve ./allurereports
+
+You will get browser for allure reports
+
+
+
+FINAL CODE :-
+import allure
+import pytest
+from allure_commons.types import AttachmentType
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
+import  time
+
+def setup_function():
+global driver
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+driver.get('https://alnafi.com/auth/signin')
+driver.maximize_window()
+
+def teardown_function():
+driver.quit()
+
+def my_cred():
+return [
+('abdeali@gmail.com', 'abdeali@123'),
+('ali@gmail.com', 'ali@123'),
+('abd@gmail.com', 'abd@123')
+]
+@pytest.mark.parametrize("username,password",my_cred())
+def test_login(username,password):
+print("My pytest login")
+driver.find_element(By.ID,'Username/ Email').send_keys(username)
+time.sleep(0.7)
+driver.find_element(By.ID, 'Password').send_keys(password)
+time.sleep(0.7)
+allure.attach(driver.get_full_page_screenshot_as_png(),name="myalnafi_sc",attachment_type=AttachmentType.PNG)
+
+
+
+
+RUN :-
+python -m pytest .\test_abd.py  --alluredir='./allurereports'
+
+allure serve .\allurereports\

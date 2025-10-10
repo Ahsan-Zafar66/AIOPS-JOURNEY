@@ -1,0 +1,70 @@
+What is Docker?
+Docker is an open source containeried platform designed to create, deploy and run applications
+
+docker uses container on the host os to run applications
+
+allows applications to use same linux kernel of host system
+
+docker can be installed on any system but docker engine run natively on linux distros
+
+docker is written in go language
+
+docker isa tool that performs OS level virtualization also knows as containeriation
+
+docker was first released in march 2013 developed by SOLOMON HYKES & SEBESTIAN PHAL
+
+docker is platform as a service (PAAS) that uses OS level irtualization where VMWARE uses Hardware level virtualization
+
+
+Components of docker:
+1) Docker daemon/engine:
+docker daemon/engine run on the host OS
+It is responsible for running container to manage docker services
+docker daemon can communicate with other daemons.
+docker engine mn docker daemon hai jo containers ki building, removing or running ko manage krta hai.
+docker api communication krwati hai docker client or baki services ki docker engine ky sth.
+
+
+
+2) docker client, jahan sy ham commands run krty hain. docker run, docker build etc
+docker users can interact with docker engine through a client
+
+docker client uses commands & rest API to communicate docker engine
+A server command runs on client terminal, will send all commands to docker engine
+
+can communicate with more than one engine
+
+
+3) Docker Host, docker host mtlb jahan py docker installed hai like ubuntu, centos.
+to provide an environment to execute and RUN applications
+
+Containes: Docker engine, images, containers, networks and storage
+
+
+
+
+Advantages of docker:
+No pre-aalocation of RAM
+CI efficiency -> docker enable you to build a container image & use that same image across every step of the deployment process
+Less cost
+light in weight
+can run on physical hardware or on cloud
+Image can be reused
+take very little time to deploy in container
+
+
+Drawbacks of docker:
+Cannot be used for apps where rich gui is required
+difficult to manage large number of containers
+does not support cross platform environment
+even can't run on different OS (ubuntu & centos)
+
+
+
+
+Kubernetes:
+It is an advance form of docker. 
+
+Container orchestration is increasing resources when needed, reducing resources when there is less load and much more.
+
+container orchestration has configuration, which is done by us ky ab resources barho do is condition mn, in conditions mn resources kam kr do

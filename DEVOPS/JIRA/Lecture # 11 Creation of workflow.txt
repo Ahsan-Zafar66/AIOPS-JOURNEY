@@ -1,0 +1,34 @@
+Go to issues in the setting stab
+
+Go to workflow, create  a  workflow make the diagram as you like, add transitions as you like To-DO, Inprogress and Done.
+
+
+Now, go to workflow schemas, go to active ones, choose your project where you want to add your workflow,
+Click on edit then click on add work_flow, then add your workflow in one issue or all. 
+Suppose I chosed bug the issue where i added this workflow. CLick on publish and then associate
+Now, when you create a bug issue in this project you will see this workflow.
+
+
+
+
+# How to edit an original Workflow?
+
+Step # 1
+Create a copy of this workflow. Now, this copy will be available in inactive workflows
+
+Step # 2
+Go to workflow schemas, find your project and change the workflow from the original to the copy one, publish it 
+
+Step # 3
+The step 2 will put the copy workflow schema in active schemas and original schema in the inactive schemas
+
+Step # 4
+Now, edit the original workflow schema which will be in inactive schema as you like
+
+Step # 5
+Now, go to workflow schemas, find your project replace the copied schema with the orignal schema containing your desired changes and publish it
+
+
+Step # 6
+Now, your copy workflow schema will be in inactive schemas and original modifed one in the active schema.
+

@@ -1,0 +1,38 @@
+Steps to connect database with flask
+
+
+# go to the linux server or any other os and install mysql
+# add a mysql user (see the commands from chatgpt)
+# create a database and a table
+
+# now go to python and install flask
+# now, get a same html template according to your table and get code from chatgpt by showing your table structure
+# create  adirectory templates and store the code in a file such as trainer_details.html
+# the structure should be
+project directory
+	|-templates
+	|	|
+	|	- trainer_details.html
+	|
+	|-app.py
+
+# run the page on flask and see if it is smoothly running
+
+
+
+# Tell me your complete name
+Bruno
+
+# Highest level of education 
+Master in computer science
+bachelors in system inforamtics
+
+# Job
+Data Scientist Mid-Level 
+
+# machine learning with python
+
+# language in brazil to portugese
+
+
+Your objective is to go through machine learning concepts in ENGLISH with me.

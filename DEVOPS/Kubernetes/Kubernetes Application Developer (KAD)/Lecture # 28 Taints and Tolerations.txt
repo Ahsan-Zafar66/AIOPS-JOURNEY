@@ -1,0 +1,80 @@
+It is a concept to control that which pods will be hosted on which nodes.
+
+Taints and tolerations helps you not to schedule the unwanted pods on a particular node.
+Taints and tolerations does not help that pod A is scheduled alwasy on node A.
+
+NodeAffinity heps to schedule pod A always on Node A.
+
+
+Concet of Taint and Toleration.
+Suppose we have NODES A,B,C and pods a,b,c,d
+
+we taint the node A with blue color, now we can define the effect of this taint, No schedule if pod is not tolerant to this taint do not schedule it. PreferNot schedule do not schedule the pod mainly but if it is than no problem but initially try not to schedule it.
+
+Now, we have pods a,b,c and I make pod d tolerant of Node A.
+
+Now, if my effect is No schedule, none of the pods except pod d is scheduled on Node A.
+If node b,c,a comes to Node A for scheduling, as they are not tolerant to taint of Node A they will not be scheduled on Node A.
+
+You can see we can use taint and tolerant concept to not schedule the unwanted pods on a specific Node.
+But, there is no guarrentee that pod d which is tolerant of Node A will always go to Node A for scheduling, it can be scheduled on Node B and C as well.
+If you want that pod d always gets scheduled on Node A then you need NodeAffinity.
+
+
+
+Taints and Tolerations Hands On:
+
+
+
+
+
+# command for applying taint
+kubectl taint nodes node-name key-value:taint-effect
+
+taint-effect: what to do with pods which are not tolerant to this taint
+
+There are three values for taint-effect:
+1) NoSchedule, do not schedule pods which are not tolerant
+2) PreferNoScheule, try not to schedule pods which are not tolerant, but they can be scheduled
+3) NoExecute, node was not taineted earlier, it contained 3 pods and now you tainted the node. Now, after tainting the node, only those pods will stay that can tolerate taint others will be evicted.
+
+
+For no schedule, if you taint a node containing 3 pods, only 1 pod is tolerant now after tainiting the node and others two are not tolerant. as effect is noschedule new upcoming pods will not be scheduled if they are not tolerant but existing not tolerant ones will stay they will not be evicted like NoExecute effect
+
+Normally, when we make cluster lcoally we are running pods on master nod.
+In industry we taint the master node so no pod is scheduled on master node.
+
+
+
+Hands On:
+
+# command to taint a particular node with NoSchedule effect
+kubectl taint node node-name spray=mortein:NoSchedule
+
+we can add multiple tolerations for a pod, so it can be scheduled on different tainted nodes
+
+
+# making a pod that is tolerant of above node
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tolerant-pod
+  labels:
+    app: tolerant
+spec:
+  containers:
+  - name: tolerant-container
+    image: nginx
+  tolerations:
+  - key: spray
+    operator: Equal
+    value: mortein
+    effect: NoSchedule
+
+# now above pod can be scheduled on the tainted node
+note that we have passed the key, the operator sign of key=value pair, value and effect type to make this pod tolerant of above node.
+
+
+
+# command to untaint a node, you need to add minus sign at last of the taint
+kubectl taint node node-name spray=mortein:NoSchedule-

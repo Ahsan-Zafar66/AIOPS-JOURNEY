@@ -1,0 +1,332 @@
+syntax of a function
+
+
+function_name()
+{
+	statements
+}
+
+function_name
+
+OR
+
+function function_name()
+{ 
+	statement
+}
+
+function_name
+
+---------------
+
+local variable --> defined with local command and only available inside function
+
+call_name()
+{
+	local name=ahsan
+	echo -e "My name is $name"
+}
+
+call_name
+
+echo "Your name is $name"
+
+
+when you call a functio parenthesis are not needed
+local variable cannot be defined outside of function, local is only avaiable inside function.
+==============
+above function will print name in the function statement but not out of it
+------------------
+global variable --> can be accessed globally
+
+name is defined globally and it is accessible inside or outside of the function.
+==========
+global_var()
+{
+	echo "My name is $name"
+}
+
+name=ahsan
+
+global_var
+
+====================
+
+echo $? --> tells you the status of previous command run by you. 0 means command ran and 127 means command not found
+
+
+
+
+# use of return statement
+
+myname()
+{
+	number=10
+	return $number
+}
+
+myname
+
+after executing above code, when you run echo $?, you will get 10 which was the return or output of myname function
+
+
+
+
+
+==============
+
+Passing arguments in the function
+========================================
+argument()
+
+{
+	echo "My name is $1"
+	echo "My age is $2"
+	echo "i am learning $3"
+}
+
+argument ahsan 24 bash_scripting
+===========================================
+
+addition()
+{
+	first_num=$1
+	second_num=$2
+	answer=$((first_num + second_num))
+	echo "The sum of $first_num and $second_num is: $answer"
+}
+
+first_number=10
+second_number=200
+
+addition first_number second_number
+
+a=300
+b=500
+
+addition a b
+
+===========================
+In above function we define variable first_num and second_num and set $1 and $2 in them, it means when we call function first value passed will be stored in first_num and second number passed will be stored in second_num.
+Then i am defining the values of these argumetns before calling function, like first_number is 100 and second_number is 200
+then i am using the function with a and b, so this function will sum two numbers in whatever way they are passed either directly while calling the function or passing the variables in them.
+
+
+
+
+
+
+
+
+
+
+Class Notes
+
+Function :-
+Function is block of code which reduce your unwanted line in your script
+Help in organizing long script into manageable modules.
+
+Function two type define :-
+
+1. Method
+function <functionname>()
+{
+statement
+}
+
+2. Method
+<function>()
+{
+statement
+}
+
+
+
+#!/bin/bash
+test()
+{
+echo "Abdeali Dodiya"
+echo "Hello Everyone"
+}
+echo " i am using sample function"
+test
+
+
+echo "This is my another function calling"
+test
+
+
+echo "===============Third times=========="
+test
+
+
+#!/bin/bash
+function test()
+{
+echo "Abdeali Dodiya"
+echo "Hello Everyone"
+}
+echo " i am using sample function"
+test
+
+
+echo "This is my another function calling"
+test
+
+
+echo "===============Third times=========="
+test
+
+
+
+
+
+
+
+
+
+root@abdealidodia:~/bash/lect20# cat mach.sh
+#!/bin/bash
+
+mach()
+{
+echo -e "\n Machine information";  uname -a
+echo -e "\n Current date" ; date
+echo -e "\n machine status"; uptime
+echo -e "\n Filesyastem  status"; df -h
+echo -e "\n Memrory details"; free -g
+}
+mach
+sleep 1
+mach
+sleep 3
+mach
+
+
+
+
+Variable in Function :-
+1. GLobal
+2. Local
+
+
+
+#!/bin/bash
+mytest()
+{
+echo "my value is : $abd"
+}
+
+abd=12
+mytest
+
+
+
+
+root@abdealidodia:~/bash/lect20# cat global.sh
+#!/bin/bash
+mytest()
+{
+ali=12
+echo "my value is : $abd"
+abd=15
+}
+
+abd=13
+mytest
+echo "My second value is $abd"
+
+
+
+
+root@abdealidodia:~/bash/lect20# cat local.sh
+#!/bin/bash
+
+mytest()
+{
+ali=12
+echo "ABD value is $abd"
+kazim=13
+local alnafi=786
+}
+
+kazim=15        #GLOBAL
+mytest
+echo "Ali value is $ali"
+echo "Kazim value is $kazim"
+echo "Alnafi value is $alnafi"
+root@abdealidodia:~/bash/lect20# ./local.sh
+ABD value is
+Ali value is 12
+Kazim value is 13
+Alnafi value is
+
+
+
+root@abdealidodia:~/bash/lect20# cat local.sh
+#!/bin/bash
+
+mytest()
+{
+local ali=10
+echo "Ali value is $ali"
+}
+mytest
+ali=$(mytest)
+
+echo "Ali value is outside function : $ali"
+
+
+
+root@abdealidodia:~/bash/lect20# vim return.sh
+#!/bin/bash
+
+myvar()
+{
+local ali=10
+return $ali
+}
+myvar
+echo "My reutrn value is : $?"
+abd=$?
+echo "My retun value is $abd"
+~
+
+
+
+Argument passing:-
+#!/bin/bash
+
+test()
+{
+echo "Hello $1"
+}
+test ALI
+test ABD
+~
+
+
+root@abdealidodia:~/bash/lect20# cat pass.sh
+#!/bin/bash
+add()
+{
+
+first=$1
+second=$2
+ans=$((first + second))
+echo "$first + $second is : $ans"
+}
+first=10
+second=20
+add $first $second
+
+
+abd=200
+ali=20
+add $abd $ali
+
+add 100 200
+
+
+
+

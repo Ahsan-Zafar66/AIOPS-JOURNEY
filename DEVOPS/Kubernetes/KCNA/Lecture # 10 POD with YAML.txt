@@ -1,0 +1,72 @@
+Kubernetes is written in GO language.
+
+Scripting in  kubernetes is done through YAML or JSON language
+
+How to write configuration in YAML file
+
+apiVersion: here we mention APIserver version we want to use
+
+kind: type of object we are trying to make e.g POD
+
+metadata: information
+	name: my-pod
+	labels: it is a dictionary in the metadata dictionary
+		app: myapp
+		type: front-end (here we mention if we have multiple pods and running containers)
+
+spec:
+	containers: containers are in form of list or array
+		- name: nginx-container(- indicates it is the first item in the list)
+		- image: nginx
+
+
+kubectl create -f <filename.yml containing instructions like above>
+
+
+=====================================
+
+Lecture # 11 DEMO with POD
+
+
+vim pod.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+    tier: frontend
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  - name: busybox
+    image: busybox
+
+
+now save the above file.
+
+# you can use both create or apply
+kubectl create/apply -f pod.yml
+
+
+# to delete above pod
+kubectl delete pods nginx
+
+# making again sing apply command
+kubectl apply -f pod.yml
+
+
+# getting pods details
+kubectl get pods
+
+
+# getting pods details
+kubectl describe pods
+
+
+# getting detail of opods in detail
+kubectl get pods -o wide
+
+

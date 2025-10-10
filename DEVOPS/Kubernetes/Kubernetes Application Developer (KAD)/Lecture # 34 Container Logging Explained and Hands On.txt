@@ -1,0 +1,11 @@
+logs of  apod are actually logs of a container, because containe ris the thing that is running inside the pod.
+
+
+# command to get log of pod/contianer
+kubectl logs pod_name
+
+# command to get logs of a speciifc containe rin a pod, where pod has more thna one contiane rin it
+kubectl logs pod_name -c container_name
+
+# command to see live logs of a pod/container
+kubectl logs -f pod_name

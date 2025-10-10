@@ -1,0 +1,10 @@
+version: "3.8"
+services: 
+  my-app:
+    image: my_node_app:${MY_ENV}
+    ports: 
+      - "8010:${MY_PORT}"
+    volumes:
+      - ./src:/app/src
+    environment:
+      PORT: ${MY_PORT}

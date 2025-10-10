@@ -1,0 +1,61 @@
+$ vagrant box list
+bento/centos-7      (virtualbox, 202212.11.0)
+centos/7            (virtualbox, 2004.01)
+hashicorp/precise64 (virtualbox, 1.1.0)
+samdoran/rhel7      (virtualbox, 1.2.0)
+ubuntu/trusty64     (virtualbox, 20190514.0.0)
+
+
+
+$ cat Vagrantfile
+Vagrant.configure("2") do |config|
+ config.vm.define "web" do |web|
+  web.vm.provider "virtualbox" do |vb_web|
+    vb_web.memory = 1024
+    vb_web.cpus = 2
+  end
+
+     web.vm.box = "ubuntu/trusty64"
+     web.vm.network "private_network", ip: "192.168.33.20"
+     web.vm.provision "shell",
+      inline: "sudo touch /home/vagrant/web.txt"
+ end
+
+  config.vm.define "mysql" do |mysql|
+    mysql.vm.box = "samdoran/rhel7"
+    mysql.vm.network "private_network", ip: "192.168.33.21"
+    mysql.vm.provision "shell",
+      inline: "sudo touch /home/vagrant/mysql.txt"
+  end
+end
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project/Vms
+$ vagrant status
+Current machine states:
+
+web                       not created (virtualbox)
+mysql                     not created (virtualbox)
+
+
+
+$ vagrant up mysql
+Bringing machine 'mysql' up with 'virtualbox' provider...
+
+
+$ vagrant halt
+==> mysql: Attempting graceful shutdown of VM...
+==> web: Attempting graceful shutdown of VM...
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project/Vms
+$ vagrant status
+Current machine states:
+
+web                       poweroff (virtualbox)
+mysql                     poweroff (virtualbox)
+
+
+
+
+VAGRANT is NOT used in Production
+
+Just have its knowledge for Interview purposes

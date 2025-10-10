@@ -1,0 +1,103 @@
+How to install selenum?
+There are two steps
+
+step # 1
+pip install selenium
+
+step # 2
+install the webdriver of browser you want to work with
+
+we used chrome so you will get chrom instruction in lecture 3 of selenium
+
+
+
+Website :-
+https://www.selenium.dev/
+
+
+https://www.selenium.dev/documentation/webdriver/browsers/
+
+https://pypi.org/project/selenium/
+
+Install selenium via cmd line:-
+
+pip install selenium
+
+
+Linux :-
+pip3 install selenium
+
+
+how to install python selenium in pycharm
+
+
+File --> setting --> Project --> Interpreter -->
+
+Verify your selenium in pycharm :-
+
+python.py
+from selenium import webdriver
+
+
+
+Driver download link :-
+https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
+
+
+Chrome webdriver :-
+https://chromedriver.chromium.org/downloads
+
+NOTE : Please check you chrome version before downloading chrome driver, Chrome Driver must be same as current google chrome version
+
+
+Download Link :-
+https://chromedriver.storage.googleapis.com/index.html?path=106.0.5249.61/
+
+
+
+script.py
+from selenium import webdriver
+driver = webdriver.Chrome()
+
+
+
+O/p:-
+You will get error
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver' executable needs to be in PATH. Please see https://chromedriver.chromium.org/home
+
+Driver path : C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\chromedriver.exe
+
+
+script.py
+from selenium import webdriver
+path=r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\chromedriver.exe"
+driver = webdriver.Chrome(path)
+
+
+
+
+Sample Our dev env website :-
+https://dev.alnafi.com/
+
+
+
+from selenium import webdriver
+path=r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\chromedriver.exe"
+driver = webdriver.Chrome(path)
+driver.get("https://dev.alnafi.com/")
+
+O/p:
+You will get warning message for service path
+
+
+C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\Lecture 3\sample_sel.py:4: DeprecationWarning: executable_path has been deprecated, please pass in a Service object
+driver = webdriver.Chrome(path)
+
+
+How to avoid warning message from your output :-
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+path=Service(r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python Selenium\driver\chromedriver.exe")
+driver = webdriver.Chrome(service=path)
+driver.get("https://dev.alnafi.com/")

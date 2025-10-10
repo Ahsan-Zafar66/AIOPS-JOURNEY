@@ -1,0 +1,239 @@
+Docker image --> Docker container --> as a process container runs --> we can run our application in containers
+
+
+Docker image --> Docker container --> Zip container --> take the zip file to another machine --> extract zip contaner --> new container
+
+
+
+# now we will learn how to zip a container, then transfer it to another machine and unzip there
+# step # 1 
+create a docker image
+
+vim Dockerfile
+
+FROM busybox
+CMD echo $((40+2))
+
+
+# now let's create an image from above dockerfile
+docker build -t math .
+
+# now lte's create a tar file of this image
+docker save math > math.tar
+
+# now let's copy this image into another machine
+scp -vr math.tar machine_ip_where_you_want_to_copy:path_you_want_to_copy_there
+
+scp --> cp means copy, s means secure, so scp means securely copy
+
+-vr --> -v means verbose show details of copy process and r means recursive, it is used for directories to copy all their content
+
+# now go into the machine where you copied the tar file and run import command
+docker import math.tar math
+
+now the image from the tar file has been imported in the machine
+
+# example of coping from ubuntu into centos
+scp -vr math.tar ahsan@192.168.43.211:/home/ahsan/Downloads
+
+the file math.tar will be copied in user ahsan in downloads folder
+
+
+# so after importing we need to load the image from tar file
+docker load -i math.tar
+
+
+save and load commands are for images
+export and import commands are for containers. 
+
+# now you can run the image
+docker run math
+
+
+
+# now we will export and import CONTAINERS, previously we worked for images
+
+# command to export a container
+docker export container_id > filename.tar
+
+# example
+docker export container_id > nginx.tar
+
+# now we need to copy this container tar file in other system
+scp -vr nginx.tar ahsan@192.168.43.211:/home/ahsan/Downloads/
+
+# now go into 192.168.43.211 machine
+docker import nginx.tar nginx:mytransfer
+
+now what we did, we will create image nginx from nginx.tar file, because we create image from container and then run that image
+
+# now run the following command to create a container from the above image
+docker run -it nginx:mytransfer /bin/sh
+
+
+
+Video LNotes:
+Docker images --> Docker container --> As process run --> We can run our application
+
+Container --> Commit --> Docker image --> Container
+
+
+Docker image --> Docker container --> Zip --> another machine --> Extract --> Create container
+
+
+Docker export --> Docker import --> Docker save --> Docker load
+
+# docker --help | grep -E "(export|import|load|save)"
+
+vim Dockerfile
+FROM busybox
+CMD echo $((40+2))
+
+#docker build -t maths .
+
+#docker run maths
+
+# docker save maths > maths.tar
+Docker save command is used to create docker image to tar files.
+scp -vr maths.tar aadmin@192.168.1.9:/home/aadmin
+
+
+
+Node machine:-
+# docker import maths.tar maths
+You will get error
+
+Save command and load command
+
+
+Docker save --> Created tar file
+
+docker import --> Able to extract tar file but unable create container
+
+
+# docker load < maths.tar
+# docker run maths
+
+
+docker image --> Multiple docker images also possible
+docker save --> Create tar file for docker images
+Docker import --> Able to extract tar file but unable to create container (Wrong step)
+
+Docker load --> Docker image from tar file
+
+Finally --> Docker run to create container from docker  images
+
+
+
+
+Export command will work on container
+#docker export 903129ad58af > hello.tar
+
+Docker images --> Docker container
+docker import calc1.tar calcfs:latest
+docker run -t -i calcfs /bin/sh
+
+
+Save --> Load --> Images
+Export --> Import --> Container
+
+DIND docker in DOcker --> Docker install in Docker
+
+
+
+Chatgpt response:
+1. Docker Images: Save and Load
+These operations apply to Docker images and are used when you want to save an image to a file and then load it onto another Docker host without needing to push it to a registry (like Docker Hub).
+
+a) Save a Docker image
+The docker save command allows you to save a Docker image as a .tar file. This is useful when you want to back up or move an image to another system.
+
+bash
+Copy code
+docker save -o my_image.tar my_image:tag
+-o my_image.tar: Specifies the output file where the image will be saved.
+my_image:tag: The image name and its tag (e.g., my_image:latest).
+b) Load a Docker image
+Once you have a saved image file (e.g., my_image.tar), you can load it onto another system using the docker load command:
+
+bash
+Copy code
+docker load -i my_image.tar
+-i my_image.tar: Specifies the input file to load the image from.
+The image will now be available on the new system just as if it was pulled from a registry.
+
+2. Docker Containers: Export and Import
+These commands apply to Docker containers and deal with exporting/importing the filesystem of a running container.
+
+a) Export a Docker container
+The docker export command creates a snapshot of a container's filesystem as a .tar file. This captures the state of the container at the time of export, but does not include the history or metadata (like the environment variables, volumes, or image layers) of the image from which the container was created.
+
+bash
+Copy code
+docker export -o my_container.tar container_id
+-o my_container.tar: Specifies the output file where the container's filesystem will be saved.
+container_id: The ID or name of the container you want to export.
+b) Import a Docker container
+To use the exported container on another system or to create a new image from it, you can use the docker import command:
+
+bash
+Copy code
+cat my_container.tar | docker import - my_new_image
+my_container.tar: The file containing the container's filesystem.
+my_new_image: The name of the new image that will be created from this filesystem.
+This new image can be used to start containers, but it won't retain the image layers or metadata that existed in the original image. It's essentially a fresh image built from the filesystem.
+
+Differences Between Save/Load and Export/Import
+Operation	Applies to	What it does	Includes image layers & metadata?
+save	Images	Saves a complete image (including all layers and metadata) to a file.	Yes
+load	Images	Loads an image from a saved .tar file.	Yes
+export	Containers	Exports a container's filesystem to a .tar file.	No (just the filesystem)
+import	Containers	Imports a .tar file and creates a new image from the container's filesystem.	No (new, flat image)
+3. Is it necessary to take the terminal of an image created from a container that is exported?
+No, it is not necessary to take the terminal of an image that was created from an exported container. When you export a container and then import it as a new image, the new image will have the same filesystem as the exported container. You can create new containers from this image and access their terminals (shells) using docker run or docker exec, just like with any other image.
+
+For example:
+
+bash
+Copy code
+docker run -it my_new_image /bin/bash
+This will create a new container from the my_new_image and give you interactive terminal access (/bin/bash is the shell in this case).
+
+Practical Scenarios
+Save and Load
+You would use save/load when you want to move or back up Docker images across systems without using a Docker registry.
+Export and Import
+You would use export/import if you want to save the state of a running container as a new image, especially when you've made changes within the container that you want to preserve (like installing software or modifying files), but you don't care about the image history or layers.
+Example Workflow:
+Save and Load Example:
+
+Save an image from a system:
+bash
+Copy code
+docker save -o my_image.tar my_image:latest
+Transfer my_image.tar to another system (e.g., using scp).
+Load the image on another system:
+bash
+Copy code
+docker load -i my_image.tar
+Export and Import Example:
+
+Run a container, make changes inside it:
+bash
+Copy code
+docker run -it ubuntu /bin/bash
+# install software, modify files, etc.
+Export the container:
+bash
+Copy code
+docker export -o my_container.tar container_id
+Import the container's filesystem as a new image:
+bash
+Copy code
+cat my_container.tar | docker import - my_new_image
+Run a new container from the imported image:
+bash
+Copy code
+docker run -it my_new_image /bin/bash
+I hope this clarifies the concepts of save/load and import/export in Docker! Let me know if you need further details.
+

@@ -1,0 +1,88 @@
+# command to stop docker
+systemctl stop docker.socket
+
+# now you run docker ps or docker images commands will not work
+
+cd /var/run in this directory there is docker.sock file.
+
+docker socket file connects docker client with docker server.
+
+if docker is corrupted and it is not working, we kill or remove the docker.sock file.
+now you run docker again and docker.sock file is again created
+
+
+# starting docker socket file
+systemctl start docker.socket
+
+
+# check status of docker socket
+systemctl status docker.socket
+
+
+What is Port Mapping?
+port mapping is mapping port with another port.
+For example apache uses 80 port, we are using apache in container.
+So, I map 8080 with 80 port. Now, anyone from outside who wants to interact with port 80 will not write 80 he will write 8080, this 8080 will interact with port 80.
+
+So, port maping is nothing but mapping ports with othe rports for outside communication,
+
+In this way people don't interact directly with port 80, they interact with port 8080
+
+# running nginx and mapping port 80 with 9000
+docker run -it -d -p 9000:80 --name mywebserver nginx:latest
+
+# now you can connect with above server using command
+curl http://localhost:9000
+
+# you can check this port mapping using following command
+netstat -tulnp
+
+you can write exit to stop the server
+# starting mywebserver again
+docker start --attach mywebserver
+
+-d --> Detach mode
+-a is called attach -->
+
+# docker run --name web-NEW nginx
+Above command will not create any binding between host and container port
+
+For mapping , We need to use below command
+docker run --name web-NEW -p 9000:80 nginx
+
+-p flag for port mapping
+
+docker run -it -p 80:80 --name web1 nginx --> Running ? : YES
+docker run -it -p 80:80 --name web2 nginx --> Running ?  : No
+--> Exit status
+
+docker run -it -p 8080:80 --name web2 nginx --> Running ? No (Conflict name)
+docker run -it -p 8080:80 --name web3 nginx --> running ? YES
+docker run -it -p 8001:80 --name web4 nginx --> Running ? YES
+
+
+Homework:-
+1. Socket read about it
+2. IP tables / Networking as per linux (IP address / Subnet : Good to have)
+3. Docker push documents --> Refer all images
+docker push
+
+
+1. Docker components
+2. docker socker file
+3. docker port mapping using nginx images
+4. Docker conflict in container name or port
+
+
+
+docker container prune --> this command dlt containers which are running and exited both all of them
+
+
+
+
+
+
+
+
+
+

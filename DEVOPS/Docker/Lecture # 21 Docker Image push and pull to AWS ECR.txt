@@ -1,0 +1,29 @@
+To set up a ECR (Elastic Container Registry) in AWS, there are two steps:
+
+Step # 1
+Install AWS CLI in the linux OS.
+
+
+Step # 2
+You need to make a repository in AWS in ECR
+
+view the push commands in it
+
+Step # 3 Create a user and create a key in it
+
+Run the following commands in linux OS
+get the following keys from above key csv file
+
+export AWS_ACCESS_KEY_ID="paste here"
+export AWS_SECRET_ACCESS_KEY="Paste Here" 
+
+
+Step # 4
+Run the first command in view push commands of the repository in ECR
+it is separate for each registry so whenever you create a registry you need to run the first command
+
+Step # 5
+Tag your image as mentioned in view push commands of ECR
+
+Step # 6 
+Now push the image, it will go in the ECR repository of AWS.

@@ -1,0 +1,159 @@
+Install vagrant on windows and reboot your machine
+
+Now, go to vagrant cloud and chose a avagrant box, vagrant box are like docker images
+
+# now download the vagrantfile of that vagrant box in your directory by running the command vagrant init vagrant_boxname
+
+# now run vagrant up command in the directory where vagrant file has been downloaded
+
+# command to check vagrant machine status
+vagrant status
+
+# now check your virtual box, you will see an OS running whcih you downloaded
+
+# run following command to take vagrant machine console
+vagrant ssh
+
+# when machine is up by default it has username and password
+SSH username: vagrant
+
+default password: vagrant
+
+#  now move out of vagrant os by using exit command
+exit
+
+# vagrant suspend command save the machine state
+vagrant suspend
+
+# now to start again use vagrant up command
+vagrant up
+
+# to power off vm use vagrant halt
+vagrant halt
+
+# to destroy or remove vm use
+vagrant destroy
+
+
+
+===========================================
+Video lecture Notes
+Open your gitb ash from windows machine :-
+
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop
+$ mkdir project
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop
+$ cd project/
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project
+$ mkdir test
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project
+$ pwd
+/c/Users/AbdealiDodiya/Desktop/project
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project
+$ cd test/
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project/test
+$ ls -ltrh
+total 0
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project/test
+$ pwd
+/c/Users/AbdealiDodiya/Desktop/project/test
+
+
+
+
+
+
+#help 
+$ vagrant help init
+Usage: vagrant init [options] [name [url]]
+
+Options:
+
+
+
+#$ vagrant init ubuntu/trusty64
+
+A `Vagrantfile` has been placed in this directory.
+
+
+#vim Vagrantfile
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+end
+
+
+#vagrant up
+
+ default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+
+
+
+
+
+
+mount directory : default: /vagrant => C:/Users/AbdealiDodiya/Desktop/project/test
+
+
+
+$ vagrant ssh
+vagrant@127.0.0.1's password:
+vagrant@127.0.0.1's password:
+Welcome to Ubuntu 14.04.6 LTS (GNU/Linux 3.13.0-170-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Sun Dec 11 13:03:19 UTC 2022
+
+username: vagrant
+password : vagrant 
+
+
+
+
+vagrant@vagrant-ubuntu-trusty-64:~$ cd /vagrant
+vagrant@vagrant-ubuntu-trusty-64:/vagrant$ ls -ltrh
+total 4.0K
+-rwxrwxrwx 1 vagrant vagrant 3.1K Dec 11 12:57 Vagrantfile
+vagrant@vagrant-ubuntu-trusty-64:/vagrant$ pwd
+/vagrant
+vagrant@vagrant-ubuntu-trusty-64:/vagrant$ vim Vagrantfile
+
+
+
+
+
+
+
+
+$ vagrant suspend
+==> default: Saving VM state and suspending execution...
+
+
+$ vagrant halt
+
+
+
+$ vagrant halt
+==> default: Attempting graceful shutdown of VM...
+
+AzureAD+AbdealiDodiya@DESKTOP-08RGL16 MINGW64 ~/Desktop/project/test
+$ vagrant status
+Current machine states:
+
+default                   poweroff (virtualbox)
+
+The VM is powered off. To restart the VM, simply run `vagrant up`
+
+
+$ vagrant destroy
+    default: Are you sure you want to destroy the 'default' VM? [y/N] y
+==> default: Destroying VM and associated drives...

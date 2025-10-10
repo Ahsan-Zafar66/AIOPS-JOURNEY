@@ -1,0 +1,25 @@
+When you run commands in worker nodes they go to kubeapi server.
+Controller manager present in kube api server is responsible for execution of these commands.
+
+Controllers are of different types responsible for different task in kubernetes:
+node controller: it monitors nodes, if one goes down it makes anothr one
+service account controller: responsible for creating default service account with newly created each namespace
+Replication Controller : to manage the creation and deletion of pod replicas.
+Persistent Volume Controller : Manage the lifecycle of persistent volumes.
+
+
+How do controllers work:
+Monitor : monitors the state of the cluster through the API Server
+Analyze : analyze the current state and compare it to the desired state defined in your
+Kubernetes configurations (like deployment specs or pod definitions)
+Reconcile : in case of any fault/discrepancy, take corrective actions to bring the cluster
+back to the desired state.
+
+
+
+Security Policies
+Restrict Access : RBAC policies,
+Secure Communication : TLS, Regularly rotate keys and certificates.
+Audit logs : Enable audit logs, alerts setup in case suspicious activities, regularly
+monitor.
+Controller Health Checks :

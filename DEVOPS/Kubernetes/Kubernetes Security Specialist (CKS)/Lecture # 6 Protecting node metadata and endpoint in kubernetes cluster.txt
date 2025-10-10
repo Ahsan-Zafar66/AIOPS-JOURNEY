@@ -1,0 +1,25 @@
+In order to achieve restriction at cluster level, first best practive is to deny all incoming and outgoing traffic of cluster
+After that only allow what is required.
+
+You need to install calico with kind cluster to enforce network policies.
+You can get cluster configuration files in network-polices directory in ubuntu
+
+
+# cluster configuration file
+# kind-config.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+  disableDefaultCNI: true
+  podSubnet: "192.168.0.0/16"
+nodes:
+- role: control-plane
+
+
+# command to install calico after you have set up cluster
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+
+
+
+I used only alnafi intenral and external pods and services
+# now use policy4.yml.

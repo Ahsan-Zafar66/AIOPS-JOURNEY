@@ -1,0 +1,4 @@
+Jenkins is an open source CI/CD automation software written in JAVA
+It is used to impplement CI/CD workflows, called pipelines.
+
+

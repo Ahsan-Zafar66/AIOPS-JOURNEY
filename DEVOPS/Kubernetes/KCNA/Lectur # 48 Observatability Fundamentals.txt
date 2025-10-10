@@ -1,0 +1,38 @@
+Application ban gai cluster, nodes and pods sab deploy ho gaye
+
+Ab mjhy kaisay pta chalay ga ky sab thk chl rha ya nhi, application ky andar kiya chl rha hai?
+
+Microservices ny jahan identification of issue asan ki wahan monitoring complex kr di
+Hr service kt apny monitoring agents
+
+Monitoring mn atay hain:
+logs: text form, timestam when the log occured, message containing info
+metrics: Metric name, Value, timestamp, Dimensions
+traces: start time, duration, parent ID
+
+
+SLI/SLO/SLA are things that are defined during development of application
+SLI/SLO/SLA:
+
+SLI: Service Level indicator
+ky bank ki website khol rha hn kitni latency hai
+aisa indeicator jo service ka level btaye.
+ham app to bna lety hain, likin jis trhan ki service dy rhi hai usko bhi track krna hota hai
+
+application customer/user centric hoti hai.
+
+
+SLO service level object, this defines target for SLI
+mtlb ky meri bank ki website ki latency < 100ms honi chahiye
+ye mera target hai SLI ky lye
+
+SLI mer website availble honi chahiye
+SLO meri website 99.9% uptime rhy
+
+SLO ka metric SLI ky liye hai
+
+SLA service level agreement, ye agreement hota hai company or customer ku darmayan ky mn itni service apko dn ga minimum.
+SLA mn mention hota hai bakida ky company kitna SLI, SLO dy gi customers ko
+For example habib bank apny customers ko khta hai 90% of time apko website up mily gi apky liye avaible go gi
+
+

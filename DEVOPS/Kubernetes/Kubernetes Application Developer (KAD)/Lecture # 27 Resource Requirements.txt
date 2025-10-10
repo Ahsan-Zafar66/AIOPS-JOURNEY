@@ -1,0 +1,67 @@
+We have clusters and clusters have node.
+
+SUppose i have a cluster which has 5 nodes, so i have 5 virtual macines.
+Each virtual machine have resources allocated with it like CPU limit, memory limit and disk limit.
+
+Now, I make a pod which needs 2 cpu, 1 gb ram and 50gb disk space
+As I have 5 nodes, in which node the pod will be placed? This is the responsibility of scheduler which decides where to place the pod in which node,
+
+Scheduler considers how much resources the pod needs and how much nodes have?
+
+when a pod dont get resources as it requires, it will go in pending state, it will not run.
+Or you can create a new node with new resources.
+
+
+By default kubernetes allocate resources to pods if not defined, suppose it has default specs that when a pod is created it gets 1 cpu, 5 gb space and 500 mb ram.
+When a pod is created and resources are not defined than by default a pod when created will get 1 cpu, 5 gb disk and 500 mb RAM
+
+
+What is meant by 1 CPU?
+1 CPU of resource equals 1 AWS vCPU, 1 GCP Core, 1 Azure Core, and 1 Hyperthread.
+
+
+Resources:
+CPU: you can go as low as 1M
+
+RAM: 1GI (Gibibyte), 1Mi (Mebibyte), 1Ki (Kibibyte)
+
+
+
+When you creat a pod with a container without describing resources for it, it can take on any resources as much it wants there is not restriction.
+So, we need to define Resourcelimits for containers, that they cannot take more than these
+
+
+when a pod resources reaches limit, kubernetes terminate it and start it again.
+
+Suppose we described a specification for a pod such as 1 CPU, 2 Gb RAm and 10 gb disk space.
+It will consume only it requires, like if it needs 1gb then it will use only 1gb though we described 2gb but it needs 1 so it will use 1.
+
+
+Resources are property of CONTAINERS.
+
+
+Resource Requirements Hands on:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: ubuntu-container
+    image: ubuntu
+    command: ["sleep","600"]
+    resources:
+      limits:
+        cpu: 2
+      requests:
+        cpu: 1
+
+NOTE: we defined only cpu, not ram and space, so be default this contianer will get 256Mi of RAm, if it needs more it will get more. 
+
+
+
+For more information refer to kubernetes documentation.
+
+
+
+

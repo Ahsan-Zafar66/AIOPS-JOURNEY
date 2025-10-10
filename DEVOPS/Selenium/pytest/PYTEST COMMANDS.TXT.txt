@@ -1,0 +1,56 @@
+# to run all the python files to chekc with pytest
+python -m pytest
+
+# to check a specific file
+python -m pytest .\test_file.py
+
+# to check the list of functions in that file and status of tests run on them
+python -m pytest .\test_file.py -s -v
+
+-s --> shows the output of functions that are being checked in the test_file.py
+
+-v --> shows the status under each function whether it passed or not
+
+# if you want to run test only on a specific function(test_login) in your .py file
+pythom -m pytest ./test_file.py -s -v -k "login"
+
+ou will mention only the word of function without test such as for test_login you will use login
+
+# except login function i want to test all other functions then
+pythom -m pytest ./test_file.py -s -v -k "not login"
+
+
+# mark concept
+we can mark functions and can call the marker
+
+we can mark multiple functions under same marker and when we run that marker all the functions under that marker will be tested
+
+# how to give marker
+@pytest.mark.mark_name
+
+# how to call the marker
+python -m pytest -s -v -m "marker_name"
+
+# all markers except this marker
+python -m pytest -s -v -m "not marker_name"
+
+
+
+# marker registration
+you can register markers in  apytest.ini file
+
+# syntax
+[pytest]
+markers = 
+	ahsan1
+	ahsan2
+
+ahsan1 and ahsan2 have been registerd as markers
+
+
+
+
+
+
+
+
